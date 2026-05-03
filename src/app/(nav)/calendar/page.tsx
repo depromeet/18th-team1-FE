@@ -1,8 +1,17 @@
+import { Suspense } from "react";
+import { UserProfileCard } from "@/entities/user";
+import { MOCK_USER_PROFILE } from "@/mock";
+import { CalendarHeader, CalendarWidget } from "@/widgets/calendar";
+
 const CalendarPage = (): React.ReactElement => {
   return (
-    <div className="flex h-full items-center justify-center">
-      <p className="text-muted-foreground">캘린더 페이지 (준비 중)</p>
-    </div>
+    <>
+      <CalendarHeader />
+      <UserProfileCard {...MOCK_USER_PROFILE} />
+      <Suspense>
+        <CalendarWidget />
+      </Suspense>
+    </>
   );
 };
 

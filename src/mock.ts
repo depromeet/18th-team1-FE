@@ -140,3 +140,7 @@ export const MOCK_SENTENCES: RecommendedSentence[] = [
 
 export const MOCK_SENTENCE: RecommendedSentence | undefined = MOCK_SENTENCES[0];
 
+export const MOCK_USER_PROFILE = {
+  nickname: "연결한 계정의 이름",
+  profileImageUrl: "",
+};

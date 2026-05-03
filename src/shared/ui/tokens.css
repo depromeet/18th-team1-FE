@@ -44,6 +44,10 @@
   --color-accent: var(--color-gray-50);
   --color-accent-foreground: var(--color-gray-700);
 
+  /* Calendar Colors */
+  --color-calendar-sun: #ec5852;
+  --color-calendar-sat: #2e7df6;
+
   /* Fonts */
   --font-pretendard: var(--font-pretendard);
   --font-gt-pressura: var(--font-gt-pressura);
