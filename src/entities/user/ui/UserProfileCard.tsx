@@ -9,7 +9,7 @@ export const UserProfileCard = ({
   nickname,
   profileImageUrl,
 }: UserProfileCardProps): React.ReactElement => (
-  <div className="flex items-center bg-gray-0 rounded-(--radius) px-2.5 py-4 gap-2.5 mx-5 mt-2.5">
+  <div className="flex items-center bg-gray-50 rounded-(--radius) px-2.5 py-4 gap-2.5 mx-5 mt-2.5">
     {profileImageUrl ? (
       <div className="relative h-10 w-10 overflow-hidden rounded-full">
         <Image
@@ -22,6 +22,6 @@ export const UserProfileCard = ({
     ) : (
       <div className="h-10 w-10 rounded-full bg-gray-100" aria-hidden="true" />
     )}
-    <p className="body1 text-gray-700">{nickname}</p>
+    <p className="subhead6 text-gray-700">{nickname}</p>
   </div>
 );
