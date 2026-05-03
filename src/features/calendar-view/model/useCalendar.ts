@@ -1,3 +1,5 @@
+"use client";
+
 import {
   addDays,
   addMonths,
@@ -12,12 +14,13 @@ import {
 } from "date-fns";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useCalendarStore } from "@/store/calendar/useCalendarStore";
 import type { CalendarMode } from "./calendar.types";
 
 interface UseCalendarReturn {
   viewDate: Date;
   selectedDate: Date;
-  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+  setSelectedDate: (date: Date) => void;
   mode: CalendarMode;
   setMode: (newMode: CalendarMode) => void;
   days: Date[];
@@ -33,7 +36,7 @@ export const useCalendar = (): UseCalendarReturn => {
   const mode: CalendarMode = modeFromParams === "monthly" ? "monthly" : "weekly";
 
   const [viewDate, setViewDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { selectedDate, setSelectedDate } = useCalendarStore();
 
   const setMode = (newMode: CalendarMode): void => {
     const params = new URLSearchParams(searchParams.toString());

@@ -1,3 +1,5 @@
+export type EmotionIntensity = "HIGH" | "MID" | "LOW";
+
 export interface Diary {
   day: number;
   sentence: string;
