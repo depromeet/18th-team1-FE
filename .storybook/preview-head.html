@@ -1,9 +1,3 @@
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-<link
-  href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap"
-  rel="stylesheet"
-/>
 <style>
   @font-face {
     font-family: "Pretendard";
@@ -12,8 +6,28 @@
     font-display: swap;
   }
 
+  @font-face {
+    font-family: "GT Pressura Trial";
+    src: url("/fonts/GT-Pressura-Extended-Bold-Trial.otf") format("opentype");
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Milling Trial";
+    src: url("/fonts/MillingTrial-Triplex1,5mm.otf") format("opentype");
+    font-weight: 400;
+    font-display: swap;
+  }
+
   :root {
     --font-pretendard: "Pretendard", Arial, sans-serif;
-    --font-nanum-myeongjo: "Nanum Myeongjo", serif;
+    --font-gt-pressura: "GT Pressura Trial", Arial, sans-serif;
+    --font-milling: "Milling Trial", serif;
+  }
+
+  body {
+    font-family: var(--font-pretendard);
+    color: var(--color-gray-700);
   }
 </style>
