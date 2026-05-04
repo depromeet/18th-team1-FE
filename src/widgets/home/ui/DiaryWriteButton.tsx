@@ -23,7 +23,7 @@ export const DiaryWriteButton = ({ hasTodayDiary }: DiaryWriteButtonProps): Reac
       type="button"
       onClick={handleClick}
       className="flex size-10.5 items-center justify-center rounded-lg bg-key-secondary2"
-      aria-label="오늘의 일기 작성하기"
+      aria-label={hasTodayDiary ? "오늘 작성한 일기 보기" : "오늘의 일기 작성하기"}
     >
       <svg width="22" height="16" viewBox="0 0 25 18" fill="none" aria-hidden="true">
         <path

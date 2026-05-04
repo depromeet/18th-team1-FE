@@ -26,10 +26,10 @@ export const RandomSentenceBanner = ({
   const slides =
     sentences.length > 1 && firstSentence
       ? [
-          ...sentences.map((s) => ({ ...s, slideKey: s.id })),
+          ...sentences.map((sentence) => ({ ...sentence, slideKey: sentence.id })),
           { ...firstSentence, slideKey: `${firstSentence.id}-clone` },
         ]
-      : sentences.map((s) => ({ ...s, slideKey: s.id }));
+      : sentences.map((sentence) => ({ ...sentence, slideKey: sentence.id }));
 
   return (
     <div className="flex w-full flex-col">
