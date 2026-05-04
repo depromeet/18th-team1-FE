@@ -1,4 +1,5 @@
 import { cn } from "@/shared/lib/utils";
+import { Text } from "@/shared/ui/text";
 
 import type { RecommendedSentence } from "../model/sentence.types";
 
@@ -18,16 +19,33 @@ export const SentenceListCard = ({
     aria-pressed={isSelected}
     onClick={onClick}
     className={cn(
-      "flex w-full flex-col items-start rounded-xl bg-white p-5 text-left border",
-      isSelected ? "border-gray-700" : "border-transparent",
+      "flex w-full flex-col items-start rounded-[4px] p-5 text-left",
+      isSelected ? "border-r-16 border-key-primary bg-key-secondary" : "bg-gray-50",
     )}
   >
-    <div className="flex w-full flex-col gap-[19px]">
+    <div className="flex w-full flex-col gap-4.75">
       <div className="flex flex-col">
-        <p className="subhead6 text-gray-600">{sentence.bookTitle}</p>
-        <p className="caption2 text-gray-400">{sentence.bookAuthor}</p>
+        <Text
+          variant={isSelected ? "subhead5" : "subhead6"}
+          color={isSelected ? "key-secondary2" : "gray-600"}
+        >
+          {sentence.bookTitle}
+        </Text>
+        <Text
+          as="span"
+          variant={isSelected ? "caption1" : "caption2"}
+          color={isSelected ? "key-secondary2" : "gray-400"}
+          className={cn(isSelected && "opacity-80")}
+        >
+          {sentence.bookAuthor}
+        </Text>
       </div>
-      <p className="title2 text-gray-700">{sentence.quote}</p>
+      <Text
+        variant={isSelected ? "title2" : "subhead2"}
+        color={isSelected ? "key-secondary2" : "gray-700"}
+      >
+        {sentence.quote}
+      </Text>
     </div>
   </button>
 );
