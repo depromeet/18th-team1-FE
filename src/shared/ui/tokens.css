@@ -1,4 +1,20 @@
 @theme {
+  /* Key Color */
+  --color-key-primary: #8e8100;
+  --color-key-secondary: #a4d4d6;
+  --color-key-secondary2: #6b1e3c;
+
+  /* Key Color Variation */
+  --color-key-primary-0: #e1ddb5;
+  --color-key-primary-100: #6a6103;
+  --color-key-secondary-0: #d1e9ea;
+  --color-key-secondary-100: #287f83;
+  --color-key-secondary2-0: #e5d1d9;
+
+  /* Sub Color */
+  --color-sub-saturday: #2e7df6;
+  --color-sub-sunday: #ff6f36;
+
   /* Gray Scale */
   --color-gray-0: #ffffff;
   --color-gray-50: #f7f7f7;
@@ -9,38 +25,64 @@
   --color-gray-500: #5c5c5c;
   --color-gray-600: #303030;
   --color-gray-700: #090909;
+  --color-gray-700-50: rgba(9, 9, 9, 0.5);
 
-  /* Semantic tokens (shadcn/ui 호환) */
-  --color-background: #ffffff;
-  --color-foreground: #090909;
-  --color-muted: #f7f7f7;
-  --color-muted-foreground: #737373;
-  --color-border: #eaebeb;
-  --color-input: #eaebeb;
-  --color-ring: #8a8a8a;
-  --color-primary: #090909;
-  --color-primary-foreground: #ffffff;
-  --color-secondary: #f7f7f7;
-  --color-secondary-foreground: #090909;
+  /* Semantic tokens (shadcn/ui 호환) — gray scale 매핑 */
+  --color-background: var(--color-gray-0);
+  --color-foreground: var(--color-gray-700);
+  --color-muted: var(--color-gray-50);
+  --color-muted-foreground: var(--color-gray-400);
+  --color-border: var(--color-gray-100);
+  --color-input: var(--color-gray-100);
+  --color-ring: var(--color-gray-300);
+  --color-primary: var(--color-gray-700);
+  --color-primary-foreground: var(--color-gray-0);
+  --color-secondary: var(--color-gray-50);
+  --color-secondary-foreground: var(--color-gray-700);
   --color-destructive: #ff3b30;
-  --color-destructive-foreground: #ffffff;
-  --color-accent: #f7f7f7;
-  --color-accent-foreground: #090909;
+  --color-destructive-foreground: var(--color-gray-0);
+  --color-accent: var(--color-gray-50);
+  --color-accent-foreground: var(--color-gray-700);
 
   /* Fonts */
-  --font-sans: var(--font-pretendard);
-  --font-serif: var(--font-nanum-myeongjo);
+  --font-pretendard: var(--font-pretendard);
+  --font-gt-pressura: var(--font-gt-pressura);
+  --font-milling: var(--font-milling);
 
   /* Border radius */
-  --radius: 0.625rem;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius: 0.625rem; /* 10px */
+  --radius-sm: calc(var(--radius) - 4px); /*  6px */
+  --radius-md: calc(var(--radius) - 2px); /*  8px */
+  --radius-lg: var(--radius); /* 10px */
+  --radius-xl: calc(var(--radius) + 4px); /* 14px */
+  --radius-2xl: calc(var(--radius) + 6px); /* 16px */
+
+  /* Shadow */
+  --shadow-modal: 0 0 30px 0 rgba(0, 0, 0, 0.1);
 }
 
 @layer utilities {
+  /* Title (Pretendard) */
+  .title1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  .title2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+
   /* Head (Pretendard) */
+  .head0 {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
   .head1 {
     font-size: 1.625rem;
     font-weight: 600;
@@ -105,6 +147,12 @@
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
+  .body2-1 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
   .body2 {
     font-size: 0.875rem;
     font-weight: 500;
@@ -132,46 +180,32 @@
     letter-spacing: -0.02em;
   }
 
-  /* Title (NanumMyeongjo - 보조 서체) */
-  .title1 {
-    font-family: var(--font-serif);
-    font-size: 1.875rem;
-    font-weight: 800;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .title2 {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
-    font-weight: 800;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .title3 {
-    font-family: var(--font-serif);
-    font-size: 1.125rem;
+  /* Point (GT Pressura Trial / Milling Trial) */
+  .point1 {
+    font-family: var(--font-gt-pressura);
+    font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .title4 {
-    font-family: var(--font-serif);
-    font-size: 0.875rem;
-    font-weight: 800;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .title5 {
-    font-family: var(--font-serif);
-    font-size: 0.875rem;
+  .point1-2 {
+    font-family: var(--font-gt-pressura);
+    font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .title6 {
-    font-family: var(--font-serif);
-    font-size: 0.75rem;
+  .point2 {
+    font-family: var(--font-milling);
+    font-size: 1.25rem;
     font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  .point3 {
+    font-family: var(--font-gt-pressura);
+    font-size: 1rem;
+    font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }

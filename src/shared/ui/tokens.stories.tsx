@@ -24,21 +24,42 @@ const grayScale: { label: string; tw: string; hex: string }[] = [
   { label: "gray-700", tw: "bg-gray-700", hex: "#090909" },
 ];
 
-//const semanticColors: { label: string; tw: string; hex: string }[] = [
-//  { label: 'background', tw: 'bg-background', hex: '#ffffff' },
-//  { label: 'foreground', tw: 'bg-foreground', hex: '#090909' },
-//  { label: 'muted', tw: 'bg-muted', hex: '#f7f7f7' },
-//  { label: 'muted-foreground', tw: 'bg-muted-foreground', hex: '#737373' },
-//  { label: 'border', tw: 'bg-border', hex: '#eaebeb' },
-//  { label: 'primary', tw: 'bg-primary', hex: '#090909' },
-//  { label: 'primary-foreground', tw: 'bg-primary-foreground', hex: '#ffffff' },
-//  { label: 'secondary', tw: 'bg-secondary', hex: '#f7f7f7' },
-//  { label: 'secondary-foreground', tw: 'bg-secondary-foreground', hex: '#090909' },
-//  { label: 'destructive', tw: 'bg-destructive', hex: '#ff3b30' },
-//  { label: 'destructive-foreground', tw: 'bg-destructive-foreground', hex: '#ffffff' },
-//  { label: 'accent', tw: 'bg-accent', hex: '#f7f7f7' },
-//  { label: 'accent-foreground', tw: 'bg-accent-foreground', hex: '#090909' },
-//];
+const keyColors: { label: string; tw: string; hex: string }[] = [
+  { label: "key-primary", tw: "bg-key-primary", hex: "#8e8100" },
+  { label: "key-secondary", tw: "bg-key-secondary", hex: "#a4d4d6" },
+  { label: "key-secondary2", tw: "bg-key-secondary2", hex: "#6b1e3c" },
+];
+
+const keyColorVariations: { label: string; tw: string; hex: string }[] = [
+  { label: "key-primary-0", tw: "bg-key-primary-0", hex: "#e1ddb5" },
+  { label: "key-primary-100", tw: "bg-key-primary-100", hex: "#6a6103" },
+  { label: "key-secondary-0", tw: "bg-key-secondary-0", hex: "#d1e9ea" },
+  { label: "key-secondary-100", tw: "bg-key-secondary-100", hex: "#287f83" },
+  { label: "key-secondary2-0", tw: "bg-key-secondary2-0", hex: "#e5d1d9" },
+];
+
+const subColors: { label: string; tw: string; hex: string }[] = [
+  { label: "sub-saturday", tw: "bg-sub-saturday", hex: "#2e7df6" },
+  { label: "sub-sunday", tw: "bg-sub-sunday", hex: "#ff6f36" },
+];
+
+const semanticColors: { label: string; tw: string; hex: string }[] = [
+  { label: "background", tw: "bg-background", hex: "→ gray-0" },
+  { label: "foreground", tw: "bg-foreground", hex: "→ gray-700" },
+  { label: "muted", tw: "bg-muted", hex: "→ gray-50" },
+  { label: "muted-foreground", tw: "bg-muted-foreground", hex: "→ gray-400" },
+  { label: "border", tw: "bg-border", hex: "→ gray-100" },
+  { label: "input", tw: "bg-input", hex: "→ gray-100" },
+  { label: "ring", tw: "bg-ring", hex: "→ gray-300" },
+  { label: "primary", tw: "bg-primary", hex: "→ gray-700" },
+  { label: "primary-foreground", tw: "bg-primary-foreground", hex: "→ gray-0" },
+  { label: "secondary", tw: "bg-secondary", hex: "→ gray-50" },
+  { label: "secondary-foreground", tw: "bg-secondary-foreground", hex: "→ gray-700" },
+  { label: "destructive", tw: "bg-destructive", hex: "#ff3b30" },
+  { label: "destructive-foreground", tw: "bg-destructive-foreground", hex: "→ gray-0" },
+  { label: "accent", tw: "bg-accent", hex: "→ gray-50" },
+  { label: "accent-foreground", tw: "bg-accent-foreground", hex: "→ gray-700" },
+];
 
 const ColorSwatch = ({
   label,
@@ -69,14 +90,38 @@ export const Color: Story = {
           ))}
         </div>
       </section>
-      {/*<section>
-        <h2 className="subhead1 text-foreground mb-4">Semantic Tokens</h2>
+      <section>
+        <h2 className="subhead1 text-foreground mb-4">Key Color</h2>
+        <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+          {keyColors.map((color) => (
+            <ColorSwatch key={color.label} {...color} />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2 className="subhead1 text-foreground mb-4">Key Color Variation</h2>
+        <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+          {keyColorVariations.map((color) => (
+            <ColorSwatch key={color.label} {...color} />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2 className="subhead1 text-foreground mb-4">Sub Color</h2>
+        <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
+          {subColors.map((color) => (
+            <ColorSwatch key={color.label} {...color} />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h2 className="subhead1 text-foreground mb-4">Semantic (shadcn/ui)</h2>
         <div className="grid grid-cols-3 gap-4 sm:grid-cols-5">
           {semanticColors.map((color) => (
             <ColorSwatch key={color.label} {...color} />
           ))}
         </div>
-      </section>*/}
+      </section>
     </div>
   ),
 };
@@ -84,6 +129,9 @@ export const Color: Story = {
 // ─── Typography ──────────────────────────────────────────────────────────────
 
 const pretendardTokens: { cls: string; size: string; weight: string; usage: string }[] = [
+  { cls: "title1", size: "1.75rem", weight: "900", usage: "대제목 (Black)" },
+  { cls: "title2", size: "1.25rem", weight: "800", usage: "제목 (ExtraBold)" },
+  { cls: "head0", size: "1.625rem", weight: "700", usage: "페이지 대제목 (Bold)" },
   { cls: "head1", size: "1.625rem", weight: "600", usage: "페이지 대제목" },
   { cls: "head2", size: "1.25rem", weight: "600", usage: "섹션 제목" },
   { cls: "head3", size: "1.25rem", weight: "500", usage: "섹션 부제목" },
@@ -94,33 +142,59 @@ const pretendardTokens: { cls: string; size: string; weight: string; usage: stri
   { cls: "subhead5", size: "1rem", weight: "700", usage: "강조 본문" },
   { cls: "subhead6", size: "1rem", weight: "600", usage: "세미볼드 본문" },
   { cls: "body1", size: "1rem", weight: "500", usage: "기본 본문" },
+  { cls: "body2-1", size: "0.875rem", weight: "700", usage: "작은 본문 (Bold)" },
   { cls: "body2", size: "0.875rem", weight: "500", usage: "작은 본문" },
   { cls: "body3", size: "0.875rem", weight: "400", usage: "작은 본문(보통)" },
   { cls: "caption1", size: "0.75rem", weight: "600", usage: "강조 캡션" },
   { cls: "caption2", size: "0.75rem", weight: "400", usage: "캡션" },
 ];
 
-const nanumTokens: { cls: string; size: string; weight: string; usage: string }[] = [
-  { cls: "title1", size: "1.875rem", weight: "800", usage: "책 문장 대표 강조" },
-  { cls: "title2", size: "1.125rem", weight: "800", usage: "문장 강조 (중간)" },
-  { cls: "title3", size: "1.125rem", weight: "700", usage: "문장 강조 (보통)" },
-  { cls: "title4", size: "0.875rem", weight: "800", usage: "문장 강조 (작은)" },
-  { cls: "title5", size: "0.875rem", weight: "700", usage: "문장 강조 (작은, 보통)" },
-  { cls: "title6", size: "0.75rem", weight: "400", usage: "문장 캡션" },
+const pointTokens: { cls: string; size: string; weight: string; font: string; usage: string }[] = [
+  {
+    cls: "point1",
+    size: "1.5rem",
+    weight: "700",
+    font: "GT Pressura Trial",
+    usage: "숫자·월 강조 (대)",
+  },
+  {
+    cls: "point1-2",
+    size: "1.25rem",
+    weight: "700",
+    font: "GT Pressura Trial",
+    usage: "숫자·월 강조 (중)",
+  },
+  {
+    cls: "point2",
+    size: "1.25rem",
+    weight: "400",
+    font: "Milling Trial",
+    usage: "숫자·월 강조 (Milling)",
+  },
+  {
+    cls: "point3",
+    size: "1rem",
+    weight: "700",
+    font: "GT Pressura Trial",
+    usage: "숫자·월 강조 (소)",
+  },
 ];
 
 const SAMPLE_TEXT = "책 속 한 문장이 오늘의 하루를 바꾼다";
+const POINT_SAMPLE_TEXT = "1234567890@";
 
 const TypographyRow = ({
   cls,
   size,
   weight,
   usage,
+  sampleText = SAMPLE_TEXT,
 }: {
   cls: string;
   size: string;
   weight: string;
   usage: string;
+  sampleText?: string;
 }): React.ReactElement => (
   <div className="flex items-baseline gap-6 border-b border-border py-4 last:border-0">
     <div className="w-28 shrink-0">
@@ -130,7 +204,7 @@ const TypographyRow = ({
       </p>
       <p className="caption2 text-muted-foreground">{usage}</p>
     </div>
-    <p className={`${cls} text-foreground`}>{SAMPLE_TEXT}</p>
+    <p className={`${cls} text-foreground`}>{sampleText}</p>
   </div>
 );
 
@@ -139,7 +213,9 @@ export const Typography: Story = {
     <div className="flex flex-col gap-10">
       <section>
         <h2 className="subhead1 text-foreground mb-1">Pretendard</h2>
-        <p className="caption2 text-muted-foreground mb-4">head · subhead · body · caption</p>
+        <p className="caption2 text-muted-foreground mb-4">
+          title · head · subhead · body · caption
+        </p>
         <div>
           {pretendardTokens.map((token) => (
             <TypographyRow key={token.cls} {...token} />
@@ -147,11 +223,18 @@ export const Typography: Story = {
         </div>
       </section>
       <section>
-        <h2 className="subhead1 text-foreground mb-1">NanumMyeongjo</h2>
-        <p className="caption2 text-muted-foreground mb-4">title — 책 문장 강조용 보조 서체</p>
+        <h2 className="subhead1 text-foreground mb-1">GT Pressura Trial / Milling Trial</h2>
+        <p className="caption2 text-muted-foreground mb-4">point — 숫자·영문 강조용 보조 서체</p>
         <div>
-          {nanumTokens.map((token) => (
-            <TypographyRow key={token.cls} {...token} />
+          {pointTokens.map((token) => (
+            <TypographyRow
+              key={token.cls}
+              cls={token.cls}
+              size={token.size}
+              weight={`${token.weight} · ${token.font}`}
+              usage={token.usage}
+              sampleText={POINT_SAMPLE_TEXT}
+            />
           ))}
         </div>
       </section>

@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Nanum_Myeongjo } from "next/font/google";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
@@ -12,10 +11,15 @@ const pretendard = localFont({
   display: "swap",
 });
 
-const nanumMyeongjo = Nanum_Myeongjo({
-  weight: ["400", "700", "800"],
-  subsets: ["latin"],
-  variable: "--font-nanum-myeongjo",
+const gtPressura = localFont({
+  src: "../../public/fonts/GT-Pressura-Extended-Bold-Trial.otf",
+  variable: "--font-gt-pressura",
+  display: "swap",
+});
+
+const millingTrial = localFont({
+  src: "../../public/fonts/MillingTrial-Triplex1,5mm.otf",
+  variable: "--font-milling",
   display: "swap",
 });
 
@@ -35,15 +39,16 @@ type RootLayoutProps = {
 
 const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
   return (
-    <html lang="ko" className={`${pretendard.variable} ${nanumMyeongjo.variable}`}>
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${gtPressura.variable} ${millingTrial.variable}`}
+    >
       <body
-        className="h-dvh overflow-hidden bg-background text-foreground antialiased"
+        className="h-dvh overflow-hidden bg-gray-0 font-pretendard text-gray-700 antialiased"
         suppressHydrationWarning
       >
         <Providers>
-          <div className="h-dvh w-full overflow-hidden bg-gray-50 md:mx-auto md:max-w-93.75">
-            {children}
-          </div>
+          <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75">{children}</div>
         </Providers>
       </body>
     </html>
