@@ -25,6 +25,7 @@
   --color-gray-500: #5c5c5c;
   --color-gray-600: #303030;
   --color-gray-700: #090909;
+  --color-gray-700-50: rgba(9, 9, 9, 0.5);
 
   /* Semantic tokens (shadcn/ui 호환) — gray scale 매핑 */
   --color-background: var(--color-gray-0);
@@ -49,11 +50,15 @@
   --font-milling: var(--font-milling);
 
   /* Border radius */
-  --radius: 0.625rem;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius: 0.625rem; /* 10px */
+  --radius-sm: calc(var(--radius) - 4px); /*  6px */
+  --radius-md: calc(var(--radius) - 2px); /*  8px */
+  --radius-lg: var(--radius); /* 10px */
+  --radius-xl: calc(var(--radius) + 4px); /* 14px */
+  --radius-2xl: calc(var(--radius) + 6px); /* 16px */
+
+  /* Shadow */
+  --shadow-modal: 0 0 30px 0 rgba(0, 0, 0, 0.1);
 }
 
 @layer utilities {
