@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { Button } from "@/shared/ui/button";
@@ -8,34 +8,28 @@ import { DoubleButton } from "@/shared/ui/double-button";
 import { Header } from "@/widgets/header";
 
 import { useEmotionStep } from "../model/useEmotionStep";
+import { EmotionBookStep } from "./EmotionBookStep";
 import { LoadingView } from "./LoadingView";
 import { SentenceTypeStep } from "./SentenceTypeStep";
 import { SituationDescriptionStep } from "./SituationDescriptionStep";
 import { SituationStep } from "./SituationStep";
-import { StepProgressBar } from "./StepProgressBar";
-import { TemperatureStep } from "./TemperatureStep";
 
 export const EmotionStepView = (): React.ReactElement => {
   useViewportHeight();
   const { currentStep, totalSteps, isLoading, handleBack, handleNext, handleSkip } =
     useEmotionStep();
-  const [isNextDisabled, setIsNextDisabled] = useState(currentStep !== 1);
-
-  useEffect(() => {
-    if (currentStep === 1) setIsNextDisabled(false);
-  }, [currentStep]);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   if (isLoading) return <LoadingView />;
 
   return (
     <div
-      className="fixed inset-x-0 top-0 flex flex-col gap-1 bg-muted md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
+      className="fixed inset-x-0 top-0 flex flex-col gap-1 bg-gray0 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
       style={{ height: "var(--vh, 100dvh)" }}
     >
       <Header onBack={handleBack} />
-      <StepProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       <div className="min-h-0 flex-1 overflow-y-auto px-5">
-        {currentStep === 1 && <TemperatureStep />}
+        {currentStep === 1 && <EmotionBookStep onValidChange={setIsNextDisabled} />}
         {currentStep === 2 && <SituationStep onValidChange={setIsNextDisabled} />}
         {currentStep === 3 && <SituationDescriptionStep onValidChange={setIsNextDisabled} />}
         {currentStep === 4 && <SentenceTypeStep onValidChange={setIsNextDisabled} />}

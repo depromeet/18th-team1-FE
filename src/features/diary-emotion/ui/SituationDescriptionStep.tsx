@@ -26,7 +26,7 @@ export const SituationDescriptionStep = ({
   }, [situationDescription, onValidChange]);
 
   return (
-    <div className="flex flex-col pt-5.25">
+    <div className="flex flex-col pt-8.5">
       <div className="flex flex-wrap gap-x-2.5 gap-y-3.5">
         {selectedChips.map((chip) => (
           <TagChip key={chip.id} label={chip.label} isSelected />

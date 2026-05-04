@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { MOCK_SENTENCE_TYPES } from "@/mock";
+import { Text } from "@/shared/ui/text";
 
 import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
 import { TagList } from "./TagList";
@@ -10,24 +11,21 @@ interface SentenceTypeStepProps {
 }
 
 export const SentenceTypeStep = ({ onValidChange }: SentenceTypeStepProps): React.ReactElement => {
-  const { selectedSentenceTypeId, setSelectedSentenceTypeId } = useDiaryEmotionStore();
+  const { selectedSentenceTypeIds, setSelectedSentenceTypeIds } = useDiaryEmotionStore();
 
   useEffect(() => {
-    onValidChange(selectedSentenceTypeId === null);
-  }, [selectedSentenceTypeId, onValidChange]);
-
-  const handleSelectionChange = (ids: string[]): void => {
-    setSelectedSentenceTypeId(ids[0] ?? null);
-  };
+    onValidChange(selectedSentenceTypeIds.length === 0);
+  }, [selectedSentenceTypeIds, onValidChange]);
 
   return (
-    <div className="flex flex-col gap-4 pt-1">
-      <div className="h-14 w-full rounded-xl bg-gray-100" />
-      <p className="body1 pt-2.5 text-foreground">오늘 어떤 문장이 필요하세요?</p>
+    <div className="flex flex-col gap-6.5 pt-1">
+      <Text variant="subhead1" className="pt-3.75">
+        오늘 어떤 문장이 필요하세요?
+      </Text>
       <TagList
         items={MOCK_SENTENCE_TYPES}
-        selectedIds={selectedSentenceTypeId ? [selectedSentenceTypeId] : []}
-        onSelectionChange={handleSelectionChange}
+        selectedIds={selectedSentenceTypeIds}
+        onSelectionChange={setSelectedSentenceTypeIds}
       />
     </div>
   );

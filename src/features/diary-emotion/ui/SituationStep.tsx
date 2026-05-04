@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 import { MOCK_SITUATIONS } from "@/mock";
+import { Text } from "@/shared/ui/text";
 
 import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
 import { TagList } from "./TagList";
@@ -17,13 +18,13 @@ export const SituationStep = ({ onValidChange }: SituationStepProps): React.Reac
   }, [selectedSituationIds, onValidChange]);
 
   return (
-    <div className="flex flex-col gap-4 pt-1">
-      <div className="h-14 w-full rounded-xl bg-gray-100" />
-      <p className="body1 pt-2.5 text-foreground">지금 어떤 상황이신가요?</p>
+    <div className="flex flex-col gap-6.5 pt-1">
+      <Text variant="subhead1" className="pt-3.75">
+        지금 어떤 상황이신가요?
+      </Text>
       <TagList
         items={MOCK_SITUATIONS}
         selectedIds={selectedSituationIds}
-        multiSelect
         onSelectionChange={setSelectedSituationIds}
       />
     </div>
