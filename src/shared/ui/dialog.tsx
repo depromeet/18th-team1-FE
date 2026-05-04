@@ -4,7 +4,6 @@ import { Dialog as DialogPrimitive } from "radix-ui";
 import type * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
-import { Button } from "./button";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -58,12 +57,11 @@ function DialogContent({
         {...props}
       >
         {children}
-        {showCloseButton && (
-          <DialogPrimitive.Close data-slot="dialog-close" asChild>
-            {/* TODO  */}
+        {/*{showCloseButton && (
+          <DialogPrimitive.Close data-slot="dialog-close">
             <Button label="닫기" />
           </DialogPrimitive.Close>
-        )}
+        )}*/}
       </DialogPrimitive.Content>
     </DialogPortal>
   );
@@ -93,11 +91,11 @@ function DialogFooter({
       {...props}
     >
       {children}
-      {showCloseButton && (
-        <DialogPrimitive.Close data-slot="dialog-close" asChild>
+      {/*{showCloseButton && (
+        <DialogPrimitive.Close data-slot="dialog-close">
           <Button label="닫기" />
         </DialogPrimitive.Close>
-      )}
+      )}*/}
     </div>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { BookOpen, Plus } from "lucide-react";
 

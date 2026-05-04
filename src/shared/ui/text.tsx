@@ -36,6 +36,7 @@ type ColorToken =
   | "gray-500"
   | "gray-600"
   | "gray-700"
+  | "gray-700-50"
   | "key-primary"
   | "key-secondary"
   | "key-secondary2"
