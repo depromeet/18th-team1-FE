@@ -1,39 +1,59 @@
 import type { Diary } from "@/entities/diary";
-import { cn } from "@/shared/lib/utils";
+import { Text } from "@/shared/ui/text";
 
 import { DiaryListItem } from "./DiaryListItem";
 
+const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"] as const;
+
 interface DiaryListSectionProps {
   diaries: Diary[];
-  className?: string;
+  onPressItem?: (day: number) => void;
 }
 
 export const DiaryListSection = ({
   diaries,
-  className,
+  onPressItem,
 }: DiaryListSectionProps): React.ReactElement => {
-  const month = new Date().getMonth() + 1;
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();
 
   return (
-    <section
-      className={cn(
-        "flex flex-col bg-gray-50 pb-24 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]",
-        className,
-      )}
-    >
-      <div className="px-6.25 pb-3 pt-8">
-        <span className="body2 text-gray-300">{month}월 · 지난 일기</span>
+    <section className="flex flex-col [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+      <div className="flex items-center gap-2 px-5 pt-7.5 pb-4">
+        <Text as="span" variant="point2" color="gray-600">
+          {monthNameEN}
+        </Text>
+        <div className="h-3.5 w-px bg-gray-400" />
+        <Text as="span" variant="subhead1" color="gray-600" className="-translate-y-px">
+          {month}월에 함께한 문장
+        </Text>
       </div>
       {diaries.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-3.5">
           <div className="size-31.5 rounded-[4px] bg-gray-100" />
-          <p className="body1 text-gray-500">아직 작성된 일기가 없어요</p>
+          <Text variant="body1" color="gray-500">
+            아직 작성된 일기가 없어요
+          </Text>
         </div>
       ) : (
-        <div className="flex flex-col">
-          {diaries.map((diary) => (
-            <DiaryListItem key={diary.day} {...diary} />
-          ))}
+        <div className="flex flex-col gap-2.5 px-5 pb-24">
+          {diaries.map((diary) => {
+            const date = new Date(today.getFullYear(), today.getMonth(), diary.day);
+            const dayIndex = date.getDay();
+            const dayName = DAY_NAMES[dayIndex] ?? "일요일";
+            const isSunday = dayIndex === 0;
+            return (
+              <DiaryListItem
+                key={diary.day}
+                day={diary.day}
+                sentence={diary.sentence}
+                dayName={dayName}
+                isSunday={isSunday}
+                onPress={onPressItem ? () => onPressItem(diary.day) : undefined}
+              />
+            );
+          })}
         </div>
       )}
     </section>
