@@ -87,14 +87,14 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-0 -mb-0 flex gap-2 rounded-b-xl border-t bg-muted/50 sm:flex-row sm:justify-end",
+        "mx-0 mb-0 flex gap-2 rounded-b-xl border-t bg-muted/50 sm:flex-row sm:justify-end",
         className,
       )}
       {...props}
     >
       {children}
       {showCloseButton && (
-        <DialogPrimitive.Close asChild>
+        <DialogPrimitive.Close data-slot="dialog-close" asChild>
           <Button label="닫기" />
         </DialogPrimitive.Close>
       )}
@@ -120,7 +120,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        "text-sm text-muted-foreground *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
+        "text-sm text-muted-foreground [&_a]:underline [&_a]:underline-offset-3 [&_a:hover]:text-foreground",
         className,
       )}
       {...props}

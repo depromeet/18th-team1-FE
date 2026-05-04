@@ -49,7 +49,7 @@ type ColorToken =
 
 type TextOwnProps<T extends ElementType> = {
   as?: T;
-  variant: TypographyVariant;
+  variant?: TypographyVariant;
   color?: ColorToken;
 };
 
