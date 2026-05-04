@@ -8,22 +8,18 @@ interface TagItem {
 interface TagListProps {
   items: TagItem[];
   selectedIds: string[];
-  multiSelect?: boolean;
   onSelectionChange: (ids: string[]) => void;
 }
 
 export const TagList = ({
   items,
   selectedIds,
-  multiSelect = false,
   onSelectionChange,
 }: TagListProps): React.ReactElement => {
   const handleSelect = (id: string): void => {
-    const next = multiSelect
-      ? selectedIds.includes(id)
-        ? selectedIds.filter((s) => s !== id)
-        : [...selectedIds, id]
-      : [id];
+    const next = selectedIds.includes(id)
+      ? selectedIds.filter((s) => s !== id)
+      : [...selectedIds, id];
     onSelectionChange(next);
   };
 
