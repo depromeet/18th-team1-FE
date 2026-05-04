@@ -8,7 +8,7 @@ const DiaryWriteLayout = ({ children }: { children: ReactNode }): React.ReactEle
   useViewportHeight();
   return (
     <div
-      className="fixed inset-x-0 top-0 flex flex-col bg-gray-50 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-93.75"
+      className="fixed inset-x-0 top-0 flex flex-col bg-gray-0 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-93.75"
       style={{ height: "var(--vh, 100dvh)" }}
     >
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</main>
