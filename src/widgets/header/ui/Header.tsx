@@ -22,7 +22,12 @@ export const Header = ({ title, onBack, right, className }: HeaderProps): React.
     });
 
   return (
-    <header className={cn("relative flex h-15 w-full items-center justify-between px-5 py-3.5", className)}>
+    <header
+      className={cn(
+        "relative flex h-15 w-full items-center justify-between px-5 py-3.5",
+        className,
+      )}
+    >
       {onBack !== undefined ? (
         <button type="button" onClick={handleBack} className="text-gray-700" aria-label="뒤로가기">
           <IcBack size={24} />
@@ -32,7 +37,7 @@ export const Header = ({ title, onBack, right, className }: HeaderProps): React.
       )}
 
       {title && (
-        <span className="subhead2 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
+        <span className="subhead1 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
           {title}
         </span>
       )}
