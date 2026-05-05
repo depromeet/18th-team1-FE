@@ -1,5 +1,5 @@
 import { cn } from "@/shared/lib/utils";
-import { IcCheck } from "@/shared/ui/icons";
+import { Checkbox } from "@/shared/ui/checkbox";
 import type { CalendarMode } from "../model/calendar.types";
 
 interface CalendarModeModalProps {
@@ -19,15 +19,18 @@ export const CalendarModeModal = ({
   return (
     <div className="flex flex-col gap-3.5 rounded-[20px] bg-gray-0 p-4 shadow-[0_0_30px_rgba(0,0,0,0.10)]">
       {VIEW_MODE_OPTIONS.map(({ label, value }) => (
-        <button
-          key={value}
-          type="button"
-          className="flex items-center gap-2"
-          onClick={() => onSelect(value)}
-        >
-          <IcCheck size={24} className={cn("text-foreground", mode !== value && "invisible")} />
-          <span className="body2 text-gray-700">{label}</span>
-        </button>
+        <div key={value} className="flex items-center gap-2">
+          <Checkbox id={value} checked={mode === value} onCheckedChange={() => onSelect(value)} />
+          <label
+            htmlFor={value}
+            className={cn(
+              "body2 cursor-pointer",
+              mode === value ? "text-key-secondary2" : "text-gray-300",
+            )}
+          >
+            {label}
+          </label>
+        </div>
       ))}
     </div>
   );

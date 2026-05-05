@@ -39,9 +39,18 @@ export const CalendarWidget = (): React.ReactElement => {
           </button>
           <span className="subhead1 text-gray-700">{format(viewDate, "yyyy년 M월")}</span>
           {isModalOpen && (
-            <div className="absolute top-6 left-10 z-50">
-              <CalendarModeModal mode={mode} onSelect={handleModeSelect} />
-            </div>
+            <>
+              <button
+                type="button"
+                className="fixed inset-0 z-10"
+                tabIndex={-1}
+                aria-label="모달 닫기"
+                onClick={() => setIsModalOpen(false)}
+              />
+              <div className="absolute top-6 left-10 z-20">
+                <CalendarModeModal mode={mode} onSelect={handleModeSelect} />
+              </div>
+            </>
           )}
         </div>
         <div className="flex items-center gap-5 text-gray-400">
