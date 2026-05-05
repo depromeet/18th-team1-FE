@@ -44,22 +44,6 @@
   --color-accent: var(--color-gray-50);
   --color-accent-foreground: var(--color-gray-700);
 
-  /* Key Colors */
-  --color-primary: #8e8100;
-  --color-secondary: #a4d4d6;
-  --color-secondary2: #6b1e3c;
-
-  /* Key Color Variation */
-  --color-primary0: #e1ddb5;
-  --color-primary100: #6a6103;
-  --color-secondary0: #d1e9ea;
-  --color-secondary100: #287f83;
-  --color-secondary2_0: #e5d1d9;
-
-  /* Calendar Colors */
-  --color-calendar-sun: #ec5852;
-  --color-calendar-sat: #2e7df6;
-
   /* Fonts */
   --font-pretendard: var(--font-pretendard);
   --font-gt-pressura: var(--font-gt-pressura);

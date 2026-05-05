@@ -2,9 +2,9 @@ import { cn } from "@/shared/lib/utils";
 
 const CHIP_VARIANTS = {
   default: "bg-gray-0 text-gray-600",
-  high: "bg-secondary0 text-secondary100",
-  mid: "bg-primary0 text-primary100",
-  low: "bg-secondary2_0 text-secondary2",
+  high: "bg-key-secondary-0 text-key-secondary-100",
+  mid: "bg-key-primary-0 text-key-primary-100",
+  low: "bg-key-secondary2-0 text-key-secondary2",
 } as const;
 
 type ChipVariant = keyof typeof CHIP_VARIANTS;

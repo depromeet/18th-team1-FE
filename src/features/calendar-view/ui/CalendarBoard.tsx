@@ -27,7 +27,7 @@ export const CalendarBoard = ({
             <span
               className={cn(
                 "body2",
-                i === 0 ? "text-calendar-sun" : i === 6 ? "text-calendar-sat" : "text-gray-400",
+                i === 0 ? "text-sub-sunday" : i === 6 ? "text-sub-saturday" : "text-gray-400",
               )}
             >
               {day}
