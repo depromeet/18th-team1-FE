@@ -2,9 +2,18 @@
 
 import { format } from "date-fns";
 import { useState } from "react";
+import type { EmotionIntensity } from "@/entities/diary";
 import type { CalendarMode } from "@/features/calendar-view";
 import { CalendarBoard, CalendarModeModal, useCalendar } from "@/features/calendar-view";
+import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcCalBack, IcCalNext, IcFilter } from "@/shared/ui/icons";
+
+const DIARY_INTENSITY_BY_DATE: Record<string, EmotionIntensity> = Object.fromEntries(
+  MOCK_CALENDAR_DIARIES.diaries.map((diary) => [
+    diary.createdAt,
+    diary.emotionIntensity as EmotionIntensity,
+  ]),
+);
 
 export const CalendarWidget = (): React.ReactElement => {
   const { viewDate, selectedDate, setSelectedDate, mode, setMode, days, handlePrev, handleNext } =
@@ -50,6 +59,7 @@ export const CalendarWidget = (): React.ReactElement => {
         selectedDate={selectedDate}
         mode={mode}
         onSelectDate={setSelectedDate}
+        diaryIntensityByDate={DIARY_INTENSITY_BY_DATE}
       />
     </div>
   );

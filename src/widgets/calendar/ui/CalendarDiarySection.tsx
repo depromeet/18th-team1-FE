@@ -1,10 +1,11 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, isToday } from "date-fns";
 import { ko } from "date-fns/locale";
 import { DiaryCard } from "@/entities/diary";
 import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { useCalendarStore } from "@/store/calendar/useCalendarStore";
+import { CalendarWritingTimer } from "./CalendarWritingTimer";
 
 export const CalendarDiarySection = (): React.ReactElement | null => {
   const { selectedDate } = useCalendarStore();
@@ -27,6 +28,8 @@ export const CalendarDiarySection = (): React.ReactElement | null => {
           coverImageUrl={diary.coverImageUrl}
           diaryImageUrl={diary.diaryImageUrl}
         />
+      ) : isToday(selectedDate) ? (
+        <CalendarWritingTimer />
       ) : (
         <p className="body2 text-gray-400 text-center mt-21.25">작성된 일기가 없어요.</p>
       )}
