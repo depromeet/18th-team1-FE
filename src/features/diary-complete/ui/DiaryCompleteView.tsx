@@ -14,7 +14,9 @@ interface DiaryCompleteViewProps {
   diaryId: string;
 }
 
-export const DiaryCompleteView = ({ diaryId: _ }: DiaryCompleteViewProps): React.ReactElement => {
+export const DiaryCompleteView = ({
+  diaryId: _diaryId,
+}: DiaryCompleteViewProps): React.ReactElement => {
   const router = useRouter();
   const today = formatDate(new Date());
 
