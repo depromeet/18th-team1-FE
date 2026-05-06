@@ -15,3 +15,13 @@ export interface TodayDiary {
   bookAuthor: string;
   note: string;
 }
+
+export interface DiaryDetail {
+  quoteContent: string;
+  title: string;
+  author: string;
+  emotions: string[];
+  content?: string | null;
+  coverImageUrl: string;
+  diaryImageUrl?: string | null;
+}
