@@ -1,12 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { type PropsWithChildren, useRef, useState } from "react";
 
-interface HomeScrollContainerProps {
-  children: React.ReactNode;
-}
-
-export const HomeScrollContainer = ({ children }: HomeScrollContainerProps): React.ReactElement => {
+export const HomeScrollContainer = ({ children }: PropsWithChildren): React.ReactElement => {
   const [isScrolled, setIsScrolled] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
