@@ -4,19 +4,22 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 type DiaryEmotionFormState = {
+  selectedEmotionId: string | null;
   selectedSituationIds: string[];
   situationDescription: string;
-  selectedSentenceTypeId: string | null;
+  selectedSentenceTypeIds: string[];
+  setSelectedEmotionId: (id: string | null) => void;
   setSelectedSituationIds: (ids: string[]) => void;
   setSituationDescription: (text: string) => void;
-  setSelectedSentenceTypeId: (id: string | null) => void;
+  setSelectedSentenceTypeIds: (ids: string[]) => void;
   reset: () => void;
 };
 
 const INITIAL_STATE = {
+  selectedEmotionId: null,
   selectedSituationIds: [] as string[],
   situationDescription: "",
-  selectedSentenceTypeId: null,
+  selectedSentenceTypeIds: [] as string[],
 };
 
 export const useDiaryEmotionStore = create<DiaryEmotionFormState>()(
@@ -24,14 +27,17 @@ export const useDiaryEmotionStore = create<DiaryEmotionFormState>()(
     persist(
       (set) => ({
         ...INITIAL_STATE,
+        setSelectedEmotionId: (id: string | null): void => {
+          set({ selectedEmotionId: id }, false, "setSelectedEmotionId");
+        },
         setSelectedSituationIds: (ids: string[]): void => {
           set({ selectedSituationIds: ids }, false, "setSelectedSituationIds");
         },
         setSituationDescription: (text: string): void => {
           set({ situationDescription: text }, false, "setSituationDescription");
         },
-        setSelectedSentenceTypeId: (id: string | null): void => {
-          set({ selectedSentenceTypeId: id }, false, "setSelectedSentenceTypeId");
+        setSelectedSentenceTypeIds: (ids: string[]): void => {
+          set({ selectedSentenceTypeIds: ids }, false, "setSelectedSentenceTypeIds");
         },
         reset: (): void => {
           set(INITIAL_STATE, false, "reset");

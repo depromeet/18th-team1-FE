@@ -1,3 +1,5 @@
+import { Text } from "@/shared/ui/text";
+
 interface TagChipProps {
   label: string;
   isSelected: boolean;
@@ -5,17 +7,27 @@ interface TagChipProps {
 }
 
 export const TagChip = ({ label, isSelected, onClick }: TagChipProps): React.ReactElement => {
-  const className = `body1 rounded-full px-3 py-2 ${
-    isSelected ? "bg-gray-700 text-gray-0" : "bg-background text-gray-500"
-  }`;
+  const color = isSelected ? ("gray-50" as const) : ("gray-500" as const);
+  const baseClassName = `rounded-full px-3 py-2 ${isSelected ? "bg-gray-700" : "bg-gray-50"}`;
 
   if (!onClick) {
-    return <span className={className}>{label}</span>;
+    return (
+      <Text as="span" variant="body1" color={color} className={baseClassName}>
+        {label}
+      </Text>
+    );
   }
 
   return (
-    <button type="button" onClick={onClick} className={`cursor-pointer ${className}`}>
+    <Text
+      as="button"
+      type="button"
+      onClick={onClick}
+      variant="body1"
+      color={color}
+      className={`cursor-pointer ${baseClassName}`}
+    >
       {label}
-    </button>
+    </Text>
   );
 };

@@ -29,7 +29,11 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
   useEffect((): (() => void) => (): void => reset(), [reset]);
 
   const handleBack = (): void => {
-    router.back();
+    if (currentStep > 1) {
+      router.push(`/diary/emotion?step=${currentStep - 1}`);
+    } else {
+      router.push("/");
+    }
   };
 
   const handleNext = (): void => {
