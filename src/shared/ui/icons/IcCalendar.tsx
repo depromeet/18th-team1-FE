@@ -12,27 +12,38 @@ export const IcCalendar = ({
   if (variant === "line") {
     return (
       <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
-        <path
-          d="M17.6471 5.45312H6.35294C5.05345 5.45312 4 6.53849 4 7.87736V17.5743C4 18.9132 5.05345 19.9985 6.35294 19.9985H17.6471C18.9466 19.9985 20 18.9132 20 17.5743V7.87736C20 6.53849 18.9466 5.45312 17.6471 5.45312Z"
-          stroke="currentColor"
-        />
-        <path d="M4 9.81836H20" stroke="currentColor" />
-        <path
-          d="M8.32715 4V6.90908M15.8566 4V6.90908"
-          stroke="currentColor"
-          strokeLinecap="round"
-        />
+        <g transform="translate(3.3 3.3)">
+          <path
+            d="M14.3471 2.1541H3.05294C1.75345 2.1541 0.7 3.23947 0.7 4.57834V14.2753C0.7 15.6142 1.75345 16.6995 3.05294 16.6995H14.3471C15.6466 16.6995 16.7 15.6142 16.7 14.2753V4.57834C16.7 3.23947 15.6466 2.1541 14.3471 2.1541Z"
+            stroke="currentColor"
+            strokeWidth={1.4}
+          />
+          <path d="M0.7 6.51831H16.7" stroke="currentColor" strokeWidth={1.4} />
+          <path
+            d="M5.02678 0.7V3.60908M12.5562 0.7V3.60908"
+            stroke="currentColor"
+            strokeWidth={1.4}
+            strokeLinecap="round"
+          />
+        </g>
       </BaseIcon>
     );
   }
 
   return (
     <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
-      <path
-        d="M20 17.5762C19.9998 18.9148 18.9458 20 17.6465 20H6.35254C5.05338 19.9998 4.00023 18.9147 4 17.5762V10.3184H20V17.5762ZM17.6465 5.45508C18.9458 5.45508 19.9998 6.54025 20 7.87891V9.31836H4V7.87891C4.00017 6.54037 5.05334 5.45527 6.35254 5.45508H17.6465Z"
-        fill="currentColor"
-      />
-      <path d="M8.32668 4V6.90895M15.8559 4V6.90895" stroke="currentColor" strokeLinecap="round" />
+      <g transform="translate(4 3.3)">
+        <path
+          d="M16 14.2752C15.9998 15.6138 14.9458 16.6991 13.6465 16.6991H2.35254C1.05338 16.6989 0.000229966 15.6137 0 14.2752V7.01741H16V14.2752ZM13.6465 2.15413C14.9458 2.15413 15.9998 3.2393 16 4.57796V6.01741H0V4.57796C0.000171783 3.23942 1.05334 2.15432 2.35254 2.15413H13.6465Z"
+          fill="currentColor"
+        />
+        <path
+          d="M4.32668 0.7V3.60895M11.8559 0.7V3.60895"
+          stroke="currentColor"
+          strokeWidth={1.4}
+          strokeLinecap="round"
+        />
+      </g>
     </BaseIcon>
   );
 };
