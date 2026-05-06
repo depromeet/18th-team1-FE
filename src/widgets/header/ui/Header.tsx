@@ -33,7 +33,7 @@ export const Header = ({ title, onBack, right, className }: HeaderProps): React.
       </button>
 
       {title && (
-        <span className="subhead2 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
+        <span className="subhead1 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
           {title}
         </span>
       )}

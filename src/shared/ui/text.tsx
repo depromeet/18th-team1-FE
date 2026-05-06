@@ -4,6 +4,7 @@ import { cn } from "@/shared/lib/utils";
 
 type TypographyVariant =
   | "title1"
+  | "title1-2"
   | "title2"
   | "head0"
   | "head1"
