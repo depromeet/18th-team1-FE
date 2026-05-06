@@ -45,7 +45,7 @@ export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.
         {EMOTIONS.map((emotion, index) => (
           <div
             key={emotion.id}
-            className={`relative flex h-11.5 w-54.5 shrink-0 items-center justify-center overflow-hidden rounded-[4px] transition-[background-color,opacity] duration-150 ease-out ${getBookClasses(index)} ${index % 2 === 0 ? "mx-auto" : "ml-18"}`}
+            className={`relative flex h-11.5 w-54.5 shrink-0 items-center justify-center overflow-hidden rounded-[4px] transition-[background-color,opacity] duration-150 ease-out ${getBookClasses(index)} ${index % 2 === 0 ? "mx-auto -translate-x-1.5" : "mx-auto translate-x-1.5"}`}
           >
             {selectedIndex === index && (
               <Text
