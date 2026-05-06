@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import type { RecommendedSentence } from "@/entities/sentence";
 import { SentenceTextCard } from "@/entities/sentence";
 import { CheckButton, Header } from "@/widgets/header";
@@ -14,12 +16,13 @@ interface DiaryWriteViewProps {
 }
 
 export const DiaryWriteView = ({ sentence }: DiaryWriteViewProps): React.ReactElement => {
+  const router = useRouter();
   const { text, handleTextChange } = useDiaryWrite();
   const { photoUrl, inputRef, handleClick, handleDelete, handleFileChange } = usePhotoSelect();
 
   const handleSubmit = (): void => {
-    // TODO: useCreateDiaryMutation 연동
-    // submitDiary({ text, photoFile, sentenceId: sentence.id })
+    // TODO: useCreateDiaryMutation 연동 후 실제 id로 교체
+    router.push("/diary/complete/1");
   };
 
   return (
@@ -27,7 +30,7 @@ export const DiaryWriteView = ({ sentence }: DiaryWriteViewProps): React.ReactEl
       <div className="shrink-0">
         <Header title="일기" right={<CheckButton isChecked={true} onClick={handleSubmit} />} />
       </div>
-      <div className="flex flex-1 flex-col gap-3.75 overflow-y-auto px-5 pt-1.75">
+      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 pt-1.75">
         <SentenceTextCard
           quote={sentence.quote}
           bookTitle={sentence.bookTitle}

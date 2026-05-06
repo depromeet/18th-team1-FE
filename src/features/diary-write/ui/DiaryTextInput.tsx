@@ -4,6 +4,7 @@ import type { ChangeEvent, SyntheticEvent } from "react";
 import { useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
+import { Text } from "@/shared/ui/text";
 
 import { MAX_DIARY_CHAR } from "../model/useDiaryWrite";
 
@@ -32,7 +33,7 @@ export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps): React.
     <div className={cn("flex w-full flex-col items-end", isAtMax ? "gap-2.5" : "gap-3.25")}>
       <div
         className={cn(
-          "min-h-45.75 w-full rounded-lg border bg-white px-4 pb-4 pt-3",
+          "min-h-45.75 w-full rounded-lg border bg-gray-50 px-4 pb-4 pt-3",
           isFocused ? "border-gray-200" : "border-transparent",
         )}
       >
@@ -49,13 +50,15 @@ export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps): React.
       </div>
       <div className="flex w-full items-center justify-between">
         {isAtMax ? (
-          <p className="caption2 text-destructive">300자까지만 작성 가능해요</p>
+          <Text variant="caption2" className="text-destructive">
+            300자까지만 작성 가능해요
+          </Text>
         ) : (
           <span />
         )}
-        <span className="text-[15px] leading-[1.4] text-gray-300">
+        <Text as="span" color="gray-300" className="text-[15px] leading-[1.4]">
           {charCount}/{MAX_DIARY_CHAR}
-        </span>
+        </Text>
       </div>
     </div>
   );

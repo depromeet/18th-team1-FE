@@ -1,17 +1,20 @@
 import { memo } from "react";
 
+import { Text } from "@/shared/ui/text";
+
 import type { RecommendedSentence } from "../model/sentence.types";
 
 type SentenceTextCardProps = Pick<RecommendedSentence, "quote" | "bookTitle" | "bookAuthor">;
 
 export const SentenceTextCard = memo(
   ({ quote, bookTitle, bookAuthor }: SentenceTextCardProps): React.ReactElement => (
-    <div className="flex flex-col gap-2 rounded-[10px] bg-white p-[14px]">
-      <p className="title2 text-gray-700">{quote}</p>
-      <div className="flex items-center gap-1">
-        <p className="caption2 text-gray-400">'{bookTitle}',</p>
-        <p className="caption2 text-gray-400">{bookAuthor}</p>
-      </div>
+    <div className="flex flex-col gap-2.5">
+      <Text variant="title2" color="gray-700">
+        {quote}
+      </Text>
+      <Text variant="caption2" color="gray-500">
+        {bookTitle} ･ {bookAuthor}
+      </Text>
     </div>
   ),
 );

@@ -1,30 +1,29 @@
-import type { Diary, TodayDiary } from "@/entities/diary";
-import { DiaryEmptyState, DiaryListSection, TodayDiaryCard } from "@/entities/diary";
+"use client";
+
+import type { Diary } from "@/entities/diary";
+import { DiaryListSection } from "@/entities/diary";
+import { MOCK_SENTENCES } from "@/mock";
+
+import { HomeBanner } from "./HomeBanner";
+import { RandomSentenceBanner } from "./RandomSentenceBanner";
 
 interface HomeDiarySectionProps {
-  hasTodayDiary: boolean;
-  todayDiary?: TodayDiary;
   diaries: Diary[];
 }
 
-export const HomeDiarySection = ({
-  hasTodayDiary,
-  todayDiary,
-  diaries,
-}: HomeDiarySectionProps): React.ReactElement => {
-  if (hasTodayDiary && todayDiary) {
-    return (
-      <>
-        <TodayDiaryCard {...todayDiary} />
-        <DiaryListSection diaries={diaries} />
-      </>
-    );
-  }
+export const HomeDiarySection = ({ diaries }: HomeDiarySectionProps): React.ReactElement => {
+  const hasTodayDiary = false; // TODO: API 연동 후 hook으로 교체
+  const handleDiaryItemPress = (day: number): void => {
+    // TODO: 일기 상세 페이지 라우팅 구현 후 활성화
+    // router.push(`/diary/${day}`);
+    void day;
+  };
 
   return (
     <>
-      <DiaryEmptyState />
-      <DiaryListSection diaries={diaries} className="min-h-0 flex-1 overflow-y-auto" />
+      <HomeBanner hasTodayDiary={hasTodayDiary} />
+      <RandomSentenceBanner sentences={MOCK_SENTENCES} />
+      <DiaryListSection diaries={diaries} onPressItem={handleDiaryItemPress} />
     </>
   );
 };

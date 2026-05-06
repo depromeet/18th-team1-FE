@@ -37,7 +37,7 @@ export const PhotoBar = ({
 
   return (
     <div className="shrink-0 px-5 pb-8.5 pt-2">
-      <div className="flex h-11 items-center rounded-full bg-white pl-5 pr-1 shadow-[0px_0px_15px_rgba(0,0,0,0.1)]">
+      <div className="flex h-11 items-center rounded-full bg-key-secondary-0 pl-5 pr-1">
         <div className="relative flex items-center">
           {photoUrl ? (
             <button type="button" aria-label="사진 옵션" onClick={handlePhotoClick}>
@@ -52,7 +52,7 @@ export const PhotoBar = ({
             </button>
           ) : (
             <button type="button" aria-label="사진 추가" onClick={onAdd}>
-              <IcCameraAdd size={30} className="text-gray-400" />
+              <IcCameraAdd size={30} className="text-gray-700" />
             </button>
           )}
 
