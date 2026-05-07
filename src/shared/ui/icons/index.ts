@@ -17,6 +17,7 @@ export { IcPlus } from "./IcPlus";
 export { IcReport } from "./IcReport";
 export { IcSetting } from "./IcSetting";
 export { IcShare } from "./IcShare";
+export { IcShare2 } from "./IcShare2";
 export { IcTrash } from "./IcTrash";
 export { IcWrite } from "./IcWrite";
 export type { IconProps } from "./icon.types";
