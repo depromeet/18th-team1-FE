@@ -34,7 +34,7 @@ export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.
         <br />
         오늘의 기분을 표현해주세요
       </Text>
-      <div className="max-h-17.75 flex-1" />
+      <div className="min-h-4 max-h-17.75 flex-1" />
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
