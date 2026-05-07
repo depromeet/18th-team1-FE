@@ -28,9 +28,13 @@ export const Header = ({ title, onBack, right, className }: HeaderProps): React.
         className,
       )}
     >
-      <button type="button" onClick={handleBack} className="text-gray-700" aria-label="뒤로가기">
-        <IcBack size={24} />
-      </button>
+      {onBack !== undefined ? (
+        <button type="button" onClick={handleBack} className="text-gray-700" aria-label="뒤로가기">
+          <IcBack size={24} />
+        </button>
+      ) : (
+        <div className="size-6" />
+      )}
 
       {title && (
         <span className="subhead1 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">

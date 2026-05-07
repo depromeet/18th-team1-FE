@@ -1,3 +1,5 @@
+export type EmotionIntensity = "HIGH" | "MID" | "LOW";
+
 export interface Diary {
   day: number;
   sentence: string;
@@ -12,4 +14,14 @@ export interface TodayDiary {
   bookTitle: string;
   bookAuthor: string;
   note: string;
+}
+
+export interface DiaryDetail {
+  quoteContent: string;
+  title: string;
+  author: string;
+  emotions: string[];
+  content?: string | null;
+  coverImageUrl: string;
+  diaryImageUrl?: string | null;
 }

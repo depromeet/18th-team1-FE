@@ -43,13 +43,13 @@ export const OptionMenu = ({ items, trigger }: OptionMenuProps): React.ReactElem
         <DropdownMenuContent
           align="end"
           sideOffset={22}
-          className="flex min-w-[190px] flex-col gap-5 rounded-[20px] border-0 bg-background p-5 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.1)]"
+          className="flex min-w-33 flex-col gap-5 rounded-[20px] border-0 bg-background p-5 shadow-[0px_0px_30px_0px_rgba(0,0,0,0.1)]"
         >
           {items.map((item) => (
             <DropdownMenuItem
               key={item.label}
               className={cn(
-                "cursor-pointer gap-3.5 p-0 focus:bg-transparent",
+                "cursor-pointer gap-2.5 p-0 focus:bg-transparent",
                 item.isDestructive
                   ? "text-destructive focus:text-destructive"
                   : "text-gray-700 focus:text-gray-700",
@@ -57,13 +57,13 @@ export const OptionMenu = ({ items, trigger }: OptionMenuProps): React.ReactElem
               onClick={item.onClick}
             >
               {cloneElement(item.icon, {
-                size: 24,
+                size: 20,
                 className: cn(
-                  "size-6 shrink-0 -translate-y-[0.5px]",
+                  "size-5 shrink-0 -translate-y-[0.5px]",
                   item.isDestructive ? "text-destructive" : "text-gray-700",
                 ),
               })}
-              <span className="subhead4">{item.label}</span>
+              <span className="body2">{item.label}</span>
             </DropdownMenuItem>
           ))}
         </DropdownMenuContent>

@@ -138,4 +138,53 @@ export const MOCK_SENTENCES: RecommendedSentence[] = [
   },
 ];
 
-export const MOCK_SENTENCE: RecommendedSentence | undefined = MOCK_SENTENCES[0];
+export const MOCK_USER_PROFILE = {
+  nickname: "연결한 계정의 이름",
+  profileImageUrl: "",
+};
+
+export const MOCK_CALENDAR_DIARIES = {
+  start: "2026-05-01",
+  end: "2026-05-31",
+  diaries: [
+    {
+      id: 1,
+      createdAt: "2026-05-02",
+      content: "오늘은 책을 읽고 산책을 했다.",
+      diaryImageUrl: null,
+      emotionIntensity: "HIGH",
+      emotions: ["만족스러운", "행복한", "기쁜"],
+      quoteContent: "가장 중요한 것은 보이지 않는다.",
+      coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
+      author: "앙투안 드 생텍쥐페리",
+      title: "어린 왕자",
+    },
+    {
+      id: 2,
+      createdAt: "2026-05-03",
+      content:
+        "오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.오늘은 책을 읽고 산책을 했다.",
+      diaryImageUrl:
+        "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      emotionIntensity: "LOW",
+      emotions: ["만족스러운", "행복한", "기쁜"],
+      quoteContent:
+        "가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.",
+      coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
+      author: "앙투안 드 생텍쥐페리",
+      title: "어린 왕자",
+    },
+    {
+      id: 3,
+      createdAt: "2026-05-04",
+      content: "오늘은 책을 읽고 산책을 했다.",
+      diaryImageUrl: null,
+      emotionIntensity: "MID",
+      emotions: ["만족스러운", "행복한", "기쁜"],
+      quoteContent: "가장 중요한 것은 보이지 않는다.",
+      coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
+      author: "앙투안 드 생텍쥐페리",
+      title: "어린 왕자",
+    },
+  ],
+};
