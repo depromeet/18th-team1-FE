@@ -26,8 +26,12 @@ export const DiaryCompleteView = ({
   };
 
   // TODO: API 연동 시 실제 imageUrl로 교체
-  const handleShare = (): void => {
-    void shareDiaryImage({ imageUrl: "/images/diary-write.png" });
+  const handleShare = async (): Promise<void> => {
+    try {
+      await shareDiaryImage({ imageUrl: "/images/diary-write.png" });
+    } catch {
+      alert("공유에 실패했어요. 다시 시도해주세요.");
+    }
   };
 
   return (
