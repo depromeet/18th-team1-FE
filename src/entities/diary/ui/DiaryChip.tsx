@@ -1,17 +1,16 @@
 import { cn } from "@/shared/lib/utils";
+import type { EmotionIntensity } from "../model/diary.types";
 
-const CHIP_VARIANTS = {
-  default: "bg-gray-0 text-gray-600",
-  high: "bg-key-secondary-0 text-key-secondary-100",
-  mid: "bg-key-primary-0 text-key-primary-100",
-  low: "bg-key-secondary2-0 text-key-secondary2",
-} as const;
-
-type ChipVariant = keyof typeof CHIP_VARIANTS;
+const getChipClasses = (variant: EmotionIntensity | "default"): string => {
+  if (variant === "HIGH") return "bg-key-secondary-0 text-key-secondary-100";
+  if (variant === "MID") return "bg-key-primary-0 text-key-primary-100";
+  if (variant === "LOW") return "bg-key-secondary2-0 text-key-secondary2";
+  return "bg-gray-0 text-gray-600";
+};
 
 interface DiaryChipProps {
   label: string;
-  variant?: ChipVariant;
+  variant?: EmotionIntensity | "default";
   className?: string;
 }
 
@@ -23,7 +22,7 @@ export const DiaryChip = ({
   <div
     className={cn(
       "flex shrink-0 items-center justify-center rounded-[4px] px-2 py-1.5",
-      CHIP_VARIANTS[variant],
+      getChipClasses(variant),
       className,
     )}
   >
