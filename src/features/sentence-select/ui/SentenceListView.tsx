@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
 import type { RecommendedSentence } from "@/entities/sentence";
 import { SentenceListCard } from "@/entities/sentence";
 import { Button } from "@/shared/ui/button";
@@ -26,11 +25,6 @@ export const SentenceListView = ({
     router.push(`/diary/write?sentenceId=${selectedId}`);
   };
 
-  const handleSelectItem = (id: string): void => {
-    handleSelect(id);
-    router.replace(`/diary/sentence/${id}/list`);
-  };
-
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1 overflow-y-auto px-5 pt-4.5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -40,7 +34,7 @@ export const SentenceListView = ({
               key={sentence.id}
               sentence={sentence}
               isSelected={sentence.id === selectedId}
-              onClick={() => handleSelectItem(sentence.id)}
+              onClick={() => handleSelect(sentence.id)}
             />
           ))}
         </div>
