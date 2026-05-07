@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
 
 import { createQueryClient } from "@/shared/api/query-client";
+import { PosthogProvider } from "./posthog-provider";
 
 let browserQueryClient: QueryClient | undefined;
 
@@ -27,9 +28,13 @@ export const Providers = ({ children }: ProvidersProps): React.ReactElement => {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
-    </QueryClientProvider>
+    <PosthogProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        {process.env.NODE_ENV === "development" ? (
+          <ReactQueryDevtools initialIsOpen={false} />
+        ) : null}
+      </QueryClientProvider>
+    </PosthogProvider>
   );
 };
