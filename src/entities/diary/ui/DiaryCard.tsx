@@ -1,23 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { IcEdit, IcOption, IcShare, IcTrash } from "@/shared/ui/icons";
-import type { OptionMenuItem } from "@/shared/ui/option-menu";
-import { OptionMenu } from "@/shared/ui/option-menu";
+import type { ReactNode } from "react";
 import type { DiaryDetail } from "../model/diary.types";
 import { DiaryChip } from "./DiaryChip";
 
-const DIARY_MENU_ITEMS: OptionMenuItem[] = [
-  { icon: <IcEdit />, label: "수정하기" },
-  { icon: <IcShare />, label: "공유하기" },
-  { icon: <IcTrash />, label: "삭제", isDestructive: true },
-];
-
 interface DiaryCardProps {
   diary: DiaryDetail;
+  action?: ReactNode;
 }
 
-export const DiaryCard = ({ diary }: DiaryCardProps): React.ReactElement => {
+export const DiaryCard = ({ diary, action }: DiaryCardProps): React.ReactElement => {
   const { quoteContent, title, author, emotions, content, coverImageUrl, diaryImageUrl } = diary;
 
   return (
@@ -35,12 +28,7 @@ export const DiaryCard = ({ diary }: DiaryCardProps): React.ReactElement => {
           </div>
         </div>
       </div>
-      <div className="absolute right-2.5 top-5 -rotate-90">
-        <OptionMenu
-          items={DIARY_MENU_ITEMS}
-          trigger={<IcOption size={24} className="text-gray-300" />}
-        />
-      </div>
+      {action && <div className="absolute right-2.5 top-5 -rotate-90">{action}</div>}
       <div className="h-px w-full bg-border" />
       <div className="flex flex-wrap gap-1.5">
         {emotions.map((emotion) => (

@@ -2,20 +2,35 @@
 
 import { format, isToday } from "date-fns";
 import { ko } from "date-fns/locale";
-import { DiaryCard } from "@/entities/diary";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
-import { useCalendarStore } from "@/store/calendar/useCalendarStore";
+import Link from "next/link";
+import { DiaryCard, useDiaryStore } from "@/entities/diary";
+import { DiaryOptionMenu, useDiaryOptions } from "@/features/diary-actions";
+import { IcOption } from "@/shared/ui/icons";
+import { useCalendarDiary } from "../model/useCalendarDiary";
 import { CalendarWritingTimer } from "./CalendarWritingTimer";
 
 export const CalendarDiarySection = (): React.ReactElement => {
-  const { selectedDate } = useCalendarStore();
-  const selectedDateStr = format(selectedDate, "yyyy-MM-dd");
-
-  const diary = MOCK_CALENDAR_DIARIES.diaries.find((entry) => entry.createdAt === selectedDateStr);
+  const { diary, selectedDate } = useCalendarDiary();
+  const { setSelectedDiary } = useDiaryStore();
+  const { handleEdit, handleShare, handleDelete } = useDiaryOptions();
 
   const renderDiaryContent = (): React.ReactElement => {
     if (diary) {
-      return <DiaryCard diary={diary} />;
+      return (
+        <Link href={`/diary/${diary.id}`} onClick={() => setSelectedDiary(diary)}>
+          <DiaryCard
+            diary={diary}
+            action={
+              <DiaryOptionMenu
+                trigger={<IcOption size={24} className="text-gray-300" />}
+                onEdit={handleEdit}
+                onShare={handleShare}
+                onDelete={handleDelete}
+              />
+            }
+          />
+        </Link>
+      );
     }
 
     if (isToday(selectedDate)) {

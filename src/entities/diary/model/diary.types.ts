@@ -17,11 +17,15 @@ export interface TodayDiary {
 }
 
 export interface DiaryDetail {
+  id: number;
+  createdAt: string;
   quoteContent: string;
   title: string;
   author: string;
+  emotionIntensity: EmotionIntensity;
   emotions: string[];
   content?: string | null;
   coverImageUrl: string;
   diaryImageUrl?: string | null;
+  aladinLink?: string;
 }
