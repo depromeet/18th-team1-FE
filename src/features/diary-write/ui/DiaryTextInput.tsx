@@ -39,7 +39,7 @@ export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps): React.
       >
         <textarea
           style={{ minHeight: MIN_TEXTAREA_HEIGHT }}
-          className="w-full resize-none overflow-hidden bg-transparent text-[15px] leading-[1.4] text-gray-700 outline-none placeholder:text-gray-300"
+          className="w-full resize-none overflow-hidden bg-transparent text-[16px] leading-[1.4] text-gray-700 outline-none placeholder:text-gray-300"
           placeholder="오늘 하루, 이 문장이 어떻게 다가오나요?"
           value={value}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => onChange(e.target.value)}

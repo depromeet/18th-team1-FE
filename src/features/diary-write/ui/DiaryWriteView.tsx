@@ -26,11 +26,11 @@ export const DiaryWriteView = ({ sentence }: DiaryWriteViewProps): React.ReactEl
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       <div className="shrink-0">
         <Header title="일기" right={<CheckButton isChecked={true} onClick={handleSubmit} />} />
       </div>
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 pt-1.75">
+      <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto px-5 pt-1.75 pb-24">
         <SentenceTextCard
           quote={sentence.quote}
           bookTitle={sentence.bookTitle}
@@ -38,13 +38,18 @@ export const DiaryWriteView = ({ sentence }: DiaryWriteViewProps): React.ReactEl
         />
         <DiaryTextInput value={text} onChange={handleTextChange} />
       </div>
-      <PhotoBar
-        photoUrl={photoUrl}
-        inputRef={inputRef}
-        onAdd={handleClick}
-        onDelete={handleDelete}
-        onFileChange={handleFileChange}
-      />
+      <div
+        className="absolute bottom-0 left-0 right-0 px-5"
+        style={{ paddingBottom: "max(env(safe-area-inset-bottom), 14px)" }}
+      >
+        <PhotoBar
+          photoUrl={photoUrl}
+          inputRef={inputRef}
+          onAdd={handleClick}
+          onDelete={handleDelete}
+          onFileChange={handleFileChange}
+        />
+      </div>
     </div>
   );
 };
