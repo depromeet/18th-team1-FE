@@ -1,8 +1,11 @@
+"use client";
+
 import { useEffect } from "react";
 
-import { MOCK_SITUATIONS } from "@/mock";
+import { useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { Text } from "@/shared/ui/text";
 
+import { EMOTIONS } from "../model/emotion";
 import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
 import { TagList } from "./TagList";
 
@@ -10,8 +13,18 @@ interface SituationStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
 }
 
+const getEmotionValue = (emotionId: string | null): number => {
+  if (!emotionId) return 50;
+  const index = EMOTIONS.findIndex((e) => e.id === emotionId);
+  if (index === -1) return 50;
+  return Math.round(100 - (index / (EMOTIONS.length - 1)) * 99);
+};
+
 export const SituationStep = ({ onValidChange }: SituationStepProps): React.ReactElement => {
-  const { selectedSituationIds, setSelectedSituationIds } = useDiaryEmotionStore();
+  const { selectedEmotionId, selectedSituationIds, setSelectedSituationIds } =
+    useDiaryEmotionStore();
+  const { data } = useEmotionTagsQuery(getEmotionValue(selectedEmotionId));
+  const tags = data?.tags.map((tag) => ({ id: String(tag.id), label: tag.label })) ?? [];
 
   useEffect(() => {
     onValidChange(selectedSituationIds.length === 0);
@@ -23,7 +36,7 @@ export const SituationStep = ({ onValidChange }: SituationStepProps): React.Reac
         지금 어떤 상황이신가요?
       </Text>
       <TagList
-        items={MOCK_SITUATIONS}
+        items={tags}
         selectedIds={selectedSituationIds}
         onSelectionChange={setSelectedSituationIds}
       />

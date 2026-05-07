@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect } from "react";
 
-import { MOCK_SENTENCE_TYPES } from "@/mock";
+import { useToneTagsQuery } from "@/entities/emotion-tag";
 import { Text } from "@/shared/ui/text";
 
 import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
@@ -12,6 +14,8 @@ interface SentenceTypeStepProps {
 
 export const SentenceTypeStep = ({ onValidChange }: SentenceTypeStepProps): React.ReactElement => {
   const { selectedSentenceTypeIds, setSelectedSentenceTypeIds } = useDiaryEmotionStore();
+  const { data } = useToneTagsQuery();
+  const tags = data?.tags.map((tag) => ({ id: String(tag.id), label: tag.label })) ?? [];
 
   useEffect(() => {
     onValidChange(selectedSentenceTypeIds.length === 0);
@@ -23,7 +27,7 @@ export const SentenceTypeStep = ({ onValidChange }: SentenceTypeStepProps): Reac
         오늘 어떤 문장이 필요하세요?
       </Text>
       <TagList
-        items={MOCK_SENTENCE_TYPES}
+        items={tags}
         selectedIds={selectedSentenceTypeIds}
         onSelectionChange={setSelectedSentenceTypeIds}
       />
