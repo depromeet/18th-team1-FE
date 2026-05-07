@@ -4,6 +4,7 @@ export interface DiaryShareMeta {
 
 export const shareDiaryImage = async (meta: DiaryShareMeta): Promise<void> => {
   const response = await fetch(meta.imageUrl);
+  if (!response.ok) throw new Error(`이미지 로드 실패: ${response.status}`);
   const blob = await response.blob();
   const file = new File([blob], "diary-share.png", { type: "image/png" });
 
