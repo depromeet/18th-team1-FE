@@ -174,7 +174,7 @@ export const MOCK_CALENDAR_DIARIES: {
       emotionIntensity: "HIGH",
       emotions: ["자신감 있는", "희망찬", "벅찬"],
       quoteContent: "자네가 무언가를 간절히 원할 때, 온 우주는 자네의 꿈이 실현되도록 도와준다네.",
-      coverImageUrl: "	https://image.aladin.co.kr/product/7162/36/cover500/8954638570_1.jpg",
+      coverImageUrl: "https://image.aladin.co.kr/product/7162/36/cover500/8954638570_1.jpg",
       author: "파울로 코엘료",
       title: "연금술사",
       aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=307361",
