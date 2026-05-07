@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { IcEdit, IcShare, IcTrash } from "@/shared/ui/icons";
+import { IcEdit, IcShare2, IcTrash } from "@/shared/ui/icons";
 
 interface DiaryOptionMenuProps {
   trigger: ReactNode;
@@ -49,7 +49,7 @@ export const DiaryOptionMenu = ({
         className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"
         onClick={onShare}
       >
-        <IcShare size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
+        <IcShare2 size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
         <span className="body2">공유하기</span>
       </DropdownMenuItem>
       <DropdownMenuItem
