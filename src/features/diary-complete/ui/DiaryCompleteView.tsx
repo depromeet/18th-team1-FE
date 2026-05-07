@@ -9,6 +9,7 @@ import { IcShare } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 
 import { formatDate } from "../lib/formatDate";
+import { shareDiaryImage } from "../lib/shareToInstagram";
 
 interface DiaryCompleteViewProps {
   diaryId: string;
@@ -22,6 +23,15 @@ export const DiaryCompleteView = ({
 
   const handleNext = (): void => {
     router.push("/");
+  };
+
+  // TODO: API 연동 시 실제 imageUrl로 교체
+  const handleShare = async (): Promise<void> => {
+    try {
+      await shareDiaryImage({ imageUrl: "/images/diary-write.png" });
+    } catch {
+      alert("공유에 실패했어요. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -58,7 +68,7 @@ export const DiaryCompleteView = ({
       <div className="shrink-0 px-5 pb-8.5">
         <div className="flex gap-3.75">
           <Button label="다음" className="flex-1" onClick={handleNext} />
-          <IconButton icon={<IcShare size={24} className="text-gray-0" />} />
+          <IconButton icon={<IcShare size={24} className="text-gray-0" />} onClick={handleShare} />
         </div>
       </div>
     </div>
