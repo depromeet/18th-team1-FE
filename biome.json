@@ -79,9 +79,6 @@
         "noUnusedImports": "error",
         "useExhaustiveDependencies": "warn"
       },
-      "a11y": {
-        "noAutofocus": "off"
-      },
       "nursery": {
         "useExplicitType": "warn"
       }

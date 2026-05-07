@@ -75,6 +75,7 @@ export const SituationDescriptionStep = ({
       </div>
       <textarea
         ref={textareaRef}
+        // biome-ignore lint/a11y/noAutofocus: 감정 입력 스텝에서 즉시 입력 유도를 위해 의도적으로 사용
         autoFocus
         style={{ minHeight: MIN_TEXTAREA_HEIGHT }}
         className="head1 mt-14 w-full resize-none bg-transparent text-foreground outline-none placeholder:text-[rgba(9,9,9,0.2)]"
