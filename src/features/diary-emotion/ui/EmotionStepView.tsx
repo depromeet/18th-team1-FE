@@ -37,7 +37,7 @@ export const EmotionStepView = (): React.ReactElement => {
     >
       <textarea
         ref={hiddenTextareaRef}
-        aria-hidden="true"
+        readOnly
         className="pointer-events-none fixed left-0 top-0 h-4 w-4 opacity-0"
         tabIndex={-1}
       />
