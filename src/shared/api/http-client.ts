@@ -35,7 +35,12 @@ const refreshAccessToken = async (): Promise<string> => {
     credentials: "include", // httpOnly 쿠키의 refresh token 자동 전송
   })
     .then((res) => {
-      if (!res.ok) throw new Error("refresh failed");
+      if (res.status === 401 || res.status === 403) {
+        throw new ApiError("UNAUTHORIZED", res.status, "Session expired");
+      }
+      if (!res.ok) {
+        throw new ApiError(getErrorCode(res.status), res.status, `HTTP Error ${res.status}`);
+      }
       return res.json() as Promise<{ accessToken: string }>;
     })
     .then(({ accessToken }) => {
@@ -89,9 +94,11 @@ const request = async <T>(
     try {
       const newToken = await refreshAccessToken();
       return request<T>(path, { ...options, token: newToken }, true);
-    } catch {
-      redirectToLogin();
-      throw new ApiError("UNAUTHORIZED", 401, "Session expired");
+    } catch (error) {
+      if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
+        redirectToLogin();
+      }
+      throw error;
     }
   }
 
