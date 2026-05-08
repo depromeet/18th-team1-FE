@@ -21,7 +21,7 @@ export const LoginView = (): React.ReactElement => {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-between px-5 py-10.5 bg-gray-0">
+    <div className="flex min-h-dvh flex-col items-center justify-between px-5 py-10.5">
       <div className="flex flex-1 items-center justify-center">
         <Logo width={125} height={43} />
       </div>

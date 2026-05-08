@@ -28,7 +28,7 @@ export const EmotionStepView = (): React.ReactElement => {
 
   return (
     <div
-      className="fixed inset-x-0 top-0 flex flex-col gap-1 bg-gray0 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
+      className="fixed inset-x-0 top-0 flex flex-col gap-1 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 bg-gray-0"
       style={{ height: "var(--vh, 100dvh)" }}
     >
       <textarea

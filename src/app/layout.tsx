@@ -52,7 +52,9 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
       >
         <Providers>
           <AuthGuard>
-            <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75">{children}</div>
+            <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75 bg-gray-0">
+              {children}
+            </div>
           </AuthGuard>
         </Providers>
       </body>
