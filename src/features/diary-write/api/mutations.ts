@@ -14,6 +14,12 @@ interface CreateDiaryInput {
   photoFile: File | null;
 }
 
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+type AllowedImageType = (typeof ALLOWED_IMAGE_TYPES)[number];
+
+const isAllowedImageType = (type: string): type is AllowedImageType =>
+  (ALLOWED_IMAGE_TYPES as readonly string[]).includes(type);
+
 export const useCreateDiaryMutation = (): UseMutationResult<number, Error, CreateDiaryInput> => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -27,10 +33,12 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
 
       let imageIds: number[] | undefined;
       if (photoFile) {
-        const contentType = photoFile.type as "image/jpeg" | "image/png" | "image/webp";
+        if (!isAllowedImageType(photoFile.type)) {
+          throw new Error("지원하지 않는 이미지 형식이에요. JPEG, PNG, WEBP 파일을 사용해주세요.");
+        }
         const { presignedUrl, imageId } = await fetchPresignedUrl({
           type: "DIARY",
-          contentType,
+          contentType: photoFile.type,
         });
         await uploadImageToGcs(presignedUrl, photoFile);
         imageIds = [imageId];
