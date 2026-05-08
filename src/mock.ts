@@ -1,4 +1,5 @@
 import type { Diary, DiaryDetail, TodayDiary } from "@/entities/diary";
+import type { EmotionTag } from "@/entities/emotion-tag";
 import type { RecommendedSentence } from "@/entities/sentence";
 
 export const MOCK_TODAY_DIARY: TodayDiary = {
@@ -47,23 +48,23 @@ export const MOCK_DIARIES: Diary[] = [
   { day: 1, sentence: "모든 사람은 자신만의 속도가 있다", temperature: 70, dotColor: "#34c759" },
 ];
 
-export const MOCK_SITUATIONS = [
-  { id: "1", label: "지쳐있는 순간" },
-  { id: "2", label: "아무것도 하기 싫은 순간" },
-  { id: "3", label: "위로가 필요한 순간" },
-  { id: "4", label: "설레는 순간" },
-  { id: "5", label: "슬픈 순간" },
-  { id: "6", label: "행복한 순간" },
-  { id: "7", label: "외로운 순간" },
-  { id: "8", label: "화가 나는 순간" },
-  { id: "9", label: "불안한 순간" },
-  { id: "10", label: "감사한 순간" },
-  { id: "11", label: "그리운 순간" },
-  { id: "12", label: "두려운 순간" },
-  { id: "13", label: "평온한 순간" },
-  { id: "14", label: "설렘이 필요한 순간" },
-  { id: "15", label: "용기가 필요한 순간" },
-  { id: "16", label: "쉬고 싶은 순간" },
+export const MOCK_SITUATIONS: EmotionTag[] = [
+  { id: 1, label: "지쳐있는 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 2, label: "아무것도 하기 싫은 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 3, label: "위로가 필요한 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 4, label: "설레는 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 5, label: "슬픈 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 6, label: "행복한 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 7, label: "외로운 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 8, label: "화가 나는 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 9, label: "불안한 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 10, label: "감사한 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 11, label: "그리운 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 12, label: "두려운 순간", type: "EMOTION", emotionRangeId: 1 },
+  { id: 13, label: "평온한 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 14, label: "설렘이 필요한 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 15, label: "용기가 필요한 순간", type: "EMOTION", emotionRangeId: 2 },
+  { id: 16, label: "쉬고 싶은 순간", type: "EMOTION", emotionRangeId: 2 },
 ];
 
 export const MOCK_SENTENCE_TYPES = [

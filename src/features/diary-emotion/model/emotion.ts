@@ -23,3 +23,11 @@ export const EMOTIONS: Emotion[] = [
   { id: "bad", label: "별로에요", category: "bad" },
   { id: "very-bad", label: "아주 별로에요", category: "bad" },
 ];
+
+// EMOTIONS 배열 순서를 1~100 수치로 변환 (긍정 → 부정)
+export const getEmotionValue = (emotionId: string | null): number => {
+  if (!emotionId) return 50;
+  const index = EMOTIONS.findIndex((e) => e.id === emotionId);
+  if (index === -1) return 50;
+  return Math.round(100 - (index / (EMOTIONS.length - 1)) * 99);
+};

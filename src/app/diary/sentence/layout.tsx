@@ -10,13 +10,8 @@ const SentenceLayout = ({ children }: { children: ReactNode }): React.ReactEleme
   const router = useRouter();
 
   const handleBack = pathname.endsWith("/list")
-    ? (): void => {
-        const id = pathname.split("/")[3];
-        router.push(`/diary/sentence/${id}`);
-      }
-    : (): void => {
-        router.push("/");
-      };
+    ? (): void => router.push("/diary/sentence")
+    : (): void => router.push("/");
 
   return (
     <div className="flex h-full flex-col bg-gray-0">
