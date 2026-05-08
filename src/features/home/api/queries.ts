@@ -13,7 +13,7 @@ export const homeKeys = {
   summary: () => [...homeKeys.all, "summary"] as const,
 };
 
-export const useHomeRandomQuery = (): UseQueryResult<QuoteResponse> =>
+export const useHomeRandomQuery = (): UseQueryResult<QuoteResponse[]> =>
   useQuery({
     queryKey: homeKeys.random(),
     queryFn: fetchHomeRandom,
