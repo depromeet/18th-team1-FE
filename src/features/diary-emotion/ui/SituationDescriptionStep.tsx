@@ -2,7 +2,7 @@ import { type ChangeEvent, useEffect, useRef } from "react";
 
 import { MOCK_SITUATIONS } from "@/mock";
 
-import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { TagChip } from "./TagChip";
 
 interface SituationDescriptionStepProps {
@@ -24,7 +24,7 @@ export const SituationDescriptionStep = ({
     useDiaryEmotionStore();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollParentRef = useRef<HTMLElement | null>(null);
-  const selectedChips = MOCK_SITUATIONS.filter((s) => selectedSituationIds.includes(s.id));
+  const selectedChips = MOCK_SITUATIONS.filter((s) => selectedSituationIds.includes(String(s.id)));
 
   useEffect(() => {
     onValidChange(situationDescription.trim() === "");

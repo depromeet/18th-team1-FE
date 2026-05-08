@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useToneTagsQuery } from "@/entities/emotion-tag";
 import { Text } from "@/shared/ui/text";
 
-import { useDiaryEmotionStore } from "../model/useDiaryEmotionStore";
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { TagList } from "./TagList";
 
 interface SentenceTypeStepProps {

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { EMOTIONS, type EmotionCategory } from "./emotion";
-import { useDiaryEmotionStore } from "./useDiaryEmotionStore";
 
 const ITEM_HEIGHT = 46;
 const ITEM_GAP = 4;
