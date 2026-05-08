@@ -18,14 +18,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${process.env.API_BASE_URL}/api/:path*`,
-      },
-    ];
-  },
+  ...(process.env.NODE_ENV === "development" && {
+    async rewrites() {
+      return [
+        {
+          source: "/api/:path*",
+          destination: `${process.env.API_BASE_URL}/api/:path*`,
+        },
+      ];
+    },
+  }),
 };
 
 export default nextConfig;
