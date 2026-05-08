@@ -19,10 +19,21 @@ export const RandomSentenceBanner = ({
     intervalMs: AUTO_SCROLL_INTERVAL_MS,
   });
 
-  if (sentences.length === 0) return null;
+  if (sentences.length === 0) {
+    return (
+      <div className="flex w-full flex-col">
+        <div className="overflow-hidden bg-key-secondary">
+          <div className="flex w-full shrink-0 flex-col gap-5 p-5">
+            <div className="h-22.5" />
+            <div className="caption2" />
+          </div>
+        </div>
+        <div className="h-6.25 bg-key-primary" />
+      </div>
+    );
+  }
 
   const firstSentence = sentences[0];
-  // 마지막에 첫 슬라이드 클론을 추가해 끝에서 처음으로 자연스럽게 연결
   const slides =
     sentences.length > 1 && firstSentence
       ? [

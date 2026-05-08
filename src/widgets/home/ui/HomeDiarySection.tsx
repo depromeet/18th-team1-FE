@@ -1,28 +1,58 @@
 "use client";
 
-import type { Diary } from "@/entities/diary";
-import { DiaryListSection } from "@/entities/diary";
-import { MOCK_SENTENCES } from "@/mock";
+import { useRouter } from "next/navigation";
 
-import { HomeBanner } from "./HomeBanner";
-import { RandomSentenceBanner } from "./RandomSentenceBanner";
+import { type Diary, DiaryListSection } from "@/entities/diary";
+import type { RecommendedSentence } from "@/entities/sentence";
+import {
+  HomeBanner,
+  RandomSentenceBanner,
+  useHomeRandomQuery,
+  useHomeSummaryQuery,
+} from "@/features/home";
 
-interface HomeDiarySectionProps {
-  diaries: Diary[];
-}
+export const HomeDiarySection = (): React.ReactElement => {
+  const router = useRouter();
+  const { data: summary } = useHomeSummaryQuery();
+  const { data: randomQuote } = useHomeRandomQuery();
 
-export const HomeDiarySection = ({ diaries }: HomeDiarySectionProps): React.ReactElement => {
-  const hasTodayDiary = false; // TODO: API 연동 후 hook으로 교체
-  const handleDiaryItemPress = (day: number): void => {
-    // TODO: 일기 상세 페이지 라우팅 구현 후 활성화
-    // router.push(`/diary/${day}`);
-    void day;
+  const diaries: Diary[] = (summary?.monthlyDiaries ?? []).map((item) => ({
+    diaryId: item.diaryId,
+    day: new Date(item.createdAt).getDate(),
+    sentence: item.quoteContent,
+    temperature: 0,
+    dotColor: "",
+  }));
+
+  const sentences: RecommendedSentence[] = randomQuote
+    ? [
+        {
+          id: String(randomQuote.quoteId),
+          quote: randomQuote.content,
+          bookTitle: randomQuote.title,
+          bookAuthor: randomQuote.author,
+          date: "",
+        },
+      ]
+    : [];
+
+  const hasTodayDiary = summary?.todayDiary !== null && summary?.todayDiary !== undefined;
+  const todayDiaryId = summary?.todayDiary?.diaryId;
+  const bannerHref =
+    hasTodayDiary && todayDiaryId !== undefined ? `/diary/${todayDiaryId}` : "/diary/emotion";
+
+  const handleDiaryItemPress = (diaryId: number): void => {
+    router.push(`/diary/${diaryId}`);
   };
 
   return (
     <>
-      <HomeBanner hasTodayDiary={hasTodayDiary} />
-      <RandomSentenceBanner sentences={MOCK_SENTENCES} />
+      <HomeBanner
+        hasTodayDiary={hasTodayDiary}
+        sentenceCount={summary?.totalDiaryCount ?? 0}
+        href={bannerHref}
+      />
+      <RandomSentenceBanner sentences={sentences} />
       <DiaryListSection diaries={diaries} onPressItem={handleDiaryItemPress} />
     </>
   );

@@ -5,6 +5,8 @@ import { Text } from "@/shared/ui/text";
 import { CATEGORY_BG, EMOTIONS } from "../model/emotion";
 import { useEmotionBookDrag } from "../model/useEmotionBookDrag";
 
+const PLACEHOLDER_INDICES = [2, 5, 8];
+
 interface EmotionBookStepProps {
   onValidChange: (isDisabled: boolean) => void;
 }
@@ -26,6 +28,9 @@ export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.
     if (selectedIndex === null) return false;
     return index >= selectedIndex;
   };
+
+  const isPlaceholder = (index: number): boolean =>
+    selectedIndex === null && PLACEHOLDER_INDICES.includes(index);
 
   return (
     <div className="flex h-full flex-col pb-3.25 pt-4.75">
@@ -54,6 +59,11 @@ export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.
                 color="gray-0"
                 className="animate-in fade-in duration-150"
               >
+                {emotion.label}
+              </Text>
+            )}
+            {isPlaceholder(index) && (
+              <Text as="span" variant="subhead1" color="gray-200">
                 {emotion.label}
               </Text>
             )}

@@ -7,7 +7,7 @@ const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요�
 
 interface DiaryListSectionProps {
   diaries: Diary[];
-  onPressItem?: (day: number) => void;
+  onPressItem?: (diaryId: number) => void;
 }
 
 export const DiaryListSection = ({
@@ -30,9 +30,8 @@ export const DiaryListSection = ({
         </Text>
       </div>
       {diaries.length === 0 ? (
-        <div className="flex flex-1 flex-col items-center justify-center gap-3.5">
-          <div className="size-31.5 rounded-[4px] bg-gray-100" />
-          <Text variant="body1" color="gray-500">
+        <div className="flex flex-1 flex-col items-center pt-9.75">
+          <Text variant="body2" color="gray-400">
             아직 작성된 일기가 없어요
           </Text>
         </div>
@@ -50,7 +49,7 @@ export const DiaryListSection = ({
                 sentence={diary.sentence}
                 dayName={dayName}
                 isSunday={isSunday}
-                onPress={onPressItem ? () => onPressItem(diary.day) : undefined}
+                onPress={onPressItem ? () => onPressItem(diary.diaryId) : undefined}
               />
             );
           })}
