@@ -23,15 +23,14 @@ export const SentenceListView = (): React.ReactElement => {
 
   const handleNext = (): void => {
     const selected = data.find((q) => q.quoteId === selectedId);
-    if (selected) {
-      setSelectedQuote({
-        dailyRecommendationId,
-        quoteId: selected.quoteId,
-        content: selected.content,
-        title: selected.title,
-        author: selected.author,
-      });
-    }
+    if (!selected) return;
+    setSelectedQuote({
+      dailyRecommendationId,
+      quoteId: selected.quoteId,
+      content: selected.content,
+      title: selected.title,
+      author: selected.author,
+    });
     router.push(`/diary/write?sentenceId=${selectedId}`);
   };
 
