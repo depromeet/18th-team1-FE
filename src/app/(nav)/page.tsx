@@ -1,4 +1,4 @@
-import { Logo } from "@/shared/ui/Logo";
+import { Logo } from "@/shared/ui/logo";
 import { HomeDiarySection } from "@/widgets/home";
 
 const HomePage = (): React.ReactElement => (
