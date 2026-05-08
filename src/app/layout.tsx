@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
+import { AuthGuard } from "@/features/auth";
+
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -45,11 +47,13 @@ const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
       className={`${pretendard.variable} ${gtPressura.variable} ${millingTrial.variable}`}
     >
       <body
-        className="h-dvh overflow-hidden bg-gray-0 font-pretendard text-gray-700 antialiased"
+        className="h-dvh overflow-hidden bg-gray-50 font-pretendard text-gray-700 antialiased"
         suppressHydrationWarning
       >
         <Providers>
-          <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75">{children}</div>
+          <AuthGuard>
+            <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75">{children}</div>
+          </AuthGuard>
         </Providers>
       </body>
     </html>
