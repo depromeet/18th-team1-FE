@@ -8,6 +8,7 @@ export interface EmotionTag {
   id: number;
   label: string;
   type: "EMOTION";
+  emotionRangeId: number;
 }
 
 export interface EmotionTagsResponse {
