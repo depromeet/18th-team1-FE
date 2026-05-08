@@ -20,7 +20,57 @@ type RequestOptions = Omit<RequestInit, "body"> & {
   token?: string;
 };
 
-const request = async <T>(path: string, options: RequestOptions = {}): Promise<T> => {
+// 동시에 여러 요청이 401을 받아도 refresh를 한 번만 호출하기 위한 싱글턴 Promise
+let refreshingPromise: Promise<string> | null = null;
+
+/**
+ * 쿠키의 refresh token(httpOnly)으로 새 access token을 발급받는다.
+ * 여러 요청이 동시에 호출해도 하나의 Promise를 공유해 중복 요청을 방지한다.
+ */
+const refreshAccessToken = async (): Promise<string> => {
+  if (refreshingPromise) return refreshingPromise;
+
+  refreshingPromise = fetch(`${BASE_URL}/auth/refresh`, {
+    method: "POST",
+    credentials: "include", // httpOnly 쿠키의 refresh token 자동 전송
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("refresh failed");
+      return res.json() as Promise<{ accessToken: string }>;
+    })
+    .then(({ accessToken }) => {
+      useAuthStore.getState().setAuth(accessToken);
+      return accessToken;
+    })
+    .finally(() => {
+      refreshingPromise = null;
+    });
+
+  return refreshingPromise;
+};
+
+const redirectToLogin = (): void => {
+  useAuthStore.getState().clearAuth();
+  if (typeof window !== "undefined") {
+    window.location.replace("/login");
+  }
+};
+
+/**
+ * 모든 API 요청의 단일 진입점.
+ *
+ * 인증 흐름:
+ * 1. Zustand store의 access token을 Authorization 헤더에 자동 주입
+ * 2. 401 응답 시 refresh token으로 access token 갱신 후 원본 요청 1회 재시도
+ * 3. 갱신 실패 시 store 초기화 후 로그인 페이지로 리다이렉트
+ *
+ * @param isRetry - true이면 401 재시도를 하지 않아 무한 루프를 방지
+ */
+const request = async <T>(
+  path: string,
+  options: RequestOptions = {},
+  isRetry = false,
+): Promise<T> => {
   const { body, token: explicitToken, headers, ...rest } = options;
   const token = explicitToken ?? useAuthStore.getState().accessToken;
 
@@ -34,6 +84,16 @@ const request = async <T>(path: string, options: RequestOptions = {}): Promise<T
     },
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
   });
+
+  if (response.status === 401 && !isRetry) {
+    try {
+      const newToken = await refreshAccessToken();
+      return request<T>(path, { ...options, token: newToken }, true);
+    } catch {
+      redirectToLogin();
+      throw new ApiError("UNAUTHORIZED", 401, "Session expired");
+    }
+  }
 
   if (!response.ok) {
     const errorCode = getErrorCode(response.status);
