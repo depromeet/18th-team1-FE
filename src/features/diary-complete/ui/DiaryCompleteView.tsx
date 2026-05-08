@@ -27,13 +27,23 @@ export const DiaryCompleteView = ({ diaryId }: DiaryCompleteViewProps): React.Re
 
   const handleShare = async (): Promise<void> => {
     if (isSharing) return;
+
+    if (!navigator.share) {
+      alert("이 브라우저에서는 공유 기능을 지원하지 않아요.");
+      return;
+    }
+
     setIsSharing(true);
     try {
       const blob = await fetchDiaryShareImage(diaryId);
       const file = new File([blob], "diary-share.png", { type: "image/png" });
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file] });
+
+      if (!navigator.canShare?.({ files: [file] })) {
+        alert("이 기기에서는 이미지 공유를 지원하지 않아요.");
+        return;
       }
+
+      await navigator.share({ files: [file] });
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       alert("공유에 실패했어요. 다시 시도해주세요.");
