@@ -19,9 +19,11 @@ export const SentenceCard = ({
 
   return (
     <div className="flex flex-col gap-7.5 px-5 pt-14.25">
-      <Text variant="subhead6" color="key-secondary2">
-        {date}
-      </Text>
+      {date && (
+        <Text variant="subhead6" color="key-secondary2">
+          {date}
+        </Text>
+      )}
       <div className="flex flex-col gap-4.5">
         <Text
           variant="title1-2"

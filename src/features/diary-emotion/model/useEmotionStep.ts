@@ -1,16 +1,14 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
-import { useDiaryEmotionStore } from "./useDiaryEmotionStore";
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 
 const TOTAL_STEPS = 4;
 
 interface UseEmotionStepReturn {
   currentStep: number;
   totalSteps: number;
-  isLoading: boolean;
   handleBack: () => void;
   handleNext: () => void;
   handleSkip: () => void;
@@ -24,14 +22,11 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
 
   const { reset } = useDiaryEmotionStore();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect((): (() => void) => (): void => reset(), [reset]);
-
   const handleBack = (): void => {
     if (currentStep > 1) {
       router.push(`/diary/emotion?step=${currentStep - 1}`);
     } else {
+      reset();
       router.push("/");
     }
   };
@@ -41,9 +36,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
       router.push(`/diary/emotion?step=${currentStep + 1}`);
       return;
     }
-    setIsLoading(true);
-    // TODO: API 호출
-    // .then(() => { reset(); router.push("/diary/sentence/{id}"); })
+    router.push("/diary/sentence");
   };
 
   const handleSkip = (): void => {
@@ -53,7 +46,6 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
   return {
     currentStep,
     totalSteps: TOTAL_STEPS,
-    isLoading,
     handleBack,
     handleNext,
     handleSkip,

@@ -9,15 +9,13 @@ import { Header } from "@/widgets/header";
 
 import { useEmotionStep } from "../model/useEmotionStep";
 import { EmotionBookStep } from "./EmotionBookStep";
-import { LoadingView } from "./LoadingView";
 import { SentenceTypeStep } from "./SentenceTypeStep";
 import { SituationDescriptionStep } from "./SituationDescriptionStep";
 import { SituationStep } from "./SituationStep";
 
 export const EmotionStepView = (): React.ReactElement => {
   useViewportHeight();
-  const { currentStep, totalSteps, isLoading, handleBack, handleNext, handleSkip } =
-    useEmotionStep();
+  const { currentStep, totalSteps, handleBack, handleNext, handleSkip } = useEmotionStep();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const hiddenTextareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -27,8 +25,6 @@ export const EmotionStepView = (): React.ReactElement => {
     }
     handleNext();
   };
-
-  if (isLoading) return <LoadingView />;
 
   return (
     <div
