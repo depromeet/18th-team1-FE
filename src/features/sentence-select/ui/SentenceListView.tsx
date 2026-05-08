@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SentenceListCard, useAdditionalSentenceQuotesQuery } from "@/entities/sentence";
 import { Button } from "@/shared/ui/button";
 import { DoubleButton } from "@/shared/ui/double-button";
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 
 import { useSentenceList } from "../model/useSentenceList";
 
@@ -14,12 +15,23 @@ export const SentenceListView = (): React.ReactElement => {
   const dailyRecommendationId = Number(searchParams.get("dailyRecommendationId"));
 
   const { data } = useAdditionalSentenceQuotesQuery(dailyRecommendationId);
+  const { setSelectedQuote } = useDiaryEmotionStore();
   const { visibleQuotes, selectedId, canLoadMore, handleSelect, handleLoadMore } = useSentenceList(
     data[0]?.quoteId ?? 0,
     data,
   );
 
   const handleNext = (): void => {
+    const selected = data.find((q) => q.quoteId === selectedId);
+    if (selected) {
+      setSelectedQuote({
+        dailyRecommendationId,
+        quoteId: selected.quoteId,
+        content: selected.content,
+        title: selected.title,
+        author: selected.author,
+      });
+    }
     router.push(`/diary/write?sentenceId=${selectedId}`);
   };
 

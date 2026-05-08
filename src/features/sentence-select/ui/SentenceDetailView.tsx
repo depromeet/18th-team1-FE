@@ -8,7 +8,7 @@ import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore
 
 export const SentenceDetailView = (): React.ReactElement => {
   const router = useRouter();
-  const { selectedSituationIds, selectedSentenceTypeIds, situationDescription } =
+  const { selectedSituationIds, selectedSentenceTypeIds, situationDescription, setSelectedQuote } =
     useDiaryEmotionStore();
 
   const { data } = useSentenceQuotesQuery({
@@ -20,6 +20,13 @@ export const SentenceDetailView = (): React.ReactElement => {
   const { dailyRecommendationId, quote } = data;
 
   const handleNext = (): void => {
+    setSelectedQuote({
+      dailyRecommendationId,
+      quoteId: quote.quoteId,
+      content: quote.content,
+      title: quote.title,
+      author: quote.author,
+    });
     router.push(`/diary/write?sentenceId=${quote.quoteId}`);
   };
 
