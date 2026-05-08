@@ -1,7 +1,7 @@
 export type EmotionIntensity = "HIGH" | "MID" | "LOW";
 
 export interface Diary {
-  diaryId?: number;
+  diaryId: number;
   day: number;
   sentence: string;
   temperature: number;

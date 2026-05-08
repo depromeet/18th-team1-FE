@@ -49,7 +49,7 @@ export const DiaryListSection = ({
                 sentence={diary.sentence}
                 dayName={dayName}
                 isSunday={isSunday}
-                onPress={onPressItem ? () => onPressItem(diary.diaryId ?? diary.day) : undefined}
+                onPress={onPressItem ? () => onPressItem(diary.diaryId) : undefined}
               />
             );
           })}
