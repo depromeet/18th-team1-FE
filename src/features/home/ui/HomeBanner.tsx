@@ -1,23 +1,22 @@
-import Link from "next/link";
-
 import { Text } from "@/shared/ui/text";
 
 interface HomeBannerProps {
   hasTodayDiary: boolean;
   sentenceCount?: number;
-  href: string;
+  onClick: () => void;
 }
 
 export const HomeBanner = ({
   hasTodayDiary,
   sentenceCount = 0,
-  href,
+  onClick,
 }: HomeBannerProps): React.ReactElement => (
-  <Link
-    href={href}
+  <button
+    type="button"
+    onClick={onClick}
     className="flex h-60 w-full shrink-0 flex-col justify-between bg-gray-100 px-5 py-5"
   >
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 items-start">
       <Text as="span" variant="title1" color="key-secondary2">
         {hasTodayDiary ? "오늘 작성한 일기 보기" : "오늘의 일기 작성하기"}
       </Text>
@@ -38,5 +37,5 @@ export const HomeBanner = ({
         </svg>
       </div>
     </div>
-  </Link>
+  </button>
 );
