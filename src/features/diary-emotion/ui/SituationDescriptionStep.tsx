@@ -1,8 +1,9 @@
 import { type ChangeEvent, useEffect, useRef } from "react";
 
-import { MOCK_SITUATIONS } from "@/mock";
-
+import { useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
+
+import { getEmotionValue } from "../model/emotion";
 import { TagChip } from "./TagChip";
 
 interface SituationDescriptionStepProps {
@@ -20,11 +21,15 @@ const adjustHeight = (el: HTMLTextAreaElement): void => {
 export const SituationDescriptionStep = ({
   onValidChange,
 }: SituationDescriptionStepProps): React.ReactElement => {
-  const { selectedSituationIds, situationDescription, setSituationDescription } =
+  const { selectedEmotionId, selectedSituationIds, situationDescription, setSituationDescription } =
     useDiaryEmotionStore();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollParentRef = useRef<HTMLElement | null>(null);
-  const selectedChips = MOCK_SITUATIONS.filter((s) => selectedSituationIds.includes(String(s.id)));
+
+  const { data } = useEmotionTagsQuery(getEmotionValue(selectedEmotionId));
+  const selectedChips = (data?.tags ?? []).filter((tag) =>
+    selectedSituationIds.includes(String(tag.id)),
+  );
 
   useEffect(() => {
     onValidChange(situationDescription.trim() === "");

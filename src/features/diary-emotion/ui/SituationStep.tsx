@@ -6,19 +6,12 @@ import { useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { MOCK_SITUATIONS } from "@/mock";
 import { Text } from "@/shared/ui/text";
 import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
-import { EMOTIONS } from "../model/emotion";
+import { getEmotionValue } from "../model/emotion";
 import { TagList } from "./TagList";
 
 interface SituationStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
 }
-
-const getEmotionValue = (emotionId: string | null): number => {
-  if (!emotionId) return 50;
-  const index = EMOTIONS.findIndex((e) => e.id === emotionId);
-  if (index === -1) return 50;
-  return Math.round(100 - (index / (EMOTIONS.length - 1)) * 99);
-};
 
 export const SituationStep = ({ onValidChange }: SituationStepProps): React.ReactElement => {
   const { selectedEmotionId, selectedSituationIds, setSelectedSituationIds } =
