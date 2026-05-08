@@ -4,7 +4,10 @@ import { type UseMutationResult, useMutation, useQueryClient } from "@tanstack/r
 
 import { getEmotionValue } from "@/features/diary-emotion";
 import { fetchPresignedUrl, uploadImageToGcs } from "@/shared/api/image-upload";
-import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
+import {
+  loadRecommendationParams,
+  useDiaryEmotionStore,
+} from "@/store/diary-emotion/useDiaryEmotionStore";
 
 import { fetchCreateDiary } from "./diaryWriteApi";
 
@@ -29,9 +32,12 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
 
       const emotionValue = getEmotionValue(selectedEmotionId);
 
-      const tagIds = selectedSituationIds.map(Number);
+      const savedParams = loadRecommendationParams();
+      const resolvedSituationIds =
+        selectedSituationIds.length > 0 ? selectedSituationIds : (savedParams?.emotionTagIds ?? []);
+      const tagIds: number[] = resolvedSituationIds.map((id) => Number(id));
 
-      let imageIds: number[] | undefined;
+      let imageIds: number[] = [];
       if (photoFile) {
         if (!isAllowedImageType(photoFile.type)) {
           throw new Error("지원하지 않는 이미지 형식이에요. JPEG, PNG, WEBP 파일을 사용해주세요.");
@@ -46,8 +52,8 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
 
       const { diaryId } = await fetchCreateDiary({
         emotionValue,
-        tagIds: tagIds.length > 0 ? tagIds : undefined,
-        dailyRecommendationId: selectedQuote?.dailyRecommendationId,
+        tagIds,
+        dailyRecommendationId: selectedQuote?.dailyRecommendationId ?? 0,
         quoteId,
         content,
         imageIds,
