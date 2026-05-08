@@ -10,11 +10,15 @@ import { useCalendarDiary } from "../model/useCalendarDiary";
 import { CalendarWritingTimer } from "./CalendarWritingTimer";
 
 export const CalendarDiarySection = (): React.ReactElement => {
-  const { diary, selectedDate } = useCalendarDiary();
+  const { diary, selectedDate, viewDate, isFutureView } = useCalendarDiary();
   const { setSelectedDiary } = useDiaryStore();
   const { handleEdit, handleShare, handleDelete } = useDiaryOptions();
 
   const renderDiaryContent = (): React.ReactElement => {
+    if (isFutureView) {
+      return <p className="body2 text-gray-400 text-center mt-21.25">작성된 일기가 없어요.</p>;
+    }
+
     if (diary) {
       return (
         <Link href={`/diary/${diary.id}`} onClick={() => setSelectedDiary(diary)}>
@@ -43,7 +47,9 @@ export const CalendarDiarySection = (): React.ReactElement => {
   return (
     <div className="px-5 pt-6">
       <p className="subhead5 mb-4 text-gray-700">
-        {format(selectedDate, "M월 d일 EEEE", { locale: ko })}
+        {isFutureView
+          ? format(viewDate, "M월", { locale: ko })
+          : format(selectedDate, "M월 d일 EEEE", { locale: ko })}
       </p>
       {renderDiaryContent()}
     </div>
