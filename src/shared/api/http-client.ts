@@ -1,3 +1,5 @@
+import { useAuthStore } from "@/store/auth/useAuthStore";
+
 import { ApiError, type ApiErrorCode } from "./error";
 
 export const BASE_URL: string = `${process.env.NEXT_PUBLIC_API_BASE_URL ?? ""}/api`;
@@ -19,7 +21,8 @@ type RequestOptions = Omit<RequestInit, "body"> & {
 };
 
 const request = async <T>(path: string, options: RequestOptions = {}): Promise<T> => {
-  const { body, token, headers, ...rest } = options;
+  const { body, token: explicitToken, headers, ...rest } = options;
+  const token = explicitToken ?? useAuthStore.getState().accessToken ?? undefined;
 
   const response = await fetch(`${BASE_URL}${path}`, {
     ...rest,
