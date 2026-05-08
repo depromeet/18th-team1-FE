@@ -5,7 +5,7 @@ import { type ReactNode, useEffect, useState } from "react";
 
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
-import { refreshAccessToken } from "../api/authApi";
+import { fetchDevToken, refreshAccessToken } from "../api/authApi";
 
 // /login으로 시작하는 경로는 인증 없이 접근 허용 (/login/callback 포함)
 const PUBLIC_PATHS = ["/login"];
@@ -37,17 +37,34 @@ export const AuthGuard = ({ children }: AuthGuardProps): React.ReactElement => {
       return;
     }
 
-    // 토큰 없으면 httpOnly 쿠키로 재발급 시도, 실패 시 로그인 페이지로 이동
+    // 토큰 없으면 토큰 발급 시도, 실패 시 로그인 페이지로 이동
     setIsReady(false);
-    refreshAccessToken()
-      .then(({ accessToken: newToken }) => {
-        setAuth(newToken);
-        setIsReady(true);
-      })
-      .catch(() => {
-        clearAuth();
-        router.replace("/login");
-      });
+
+    const initToken = async (): Promise<void> => {
+      // 개발 모드에서는 dev-token으로 임시 토큰 발급 시도
+      if (process.env.NODE_ENV === "development") {
+        try {
+          const { accessToken: devToken } = await fetchDevToken();
+          setAuth(devToken);
+          setIsReady(true);
+          return;
+        } catch {
+          // dev-token 실패 시 일반 refresh 흐름으로 계속
+        }
+      }
+
+      refreshAccessToken()
+        .then(({ accessToken: newToken }) => {
+          setAuth(newToken);
+          setIsReady(true);
+        })
+        .catch(() => {
+          clearAuth();
+          router.replace("/login");
+        });
+    };
+
+    initToken();
   }, [pathname, router, setAuth, clearAuth]);
 
   if (!isReady) {

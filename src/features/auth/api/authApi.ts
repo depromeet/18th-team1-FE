@@ -7,6 +7,9 @@ type RefreshResponse = {
 export const refreshAccessToken = (): Promise<RefreshResponse> =>
   httpClient.post<RefreshResponse>("/auth/refresh");
 
+export const fetchDevToken = (): Promise<RefreshResponse> =>
+  httpClient.get<RefreshResponse>("/auth/dev-token");
+
 export const redirectToKakaoLogin = (): void => {
   window.location.href = `${BASE_URL}/oauth2/authorization/kakao`;
 };
