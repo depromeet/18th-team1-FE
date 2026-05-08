@@ -2,34 +2,35 @@
 
 import { useRouter } from "next/navigation";
 
-import type { RecommendedSentence } from "@/entities/sentence";
-import { SentenceCard } from "@/entities/sentence";
+import { SentenceCard, useSentenceQuotesQuery } from "@/entities/sentence";
 import { Button } from "@/shared/ui/button";
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 
-interface SentenceDetailViewProps {
-  sentence: RecommendedSentence;
-}
-
-export const SentenceDetailView = ({ sentence }: SentenceDetailViewProps): React.ReactElement => {
+export const SentenceDetailView = (): React.ReactElement => {
   const router = useRouter();
+  const { selectedSituationIds, selectedSentenceTypeIds, situationDescription } =
+    useDiaryEmotionStore();
+
+  const { data } = useSentenceQuotesQuery({
+    emotionTagIds: selectedSituationIds.map(Number),
+    toneTagIds: selectedSentenceTypeIds.map(Number),
+    userContext: situationDescription || undefined,
+  });
+
+  const { dailyRecommendationId, quote } = data;
 
   const handleNext = (): void => {
-    router.push(`/diary/write?sentenceId=${sentence.id}`);
+    router.push(`/diary/write?sentenceId=${quote.quoteId}`);
   };
 
   const handleViewList = (): void => {
-    router.push(`/diary/sentence/${sentence.id}/list`);
+    router.push(`/diary/sentence/list?dailyRecommendationId=${dailyRecommendationId}`);
   };
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1">
-        <SentenceCard
-          bookTitle={sentence.bookTitle}
-          bookAuthor={sentence.bookAuthor}
-          quote={sentence.quote}
-          date={sentence.date}
-        />
+        <SentenceCard bookTitle={quote.title} bookAuthor={quote.author} quote={quote.content} />
       </div>
       <section className="flex shrink-0 flex-col items-center gap-2 px-5 pb-8 pt-2">
         <Button label="다음" onClick={handleNext} />
