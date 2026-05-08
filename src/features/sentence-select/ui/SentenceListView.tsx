@@ -37,7 +37,7 @@ export const SentenceListView = (): React.ReactElement => {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-y-auto px-5 pt-4.5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex-1 overflow-y-auto px-5 pt-4.5 pb-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex flex-col gap-3.5">
           {visibleQuotes.map((quote) => (
             <SentenceListCard
@@ -54,7 +54,8 @@ export const SentenceListView = (): React.ReactElement => {
           ))}
         </div>
       </div>
-      <section className="shrink-0 bg-gray-0 px-5 pb-8">
+      <section className="relative shrink-0 bg-gray-0 px-5 pb-8">
+        <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-linear-to-b from-transparent to-gray-0" />
         {canLoadMore ? (
           <DoubleButton
             secondaryLabel="문장 더 불러오기"
