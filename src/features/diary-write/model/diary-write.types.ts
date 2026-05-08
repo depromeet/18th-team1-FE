@@ -1,5 +1,5 @@
 export interface CreateDiaryRequest {
-  emotionIntensity?: number;
+  emotionValue: number;
   tagIds?: number[];
   dailyRecommendationId?: number;
   quoteId?: number;

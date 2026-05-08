@@ -27,7 +27,7 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
       const { selectedEmotionId, selectedSituationIds, selectedQuote } =
         useDiaryEmotionStore.getState();
 
-      const emotionIntensity = selectedEmotionId ? getEmotionValue(selectedEmotionId) : undefined;
+      const emotionValue = getEmotionValue(selectedEmotionId);
 
       const tagIds = selectedSituationIds.map(Number);
 
@@ -45,7 +45,7 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
       }
 
       const { diaryId } = await fetchCreateDiary({
-        emotionIntensity,
+        emotionValue,
         tagIds: tagIds.length > 0 ? tagIds : undefined,
         dailyRecommendationId: selectedQuote?.dailyRecommendationId,
         quoteId,

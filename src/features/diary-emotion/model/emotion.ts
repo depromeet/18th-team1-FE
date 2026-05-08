@@ -24,10 +24,10 @@ export const EMOTIONS: Emotion[] = [
   { id: "very-bad", label: "아주 별로에요", category: "bad" },
 ];
 
-// EMOTIONS 배열 순서를 1~100 수치로 변환 (긍정 → 부정)
+// 선택한 책의 스택 수 기반 1~9 수치로 변환 (위 책=9, 아래 책=1)
 export const getEmotionValue = (emotionId: string | null): number => {
-  if (!emotionId) return 50;
+  if (!emotionId) return 5;
   const index = EMOTIONS.findIndex((e) => e.id === emotionId);
-  if (index === -1) return 50;
-  return Math.round(100 - (index / (EMOTIONS.length - 1)) * 99);
+  if (index === -1) return 5;
+  return EMOTIONS.length - index;
 };
