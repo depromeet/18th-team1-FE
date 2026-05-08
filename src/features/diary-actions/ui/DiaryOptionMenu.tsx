@@ -35,7 +35,7 @@ export const DiaryOptionMenu = ({
     <DropdownMenuContent
       align="end"
       sideOffset={22}
-      className="flex min-w-33 flex-col gap-5 rounded-[20px] border-0 bg-background p-5 shadow-modal"
+      className="flex min-w-33 flex-col gap-4 rounded-[20px] border-0 bg-background p-4 shadow-modal"
       onClick={(e): void => e.stopPropagation()}
     >
       <DropdownMenuItem
@@ -43,21 +43,21 @@ export const DiaryOptionMenu = ({
         onClick={onEdit}
       >
         <IcEdit size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
-        <span className="body2">수정하기</span>
+        <span>수정하기</span>
       </DropdownMenuItem>
       <DropdownMenuItem
         className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"
         onClick={onShare}
       >
         <IcShare2 size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
-        <span className="body2">공유하기</span>
+        <span>공유하기</span>
       </DropdownMenuItem>
       <DropdownMenuItem
         className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-destructive focus:text-destructive"
         onClick={onDelete}
       >
         <IcTrash size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-destructive" />
-        <span className="body2">삭제</span>
+        <span>삭제</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
