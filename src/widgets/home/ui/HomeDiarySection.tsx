@@ -38,7 +38,7 @@ export const HomeDiarySection = (): React.ReactElement => {
     const diaryExists = await fetchTodayDiaryExists();
     if (diaryExists.exists && diaryExists.diaryId !== null) {
       // 오늘 작성한 일기가 있으면 해당 일기로 이동
-      router.push(`/diary/${diaryExists.diaryId}`);
+      //router.push(`/diary/${diaryExists.diaryId}`);
       return;
     }
 
