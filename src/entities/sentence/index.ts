@@ -1,8 +1,4 @@
 export {
-  useAdditionalSentenceQuotesMutation,
-  useCreateSentenceQuotesMutation,
-} from "./api/mutations";
-export {
   sentenceKeys,
   useAdditionalSentenceQuotesQuery,
   useSentenceQuotesQuery,
