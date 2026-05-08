@@ -32,8 +32,8 @@ export const SituationDescriptionStep = ({
   );
 
   useEffect(() => {
-    onValidChange(situationDescription.trim() === "");
-  }, [situationDescription, onValidChange]);
+    onValidChange(false);
+  }, [onValidChange]);
 
   useEffect(() => {
     const textarea = textareaRef.current;

@@ -32,7 +32,7 @@ export const SentenceDetailView = (): React.ReactElement => {
     {
       emotionTagIds: emotionTagIds.map(Number),
       toneTagIds: toneTagIds.map(Number),
-      userContext: situationDescription || undefined,
+      userContext: situationDescription,
     },
     cachedResponse ?? undefined,
   );
