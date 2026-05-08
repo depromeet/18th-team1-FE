@@ -18,17 +18,18 @@ export const DiaryWriteView = (): React.ReactElement | null => {
   const { text, handleTextChange } = useDiaryWrite();
   const { photoUrl, photoFile, inputRef, handleClick, handleDelete, handleFileChange } =
     usePhotoSelect();
-  const { mutateAsync, isPending } = useCreateDiaryMutation();
+  const { mutate, isPending } = useCreateDiaryMutation();
 
   if (!selectedQuote) return null;
 
-  const handleSubmit = async (): Promise<void> => {
-    const diaryId = await mutateAsync({
-      quoteId: selectedQuote.quoteId,
-      content: text || null,
-      photoFile,
-    });
-    router.push(`/diary/complete?diaryId=${diaryId}`);
+  const handleSubmit = (): void => {
+    mutate(
+      { quoteId: selectedQuote.quoteId, content: text || null, photoFile },
+      {
+        onSuccess: (diaryId: number) => router.push(`/diary/complete?diaryId=${diaryId}`),
+        onError: () => alert("일기 저장에 실패했어요. 다시 시도해주세요."),
+      },
+    );
   };
 
   return (
