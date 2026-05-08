@@ -2,13 +2,14 @@
 
 import { useRouter } from "next/navigation";
 
-import type { Diary } from "@/entities/diary";
-import { DiaryListSection } from "@/entities/diary";
-import { useHomeRandomQuery, useHomeSummaryQuery } from "@/entities/home";
+import { type Diary, DiaryListSection } from "@/entities/diary";
 import type { RecommendedSentence } from "@/entities/sentence";
-
-import { HomeBanner } from "./HomeBanner";
-import { RandomSentenceBanner } from "./RandomSentenceBanner";
+import {
+  HomeBanner,
+  RandomSentenceBanner,
+  useHomeRandomQuery,
+  useHomeSummaryQuery,
+} from "@/features/home";
 
 export const HomeDiarySection = (): React.ReactElement => {
   const router = useRouter();

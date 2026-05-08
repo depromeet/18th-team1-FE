@@ -34,7 +34,6 @@ export const RandomSentenceBanner = ({
   }
 
   const firstSentence = sentences[0];
-  // 마지막에 첫 슬라이드 클론을 추가해 끝에서 처음으로 자연스럽게 연결
   const slides =
     sentences.length > 1 && firstSentence
       ? [
