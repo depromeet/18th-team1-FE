@@ -14,6 +14,7 @@ export { IcNextCard } from "./IcNextCard";
 export { IcOption } from "./IcOption";
 export { IcOptionHeader } from "./IcOptionHeader";
 export { IcPlus } from "./IcPlus";
+export { IcProfileNone } from "./IcProfileNone";
 export { IcReport } from "./IcReport";
 export { IcSetting } from "./IcSetting";
 export { IcShare } from "./IcShare";
