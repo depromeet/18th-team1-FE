@@ -2,35 +2,43 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { Button } from "@/shared/ui/button";
 import { IconButton } from "@/shared/ui/icon-button";
 import { IcShare } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 
+import { fetchDiaryShareImage } from "../api/diaryCompleteApi";
 import { formatDate } from "../lib/formatDate";
-import { shareDiaryImage } from "../lib/shareToInstagram";
 
 interface DiaryCompleteViewProps {
-  diaryId: string;
+  diaryId: number;
 }
 
-export const DiaryCompleteView = ({
-  diaryId: _diaryId,
-}: DiaryCompleteViewProps): React.ReactElement => {
+export const DiaryCompleteView = ({ diaryId }: DiaryCompleteViewProps): React.ReactElement => {
   const router = useRouter();
   const today = formatDate(new Date());
+  const [isSharing, setIsSharing] = useState(false);
 
   const handleNext = (): void => {
     router.push("/");
   };
 
-  // TODO: API 연동 시 실제 imageUrl로 교체
   const handleShare = async (): Promise<void> => {
+    if (isSharing) return;
+    setIsSharing(true);
     try {
-      await shareDiaryImage({ imageUrl: "/images/diary-write.png" });
-    } catch {
+      const blob = await fetchDiaryShareImage(diaryId);
+      const file = new File([blob], "diary-share.png", { type: "image/png" });
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file] });
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
       alert("공유에 실패했어요. 다시 시도해주세요.");
+    } finally {
+      setIsSharing(false);
     }
   };
 
