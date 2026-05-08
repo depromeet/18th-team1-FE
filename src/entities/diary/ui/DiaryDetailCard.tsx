@@ -60,11 +60,13 @@ export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps): React.ReactEle
         </div>
       </div>
       <div className="h-px w-full bg-border" />
-      <div className="flex flex-wrap gap-1.5">
-        {emotions.map((emotion) => (
-          <DiaryChip key={emotion} label={emotion} variant={emotionIntensity} />
-        ))}
-      </div>
+      {emotions && emotions.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {emotions.map((emotion) => (
+            <DiaryChip key={emotion} label={emotion} variant={emotionIntensity} />
+          ))}
+        </div>
+      )}
       {content != null && <p className="body3 whitespace-pre-wrap text-gray-500">{content}</p>}
       {diaryImageUrl != null && (
         <div className="relative h-32.5 w-32.5 shrink-0 overflow-hidden rounded-lg bg-gray-200">

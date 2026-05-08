@@ -5,6 +5,7 @@ import { type UseMutationResult, useMutation, useQueryClient } from "@tanstack/r
 import { getEmotionValue } from "@/features/diary-emotion";
 import { fetchPresignedUrl, uploadImageToGcs } from "@/shared/api/image-upload";
 import {
+  clearDiarySessionStorage,
   loadRecommendationParams,
   useDiaryEmotionStore,
 } from "@/store/diary-emotion/useDiaryEmotionStore";
@@ -63,6 +64,7 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
     },
     onSuccess: (): void => {
       useDiaryEmotionStore.getState().reset();
+      clearDiarySessionStorage();
       queryClient.invalidateQueries({ queryKey: ["home"] });
     },
   });

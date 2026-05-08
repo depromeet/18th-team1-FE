@@ -41,6 +41,12 @@ export const loadQuotesResponse = <T>(): T | null => {
   return stored ? (JSON.parse(stored) as T) : null;
 };
 
+export const clearDiarySessionStorage = (): void => {
+  if (typeof window === "undefined") return;
+  sessionStorage.removeItem(RECOMMENDATION_PARAMS_KEY);
+  sessionStorage.removeItem(QUOTES_RESPONSE_KEY);
+};
+
 type DiaryEmotionFormState = {
   selectedEmotionId: string | null;
   selectedSituationIds: string[];

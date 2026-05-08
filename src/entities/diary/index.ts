@@ -1,9 +1,17 @@
 export type { TodayDiaryExistsResponse } from "./api/diaryApi";
-export { fetchTodayDiaryExists } from "./api/diaryApi";
-export type { Diary, DiaryDetail, EmotionIntensity, TodayDiary } from "./model/diary.types";
+export { fetchDiaries, fetchDiaryDetail, fetchTodayDiaryExists } from "./api/diaryApi";
+export { diaryKeys, useDiariesQuery, useDiaryDetailQuery } from "./api/diaryQueries";
+export type {
+  Diary,
+  DiaryDetail,
+  DiaryListItem,
+  DiaryListResponse,
+  EmotionIntensity,
+  TodayDiary,
+} from "./model/diary.types";
 export { useDiaryStore } from "./model/useDiaryStore";
 export { DiaryCard } from "./ui/DiaryCard";
 export { DiaryChip } from "./ui/DiaryChip";
 export { DiaryDetailCard } from "./ui/DiaryDetailCard";
-export { DiaryListItem } from "./ui/DiaryListItem";
+export { DiaryListItem as DiaryListItemComponent } from "./ui/DiaryListItem";
 export { DiaryListSection } from "./ui/DiaryListSection";

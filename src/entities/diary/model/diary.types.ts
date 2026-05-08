@@ -17,16 +17,26 @@ export interface TodayDiary {
   note: string;
 }
 
-export interface DiaryDetail {
+export interface DiaryListItem {
   id: number;
   createdAt: string;
+  content: string | null;
+  emotionValue: number;
   quoteContent: string;
-  title: string;
-  author: string;
-  emotionIntensity: EmotionIntensity;
-  emotions: string[];
-  content?: string | null;
   coverImageUrl: string;
+  author: string;
+  title: string;
+}
+
+export interface DiaryListResponse {
+  start: string;
+  end: string;
+  diaries: DiaryListItem[];
+}
+
+export interface DiaryDetail extends DiaryListItem {
   diaryImageUrl?: string | null;
   aladinLink?: string;
+  emotionIntensity?: EmotionIntensity;
+  emotions?: string[];
 }
