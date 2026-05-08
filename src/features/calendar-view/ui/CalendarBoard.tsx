@@ -66,10 +66,14 @@ export const CalendarBoard = ({
                   !isSelected && isFutureDate && "cursor-default text-gray-200",
                 )}
               >
-                {isTodayDate && (
-                  <span className="absolute top-1.5 size-1 rounded-full bg-current" />
+                {isTodayDate && !isSelected && (
+                  <span className="absolute text-key-secondary2 top-1.5 size-1 rounded-full bg-current" />
                 )}
-                <span className="subhead2">{getDate(day)}</span>
+                <span
+                  className={cn("subhead2", isTodayDate && !isSelected && "text-key-secondary2")}
+                >
+                  {getDate(day)}
+                </span>
               </button>
             </div>
           );
