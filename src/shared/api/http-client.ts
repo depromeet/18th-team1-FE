@@ -71,11 +71,11 @@ const redirectToLogin = (): void => {
  *
  * @param isRetry - true이면 401 재시도를 하지 않아 무한 루프를 방지
  */
-const request = async <T>(
+const executeRawRequest = async (
   path: string,
   options: RequestOptions = {},
   isRetry = false,
-): Promise<T> => {
+): Promise<Response> => {
   const { body, token: explicitToken, headers, ...rest } = options;
   const token = explicitToken ?? useAuthStore.getState().accessToken;
 
@@ -83,7 +83,6 @@ const request = async <T>(
     ...rest,
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
@@ -93,7 +92,7 @@ const request = async <T>(
   if (response.status === 401 && !isRetry) {
     try {
       const newToken = await refreshAccessToken();
-      return request<T>(path, { ...options, token: newToken }, true);
+      return executeRawRequest(path, { ...options, token: newToken }, true);
     } catch (error) {
       if (error instanceof ApiError && error.code === "UNAUTHORIZED") {
         redirectToLogin();
@@ -107,7 +106,20 @@ const request = async <T>(
     throw new ApiError(errorCode, response.status, `HTTP Error ${response.status}`);
   }
 
+  return response;
+};
+
+const request = async <T>(path: string, options: RequestOptions = {}): Promise<T> => {
+  const response = await executeRawRequest(path, {
+    ...options,
+    headers: { "Content-Type": "application/json", ...options.headers },
+  });
   return response.json() as Promise<T>;
+};
+
+const requestBlob = async (path: string, options: RequestOptions = {}): Promise<Blob> => {
+  const response = await executeRawRequest(path, options);
+  return response.blob();
 };
 
 export const httpClient = {
@@ -116,4 +128,7 @@ export const httpClient = {
 
   post: <T>(path: string, body?: unknown, options?: RequestOptions): Promise<T> =>
     request<T>(path, { ...options, method: "POST", body }),
+
+  getBlob: (path: string, options?: RequestOptions): Promise<Blob> =>
+    requestBlob(path, { ...options, method: "GET" }),
 };
