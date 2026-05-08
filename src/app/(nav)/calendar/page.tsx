@@ -11,8 +11,8 @@ const CalendarPage = (): React.ReactElement => {
         <UserProfileCard {...MOCK_USER_PROFILE} />
         <Suspense>
           <CalendarWidget />
+          <CalendarDiarySection />
         </Suspense>
-        <CalendarDiarySection />
       </div>
     </div>
   );

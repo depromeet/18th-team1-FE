@@ -30,9 +30,24 @@ export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps): React.ReactEle
   return (
     <div className="relative flex w-full flex-col gap-4 rounded-2xl bg-gray-0 p-5">
       <div className="flex flex-col gap-4">
-        <div className="relative h-21.5 w-15 shrink-0 overflow-hidden rounded-[4px]">
-          {coverImageUrl && (
-            <Image alt={title} src={coverImageUrl} fill sizes="3.75rem" className="object-cover" />
+        <div className="flex justify-between items-start">
+          <div className="relative h-21.5 w-15 shrink-0 overflow-hidden rounded-[4px]">
+            {coverImageUrl && (
+              <Image
+                alt={title}
+                src={coverImageUrl}
+                fill
+                sizes="3.75rem"
+                className="object-cover"
+              />
+            )}
+          </div>
+          {aladinLink && (
+            <IconButton
+              icon={<IcWrite className="text-gray-400" />}
+              className="w-7 h-7 bg-gray-100 rounded-[4.67px]"
+              onClick={handleAladinLinkOpen}
+            />
           )}
         </div>
         <div className="flex flex-col gap-2.5">
@@ -44,15 +59,6 @@ export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps): React.ReactEle
           </div>
         </div>
       </div>
-      {aladinLink && (
-        <div className="absolute right-2.5 top-5">
-          <IconButton
-            icon={<IcWrite className="text-gray-400" />}
-            className="w-7 h-7 bg-gray-100 rounded-[4.67px]"
-            onClick={handleAladinLinkOpen}
-          />
-        </div>
-      )}
       <div className="h-px w-full bg-border" />
       <div className="flex flex-wrap gap-1.5">
         {emotions.map((emotion) => (

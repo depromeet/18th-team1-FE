@@ -17,20 +17,14 @@ export const CalendarModeModal = ({
   onSelect,
 }: CalendarModeModalProps): React.ReactElement => {
   return (
-    <div className="flex flex-col gap-3.5 rounded-[20px] bg-gray-0 p-4 shadow-[0_0_30px_rgba(0,0,0,0.10)]">
+    <div className="flex flex-col gap-4 rounded-[20px] bg-gray-0 py-4 pl-4 pr-6 shadow-[0_0_30px_rgba(0,0,0,0.10)]">
       {VIEW_MODE_OPTIONS.map(({ label, value }) => (
-        <div key={value} className="flex items-center gap-2">
+        <label key={value} htmlFor={value} className="flex cursor-pointer items-center gap-2.5">
           <Checkbox id={value} checked={mode === value} onCheckedChange={() => onSelect(value)} />
-          <label
-            htmlFor={value}
-            className={cn(
-              "body2 cursor-pointer",
-              mode === value ? "text-key-secondary2" : "text-gray-300",
-            )}
-          >
+          <span className={cn("body1", mode === value ? "text-key-secondary2" : "text-gray-300")}>
             {label}
-          </label>
-        </div>
+          </span>
+        </label>
       ))}
     </div>
   );
