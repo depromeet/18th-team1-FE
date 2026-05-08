@@ -30,11 +30,13 @@ export const DiaryCard = ({ diary, action }: DiaryCardProps): React.ReactElement
       </div>
       {action && <div className="absolute right-2.5 top-5 -rotate-90">{action}</div>}
       <div className="h-px w-full bg-border" />
-      <div className="flex flex-wrap gap-1.5">
-        {emotions.map((emotion) => (
-          <DiaryChip key={emotion} label={emotion} />
-        ))}
-      </div>
+      {emotions && emotions.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {emotions.map((emotion) => (
+            <DiaryChip key={emotion} label={emotion} />
+          ))}
+        </div>
+      )}
       {content != null && <p className="body3 whitespace-pre-wrap text-gray-500">{content}</p>}
       {diaryImageUrl != null && (
         <div className="relative h-17 w-17 shrink-0 overflow-hidden rounded-lg bg-gray-200">

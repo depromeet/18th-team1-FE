@@ -1,23 +1,33 @@
 "use client";
 
-import { format } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import { useState } from "react";
 import type { EmotionIntensity } from "@/entities/diary";
+import { useDiariesQuery } from "@/entities/diary";
 import type { CalendarMode } from "@/features/calendar-view";
 import { CalendarBoard, CalendarModeModal, useCalendar } from "@/features/calendar-view";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcCalBack, IcCalNext, IcFilter } from "@/shared/ui/icons";
 
-const DIARY_INTENSITY_BY_DATE: Record<string, EmotionIntensity> = Object.fromEntries(
-  MOCK_CALENDAR_DIARIES.diaries.map((diary) => [
-    diary.createdAt,
-    diary.emotionIntensity as EmotionIntensity,
-  ]),
-);
+const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
+  if (emotionValue >= 4) return "HIGH";
+  if (emotionValue >= 3) return "MID";
+  return "LOW";
+};
 
 export const CalendarWidget = (): React.ReactElement => {
   const { viewDate, selectedDate, setSelectedDate, mode, setMode, days, handlePrev, handleNext } =
     useCalendar();
+
+  const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
+  const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
+  const { data } = useDiariesQuery(start, end);
+
+  const diaryIntensityByDate: Record<string, EmotionIntensity> = Object.fromEntries(
+    (data?.diaries ?? []).map((diary) => [
+      diary.createdAt,
+      getEmotionIntensity(diary.emotionValue),
+    ]),
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -68,7 +78,7 @@ export const CalendarWidget = (): React.ReactElement => {
         selectedDate={selectedDate}
         mode={mode}
         onSelectDate={setSelectedDate}
-        diaryIntensityByDate={DIARY_INTENSITY_BY_DATE}
+        diaryIntensityByDate={diaryIntensityByDate}
       />
     </div>
   );

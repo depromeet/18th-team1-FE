@@ -1,15 +1,15 @@
 "use client";
 
-import { format, isAfter, startOfDay, startOfMonth, startOfWeek } from "date-fns";
+import { endOfMonth, format, isAfter, startOfDay, startOfMonth, startOfWeek } from "date-fns";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import type { DiaryDetail } from "@/entities/diary";
+import type { DiaryListItem } from "@/entities/diary";
+import { useDiariesQuery } from "@/entities/diary";
 import type { CalendarMode } from "@/features/calendar-view";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { useCalendarStore } from "@/store/calendar/useCalendarStore";
 
 interface UseCalendarDiaryReturn {
-  diary: DiaryDetail | undefined;
+  diary: DiaryListItem | undefined;
   selectedDate: Date;
   viewDate: Date;
   isFutureView: boolean;
@@ -20,8 +20,12 @@ export const useCalendarDiary = (): UseCalendarDiaryReturn => {
   const searchParams = useSearchParams();
   const mode: CalendarMode = searchParams.get("mode") === "monthly" ? "monthly" : "weekly";
 
+  const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
+  const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
+  const { data } = useDiariesQuery(start, end);
+
   const selectedDateStr = format(selectedDate, "yyyy-MM-dd");
-  const diary = MOCK_CALENDAR_DIARIES.diaries.find((entry) => entry.createdAt === selectedDateStr);
+  const diary = data?.diaries.find((entry) => entry.createdAt === selectedDateStr);
 
   const isFutureView = useMemo(() => {
     const today = startOfDay(new Date());
