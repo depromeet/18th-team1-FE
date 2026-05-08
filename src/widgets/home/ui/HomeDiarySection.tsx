@@ -24,17 +24,13 @@ export const HomeDiarySection = (): React.ReactElement => {
     dotColor: "",
   }));
 
-  const sentences: RecommendedSentence[] = randomQuote
-    ? [
-        {
-          id: String(randomQuote.quoteId),
-          quote: randomQuote.content,
-          bookTitle: randomQuote.title,
-          bookAuthor: randomQuote.author,
-          date: "",
-        },
-      ]
-    : [];
+  const sentences: RecommendedSentence[] = (randomQuote ?? []).map((quote) => ({
+    id: String(quote.quoteId),
+    quote: quote.content,
+    bookTitle: quote.title,
+    bookAuthor: quote.author,
+    date: "",
+  }));
 
   const hasTodayDiary = summary?.todayDiary !== null && summary?.todayDiary !== undefined;
   const todayDiaryId = summary?.todayDiary?.diaryId;
