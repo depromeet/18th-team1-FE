@@ -3,15 +3,20 @@
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { Header } from "@/widgets/header";
 
 const SentenceLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
   const pathname = usePathname();
   const router = useRouter();
+  const reset = useDiaryEmotionStore((state) => state.reset);
 
   const handleBack = pathname.endsWith("/list")
     ? (): void => router.push("/diary/sentence")
-    : (): void => router.push("/");
+    : (): void => {
+        reset();
+        router.push("/");
+      };
 
   return (
     <div className="flex h-full flex-col bg-gray-0">

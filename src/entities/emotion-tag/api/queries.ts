@@ -13,12 +13,12 @@ export const toneTagKeys = {
   all: ["toneTags"] as const,
 };
 
-// 감정 강도값(1~100)에 따른 감정 태그 목록 조회
+// 감정 강도값(1~9)에 따른 감정 태그 목록 조회
 export const useEmotionTagsQuery = (value: number) =>
   useQuery({
     queryKey: emotionTagKeys.byValue(value),
     queryFn: () => fetchEmotionTags(value),
-    enabled: value >= 1 && value <= 100,
+    enabled: value >= 1 && value <= 9,
   });
 
 // 톤 태그 목록 조회 — 변경 없는 정적 데이터이므로 staleTime 무한

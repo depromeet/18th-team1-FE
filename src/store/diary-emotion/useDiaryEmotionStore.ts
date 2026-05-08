@@ -3,15 +3,25 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
+type SelectedQuote = {
+  dailyRecommendationId: number;
+  quoteId: number;
+  content: string;
+  title: string;
+  author: string;
+};
+
 type DiaryEmotionFormState = {
   selectedEmotionId: string | null;
   selectedSituationIds: string[];
   situationDescription: string;
   selectedSentenceTypeIds: string[];
+  selectedQuote: SelectedQuote | null;
   setSelectedEmotionId: (id: string | null) => void;
   setSelectedSituationIds: (ids: string[]) => void;
   setSituationDescription: (text: string) => void;
   setSelectedSentenceTypeIds: (ids: string[]) => void;
+  setSelectedQuote: (quote: SelectedQuote | null) => void;
   reset: () => void;
 };
 
@@ -20,6 +30,7 @@ const INITIAL_STATE = {
   selectedSituationIds: [] as string[],
   situationDescription: "",
   selectedSentenceTypeIds: [] as string[],
+  selectedQuote: null,
 };
 
 export const useDiaryEmotionStore = create<DiaryEmotionFormState>()(
@@ -38,6 +49,9 @@ export const useDiaryEmotionStore = create<DiaryEmotionFormState>()(
         },
         setSelectedSentenceTypeIds: (ids: string[]): void => {
           set({ selectedSentenceTypeIds: ids }, false, "setSelectedSentenceTypeIds");
+        },
+        setSelectedQuote: (quote: SelectedQuote | null): void => {
+          set({ selectedQuote: quote }, false, "setSelectedQuote");
         },
         reset: (): void => {
           set(INITIAL_STATE, false, "reset");
