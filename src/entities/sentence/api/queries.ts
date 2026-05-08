@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import type { SentenceQuotesRequest } from "../model/sentence.types";
+import type { SentenceQuotesRequest, SentenceQuotesResponse } from "../model/sentence.types";
 import {
   createSentenceQuotes,
   fetchAdditionalSentenceQuotes,
@@ -24,12 +24,16 @@ export const useTodaySentenceExistsQuery = () =>
   });
 
 // 감정/톤 태그 기반 추천 문장 조회 — Suspense 지원
-export const useSentenceQuotesQuery = (req: SentenceQuotesRequest) =>
+export const useSentenceQuotesQuery = (
+  req: SentenceQuotesRequest,
+  initialData?: SentenceQuotesResponse,
+) =>
   useSuspenseQuery({
     queryKey: sentenceKeys.quote(req),
     queryFn: () => createSentenceQuotes(req),
     staleTime: Number.POSITIVE_INFINITY,
     retry: false,
+    initialData,
   });
 
 // dailyRecommendationId 기준 추가 문장 목록 조회 — Suspense 지원

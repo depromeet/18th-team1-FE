@@ -1,3 +1,5 @@
+export type { TodayDiaryExistsResponse } from "./api/diaryApi";
+export { fetchTodayDiaryExists } from "./api/diaryApi";
 export type { Diary, DiaryDetail, EmotionIntensity, TodayDiary } from "./model/diary.types";
 export { useDiaryStore } from "./model/useDiaryStore";
 export { DiaryCard } from "./ui/DiaryCard";

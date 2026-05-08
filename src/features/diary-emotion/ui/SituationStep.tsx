@@ -1,9 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { useEmotionTagsQuery } from "@/entities/emotion-tag";
-import { MOCK_SITUATIONS } from "@/mock";
 import { Text } from "@/shared/ui/text";
 import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { getEmotionValue } from "../model/emotion";
@@ -14,11 +14,15 @@ interface SituationStepProps {
 }
 
 export const SituationStep = ({ onValidChange }: SituationStepProps): React.ReactElement => {
+  const router = useRouter();
   const { selectedEmotionId, selectedSituationIds, setSelectedSituationIds } =
     useDiaryEmotionStore();
   const { data, isError } = useEmotionTagsQuery(getEmotionValue(selectedEmotionId));
-  const sourceTags = isError ? MOCK_SITUATIONS : (data?.tags ?? []);
-  const tags = sourceTags.map((tag) => ({ id: String(tag.id), label: tag.label }));
+  const tags = data?.tags.map((tag) => ({ id: String(tag.id), label: tag.label })) ?? [];
+
+  useEffect(() => {
+    if (isError) router.replace("/");
+  }, [isError, router]);
 
   useEffect(() => {
     onValidChange(selectedSituationIds.length === 0);

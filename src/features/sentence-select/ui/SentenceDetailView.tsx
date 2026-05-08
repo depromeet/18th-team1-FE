@@ -2,22 +2,42 @@
 
 import { useRouter } from "next/navigation";
 
-import { SentenceCard, useSentenceQuotesQuery } from "@/entities/sentence";
+import {
+  SentenceCard,
+  type SentenceQuotesResponse,
+  useSentenceQuotesQuery,
+} from "@/entities/sentence";
 import { Button } from "@/shared/ui/button";
-import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
+import {
+  loadQuotesResponse,
+  loadRecommendationParams,
+  saveQuotesResponse,
+  useDiaryEmotionStore,
+} from "@/store/diary-emotion/useDiaryEmotionStore";
 
 export const SentenceDetailView = (): React.ReactElement => {
   const router = useRouter();
   const { selectedSituationIds, selectedSentenceTypeIds, situationDescription, setSelectedQuote } =
     useDiaryEmotionStore();
 
-  const { data } = useSentenceQuotesQuery({
-    emotionTagIds: selectedSituationIds.map(Number),
-    toneTagIds: selectedSentenceTypeIds.map(Number),
-    userContext: situationDescription || undefined,
-  });
+  const savedParams = loadRecommendationParams();
+  const emotionTagIds =
+    selectedSituationIds.length > 0 ? selectedSituationIds : (savedParams?.emotionTagIds ?? []);
+  const toneTagIds =
+    selectedSentenceTypeIds.length > 0 ? selectedSentenceTypeIds : (savedParams?.toneTagIds ?? []);
 
+  const cachedResponse = loadQuotesResponse<SentenceQuotesResponse>();
+
+  const { data } = useSentenceQuotesQuery(
+    {
+      emotionTagIds: emotionTagIds.map(Number),
+      toneTagIds: toneTagIds.map(Number),
+      userContext: situationDescription || undefined,
+    },
+    cachedResponse ?? undefined,
+  );
   const { dailyRecommendationId, quote } = data;
+  saveQuotesResponse(data);
 
   const handleNext = (): void => {
     setSelectedQuote({
@@ -27,7 +47,7 @@ export const SentenceDetailView = (): React.ReactElement => {
       title: quote.title,
       author: quote.author,
     });
-    router.push(`/diary/write?sentenceId=${quote.quoteId}`);
+    router.push("/diary/write");
   };
 
   const handleViewList = (): void => {
@@ -39,7 +59,7 @@ export const SentenceDetailView = (): React.ReactElement => {
       <div className="flex-1">
         <SentenceCard bookTitle={quote.title} bookAuthor={quote.author} quote={quote.content} />
       </div>
-      <section className="flex shrink-0 flex-col items-center gap-2 px-5 pb-8 pt-2">
+      <section className="flex shrink-0 flex-col items-center gap-2 p-5">
         <Button label="다음" onClick={handleNext} />
         <Button
           label="다른 문장 더보기"
