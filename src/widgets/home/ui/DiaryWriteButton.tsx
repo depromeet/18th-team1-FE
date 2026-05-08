@@ -4,15 +4,18 @@ import { useRouter } from "next/navigation";
 
 interface DiaryWriteButtonProps {
   hasTodayDiary: boolean;
+  todayDiaryId?: number;
 }
 
-export const DiaryWriteButton = ({ hasTodayDiary }: DiaryWriteButtonProps): React.ReactElement => {
+export const DiaryWriteButton = ({
+  hasTodayDiary,
+  todayDiaryId,
+}: DiaryWriteButtonProps): React.ReactElement => {
   const router = useRouter();
 
   const handleClick = (): void => {
-    if (hasTodayDiary) {
-      // TODO: 일기 상세 보기 라우팅 설정 후 활성화
-      // router.push("/diary/:id");
+    if (hasTodayDiary && todayDiaryId !== undefined) {
+      router.push(`/diary/${todayDiaryId}`);
       return;
     }
     router.push("/diary/emotion");

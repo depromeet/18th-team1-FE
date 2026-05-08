@@ -5,11 +5,13 @@ import { DiaryWriteButton } from "./DiaryWriteButton";
 interface HomeBannerProps {
   hasTodayDiary: boolean;
   sentenceCount?: number;
+  todayDiaryId?: number;
 }
 
 export const HomeBanner = ({
   hasTodayDiary,
   sentenceCount = 0,
+  todayDiaryId,
 }: HomeBannerProps): React.ReactElement => (
   <div className="flex h-60 w-full shrink-0 flex-col justify-between bg-gray-100 px-5 py-5">
     <div className="flex flex-col gap-1">
@@ -21,7 +23,7 @@ export const HomeBanner = ({
       </Text>
     </div>
     <div className="self-end">
-      <DiaryWriteButton hasTodayDiary={hasTodayDiary} />
+      <DiaryWriteButton hasTodayDiary={hasTodayDiary} todayDiaryId={todayDiaryId} />
     </div>
   </div>
 );
