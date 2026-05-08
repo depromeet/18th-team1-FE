@@ -38,6 +38,8 @@ export const HomeDiarySection = (): React.ReactElement => {
 
   const hasTodayDiary = summary?.todayDiary !== null && summary?.todayDiary !== undefined;
   const todayDiaryId = summary?.todayDiary?.diaryId;
+  const bannerHref =
+    hasTodayDiary && todayDiaryId !== undefined ? `/diary/${todayDiaryId}` : "/diary/emotion";
 
   const handleDiaryItemPress = (diaryId: number): void => {
     router.push(`/diary/${diaryId}`);
@@ -48,7 +50,7 @@ export const HomeDiarySection = (): React.ReactElement => {
       <HomeBanner
         hasTodayDiary={hasTodayDiary}
         sentenceCount={summary?.totalDiaryCount ?? 0}
-        todayDiaryId={todayDiaryId}
+        href={bannerHref}
       />
       <RandomSentenceBanner sentences={sentences} />
       <DiaryListSection diaries={diaries} onPressItem={handleDiaryItemPress} />
