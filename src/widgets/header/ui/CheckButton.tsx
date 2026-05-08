@@ -4,18 +4,21 @@ import { IcCheck } from "@/shared/ui/icons";
 interface CheckButtonProps {
   isChecked: boolean;
   onClick: () => void;
+  disabled?: boolean;
   className?: string;
 }
 
 export const CheckButton = ({
   isChecked,
   onClick,
+  disabled,
   className,
 }: CheckButtonProps): React.ReactElement => {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         "flex size-7 items-center justify-center rounded-full transition-colors",
         isChecked ? "bg-gray-700" : "bg-gray-200",

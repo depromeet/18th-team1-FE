@@ -37,7 +37,7 @@ export const DiaryWriteView = (): React.ReactElement | null => {
       <div className="shrink-0">
         <Header
           title="일기"
-          right={<CheckButton isChecked={!isPending} onClick={handleSubmit} />}
+          right={<CheckButton isChecked={!isPending} disabled={isPending} onClick={handleSubmit} />}
         />
       </div>
       <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto px-5 pt-1.75 pb-24">
