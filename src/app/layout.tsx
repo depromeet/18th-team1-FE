@@ -26,8 +26,8 @@ const millingTrial = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "책 문장 일기",
-  description: "책 속 문장으로 나의 하루를 기록하는 웹 애플리케이션",
+  title: "Senti",
+  description: "책 문장으로 나의 하루를 기록할 수 있는 일기 서비스",
 };
 
 export const viewport: Viewport = {
