@@ -4,40 +4,9 @@ title: "[FIX] "
 labels: ["bug"]
 body:
   - type: textarea
-    id: summary
+    id: content
     attributes:
-      label: 🎯 요약
-      description: 발생한 버그를 한 줄로 요약해주세요
-      placeholder: 예) 로그인 버튼 클릭 시 오류 발생
-    validations:
-      required: true
-
-  - type: textarea
-    id: current-behavior
-    attributes:
-      label: 🔴 현재 동작
-      description: 현재 어떤 문제가 발생하고 있나요?
-      placeholder: 버그가 발생하는 상황을 구체적으로 설명해주세요
-    validations:
-      required: true
-
-  - type: textarea
-    id: expected-behavior
-    attributes:
-      label: 🟢 예상 동작
-      description: 어떻게 동작해야 하나요?
-      placeholder: 정상적으로 동작할 때의 모습을 설명해주세요
-    validations:
-      required: true
-
-  - type: textarea
-    id: tasks
-    attributes:
-      label: ✅ 체크리스트
-      description: 수정해야 할 작업 목록
-      value: |
-        - [ ] 버그 원인 파악
-        - [ ] 수정 작업
-        - [ ] 테스트 확인
+      label: 📄 작업 내용
+      description: 작업 내용을 작성해주세요
     validations:
       required: true
