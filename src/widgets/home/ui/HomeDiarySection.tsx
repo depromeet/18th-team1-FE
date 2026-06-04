@@ -2,10 +2,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { type Diary, DiaryListSection } from "@/entities/diary";
+import type { Diary } from "@/entities/diary";
 import type { RecommendedSentence } from "@/entities/sentence";
 import {
   HomeBanner,
+  HomeSentenceSection,
   RandomSentenceBanner,
   useHomeRandomQuery,
   useHomeSummaryQuery,
@@ -52,7 +53,7 @@ export const HomeDiarySection = () => {
     <>
       <RandomSentenceBanner sentences={sentences} />
       <HomeBanner onClick={handleBannerClick} />
-      <DiaryListSection diaries={diaries} />
+      <HomeSentenceSection diaries={diaries} />
     </>
   );
 };

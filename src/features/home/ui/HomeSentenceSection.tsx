@@ -1,15 +1,15 @@
 import type { Diary } from "@/entities/diary";
 import { Text } from "@/shared/ui/text";
 
-import { DiaryListItem } from "./DiaryListItem";
+import { HomeSentenceItem } from "./HomeSentenceItem";
 
 const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"] as const;
 
-interface DiaryListSectionProps {
+interface HomeSentenceSectionProps {
   diaries: Diary[];
 }
 
-export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps) => {
+export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps): React.ReactElement => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();
@@ -39,7 +39,7 @@ export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps
             const dayName = DAY_NAMES[dayIndex] ?? "일요일";
             const isSunday = dayIndex === 0;
             return (
-              <DiaryListItem
+              <HomeSentenceItem
                 key={diary.day}
                 day={diary.day}
                 sentence={diary.sentence}
