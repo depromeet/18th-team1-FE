@@ -7,7 +7,6 @@ const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요�
 
 interface DiaryListSectionProps {
   diaries: Diary[];
-  onPressItem?: (diaryId: number) => void;
 }
 
 export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps) => {
@@ -33,7 +32,7 @@ export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps
           </Text>
         </div>
       ) : (
-        <div className="flex flex-col gap-2.5 px-5 pb-24">
+        <div className="flex flex-col gap-3 px-5 pb-24">
           {diaries.map((diary) => {
             const date = new Date(today.getFullYear(), today.getMonth(), diary.day);
             const dayIndex = date.getDay();
@@ -46,7 +45,6 @@ export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps
                 sentence={diary.sentence}
                 dayName={dayName}
                 isSunday={isSunday}
-                onPress={onPressItem ? () => onPressItem(diary.diaryId) : undefined}
               />
             );
           })}
