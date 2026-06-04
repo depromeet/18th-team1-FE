@@ -4,6 +4,7 @@ import type { RecommendedSentence } from "@/entities/sentence";
 import { Text } from "@/shared/ui/text";
 
 import { useInfiniteSlider } from "../model/useInfiniteSlider";
+import { PlaybackControlChip } from "./PlaybackControlChip";
 
 const AUTO_SCROLL_INTERVAL_MS = 5000;
 
@@ -11,22 +12,26 @@ interface RandomSentenceBannerProps {
   sentences: RecommendedSentence[];
 }
 
-export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) => {
-  const { slideIndex, isAnimating, handleTransitionEnd } = useInfiniteSlider({
-    count: sentences.length,
-    intervalMs: AUTO_SCROLL_INTERVAL_MS,
-  });
+export const RandomSentenceBanner = ({
+  sentences,
+}: RandomSentenceBannerProps): React.ReactElement | null => {
+  const { slideIndex, isAnimating, isPaused, togglePause, handleTransitionEnd } = useInfiniteSlider(
+    {
+      count: sentences.length,
+      intervalMs: AUTO_SCROLL_INTERVAL_MS,
+    },
+  );
 
   if (sentences.length === 0) {
     return (
       <div className="flex w-full flex-col">
-        <div className="overflow-hidden bg-key-secondary">
+        <div className="h-72.25 overflow-hidden bg-key-secondary">
           <div className="flex w-full shrink-0 flex-col gap-5 p-5">
-            <div className="h-22.5" />
+            <div className="h-31.5" />
             <div className="caption2" />
           </div>
         </div>
-        <div className="h-6.25 bg-key-primary" />
+        <div className="h-1.5 bg-key-primary-0-1" />
       </div>
     );
   }
@@ -40,9 +45,11 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
         ]
       : sentences.map((sentence) => ({ ...sentence, slideKey: sentence.id }));
 
+  const currentPosition = (slideIndex % sentences.length) + 1;
+
   return (
     <div className="flex w-full flex-col">
-      <div className="overflow-hidden bg-key-secondary">
+      <div className="relative h-72.25 overflow-hidden bg-key-secondary">
         <div
           className="flex"
           style={{
@@ -53,17 +60,21 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
         >
           {slides.map((slide) => (
             <div key={slide.slideKey} className="flex w-full shrink-0 flex-col gap-5 p-5">
-              <Text variant="title2" color="key-secondary2" className="line-clamp-3 h-22.5">
-                {slide.quote}
-              </Text>
+              <p className="title1-3 line-clamp-3 h-31.5 text-key-secondary2">{slide.quote}</p>
               <Text variant="caption2" color="key-secondary2">
                 &#x300E;{slide.bookTitle}&#x300F;, {slide.bookAuthor}
               </Text>
             </div>
           ))}
         </div>
+        <PlaybackControlChip
+          isPaused={isPaused}
+          currentPosition={currentPosition}
+          total={sentences.length}
+          onToggle={togglePause}
+        />
       </div>
-      <div className="h-6.25 bg-key-primary" />
+      <div className="h-1.5 bg-key-primary-0-1" />
     </div>
   );
 };

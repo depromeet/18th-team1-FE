@@ -8,6 +8,8 @@ interface UseInfiniteSliderOptions {
 interface UseInfiniteSliderResult {
   slideIndex: number;
   isAnimating: boolean;
+  isPaused: boolean;
+  togglePause: () => void;
   handleTransitionEnd: () => void;
 }
 
@@ -16,16 +18,19 @@ export const useInfiniteSlider = ({
   intervalMs,
 }: UseInfiniteSliderOptions): UseInfiniteSliderResult => {
   const [slideIndex, setSlideIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    if (count <= 1) return;
+    if (count <= 1 || isPaused) return;
     const timer = setInterval(() => {
       setIsAnimating(true);
       setSlideIndex((prev) => prev + 1);
     }, intervalMs);
     return () => clearInterval(timer);
-  }, [count, intervalMs]);
+  }, [count, intervalMs, isPaused]);
+
+  const togglePause = (): void => setIsPaused((prev) => !prev);
 
   const handleTransitionEnd = () => {
     if (slideIndex === count) {
@@ -34,5 +39,5 @@ export const useInfiniteSlider = ({
     }
   };
 
-  return { slideIndex, isAnimating, handleTransitionEnd };
+  return { slideIndex, isAnimating, isPaused, togglePause, handleTransitionEnd };
 };
