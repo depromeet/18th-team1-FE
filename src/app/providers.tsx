@@ -20,9 +20,9 @@ const getQueryClient = (): QueryClient => {
   return browserQueryClient;
 };
 
-type ProvidersProps = {
+interface ProvidersProps {
   children: ReactNode;
-};
+}
 
 export const Providers = ({ children }: ProvidersProps) => {
   const queryClient = getQueryClient();

@@ -5,9 +5,9 @@ import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { type ReactNode, Suspense, useEffect } from "react";
 
-type PosthogProviderProps = {
+interface PosthogProviderProps {
   children: ReactNode;
-};
+}
 
 const PosthogPageview = (): null => {
   const pathname = usePathname();

@@ -10,9 +10,9 @@ import { fetchDevToken, refreshAccessToken } from "../api/authApi";
 // /login으로 시작하는 경로는 인증 없이 접근 허용 (/login/callback 포함)
 const PUBLIC_PATHS = ["/login"];
 
-type AuthGuardProps = {
+interface AuthGuardProps {
   children: ReactNode;
-};
+}
 
 export const AuthGuard = ({ children }: AuthGuardProps) => {
   const pathname = usePathname();
