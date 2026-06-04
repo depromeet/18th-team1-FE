@@ -3,7 +3,7 @@
 import { DiaryDetailCard } from "@/entities/diary";
 import { useDiaryDetail } from "../model/useDiaryDetail";
 
-export const DiaryDetailView = (): React.ReactElement | null => {
+export const DiaryDetailView = () => {
   const diary = useDiaryDetail();
 
   if (!diary) return null;

@@ -18,24 +18,24 @@ export const usePhotoSelect = (): UsePhotoSelectReturn => {
   const photoUrlRef = useRef<string | null>(null);
 
   useEffect(
-    (): (() => void) => (): void => {
+    (): (() => void) => () => {
       if (photoUrlRef.current) URL.revokeObjectURL(photoUrlRef.current);
     },
     [],
   );
 
-  const handleClick = (): void => {
+  const handleClick = () => {
     inputRef.current?.click();
   };
 
-  const handleDelete = (): void => {
+  const handleDelete = () => {
     if (photoUrlRef.current) URL.revokeObjectURL(photoUrlRef.current);
     photoUrlRef.current = null;
     setPhotoUrl(null);
     setPhotoFile(null);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 

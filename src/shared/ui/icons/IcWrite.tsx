@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcWrite = (props: IconProps): React.ReactElement => (
+export const IcWrite = (props: IconProps) => (
   <BaseIcon viewBox="0 0 28 28" fill="none" {...props}>
     <path
       d="M13.9999 18.6441L12.6064 20.0376C11.9904 20.6534 11.155 20.9994 10.2839 20.9994C9.41287 20.9994 8.57747 20.6534 7.96146 20.0376C7.3456 19.4215 6.99963 18.5861 6.99963 17.7151C6.99963 16.844 7.3456 16.0086 7.96146 15.3926L10.7484 12.6056C11.3644 11.9898 12.1998 11.6438 13.0709 11.6438C13.942 11.6438 14.7774 11.9898 15.3934 12.6056"

@@ -11,7 +11,7 @@ import {
   useHomeSummaryQuery,
 } from "@/features/home";
 
-export const HomeDiarySection = (): React.ReactElement => {
+export const HomeDiarySection = () => {
   const router = useRouter();
   const { data: summary } = useHomeSummaryQuery();
   const { data: randomQuote } = useHomeRandomQuery();
@@ -34,7 +34,7 @@ export const HomeDiarySection = (): React.ReactElement => {
 
   const hasTodayDiary = summary?.todayDiary !== null && summary?.todayDiary !== undefined;
 
-  const handleBannerClick = async (): Promise<void> => {
+  const handleBannerClick = async () => {
     const diaryExists = await fetchTodayDiaryExists();
     if (diaryExists.exists && diaryExists.diaryId !== null) {
       // 오늘 작성한 일기가 있으면 해당 일기로 이동
@@ -53,7 +53,7 @@ export const HomeDiarySection = (): React.ReactElement => {
     router.push("/diary/emotion");
   };
 
-  const handleDiaryItemPress = (diaryId: number): void => {
+  const handleDiaryItemPress = (diaryId: number) => {
     router.push(`/diary/${diaryId}`);
   };
 

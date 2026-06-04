@@ -22,7 +22,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
 
   const { reset } = useDiaryEmotionStore();
 
-  const handleBack = (): void => {
+  const handleBack = () => {
     if (currentStep > 1) {
       router.push(`/diary/emotion?step=${currentStep - 1}`);
     } else {
@@ -31,7 +31,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
     }
   };
 
-  const handleNext = (): void => {
+  const handleNext = () => {
     if (currentStep < TOTAL_STEPS) {
       router.push(`/diary/emotion?step=${currentStep + 1}`);
       return;
@@ -39,7 +39,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
     router.push("/diary/sentence");
   };
 
-  const handleSkip = (): void => {
+  const handleSkip = () => {
     router.push(`/diary/emotion?step=${TOTAL_STEPS}`);
   };
 

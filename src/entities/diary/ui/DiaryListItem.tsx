@@ -17,7 +17,7 @@ export const DiaryListItem = ({
   dayName,
   isSunday = false,
   onPress,
-}: DiaryListItemProps): React.ReactElement => (
+}: DiaryListItemProps) => (
   <div className="flex items-center gap-2 rounded-2xl bg-gray-50 py-5 pl-5 pr-1.5">
     <div className="flex flex-1 items-center gap-4">
       <div className="flex w-9.75 shrink-0 flex-col items-center pb-1">

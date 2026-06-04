@@ -12,7 +12,7 @@ interface UseDiaryWriteReturn {
 export const useDiaryWrite = (): UseDiaryWriteReturn => {
   const [text, setText] = useState("");
 
-  const handleTextChange = (value: string): void => {
+  const handleTextChange = (value: string) => {
     setText(value.slice(0, MAX_DIARY_CHAR));
   };
 

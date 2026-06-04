@@ -16,7 +16,7 @@ type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>;
  * <Checkbox checked={isChecked} onCheckedChange={setIsChecked} />
  * <Checkbox disabled />
  */
-export const Checkbox = ({ className, ...props }: CheckboxProps): React.ReactElement => {
+export const Checkbox = ({ className, ...props }: CheckboxProps) => {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"

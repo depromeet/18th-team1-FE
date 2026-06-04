@@ -10,7 +10,7 @@ interface DiaryDetailCardProps {
   diary: DiaryDetail;
 }
 
-export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps): React.ReactElement => {
+export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps) => {
   const {
     quoteContent,
     title,
@@ -23,7 +23,7 @@ export const DiaryDetailCard = ({ diary }: DiaryDetailCardProps): React.ReactEle
     aladinLink,
   } = diary;
 
-  const handleAladinLinkOpen = (): void => {
+  const handleAladinLinkOpen = () => {
     window.open(aladinLink, "_blank", "noopener,noreferrer");
   };
 

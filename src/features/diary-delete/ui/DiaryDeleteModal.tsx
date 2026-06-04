@@ -1,6 +1,6 @@
 "use client";
 
-import type { KeyboardEvent, MouseEvent, ReactElement } from "react";
+import type { KeyboardEvent, MouseEvent } from "react";
 
 import { DoubleButton } from "@/shared/ui/double-button";
 
@@ -10,11 +10,7 @@ interface DiaryDeleteModalProps {
   onCancel?: () => void;
 }
 
-export const DiaryDeleteModal = ({
-  isOpen,
-  onConfirm,
-  onCancel,
-}: DiaryDeleteModalProps): ReactElement | null => {
+export const DiaryDeleteModal = ({ isOpen, onConfirm, onCancel }: DiaryDeleteModalProps) => {
   if (!isOpen) return null;
 
   return (

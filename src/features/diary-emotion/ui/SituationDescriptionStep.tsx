@@ -13,14 +13,12 @@ interface SituationDescriptionStepProps {
 const MIN_TEXTAREA_HEIGHT = 180;
 const BUTTON_AREA = 100;
 
-const adjustHeight = (el: HTMLTextAreaElement): void => {
+const adjustHeight = (el: HTMLTextAreaElement) => {
   el.style.height = "auto";
   el.style.height = `${Math.max(el.scrollHeight, MIN_TEXTAREA_HEIGHT)}px`;
 };
 
-export const SituationDescriptionStep = ({
-  onValidChange,
-}: SituationDescriptionStepProps): React.ReactElement => {
+export const SituationDescriptionStep = ({ onValidChange }: SituationDescriptionStepProps) => {
   const { selectedEmotionId, selectedSituationIds, situationDescription, setSituationDescription } =
     useDiaryEmotionStore();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -49,7 +47,7 @@ export const SituationDescriptionStep = ({
     adjustHeight(textarea);
   }, []);
 
-  const scrollToCursor = (textarea: HTMLTextAreaElement): void => {
+  const scrollToCursor = (textarea: HTMLTextAreaElement) => {
     const sp = scrollParentRef.current;
     if (!sp) return;
 
@@ -65,7 +63,7 @@ export const SituationDescriptionStep = ({
     });
   };
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setSituationDescription(e.target.value);
     adjustHeight(e.currentTarget);
     scrollToCursor(e.currentTarget);

@@ -40,7 +40,7 @@ type RootLayoutProps = {
   children: ReactNode;
 };
 
-const RootLayout = ({ children }: RootLayoutProps): React.ReactElement => {
+const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
       lang="ko"

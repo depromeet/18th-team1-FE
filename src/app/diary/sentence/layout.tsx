@@ -6,14 +6,14 @@ import type { ReactNode } from "react";
 import { useDiaryEmotionStore } from "@/store/diary-emotion/useDiaryEmotionStore";
 import { Header } from "@/widgets/header";
 
-const SentenceLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
+const SentenceLayout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const reset = useDiaryEmotionStore((state) => state.reset);
 
   const handleBack = pathname.endsWith("/list")
-    ? (): void => router.push("/diary/sentence")
-    : (): void => {
+    ? () => router.push("/diary/sentence")
+    : () => {
         reset();
         router.push("/");
       };

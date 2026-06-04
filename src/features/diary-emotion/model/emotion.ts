@@ -26,7 +26,7 @@ export const EMOTIONS: Emotion[] = [
 ];
 
 // 선택한 책의 스택 수 기반 1~9 수치로 변환 (위 책=9, 아래 책=1)
-export const getEmotionValue = (emotionId: string | null): number => {
+export const getEmotionValue = (emotionId: string | null) => {
   if (!emotionId) return 5;
   return EMOTIONS.find((e) => e.id === emotionId)?.value ?? 5;
 };

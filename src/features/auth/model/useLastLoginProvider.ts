@@ -10,7 +10,7 @@ export const getLastLoginProvider = (): LoginProvider | null => {
   return value === "kakao" || value === "google" ? value : null;
 };
 
-export const saveLastLoginProvider = (provider: LoginProvider): void => {
+export const saveLastLoginProvider = (provider: LoginProvider) => {
   localStorage.setItem(STORAGE_KEY, provider);
 };
 

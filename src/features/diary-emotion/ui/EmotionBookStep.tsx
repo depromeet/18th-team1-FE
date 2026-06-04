@@ -11,11 +11,11 @@ interface EmotionBookStepProps {
   onValidChange: (isDisabled: boolean) => void;
 }
 
-export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.ReactElement => {
+export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps) => {
   const { selectedIndex, containerRef, handlePointerDown, handlePointerMove, handlePointerUp } =
     useEmotionBookDrag({ onValidChange });
 
-  const getBookClasses = (index: number): string => {
+  const getBookClasses = (index: number) => {
     if (selectedIndex === null) return "bg-gray-50";
     const selected = EMOTIONS[selectedIndex];
     if (!selected) return "bg-gray-50";
@@ -24,12 +24,12 @@ export const EmotionBookStep = ({ onValidChange }: EmotionBookStepProps): React.
     return "bg-gray-50";
   };
 
-  const isBookColored = (index: number): boolean => {
+  const isBookColored = (index: number) => {
     if (selectedIndex === null) return false;
     return index >= selectedIndex;
   };
 
-  const isPlaceholder = (index: number): boolean =>
+  const isPlaceholder = (index: number) =>
     selectedIndex === null && PLACEHOLDER_INDICES.includes(index);
 
   return (

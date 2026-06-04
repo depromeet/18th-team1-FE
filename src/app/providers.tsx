@@ -24,7 +24,7 @@ type ProvidersProps = {
   children: ReactNode;
 };
 
-export const Providers = ({ children }: ProvidersProps): React.ReactElement => {
+export const Providers = ({ children }: ProvidersProps) => {
   const queryClient = getQueryClient();
 
   return (

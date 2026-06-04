@@ -20,7 +20,7 @@ export class SentenceErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  componentDidCatch(_error: Error, info: ErrorInfo): void {
+  componentDidCatch(_error: Error, info: ErrorInfo) {
     console.error("[SentenceErrorBoundary] componentStack:", info.componentStack);
   }
 

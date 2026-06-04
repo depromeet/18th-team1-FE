@@ -5,10 +5,7 @@ interface IcCalendarProps extends IconProps {
   variant?: "default" | "line";
 }
 
-export const IcCalendar = ({
-  variant = "default",
-  ...props
-}: IcCalendarProps): React.ReactElement => {
+export const IcCalendar = ({ variant = "default", ...props }: IcCalendarProps) => {
   if (variant === "line") {
     return (
       <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>

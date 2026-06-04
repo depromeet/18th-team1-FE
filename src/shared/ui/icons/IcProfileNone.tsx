@@ -1,6 +1,6 @@
 import type { IconProps } from "./icon.types";
 
-export const IcProfileNone = ({ size = 40, className }: IconProps): React.ReactElement => (
+export const IcProfileNone = ({ size = 40, className }: IconProps) => (
   <svg
     width={size}
     height={size}

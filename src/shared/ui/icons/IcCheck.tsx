@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcCheck = (props: IconProps): React.ReactElement => (
+export const IcCheck = (props: IconProps) => (
   <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
     <path
       fillRule="evenodd"

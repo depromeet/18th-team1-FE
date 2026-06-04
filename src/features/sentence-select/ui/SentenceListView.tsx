@@ -16,7 +16,7 @@ import { useSentenceList } from "../model/useSentenceList";
 
 const MAX_LOAD_COUNT = 3;
 
-export const SentenceListView = (): React.ReactElement => {
+export const SentenceListView = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dailyRecommendationId = Number(searchParams.get("dailyRecommendationId"));
@@ -28,7 +28,7 @@ export const SentenceListView = (): React.ReactElement => {
   const { setSelectedQuote } = useDiaryEmotionStore();
   const { selectedId, handleSelect } = useSentenceList(quotes[0]?.quoteId ?? -1);
 
-  const handleLoadMore = async (): Promise<void> => {
+  const handleLoadMore = async () => {
     if (loadCount >= MAX_LOAD_COUNT) {
       alert("추천 문장은 최대 3번까지 더 불러올 수 있어요.");
       return;
@@ -38,7 +38,7 @@ export const SentenceListView = (): React.ReactElement => {
     setLoadCount((prev) => prev + 1);
   };
 
-  const handleNext = (): void => {
+  const handleNext = () => {
     const selected = quotes.find((q) => q.quoteId === selectedId);
     if (!selected) return;
     setSelectedQuote({

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { EmotionStepView } from "@/features/diary-emotion";
 
-const EmotionPage = (): React.ReactElement => (
+const EmotionPage = () => (
   <Suspense>
     <EmotionStepView />
   </Suspense>

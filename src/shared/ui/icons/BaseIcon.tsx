@@ -11,7 +11,7 @@ export const BaseIcon = ({
   children,
   viewBox = "0 0 24 24",
   ...props
-}: BaseIconProps): React.ReactElement => (
+}: BaseIconProps) => (
   <svg
     width={size}
     height={size}

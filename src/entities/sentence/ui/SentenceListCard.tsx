@@ -9,11 +9,7 @@ interface SentenceListCardProps {
   onClick: () => void;
 }
 
-export const SentenceListCard = ({
-  sentence,
-  isSelected,
-  onClick,
-}: SentenceListCardProps): React.ReactElement => (
+export const SentenceListCard = ({ sentence, isSelected, onClick }: SentenceListCardProps) => (
   <button
     type="button"
     aria-pressed={isSelected}

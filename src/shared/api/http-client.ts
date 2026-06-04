@@ -54,7 +54,7 @@ const refreshAccessToken = async (): Promise<string> => {
   return refreshingPromise;
 };
 
-const redirectToLogin = (): void => {
+const redirectToLogin = () => {
   useAuthStore.getState().clearAuth();
   if (typeof window !== "undefined") {
     window.location.replace("/login");

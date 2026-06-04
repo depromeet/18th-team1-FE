@@ -6,7 +6,7 @@ interface TagChipProps {
   onClick?: () => void;
 }
 
-export const TagChip = ({ label, isSelected, onClick }: TagChipProps): React.ReactElement => {
+export const TagChip = ({ label, isSelected, onClick }: TagChipProps) => {
   const color = isSelected ? ("gray-50" as const) : ("gray-500" as const);
   const baseClassName = `rounded-full px-3 py-2 ${isSelected ? "bg-gray-700" : "bg-gray-50"}`;
 

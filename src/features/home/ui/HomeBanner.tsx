@@ -6,11 +6,7 @@ interface HomeBannerProps {
   onClick: () => void;
 }
 
-export const HomeBanner = ({
-  hasTodayDiary,
-  sentenceCount = 0,
-  onClick,
-}: HomeBannerProps): React.ReactElement => (
+export const HomeBanner = ({ hasTodayDiary, sentenceCount = 0, onClick }: HomeBannerProps) => (
   <button
     type="button"
     onClick={onClick}

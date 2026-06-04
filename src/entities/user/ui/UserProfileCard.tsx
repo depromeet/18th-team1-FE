@@ -6,7 +6,7 @@ import { IcProfileNone } from "@/shared/ui/icons";
 
 import { useUserProfileQuery } from "../api/queries";
 
-export const UserProfileCard = (): React.ReactElement => {
+export const UserProfileCard = () => {
   const { data } = useUserProfileQuery();
 
   if (!data) {

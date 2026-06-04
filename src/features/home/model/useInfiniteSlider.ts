@@ -27,7 +27,7 @@ export const useInfiniteSlider = ({
     return () => clearInterval(timer);
   }, [count, intervalMs]);
 
-  const handleTransitionEnd = (): void => {
+  const handleTransitionEnd = () => {
     if (slideIndex === count) {
       setIsAnimating(false);
       setSlideIndex(0);

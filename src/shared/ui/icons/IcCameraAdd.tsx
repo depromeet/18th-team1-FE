@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcCameraAdd = (props: IconProps): React.ReactElement => (
+export const IcCameraAdd = (props: IconProps) => (
   <BaseIcon viewBox="0 0 30 30" fill="none" {...props}>
     <path
       d="M16 24H6.5C5.67157 24 5 23.3284 5 22.5V11C5 10.1716 5.67157 9.5 6.5 9.5H9.02175C9.67099 9.5 10.2465 9.08231 10.4478 8.46506L11.0773 6.53493C11.2786 5.91769 11.8541 5.5 12.5034 5.5H18.6003C19.2484 5.5 19.8232 5.91626 20.0254 6.53203L20.6611 8.46797C20.8633 9.08374 21.4381 9.5 22.0862 9.5H24.5C25.3284 9.5 26 10.1716 26 11V17.5"

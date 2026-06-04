@@ -1,5 +1,5 @@
 import { DiaryWriteView } from "@/features/diary-write";
 
-const DiaryWritePage = (): React.ReactElement => <DiaryWriteView />;
+const DiaryWritePage = () => <DiaryWriteView />;
 
 export default DiaryWritePage;

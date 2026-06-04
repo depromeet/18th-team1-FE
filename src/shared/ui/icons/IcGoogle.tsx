@@ -1,6 +1,6 @@
 import type { IconProps } from "./icon.types";
 
-export const IcGoogle = ({ size = 24, className }: IconProps): React.ReactElement => (
+export const IcGoogle = ({ size = 24, className }: IconProps) => (
   <svg
     width={size}
     height={size}

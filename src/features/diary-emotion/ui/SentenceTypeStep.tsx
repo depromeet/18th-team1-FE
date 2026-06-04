@@ -11,7 +11,7 @@ interface SentenceTypeStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
 }
 
-export const SentenceTypeStep = ({ onValidChange }: SentenceTypeStepProps): React.ReactElement => {
+export const SentenceTypeStep = ({ onValidChange }: SentenceTypeStepProps) => {
   const router = useRouter();
   const { selectedSentenceTypeIds, setSelectedSentenceTypeIds } = useDiaryEmotionStore();
   const { data, isError } = useToneTagsQuery();

@@ -10,7 +10,7 @@ interface UseSentenceListReturn {
 export const useSentenceList = (initialQuoteId: number): UseSentenceListReturn => {
   const [selectedId, setSelectedId] = useState(initialQuoteId);
 
-  const handleSelect = (id: number): void => {
+  const handleSelect = (id: number) => {
     setSelectedId(id);
   };
 

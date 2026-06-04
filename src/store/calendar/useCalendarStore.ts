@@ -12,11 +12,11 @@ export const useCalendarStore = create<CalendarState>()(
   devtools(
     (set) => ({
       selectedDate: new Date(),
-      setSelectedDate: (date: Date): void => {
+      setSelectedDate: (date: Date) => {
         set({ selectedDate: date }, false, "calendar/setSelectedDate");
       },
       viewDate: new Date(),
-      setViewDate: (date: Date): void => {
+      setViewDate: (date: Date) => {
         set({ viewDate: date }, false, "calendar/setViewDate");
       },
     }),

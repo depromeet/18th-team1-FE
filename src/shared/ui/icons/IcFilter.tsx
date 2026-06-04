@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcFilter = (props: IconProps): React.ReactElement => (
+export const IcFilter = (props: IconProps) => (
   <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
     <path
       d="M4.75 8.35H6.62M11.62 8.35H19.25M4.75 15.65H12.25M17.25 15.65H19.25"

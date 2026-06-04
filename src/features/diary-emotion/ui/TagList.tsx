@@ -11,12 +11,8 @@ interface TagListProps {
   onSelectionChange: (ids: string[]) => void;
 }
 
-export const TagList = ({
-  items,
-  selectedIds,
-  onSelectionChange,
-}: TagListProps): React.ReactElement => {
-  const handleSelect = (id: string): void => {
+export const TagList = ({ items, selectedIds, onSelectionChange }: TagListProps) => {
+  const handleSelect = (id: string) => {
     const next = selectedIds.includes(id)
       ? selectedIds.filter((s) => s !== id)
       : [...selectedIds, id];

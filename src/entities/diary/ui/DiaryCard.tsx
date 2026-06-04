@@ -10,7 +10,7 @@ interface DiaryCardProps {
   action?: ReactNode;
 }
 
-export const DiaryCard = ({ diary, action }: DiaryCardProps): React.ReactElement => {
+export const DiaryCard = ({ diary, action }: DiaryCardProps) => {
   const { quoteContent, title, author, emotions, content, coverImageUrl, diaryImageUrl } = diary;
 
   return (

@@ -9,7 +9,7 @@ import { IcOptionHeader } from "@/shared/ui/icons";
 import { useDiaryDetail } from "@/widgets/diary-detail";
 import { Header } from "@/widgets/header";
 
-const DiaryDetailLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
+const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
   const { handleBack, handleEdit, handleShare, handleDelete } = useDiaryOptions();
   const diary = useDiaryDetail();
 

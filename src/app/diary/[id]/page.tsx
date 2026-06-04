@@ -1,6 +1,6 @@
 import { DiaryDetailView } from "@/widgets/diary-detail";
 
-const DiaryDetailPage = (): React.ReactElement => {
+const DiaryDetailPage = () => {
   return <DiaryDetailView />;
 };
 

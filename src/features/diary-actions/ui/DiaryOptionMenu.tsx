@@ -16,12 +16,7 @@ interface DiaryOptionMenuProps {
   onDelete?: () => void;
 }
 
-export const DiaryOptionMenu = ({
-  trigger,
-  onEdit,
-  onShare,
-  onDelete,
-}: DiaryOptionMenuProps): React.ReactElement => (
+export const DiaryOptionMenu = ({ trigger, onEdit, onShare, onDelete }: DiaryOptionMenuProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <button
@@ -36,7 +31,7 @@ export const DiaryOptionMenu = ({
       align="end"
       sideOffset={22}
       className="flex min-w-33 flex-col gap-4 rounded-[20px] border-0 bg-background p-4 shadow-modal"
-      onClick={(e): void => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
     >
       <DropdownMenuItem
         className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"

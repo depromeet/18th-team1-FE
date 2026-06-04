@@ -6,19 +6,19 @@ import { useEffect, useRef } from "react";
 const POLL_INTERVAL_MS = 100;
 const POLL_COUNT = 20;
 
-export const useViewportHeight = (): void => {
+export const useViewportHeight = () => {
   const focusIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const focusOutTimerIds = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
     const vp = window.visualViewport ?? null;
 
-    const updateVH = (): void => {
+    const updateVH = () => {
       const h = vp ? vp.height : window.innerHeight;
       document.documentElement.style.setProperty("--vh", `${h}px`);
     };
 
-    const preventTouchMove = (e: TouchEvent): void => {
+    const preventTouchMove = (e: TouchEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest("textarea")) return;
 
@@ -34,11 +34,11 @@ export const useViewportHeight = (): void => {
       e.preventDefault();
     };
 
-    const resetScroll = (): void => {
+    const resetScroll = () => {
       if (window.scrollY !== 0) window.scrollTo(0, 0);
     };
 
-    const onFocusIn = (): void => {
+    const onFocusIn = () => {
       if (focusIntervalRef.current) clearInterval(focusIntervalRef.current);
       let count = 0;
       focusIntervalRef.current = setInterval(() => {
@@ -51,7 +51,7 @@ export const useViewportHeight = (): void => {
       }, POLL_INTERVAL_MS);
     };
 
-    const onFocusOut = (): void => {
+    const onFocusOut = () => {
       if (focusIntervalRef.current) {
         clearInterval(focusIntervalRef.current);
         focusIntervalRef.current = null;

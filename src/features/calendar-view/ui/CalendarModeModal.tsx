@@ -12,10 +12,7 @@ const VIEW_MODE_OPTIONS: { label: string; value: CalendarMode }[] = [
   { label: "월간", value: "monthly" },
 ];
 
-export const CalendarModeModal = ({
-  mode,
-  onSelect,
-}: CalendarModeModalProps): React.ReactElement => {
+export const CalendarModeModal = ({ mode, onSelect }: CalendarModeModalProps) => {
   return (
     <div className="flex flex-col gap-4 rounded-[20px] bg-gray-0 py-4 pl-4 pr-6 shadow-[0_0_30px_rgba(0,0,0,0.10)]">
       {VIEW_MODE_OPTIONS.map(({ label, value }) => (

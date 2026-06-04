@@ -8,12 +8,7 @@ interface CheckButtonProps {
   className?: string;
 }
 
-export const CheckButton = ({
-  isChecked,
-  onClick,
-  disabled,
-  className,
-}: CheckButtonProps): React.ReactElement => {
+export const CheckButton = ({ isChecked, onClick, disabled, className }: CheckButtonProps) => {
   return (
     <button
       type="button"

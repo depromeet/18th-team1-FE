@@ -14,7 +14,7 @@ type AuthGuardProps = {
   children: ReactNode;
 };
 
-export const AuthGuard = ({ children }: AuthGuardProps): React.ReactElement => {
+export const AuthGuard = ({ children }: AuthGuardProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
@@ -40,7 +40,7 @@ export const AuthGuard = ({ children }: AuthGuardProps): React.ReactElement => {
     // 토큰 없으면 토큰 발급 시도, 실패 시 로그인 페이지로 이동
     setIsReady(false);
 
-    const initToken = async (): Promise<void> => {
+    const initToken = async () => {
       // 개발 모드에서는 dev-token으로 임시 토큰 발급 시도
       if (process.env.NODE_ENV === "development") {
         try {

@@ -9,12 +9,12 @@ import { IcOption } from "@/shared/ui/icons";
 import { useCalendarDiary } from "../model/useCalendarDiary";
 import { CalendarWritingTimer } from "./CalendarWritingTimer";
 
-export const CalendarDiarySection = (): React.ReactElement => {
+export const CalendarDiarySection = () => {
   const { diary, selectedDate, viewDate, isFutureView } = useCalendarDiary();
   const { setSelectedDiary } = useDiaryStore();
   const { handleEdit, handleShare, handleDelete } = useDiaryOptions();
 
-  const renderDiaryContent = (): React.ReactElement => {
+  const renderDiaryContent = () => {
     if (isFutureView) {
       return <p className="body2 text-gray-400 text-center mt-21.25">작성된 일기가 없어요.</p>;
     }

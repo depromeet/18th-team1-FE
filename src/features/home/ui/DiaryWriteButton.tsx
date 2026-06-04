@@ -7,13 +7,10 @@ interface DiaryWriteButtonProps {
   todayDiaryId?: number;
 }
 
-export const DiaryWriteButton = ({
-  hasTodayDiary,
-  todayDiaryId,
-}: DiaryWriteButtonProps): React.ReactElement => {
+export const DiaryWriteButton = ({ hasTodayDiary, todayDiaryId }: DiaryWriteButtonProps) => {
   const router = useRouter();
 
-  const handleClick = (): void => {
+  const handleClick = () => {
     if (hasTodayDiary && todayDiaryId !== undefined) {
       router.push(`/diary/${todayDiaryId}`);
       return;

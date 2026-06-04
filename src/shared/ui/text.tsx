@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType, ReactElement } from "react";
+import type { ComponentPropsWithoutRef, ElementType } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
@@ -77,7 +77,7 @@ export const Text = <T extends ElementType = "p">({
   color = "gray-700",
   className,
   ...props
-}: TextProps<T>): ReactElement => {
+}: TextProps<T>) => {
   const Component = (as ?? "p") as ElementType;
   return <Component className={cn(variant, color && `text-${color}`, className)} {...props} />;
 };

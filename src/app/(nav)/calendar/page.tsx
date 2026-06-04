@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { UserProfileCard } from "@/entities/user";
 import { CalendarDiarySection, CalendarHeader, CalendarWidget } from "@/widgets/calendar";
 
-const CalendarPage = (): React.ReactElement => {
+const CalendarPage = () => {
   return (
     <div className="flex flex-col h-full bg-gray-0">
       <CalendarHeader />

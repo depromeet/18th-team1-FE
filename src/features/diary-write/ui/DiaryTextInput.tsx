@@ -10,7 +10,7 @@ import { MAX_DIARY_CHAR } from "../model/useDiaryWrite";
 
 const MIN_TEXTAREA_HEIGHT = 153;
 
-const adjustHeight = (el: HTMLTextAreaElement): void => {
+const adjustHeight = (el: HTMLTextAreaElement) => {
   el.style.height = "auto";
   el.style.height = `${Math.max(el.scrollHeight, MIN_TEXTAREA_HEIGHT)}px`;
 };
@@ -20,12 +20,12 @@ interface DiaryTextInputProps {
   onChange: (value: string) => void;
 }
 
-export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps): React.ReactElement => {
+export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const charCount = value.length;
   const isAtMax = charCount >= MAX_DIARY_CHAR;
 
-  const handleInput = (e: SyntheticEvent<HTMLTextAreaElement>): void => {
+  const handleInput = (e: SyntheticEvent<HTMLTextAreaElement>) => {
     adjustHeight(e.currentTarget);
   };
 
@@ -42,10 +42,10 @@ export const DiaryTextInput = ({ value, onChange }: DiaryTextInputProps): React.
           className="w-full resize-none overflow-hidden bg-transparent text-[16px] leading-[1.4] text-gray-700 outline-none placeholder:text-gray-300"
           placeholder="오늘 하루, 이 문장이 어떻게 다가오나요?"
           value={value}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>): void => onChange(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onChange(e.target.value)}
           onInput={handleInput}
-          onFocus={(): void => setIsFocused(true)}
-          onBlur={(): void => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
       </div>
       <div className="flex w-full items-center justify-between">

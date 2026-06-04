@@ -62,7 +62,7 @@ export const useCreateDiaryMutation = (): UseMutationResult<number, Error, Creat
 
       return diaryId;
     },
-    onSuccess: (): void => {
+    onSuccess: () => {
       useDiaryEmotionStore.getState().reset();
       clearDiarySessionStorage();
       queryClient.invalidateQueries({ queryKey: ["home"] });

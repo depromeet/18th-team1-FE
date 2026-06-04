@@ -10,10 +10,7 @@ interface DiaryListSectionProps {
   onPressItem?: (diaryId: number) => void;
 }
 
-export const DiaryListSection = ({
-  diaries,
-  onPressItem,
-}: DiaryListSectionProps): React.ReactElement => {
+export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps) => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();

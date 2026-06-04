@@ -7,12 +7,7 @@ import type { RecommendedSentence } from "../model/sentence.types";
 
 type SentenceCardProps = Omit<RecommendedSentence, "id">;
 
-export const SentenceCard = ({
-  bookTitle,
-  bookAuthor,
-  quote,
-  date,
-}: SentenceCardProps): React.ReactElement => {
+export const SentenceCard = ({ bookTitle, bookAuthor, quote, date }: SentenceCardProps) => {
   const longPressHandlers = useLongPress(() => {
     navigator.clipboard.writeText(quote);
   });

@@ -10,7 +10,7 @@ interface IconButtonProps {
   onClick?: () => void;
 }
 
-export const IconButton = ({ icon, className, onClick }: IconButtonProps): React.ReactElement => (
+export const IconButton = ({ icon, className, onClick }: IconButtonProps) => (
   <button
     type="button"
     className={cn(

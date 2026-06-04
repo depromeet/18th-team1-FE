@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcCalBack = (props: IconProps): React.ReactElement => (
+export const IcCalBack = (props: IconProps) => (
   <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
     <path
       d="M15 6L9 12L15 18"

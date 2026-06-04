@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 
-const DiaryWriteLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
+const DiaryWriteLayout = ({ children }: { children: ReactNode }) => {
   useViewportHeight();
   return (
     <div
