@@ -78,9 +78,6 @@
         "noUnusedVariables": "error",
         "noUnusedImports": "error",
         "useExhaustiveDependencies": "warn"
-      },
-      "nursery": {
-        "useExplicitType": "warn"
       }
     }
   },
@@ -91,15 +88,5 @@
         "organizeImports": "on"
       }
     }
-  },
-  "overrides": [
-    {
-      "includes": ["**/*.config.ts", "**/*.config.js", "**/*.config.mjs"],
-      "linter": { "rules": { "nursery": { "useExplicitType": "off" } } }
-    },
-    {
-      "includes": ["src/shared/ui/*.tsx"],
-      "linter": { "rules": { "nursery": { "useExplicitType": "off" } } }
-    }
-  ]
+  }
 }
