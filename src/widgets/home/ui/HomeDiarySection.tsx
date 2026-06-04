@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
-import { type Diary, DiaryListSection, fetchTodayDiaryExists } from "@/entities/diary";
-import { fetchTodaySentenceExists, type RecommendedSentence } from "@/entities/sentence";
+import { type Diary, DiaryListSection } from "@/entities/diary";
+import type { RecommendedSentence } from "@/entities/sentence";
 import {
   HomeBanner,
   RandomSentenceBanner,
@@ -32,40 +32,27 @@ export const HomeDiarySection = () => {
     date: "",
   }));
 
-  const hasTodayDiary = summary?.todayDiary !== null && summary?.todayDiary !== undefined;
-
-  const handleBannerClick = async () => {
-    const diaryExists = await fetchTodayDiaryExists();
-    if (diaryExists.exists && diaryExists.diaryId !== null) {
-      // 오늘 작성한 일기가 있으면 해당 일기로 이동
-      //router.push(`/diary/${diaryExists.diaryId}`);
-      return;
-    }
-
-    const sentenceExists = await fetchTodaySentenceExists();
-    if (sentenceExists.exists) {
-      // 오늘 작성한 일기는 없지만 추천 문장이 있으면 추천 문장으로 이동
-      router.push("/diary/sentence");
-      return;
-    }
-
-    // 오늘 작성한 일기도 추천 문장도 없으면 감정 선택 화면으로 이동
+  const handleBannerClick = (): void => {
     router.push("/diary/emotion");
-  };
-
-  const handleDiaryItemPress = (diaryId: number) => {
-    router.push(`/diary/${diaryId}`);
+    // TODO: 분기 로직 복구 필요
+    // const diaryExists = await fetchTodayDiaryExists();
+    // if (diaryExists.exists && diaryExists.diaryId !== null) {
+    //   router.push(`/diary/${diaryExists.diaryId}`);
+    //   return;
+    // }
+    // const sentenceExists = await fetchTodaySentenceExists();
+    // if (sentenceExists.exists) {
+    //   router.push("/diary/sentence");
+    //   return;
+    // }
+    // router.push("/diary/emotion");
   };
 
   return (
     <>
-      <HomeBanner
-        hasTodayDiary={hasTodayDiary}
-        sentenceCount={summary?.totalDiaryCount ?? 0}
-        onClick={handleBannerClick}
-      />
       <RandomSentenceBanner sentences={sentences} />
-      <DiaryListSection diaries={diaries} onPressItem={handleDiaryItemPress} />
+      <HomeBanner onClick={handleBannerClick} />
+      <DiaryListSection diaries={diaries} />
     </>
   );
 };
