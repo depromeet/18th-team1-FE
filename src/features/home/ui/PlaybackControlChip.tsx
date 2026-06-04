@@ -15,6 +15,7 @@ export const PlaybackControlChip = ({
     type="button"
     onClick={onToggle}
     aria-label={isPaused ? "재생" : "일시정지"}
+    aria-pressed={isPaused}
     className="absolute bottom-5 right-5 flex h-8 w-19.75 items-center justify-center rounded-full border border-gray-600-15 bg-gray-500-50 p-px backdrop-blur-sm"
   >
     <div className="flex h-full items-center gap-1.25">

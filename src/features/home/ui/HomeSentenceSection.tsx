@@ -40,7 +40,7 @@ export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps): Reac
             const isSunday = dayIndex === 0;
             return (
               <HomeSentenceItem
-                key={diary.day}
+                key={diary.diaryId}
                 day={diary.day}
                 sentence={diary.sentence}
                 dayName={dayName}

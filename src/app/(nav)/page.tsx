@@ -6,10 +6,11 @@ import { cn } from "@/shared/lib/utils";
 import { Logo } from "@/shared/ui/logo";
 import { HomeDiarySection } from "@/widgets/home";
 
-const RANDOM_BANNER_HEIGHT = 289; // h-72.25
-const ACCENT_BAR_HEIGHT = 6; // h-1.5
-const HOME_BANNER_HEIGHT = 126; // h-31.5
-const BANNER_SCROLL_THRESHOLD = RANDOM_BANNER_HEIGHT + ACCENT_BAR_HEIGHT + HOME_BANNER_HEIGHT;
+const RANDOM_BANNER_HEIGHT: number = 289;
+const ACCENT_BAR_HEIGHT: number = 6;
+const HOME_BANNER_HEIGHT: number = 126;
+const BANNER_SCROLL_THRESHOLD: number =
+  RANDOM_BANNER_HEIGHT + ACCENT_BAR_HEIGHT + HOME_BANNER_HEIGHT;
 
 const HomePage = (): React.ReactElement => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -23,6 +24,7 @@ const HomePage = (): React.ReactElement => {
       setIsPastBanner(el.scrollTop >= BANNER_SCROLL_THRESHOLD);
     };
 
+    handleScroll();
     el.addEventListener("scroll", handleScroll, { passive: true });
     return () => el.removeEventListener("scroll", handleScroll);
   }, []);
