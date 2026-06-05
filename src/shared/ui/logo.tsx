@@ -6,7 +6,7 @@ interface LogoProps {
   height?: number;
 }
 
-export const Logo = ({ className, width = 58, height = 20 }: LogoProps): React.ReactElement => (
+export const Logo = ({ className, width = 58, height = 20 }: LogoProps) => (
   <svg
     width={width}
     height={height}

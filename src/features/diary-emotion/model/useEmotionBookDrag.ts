@@ -45,7 +45,7 @@ export const useEmotionBookDrag = ({
     }
   }, [onValidChange]);
 
-  const getIndexFromClientY = (clientY: number): number => {
+  const getIndexFromClientY = (clientY: number) => {
     if (!containerRef.current) return -1;
     const rect = containerRef.current.getBoundingClientRect();
     const relativeY = clientY - rect.top;
@@ -53,7 +53,7 @@ export const useEmotionBookDrag = ({
     return Math.max(0, Math.min(EMOTIONS.length - 1, rawIndex));
   };
 
-  const trySelectEmotion = (index: number): void => {
+  const trySelectEmotion = (index: number) => {
     const emotion = EMOTIONS[index];
     if (!emotion) return;
 
@@ -69,13 +69,13 @@ export const useEmotionBookDrag = ({
     setSelectedEmotionId(emotion.id);
   };
 
-  const handleIndexChange = (clientY: number): void => {
+  const handleIndexChange = (clientY: number) => {
     const index = getIndexFromClientY(clientY);
     if (index === selectedIndex) return;
     trySelectEmotion(index);
   };
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     const index = getIndexFromClientY(e.clientY);
     if (index === selectedIndex) {
@@ -86,7 +86,7 @@ export const useEmotionBookDrag = ({
     }
   };
 
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>): void => {
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
     if (shouldDeselectRef.current) {
       const index = getIndexFromClientY(e.clientY);
@@ -99,7 +99,7 @@ export const useEmotionBookDrag = ({
     handleIndexChange(e.clientY);
   };
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>): void => {
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     e.currentTarget.releasePointerCapture(e.pointerId);
     if (shouldDeselectRef.current) {
       shouldDeselectRef.current = false;

@@ -61,15 +61,7 @@ const semanticColors: { label: string; tw: string; hex: string }[] = [
   { label: "accent-foreground", tw: "bg-accent-foreground", hex: "→ gray-700" },
 ];
 
-const ColorSwatch = ({
-  label,
-  tw,
-  hex,
-}: {
-  label: string;
-  tw: string;
-  hex: string;
-}): React.ReactElement => (
+const ColorSwatch = ({ label, tw, hex }: { label: string; tw: string; hex: string }) => (
   <div className="flex flex-col gap-1.5">
     <div className={`h-14 w-full rounded-lg border border-gray-100 ${tw}`} />
     <div>
@@ -195,7 +187,7 @@ const TypographyRow = ({
   weight: string;
   usage: string;
   sampleText?: string;
-}): React.ReactElement => (
+}) => (
   <div className="flex items-baseline gap-6 border-b border-border py-4 last:border-0">
     <div className="w-28 shrink-0">
       <p className="caption1 text-muted-foreground">.{cls}</p>

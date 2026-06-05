@@ -40,7 +40,7 @@ export const useCalendar = (): UseCalendarReturn => {
 
   const { selectedDate, setSelectedDate, viewDate, setViewDate } = useCalendarStore();
 
-  const setMode = (newMode: CalendarMode): void => {
+  const setMode = (newMode: CalendarMode) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("mode", newMode);
     router.replace(`?${params.toString()}`);
@@ -75,7 +75,7 @@ export const useCalendar = (): UseCalendarReturn => {
     return isAfter(startOfDay(lastDay), today) ? today : lastDay;
   };
 
-  const handlePrev = (): void => {
+  const handlePrev = () => {
     const today = startOfDay(new Date());
     if (mode === "monthly") {
       const newViewDate = subMonths(viewDate, 1);
@@ -96,7 +96,7 @@ export const useCalendar = (): UseCalendarReturn => {
     }
   };
 
-  const handleNext = (): void => {
+  const handleNext = () => {
     const today = startOfDay(new Date());
     if (mode === "monthly") {
       const newViewDate = addMonths(viewDate, 1);

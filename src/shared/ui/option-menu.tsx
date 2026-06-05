@@ -24,7 +24,7 @@ interface OptionMenuProps {
   trigger?: ReactNode;
 }
 
-export const OptionMenu = ({ items, trigger }: OptionMenuProps): React.ReactElement => {
+export const OptionMenu = ({ items, trigger }: OptionMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

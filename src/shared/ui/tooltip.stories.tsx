@@ -13,7 +13,7 @@ const meta: Meta<typeof Tooltip> = {
     layout: "centered",
   },
   decorators: [
-    (Story): React.ReactElement => (
+    (Story) => (
       <TooltipProvider>
         <div className="flex items-center justify-center p-20">
           <Story />
@@ -27,7 +27,7 @@ export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
-  render: (): React.ReactElement => (
+  render: () => (
     <Tooltip>
       <TooltipTrigger asChild>
         <Button label="호버해보세요" className="bg-muted text-foreground border border-border" />
@@ -38,7 +38,7 @@ export const Default: Story = {
 };
 
 export const AllSides: Story = {
-  render: (): React.ReactElement => (
+  render: () => (
     <div className="grid grid-cols-2 gap-8">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
         <Tooltip key={side} open>
@@ -53,7 +53,7 @@ export const AllSides: Story = {
 };
 
 export const AlwaysOpen: Story = {
-  render: (): React.ReactElement => (
+  render: () => (
     <Tooltip open>
       <TooltipTrigger asChild>
         <Button
@@ -73,7 +73,7 @@ export const AlwaysOpen: Story = {
 };
 
 export const CustomStyle: Story = {
-  render: (): React.ReactElement => (
+  render: () => (
     <div className="flex flex-col items-center gap-12">
       <Tooltip open>
         <TooltipTrigger asChild>

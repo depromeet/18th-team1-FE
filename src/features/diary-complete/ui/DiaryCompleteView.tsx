@@ -16,16 +16,16 @@ interface DiaryCompleteViewProps {
   diaryId: number;
 }
 
-export const DiaryCompleteView = ({ diaryId }: DiaryCompleteViewProps): React.ReactElement => {
+export const DiaryCompleteView = ({ diaryId }: DiaryCompleteViewProps) => {
   const router = useRouter();
   const today = formatDate(new Date());
   const [isSharing, setIsSharing] = useState(false);
 
-  const handleNext = (): void => {
+  const handleNext = () => {
     router.push("/");
   };
 
-  const handleShare = async (): Promise<void> => {
+  const handleShare = async () => {
     if (isSharing) return;
 
     if (!navigator.share) {

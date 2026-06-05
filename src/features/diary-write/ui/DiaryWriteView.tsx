@@ -12,7 +12,7 @@ import { usePhotoSelect } from "../model/usePhotoSelect";
 import { DiaryTextInput } from "./DiaryTextInput";
 import { PhotoBar } from "./PhotoBar";
 
-export const DiaryWriteView = (): React.ReactElement | null => {
+export const DiaryWriteView = () => {
   const router = useRouter();
   const { selectedQuote } = useDiaryEmotionStore();
   const { text, handleTextChange } = useDiaryWrite();
@@ -22,7 +22,7 @@ export const DiaryWriteView = (): React.ReactElement | null => {
 
   if (!selectedQuote) return null;
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     mutate(
       { quoteId: selectedQuote.quoteId, content: text || null, photoFile },
       {

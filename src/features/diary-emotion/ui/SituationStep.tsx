@@ -13,7 +13,7 @@ interface SituationStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
 }
 
-export const SituationStep = ({ onValidChange }: SituationStepProps): React.ReactElement => {
+export const SituationStep = ({ onValidChange }: SituationStepProps) => {
   const router = useRouter();
   const { selectedEmotionId, selectedSituationIds, setSelectedSituationIds } =
     useDiaryEmotionStore();

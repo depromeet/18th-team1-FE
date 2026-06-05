@@ -7,15 +7,15 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/shar
 import { redirectToGoogleLogin, redirectToKakaoLogin } from "../api/authApi";
 import { saveLastLoginProvider, useLastLoginProvider } from "../model/useLastLoginProvider";
 
-export const LoginView = (): React.ReactElement => {
+export const LoginView = () => {
   const lastLoginProvider = useLastLoginProvider();
 
-  const handleKakaoLogin = (): void => {
+  const handleKakaoLogin = () => {
     saveLastLoginProvider("kakao");
     redirectToKakaoLogin();
   };
 
-  const handleGoogleLogin = (): void => {
+  const handleGoogleLogin = () => {
     saveLastLoginProvider("google");
     redirectToGoogleLogin();
   };

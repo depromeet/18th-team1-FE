@@ -10,10 +10,10 @@ export const refreshAccessToken = (): Promise<RefreshResponse> =>
 export const fetchDevToken = (): Promise<RefreshResponse> =>
   httpClient.get<RefreshResponse>("/auth/dev-token");
 
-export const redirectToKakaoLogin = (): void => {
+export const redirectToKakaoLogin = () => {
   window.location.href = `${BASE_URL}/oauth2/authorization/kakao`;
 };
 
-export const redirectToGoogleLogin = (): void => {
+export const redirectToGoogleLogin = () => {
   window.location.href = `${BASE_URL}/oauth2/authorization/google`;
 };

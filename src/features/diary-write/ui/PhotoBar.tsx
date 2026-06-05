@@ -14,23 +14,17 @@ interface PhotoBarProps {
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const PhotoBar = ({
-  photoUrl,
-  inputRef,
-  onAdd,
-  onDelete,
-  onFileChange,
-}: PhotoBarProps): React.ReactElement => {
+export const PhotoBar = ({ photoUrl, inputRef, onAdd, onDelete, onFileChange }: PhotoBarProps) => {
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(popupRef, () => setIsDeletePopupOpen(false), isDeletePopupOpen);
 
-  const handlePhotoClick = (): void => {
+  const handlePhotoClick = () => {
     setIsDeletePopupOpen(true);
   };
 
-  const handleDeleteAndClose = (): void => {
+  const handleDeleteAndClose = () => {
     onDelete();
     setIsDeletePopupOpen(false);
   };

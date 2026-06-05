@@ -4,9 +4,9 @@ import { IcNextCard } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 import { useWritingTimer } from "../model/useWritingTimer";
 
-export const CalendarWritingTimer = (): React.ReactElement => {
+export const CalendarWritingTimer = () => {
   const router = useRouter();
-  const handleNavigateToWrite = (): void => {
+  const handleNavigateToWrite = () => {
     router.push("/diary/emotion");
   };
 

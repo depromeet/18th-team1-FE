@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 
-const getSecondsUntilMidnight = (): number => {
+const getSecondsUntilMidnight = () => {
   const now = new Date();
   const midnight = new Date();
   midnight.setHours(24, 0, 0, 0);
   return Math.floor((midnight.getTime() - now.getTime()) / 1000);
 };
 
-const formatTime = (totalSeconds: number): string => {
+const formatTime = (totalSeconds: number) => {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;

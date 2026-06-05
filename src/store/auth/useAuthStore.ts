@@ -11,10 +11,10 @@ export const useAuthStore = create<AuthState>()(
   devtools(
     (set) => ({
       accessToken: null,
-      setAuth: (accessToken: string): void => {
+      setAuth: (accessToken: string) => {
         set({ accessToken }, false, "auth/setAuth");
       },
-      clearAuth: (): void => {
+      clearAuth: () => {
         set({ accessToken: null }, false, "auth/clearAuth");
       },
     }),

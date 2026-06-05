@@ -1,6 +1,6 @@
 import { LoginView } from "@/features/auth";
 
-const LoginPage = (): React.ReactElement => {
+const LoginPage = () => {
   return <LoginView />;
 };
 

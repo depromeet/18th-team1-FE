@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcShare = (props: IconProps): React.ReactElement => (
+export const IcShare = (props: IconProps) => (
   <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
     <path
       d="M8.57141 5.68391L12.2553 2L15.9392 5.68391"

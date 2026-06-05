@@ -11,7 +11,7 @@ export const useDiaryStore = create<DiaryState>()(
   devtools(
     (set) => ({
       selectedDiary: null,
-      setSelectedDiary: (diary: DiaryDetail | null): void => {
+      setSelectedDiary: (diary: DiaryDetail | null) => {
         set({ selectedDiary: diary }, false, "diary/setSelectedDiary");
       },
     }),

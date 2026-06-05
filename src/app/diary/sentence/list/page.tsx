@@ -10,7 +10,7 @@ const SentenceListView = dynamic(
   { ssr: false },
 );
 
-const SentenceListPage = (): React.ReactElement => (
+const SentenceListPage = () => (
   <SentenceErrorBoundary>
     <Suspense fallback={<SentenceLoadingView />}>
       <SentenceListView />

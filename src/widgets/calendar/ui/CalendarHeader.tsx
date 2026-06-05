@@ -3,7 +3,7 @@
 import { IcSetting, IcShare } from "@/shared/ui/icons";
 import { Header } from "@/widgets/header";
 
-export const CalendarHeader = (): React.ReactElement => {
+export const CalendarHeader = () => {
   return (
     <Header
       title="캘린더"

@@ -13,13 +13,13 @@ import { SentenceTypeStep } from "./SentenceTypeStep";
 import { SituationDescriptionStep } from "./SituationDescriptionStep";
 import { SituationStep } from "./SituationStep";
 
-export const EmotionStepView = (): React.ReactElement => {
+export const EmotionStepView = () => {
   useViewportHeight();
   const { currentStep, totalSteps, handleBack, handleNext, handleSkip } = useEmotionStep();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const hiddenTextareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleNextWithKeyboard = (): void => {
+  const handleNextWithKeyboard = () => {
     if (currentStep === 2) {
       hiddenTextareaRef.current?.focus();
     }

@@ -3,10 +3,7 @@ interface StepProgressBarProps {
   totalSteps: number;
 }
 
-export const StepProgressBar = ({
-  currentStep,
-  totalSteps,
-}: StepProgressBarProps): React.ReactElement => {
+export const StepProgressBar = ({ currentStep, totalSteps }: StepProgressBarProps) => {
   const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
 
   return (

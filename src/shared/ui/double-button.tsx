@@ -1,7 +1,5 @@
 "use client";
 
-import type { ReactElement } from "react";
-
 import { cn } from "@/shared/lib/utils";
 
 interface DoubleButtonProps {
@@ -20,7 +18,7 @@ export const DoubleButton = ({
   className,
   onPrimaryClick,
   onSecondaryClick,
-}: DoubleButtonProps): ReactElement => (
+}: DoubleButtonProps) => (
   <div className={cn("flex w-full h-14 items-center gap-2", className)}>
     <button
       type="button"

@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { href: "/calendar", label: "캘린더", icon: IcCalendar },
 ] as const;
 
-export const NavBar = (): React.ReactElement => {
+export const NavBar = () => {
   const pathname = usePathname();
 
   return (

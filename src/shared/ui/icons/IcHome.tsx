@@ -5,7 +5,7 @@ interface IcHomeProps extends IconProps {
   variant?: "default" | "line";
 }
 
-export const IcHome = ({ variant = "default", ...props }: IcHomeProps): React.ReactElement => {
+export const IcHome = ({ variant = "default", ...props }: IcHomeProps) => {
   if (variant === "line") {
     return (
       <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>

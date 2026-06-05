@@ -27,7 +27,7 @@ export const CalendarBoard = ({
   mode,
   onSelectDate,
   diaryIntensityByDate,
-}: CalendarBoardProps): React.ReactElement => {
+}: CalendarBoardProps) => {
   return (
     <div className="flex w-full flex-col gap-2.5">
       <div className="grid grid-cols-7 px-4">

@@ -6,9 +6,7 @@ interface DiaryCompletePageProps {
   searchParams: Promise<{ diaryId?: string }>;
 }
 
-const DiaryCompletePage = async ({
-  searchParams,
-}: DiaryCompletePageProps): Promise<React.ReactElement> => {
+const DiaryCompletePage = async ({ searchParams }: DiaryCompletePageProps) => {
   const { diaryId } = await searchParams;
   const parsedId = Number(diaryId);
   if (!parsedId) redirect("/");

@@ -15,7 +15,7 @@ import {
   useDiaryEmotionStore,
 } from "@/store/diary-emotion/useDiaryEmotionStore";
 
-export const SentenceDetailView = (): React.ReactElement => {
+export const SentenceDetailView = () => {
   const router = useRouter();
   const { selectedSituationIds, selectedSentenceTypeIds, situationDescription, setSelectedQuote } =
     useDiaryEmotionStore();
@@ -39,7 +39,7 @@ export const SentenceDetailView = (): React.ReactElement => {
   const { dailyRecommendationId, quote } = data;
   saveQuotesResponse(data);
 
-  const handleNext = (): void => {
+  const handleNext = () => {
     setSelectedQuote({
       dailyRecommendationId,
       quoteId: quote.quoteId,
@@ -50,7 +50,7 @@ export const SentenceDetailView = (): React.ReactElement => {
     router.push("/diary/write");
   };
 
-  const handleViewList = (): void => {
+  const handleViewList = () => {
     router.push(`/diary/sentence/list?dailyRecommendationId=${dailyRecommendationId}`);
   };
 

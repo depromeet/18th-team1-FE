@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { refreshAccessToken } from "@/features/auth";
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
-const LoginCallbackPage = (): React.ReactElement => {
+const LoginCallbackPage = () => {
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
   const clearAuth = useAuthStore((state) => state.clearAuth);

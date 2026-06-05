@@ -61,7 +61,7 @@ features/
 ## 코딩 규칙 요약
 
 - 변수/함수 `camelCase`, 컴포넌트/타입 `PascalCase`, 상수 `UPPER_SNAKE_CASE`
-- 함수는 Arrow Function + 명시적 반환 타입 필수
+- 함수는 Arrow Function 사용
 - boolean: `is/has/should` 접두사 · 이벤트 핸들러: 내부 `handle*`, props `on*`
 - 절대 경로 `@/*` → `src/*`
 - 줄임말 지양: `btn` (✗) → `button` (✓)

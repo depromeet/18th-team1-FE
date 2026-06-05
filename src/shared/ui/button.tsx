@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactElement, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
@@ -12,13 +12,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button = ({
-  label,
-  icon,
-  isDisabled = false,
-  className,
-  onClick,
-}: ButtonProps): ReactElement => (
+export const Button = ({ label, icon, isDisabled = false, className, onClick }: ButtonProps) => (
   <button
     type="button"
     className={cn(

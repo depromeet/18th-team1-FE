@@ -14,7 +14,7 @@ const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
   return "LOW";
 };
 
-export const CalendarWidget = (): React.ReactElement => {
+export const CalendarWidget = () => {
   const { viewDate, selectedDate, setSelectedDate, mode, setMode, days, handlePrev, handleNext } =
     useCalendar();
 
@@ -31,12 +31,12 @@ export const CalendarWidget = (): React.ReactElement => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleModeSelect = (selectedMode: CalendarMode): void => {
+  const handleModeSelect = (selectedMode: CalendarMode) => {
     setMode(selectedMode);
     setIsModalOpen(false);
   };
 
-  const handleFilterToggle = (): void => {
+  const handleFilterToggle = () => {
     setIsModalOpen((prev) => !prev);
   };
 

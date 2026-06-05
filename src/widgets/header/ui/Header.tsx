@@ -13,11 +13,11 @@ interface HeaderProps {
   className?: string;
 }
 
-export const Header = ({ title, onBack, right, className }: HeaderProps): React.ReactElement => {
+export const Header = ({ title, onBack, right, className }: HeaderProps) => {
   const router = useRouter();
   const handleBack =
     onBack ??
-    ((): void => {
+    (() => {
       router.back();
     });
 
