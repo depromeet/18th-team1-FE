@@ -1,16 +1,15 @@
 import type { Diary } from "@/entities/diary";
 import { Text } from "@/shared/ui/text";
 
-import { DiaryListItem } from "./DiaryListItem";
+import { HomeSentenceItem } from "./HomeSentenceItem";
 
 const DAY_NAMES = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"] as const;
 
-interface DiaryListSectionProps {
+interface HomeSentenceSectionProps {
   diaries: Diary[];
-  onPressItem?: (diaryId: number) => void;
 }
 
-export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps) => {
+export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps) => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();
@@ -33,20 +32,19 @@ export const DiaryListSection = ({ diaries, onPressItem }: DiaryListSectionProps
           </Text>
         </div>
       ) : (
-        <div className="flex flex-col gap-2.5 px-5 pb-24">
+        <div className="flex flex-col gap-3 px-5 pb-24">
           {diaries.map((diary) => {
             const date = new Date(today.getFullYear(), today.getMonth(), diary.day);
             const dayIndex = date.getDay();
             const dayName = DAY_NAMES[dayIndex] ?? "일요일";
             const isSunday = dayIndex === 0;
             return (
-              <DiaryListItem
-                key={diary.day}
+              <HomeSentenceItem
+                key={diary.diaryId}
                 day={diary.day}
                 sentence={diary.sentence}
                 dayName={dayName}
                 isSunday={isSunday}
-                onPress={onPressItem ? () => onPressItem(diary.diaryId) : undefined}
               />
             );
           })}

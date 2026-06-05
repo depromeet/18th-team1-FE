@@ -13,5 +13,3 @@ export { useDiaryStore } from "./model/useDiaryStore";
 export { DiaryCard } from "./ui/DiaryCard";
 export { DiaryChip } from "./ui/DiaryChip";
 export { DiaryDetailCard } from "./ui/DiaryDetailCard";
-export { DiaryListItem as DiaryListItemComponent } from "./ui/DiaryListItem";
-export { DiaryListSection } from "./ui/DiaryListSection";
