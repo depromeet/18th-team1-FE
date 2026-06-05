@@ -12,9 +12,7 @@ interface RandomSentenceBannerProps {
   sentences: RecommendedSentence[];
 }
 
-export const RandomSentenceBanner = ({
-  sentences,
-}: RandomSentenceBannerProps): React.ReactElement | null => {
+export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) => {
   const { slideIndex, isAnimating, isPaused, togglePause, handleTransitionEnd } = useInfiniteSlider(
     {
       count: sentences.length,

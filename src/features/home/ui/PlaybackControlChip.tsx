@@ -10,7 +10,7 @@ export const PlaybackControlChip = ({
   currentPosition,
   total,
   onToggle,
-}: PlaybackControlChipProps): React.ReactElement => (
+}: PlaybackControlChipProps) => (
   <button
     type="button"
     onClick={onToggle}

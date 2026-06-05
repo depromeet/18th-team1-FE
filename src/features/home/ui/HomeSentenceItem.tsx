@@ -15,7 +15,7 @@ export const HomeSentenceItem = ({
   sentence,
   dayName,
   isSunday = false,
-}: HomeSentenceItemProps): React.ReactElement => (
+}: HomeSentenceItemProps) => (
   <div className="flex h-21.5 items-center gap-4 border-b border-gray-200 py-5 pl-5 pr-1.5">
     <div className="flex w-9.75 shrink-0 flex-col items-center">
       <Text

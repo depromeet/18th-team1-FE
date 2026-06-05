@@ -33,7 +33,7 @@ export const HomeDiarySection = () => {
     date: "",
   }));
 
-  const handleBannerClick = (): void => {
+  const handleBannerClick = () => {
     router.push("/diary/emotion");
     // TODO: 분기 로직 복구 필요
     // const diaryExists = await fetchTodayDiaryExists();

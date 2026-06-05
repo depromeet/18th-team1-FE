@@ -9,7 +9,7 @@ interface HomeSentenceSectionProps {
   diaries: Diary[];
 }
 
-export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps): React.ReactElement => {
+export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps) => {
   const today = new Date();
   const month = today.getMonth() + 1;
   const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();
