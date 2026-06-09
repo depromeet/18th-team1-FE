@@ -1,7 +1,6 @@
 import { format, getDate, isFuture, isSameDay, isSameMonth, isToday } from "date-fns";
 import type { EmotionIntensity } from "@/entities/diary";
 import { cn } from "@/shared/lib/utils";
-import type { CalendarMode } from "../model/calendar.types";
 
 const INTENSITY_STYLE: Record<EmotionIntensity, string> = {
   HIGH: "bg-key-secondary-0 text-key-secondary-100",
@@ -13,7 +12,6 @@ interface CalendarBoardProps {
   days: Date[];
   viewDate: Date;
   selectedDate: Date;
-  mode: CalendarMode;
   onSelectDate: (date: Date) => void;
   diaryIntensityByDate?: Record<string, EmotionIntensity>;
 }
@@ -24,7 +22,6 @@ export const CalendarBoard = ({
   days,
   viewDate,
   selectedDate,
-  mode,
   onSelectDate,
   diaryIntensityByDate,
 }: CalendarBoardProps) => {
@@ -44,7 +41,7 @@ export const CalendarBoard = ({
           </div>
         ))}
       </div>
-      <div className={cn("grid grid-cols-7 px-4", mode === "monthly" && "gap-y-2.5")}>
+      <div className="grid grid-cols-7 gap-y-2.5 px-4">
         {days.map((day) => {
           const isSelected = isSameDay(day, selectedDate);
           const isCurrentMonth = isSameMonth(day, viewDate);

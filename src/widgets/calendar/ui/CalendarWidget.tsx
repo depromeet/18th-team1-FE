@@ -1,12 +1,10 @@
 "use client";
 
 import { endOfMonth, format, startOfMonth } from "date-fns";
-import { useState } from "react";
 import type { EmotionIntensity } from "@/entities/diary";
 import { useDiariesQuery } from "@/entities/diary";
-import type { CalendarMode } from "@/features/calendar-view";
-import { CalendarBoard, CalendarModeModal, useCalendar } from "@/features/calendar-view";
-import { IcCalBack, IcCalNext, IcFilter } from "@/shared/ui/icons";
+import { CalendarBoard, useCalendar } from "@/features/calendar-view";
+import { IcCalBack, IcCalNext } from "@/shared/ui/icons";
 
 const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
   if (emotionValue >= 4) return "HIGH";
@@ -15,8 +13,7 @@ const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
 };
 
 export const CalendarWidget = () => {
-  const { viewDate, selectedDate, setSelectedDate, mode, setMode, days, handlePrev, handleNext } =
-    useCalendar();
+  const { viewDate, selectedDate, setSelectedDate, days, handlePrev, handleNext } = useCalendar();
 
   const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
   const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
@@ -29,40 +26,10 @@ export const CalendarWidget = () => {
     ]),
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModeSelect = (selectedMode: CalendarMode) => {
-    setMode(selectedMode);
-    setIsModalOpen(false);
-  };
-
-  const handleFilterToggle = () => {
-    setIsModalOpen((prev) => !prev);
-  };
-
   return (
     <div className="flex w-full flex-col gap-4 pt-6 pb-4 border-b-2 border-gray-100">
       <div className="flex items-center justify-between px-5">
-        <div className="relative flex items-center gap-1">
-          <button type="button" onClick={handleFilterToggle}>
-            <IcFilter size={30} className="text-gray-700" />
-          </button>
-          <span className="subhead1 text-gray-700">{format(viewDate, "yyyy년 M월")}</span>
-          {isModalOpen && (
-            <>
-              <button
-                type="button"
-                className="fixed inset-0 z-10"
-                tabIndex={-1}
-                aria-label="모달 닫기"
-                onClick={() => setIsModalOpen(false)}
-              />
-              <div className="absolute top-6 left-10 z-20">
-                <CalendarModeModal mode={mode} onSelect={handleModeSelect} />
-              </div>
-            </>
-          )}
-        </div>
+        <span className="subhead1 text-gray-700">{format(viewDate, "yyyy년 M월")}</span>
         <div className="flex items-center gap-5 text-gray-400">
           <button type="button" onClick={handlePrev}>
             <IcCalBack size={24} />
@@ -76,7 +43,6 @@ export const CalendarWidget = () => {
         days={days}
         viewDate={viewDate}
         selectedDate={selectedDate}
-        mode={mode}
         onSelectDate={setSelectedDate}
         diaryIntensityByDate={diaryIntensityByDate}
       />
