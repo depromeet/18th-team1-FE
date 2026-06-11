@@ -16,7 +16,7 @@ const HIDE_DELAY_MS = 300;
 export const NavBar = () => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
