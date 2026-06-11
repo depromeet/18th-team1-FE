@@ -1,21 +1,27 @@
 @theme {
   /* Key Color */
-  --color-key-primary: #8e8100;
-  --color-key-secondary: #a4d4d6;
-  --color-key-secondary2: #6b1e3c;
+  --color-key-primary: #a4d4d6;
+  --color-key-secondary: #6b1e3c;
+  --color-key-point: #ab9d44;
 
   /* Key Color Variation */
-  --color-key-primary-0: #e1ddb5;
-  --color-key-primary-100: #6a6103;
-  --color-key-secondary-0: #d1e9ea;
-  --color-key-secondary-100: #287f83;
-  --color-key-secondary2-0: #e5d1d9;
-  --color-key-primary-0-1: #e7e4c4;
-  --color-key-secondary-0-1: #cde7e9;
+  --color-key-primary-0: #e2f1f2;
+  --color-key-primary-100: #287f83;
+  /*--color-key-primary-0-1: #287f83;*/
+  --color-key-secondary-0: #f5edf0;
+  /*--color-key-secondary-0-1: #e2f1f2;*/
+  --color-key-secondary-50: #e5d1d9;
+
+  --color-key-point-0: #f3f1e1;
+  --color-key-point-50: #e7e4c4;
+  --color-key-point-100: #6a6103;
+  /*--color-key-secondary2-0: #e5d1d9;*/
+  /*--color-key-secondary2-0-1: #f5edf0;*/
 
   /* Sub Color */
   --color-sub-saturday: #2e7df6;
   --color-sub-sunday: #ff6f36;
+  --color-sub-error: #ff4668;
 
   /* Gray Scale */
   --color-gray-0: #ffffff;
@@ -25,20 +31,21 @@
   --color-gray-300: #8a8a8a;
   --color-gray-400: #737373;
   --color-gray-500: #5c5c5c;
-  --color-gray-600: #303030;
-  --color-gray-700: #090909;
-  --color-gray-bg: #191919;
-  --color-gray-700-50: rgba(9, 9, 9, 0.5);
+  --color-gray-600: #3a3a3a;
+  --color-gray-700: #222222;
+  /*--color-gray-bg: #191919;*/
   --color-gray-0-20: rgba(255, 255, 255, 0.2);
+  --color-gray-0-70: rgba(255, 255, 255, 0.7);
   --color-gray-500-50: rgba(92, 92, 92, 0.5);
   --color-gray-600-15: rgba(58, 58, 58, 0.15);
+  --color-gray-700-50: rgba(9, 9, 9, 0.5);
 
   /* Label / UI */
-  --color-label-strong: #000000;
+  /*--color-label-strong: #000000;
   --color-label-normal: #171719;
   --color-label-alternative: rgba(55, 56, 60, 0.61);
   --color-background-alternative: #f7f7f8;
-  --color-line-normal: rgba(112, 115, 124, 0.22);
+  --color-line-normal: rgba(112, 115, 124, 0.22);*/
 
   /* Semantic tokens (shadcn/ui 호환) — gray scale 매핑 */
   --color-background: var(--color-gray-0);
@@ -52,7 +59,7 @@
   --color-primary-foreground: var(--color-gray-0);
   --color-secondary: var(--color-gray-50);
   --color-secondary-foreground: var(--color-gray-700);
-  --color-destructive: #ff3b30;
+  --color-destructive: #ff4242;
   --color-destructive-foreground: var(--color-gray-0);
   --color-accent: var(--color-gray-50);
   --color-accent-foreground: var(--color-gray-700);
@@ -75,46 +82,34 @@
 }
 
 @layer utilities {
-  /* Title (Pretendard) */
+  /* ── Title (Pretendard) ──────────────────────────────────── */
   .title1 {
-    font-size: 1.75rem;
-    font-weight: 900;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .title1-2 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    line-height: 1.5;
-    letter-spacing: -0.035rem;
-  }
-  .title1-3 {
     font-size: 1.75rem;
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.04em;
   }
   .title2 {
-    font-size: 1.25rem;
-    font-weight: 800;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-
-  /* Head (Pretendard) */
-  .head0 {
     font-size: 1.625rem;
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .head1 {
-    font-size: 1.625rem;
-    font-weight: 600;
+  .title3 {
+    font-size: 1.5rem;
+    font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .head1-2 {
+  .title4 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Head (Pretendard) ───────────────────────────────────── */
+  .head1 {
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.5;
@@ -122,21 +117,27 @@
   }
   .head2 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
   .head3 {
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  .head4 {
+    font-size: 1.125rem;
+    font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
 
-  /* Subhead (Pretendard) */
+  /* ── Subhead (Pretendard) ────────────────────────────────── */
   .subhead1 {
     font-size: 1.125rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
@@ -147,57 +148,51 @@
     letter-spacing: -0.02em;
   }
   .subhead3 {
-    font-size: 1.125rem;
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .subhead4 {
-    font-size: 1.0625rem;
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
-  .subhead5 {
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .subhead6 {
+  .subhead4 {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
+  .subhead5 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
 
-  /* Body (Pretendard) */
+  /* ── Body (Pretendard) ───────────────────────────────────── */
   .body1 {
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .body2-1 {
+  .body2 {
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .body2 {
+  .body3 {
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .body3 {
+  .body4 {
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
 
-  /* Caption (Pretendard) */
+  /* ── Caption (Pretendard) ────────────────────────────────── */
   .caption1 {
     font-size: 0.75rem;
     font-weight: 600;
@@ -206,12 +201,18 @@
   }
   .caption2 {
     font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+  .caption3 {
+    font-size: 0.75rem;
     font-weight: 400;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
 
-  /* Point (GT Pressura Trial / Milling Trial) */
+  /* ── Point — GT Pressura Trial ───────────────────────────── */
   .point1 {
     font-family: var(--font-gt-pressura);
     font-size: 1.5rem;
@@ -219,17 +220,10 @@
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
-  .point1-2 {
-    font-family: var(--font-gt-pressura);
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-  }
   .point2 {
-    font-family: var(--font-milling);
-    font-size: 1.25rem;
-    font-weight: 400;
+    font-family: var(--font-gt-pressura);
+    font-size: 1.125rem;
+    font-weight: 700;
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
@@ -240,4 +234,37 @@
     line-height: 1.5;
     letter-spacing: -0.02em;
   }
+  .point4 {
+    font-family: var(--font-gt-pressura);
+    font-size: 0.625rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Point — Milling Trial ───────────────────────────────── */
+  .point-eng {
+    font-family: var(--font-milling);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Deprecated (Figma에 없는 구 클래스) ─────────────────── */
+  /* .title1-2  { 1.75rem / 700 / -0.035rem } */
+  /* .title1-3  { 1.75rem / 700 / -0.04em  } */
+  /* .head0     { 1.625rem / 700            } → title2 로 대체 */
+  /* .head1-2   { 1.25rem / 700 / -0.04em  } → head1 로 대체  */
+  /* .subhead1  old { 1.125rem / 700        } → head4 로 대체  */
+  /* .subhead1-2    { 1.125rem / 600        } → subhead1 로 대체 */
+  /* .subhead5  old { 1rem / 700            } → subhead3 로 대체 */
+  /* .subhead6      { 1rem / 600            } → subhead4 로 대체 */
+  /* .body2-1   { 0.875rem / 700            } → subhead5 로 대체 */
+  /* .body2-2   { 0.875rem / 600            } → body2 로 대체   */
+  /* .body3 old { 0.875rem / 400            } → body4 로 대체   */
+  /* .caption2-1 { 0.75rem / 500            } → caption2 로 대체 */
+  /* .caption2 old { 0.75rem / 400          } → caption3 로 대체 */
+  /* .point1-2  { GT / 1.125rem / 700       } → point2 로 대체  */
+  /* .point2 old { Milling / 1.25rem / 700  } → point-eng 로 대체 */
 }
