@@ -14,7 +14,7 @@ export const SentenceTypeChip = ({ label, isSelected, onClick }: SentenceTypeChi
     className={cn(
       "subhead2 flex h-13.5 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[30px] px-3.5 py-3.375",
       isSelected
-        ? "bg-key-secondary2 text-gray-0"
+        ? "bg-key-secondary text-gray-0"
         : "border border-dashed border-gray-200 bg-gray-50 text-gray-500",
     )}
   >

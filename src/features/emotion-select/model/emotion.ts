@@ -8,7 +8,7 @@ export type Emotion = {
 };
 
 export const CATEGORY_BG: Record<EmotionCategory, string> = {
-  bad: "bg-key-secondary2",
+  bad: "bg-key-secondary",
   neutral: "bg-key-primary",
   good: "bg-key-secondary",
 };

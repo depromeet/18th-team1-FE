@@ -28,7 +28,7 @@ export const SentenceSelectCard = ({
   >
     {isSelected ? (
       <div className="overflow-hidden rounded-lg">
-        <div className="flex h-11 flex-col items-start bg-key-secondary2 pl-4 pr-2.5 py-2.5">
+        <div className="flex h-11 flex-col items-start bg-key-secondary pl-4 pr-2.5 py-2.5">
           <div className="flex w-full items-center">
             <Text as="span" variant="point3" color="gray-0" className="flex-1">
               Today&apos;s text
