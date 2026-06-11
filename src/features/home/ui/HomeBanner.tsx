@@ -6,7 +6,7 @@ export const HomeBanner = ({ onClick }: HomeBannerProps) => (
   <button
     type="button"
     onClick={onClick}
-    className="flex h-31.5 w-full shrink-0 items-start justify-between bg-key-secondary2 p-5"
+    className="flex h-31.5 w-full shrink-0 items-start justify-between bg-key-secondary p-5"
   >
     <div className="flex flex-col items-start gap-1 text-left">
       <span className="head1-2 text-gray-100">나의 문장 찾기</span>

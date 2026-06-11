@@ -18,7 +18,7 @@ export const CalendarModeModal = ({ mode, onSelect }: CalendarModeModalProps) =>
       {VIEW_MODE_OPTIONS.map(({ label, value }) => (
         <label key={value} htmlFor={value} className="flex cursor-pointer items-center gap-2.5">
           <Checkbox id={value} checked={mode === value} onCheckedChange={() => onSelect(value)} />
-          <span className={cn("body1", mode === value ? "text-key-secondary2" : "text-gray-300")}>
+          <span className={cn("body1", mode === value ? "text-key-secondary" : "text-gray-300")}>
             {label}
           </span>
         </label>

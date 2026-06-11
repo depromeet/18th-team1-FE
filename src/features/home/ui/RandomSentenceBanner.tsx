@@ -58,8 +58,8 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
         >
           {slides.map((slide) => (
             <div key={slide.slideKey} className="flex w-full shrink-0 flex-col gap-5 p-5">
-              <p className="title1-3 line-clamp-3 h-31.5 text-key-secondary2">{slide.quote}</p>
-              <Text variant="caption2" color="key-secondary2">
+              <p className="title1-3 line-clamp-3 h-31.5 text-key-secondary">{slide.quote}</p>
+              <Text variant="caption2" color="key-secondary">
                 &#x300E;{slide.bookTitle}&#x300F;, {slide.bookAuthor}
               </Text>
             </div>

@@ -6,3 +6,4 @@ export type {
   ToneTag,
   ToneTagsResponse,
 } from "./model/emotionTag.types";
+export { TagChip, type TagChipVariant } from "./ui/TagChip";

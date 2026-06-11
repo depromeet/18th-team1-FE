@@ -7,7 +7,7 @@ import { useWritingTimer } from "../model/useWritingTimer";
 export const CalendarWritingTimer = () => {
   const router = useRouter();
   const handleNavigateToWrite = () => {
-    router.push("/diary/emotion");
+    router.push("/emotion");
   };
 
   const { formattedTime, isUnderThreeHours } = useWritingTimer();
