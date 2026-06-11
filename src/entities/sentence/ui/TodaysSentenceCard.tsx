@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Text } from "@/shared/ui/text";
 
@@ -24,6 +24,25 @@ export const TodaysSentenceCard = ({
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
   const controls = useAnimation();
+
+  const wordLines = useMemo(() => {
+    let globalIndex = 0;
+    return quote.split("\n").map((line, lineIndex) => {
+      const words = line.split(" ");
+      return {
+        lineKey: `L${lineIndex}`,
+        words: words.map((word, wordIndex) => {
+          const idx = globalIndex++;
+          return {
+            wordKey: `W${idx}`,
+            word,
+            delay: 0.28 + idx * 0.07,
+            hasSpaceAfter: wordIndex < words.length - 1,
+          };
+        }),
+      };
+    });
+  }, [quote]);
 
   const handleClick = async () => {
     if (isFlipping) return;
@@ -87,33 +106,23 @@ export const TodaysSentenceCard = ({
 
           <div className="flex flex-1 flex-col justify-start bg-background px-4.5 pt-5 pb-4.5">
             <div className="head4 text-key-secondary">
-              {(() => {
-                let n = 0;
-                return quote.split("\n").map((line) => {
-                  const lineWords = line.split(" ");
-                  return (
-                    <p key={line} className="m-0">
-                      {lineWords.map((word, pos) => {
-                        const delay = 0.28 + n * 0.07;
-                        n += 1;
-                        return (
-                          <span key={String(n)} className="inline-block">
-                            <motion.span
-                              className="inline-block"
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.55, delay, ease: [0.25, 0.1, 0.25, 1] }}
-                            >
-                              {word}
-                            </motion.span>
-                            {pos < lineWords.length - 1 && <span>&nbsp;</span>}
-                          </span>
-                        );
-                      })}
-                    </p>
-                  );
-                });
-              })()}
+              {wordLines.map(({ lineKey, words }) => (
+                <p key={lineKey} className="m-0">
+                  {words.map(({ wordKey, word, delay, hasSpaceAfter }) => (
+                    <span key={wordKey} className="inline-block">
+                      <motion.span
+                        className="inline-block"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.55, delay, ease: [0.25, 0.1, 0.25, 1] }}
+                      >
+                        {word}
+                      </motion.span>
+                      {hasSpaceAfter && <span>&nbsp;</span>}
+                    </span>
+                  ))}
+                </p>
+              ))}
             </div>
           </div>
 
