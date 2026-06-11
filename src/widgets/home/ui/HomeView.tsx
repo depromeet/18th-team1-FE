@@ -12,7 +12,7 @@ import {
   useHomeSummaryQuery,
 } from "@/features/home";
 
-export const HomeDiarySection = () => {
+export const HomeView = () => {
   const router = useRouter();
   const { data: summary } = useHomeSummaryQuery();
   const { data: randomQuote } = useHomeRandomQuery();
