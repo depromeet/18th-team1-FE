@@ -6,7 +6,7 @@ import type { CalendarMode } from "../model/calendar.types";
 const INTENSITY_STYLE: Record<EmotionIntensity, string> = {
   HIGH: "bg-key-secondary-0 text-key-secondary-100",
   MID: "bg-key-primary-0 text-key-primary-100",
-  LOW: "bg-key-secondary2-0 text-key-secondary2",
+  LOW: "bg-key-secondary-0 text-key-secondary",
 };
 
 interface CalendarBoardProps {
@@ -61,16 +61,16 @@ export const CalendarBoard = ({
                 className={cn(
                   "relative flex size-11 items-center justify-center rounded transition-all",
                   !isCurrentMonth && "pointer-events-none opacity-0",
-                  isSelected ? "bg-key-secondary2 text-key-secondary" : "text-foreground",
+                  isSelected ? "bg-key-secondary text-key-secondary" : "text-foreground",
                   !isSelected && intensity && INTENSITY_STYLE[intensity],
                   !isSelected && isFutureDate && "cursor-default text-gray-200",
                 )}
               >
                 {isTodayDate && !isSelected && (
-                  <span className="absolute text-key-secondary2 top-1.5 size-1 rounded-full bg-current" />
+                  <span className="absolute text-key-secondary top-1.5 size-1 rounded-full bg-current" />
                 )}
                 <span
-                  className={cn("subhead2", isTodayDate && !isSelected && "text-key-secondary2")}
+                  className={cn("subhead2", isTodayDate && !isSelected && "text-key-secondary")}
                 >
                   {getDate(day)}
                 </span>

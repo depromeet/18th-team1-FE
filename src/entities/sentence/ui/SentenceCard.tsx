@@ -15,7 +15,7 @@ export const SentenceCard = ({ bookTitle, bookAuthor, quote, date }: SentenceCar
   return (
     <div className="flex flex-col gap-7.5 px-5 pt-14.25">
       {date && (
-        <Text variant="subhead6" color="key-secondary2">
+        <Text variant="subhead6" color="key-secondary">
           {date}
         </Text>
       )}

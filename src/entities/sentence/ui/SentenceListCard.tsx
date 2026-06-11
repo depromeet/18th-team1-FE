@@ -23,14 +23,14 @@ export const SentenceListCard = ({ sentence, isSelected, onClick }: SentenceList
       <div className="flex flex-col">
         <Text
           variant={isSelected ? "subhead5" : "subhead6"}
-          color={isSelected ? "key-secondary2" : "gray-600"}
+          color={isSelected ? "key-secondary" : "gray-600"}
         >
           {sentence.bookTitle}
         </Text>
         <Text
           as="span"
           variant={isSelected ? "caption1" : "caption2"}
-          color={isSelected ? "key-secondary2" : "gray-400"}
+          color={isSelected ? "key-secondary" : "gray-400"}
           className={cn(isSelected && "opacity-80")}
         >
           {sentence.bookAuthor}
@@ -38,7 +38,7 @@ export const SentenceListCard = ({ sentence, isSelected, onClick }: SentenceList
       </div>
       <Text
         variant={isSelected ? "title2" : "subhead2"}
-        color={isSelected ? "key-secondary2" : "gray-700"}
+        color={isSelected ? "key-secondary" : "gray-700"}
       >
         {sentence.quote}
       </Text>

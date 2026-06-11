@@ -110,7 +110,7 @@ function DropdownMenuCheckboxItem({
       <span
         className={cn(
           "flex size-5 shrink-0 items-center justify-center rounded-[4px] transition-colors",
-          isChecked ? "bg-key-secondary2" : "bg-gray-100",
+          isChecked ? "bg-key-secondary" : "bg-gray-100",
         )}
       >
         <IcCheck

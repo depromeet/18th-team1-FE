@@ -8,6 +8,7 @@ type TypographyVariant =
   | "title2"
   | "head0"
   | "head1"
+  | "head1-2"
   | "head2"
   | "head3"
   | "subhead1"
@@ -25,7 +26,9 @@ type TypographyVariant =
   | "point1"
   | "point1-2"
   | "point2"
-  | "point3";
+  | "point3"
+  | "point4"
+  | "point-eng";
 
 type ColorToken =
   | "gray-0"
@@ -40,12 +43,12 @@ type ColorToken =
   | "gray-700-50"
   | "key-primary"
   | "key-secondary"
-  | "key-secondary2"
+  | "key-secondary"
   | "key-primary-0"
   | "key-primary-100"
   | "key-secondary-0"
   | "key-secondary-100"
-  | "key-secondary2-0"
+  | "key-secondary-0"
   | "sub-saturday"
   | "sub-sunday";
 

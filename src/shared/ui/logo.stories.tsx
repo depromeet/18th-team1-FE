@@ -47,7 +47,7 @@ export const Colors: Story = {
   render: () => (
     <div className="flex flex-col items-start gap-6">
       <div className="flex flex-col gap-1">
-        <span className="caption2 text-muted-foreground">key-secondary2 (기본)</span>
+        <span className="caption2 text-muted-foreground">key-secondary (기본)</span>
         <Logo width={125} height={43} />
       </div>
       <div className="flex flex-col gap-1">
