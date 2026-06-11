@@ -22,7 +22,7 @@ export const Checkbox = ({ className, ...props }: CheckboxProps) => {
       data-slot="checkbox"
       className={cn(
         "group relative flex size-5 shrink-0 items-center justify-center rounded-[4px] outline-none transition-colors",
-        "bg-gray-50 data-[state=checked]:bg-key-secondary2",
+        "bg-gray-50 data-[state=checked]:bg-key-secondary",
         "focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-not-allowed disabled:opacity-50",
         className,

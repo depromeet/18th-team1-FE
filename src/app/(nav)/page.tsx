@@ -37,13 +37,13 @@ const HomePage = () => {
         <header
           className={cn(
             "sticky top-0 z-10 flex items-center px-5 py-4.75",
-            isPastBanner ? "bg-key-secondary2" : "bg-gray-100",
+            isPastBanner ? "bg-key-secondary" : "bg-gray-100",
           )}
         >
           <Logo
             className={cn(
               "transition-colors duration-300",
-              isPastBanner ? "text-key-secondary-0-1" : "text-key-secondary2",
+              isPastBanner ? "text-key-secondary-0-1" : "text-key-secondary",
             )}
           />
         </header>

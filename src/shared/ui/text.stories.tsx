@@ -52,7 +52,7 @@ const meta: Meta<typeof Text> = {
         "gray-700",
         "key-primary",
         "key-secondary",
-        "key-secondary2",
+        "key-secondary",
         "sub-saturday",
         "sub-sunday",
       ],
@@ -122,8 +122,8 @@ export const WithColor: Story = {
       <Text variant="subhead1" color="key-primary">
         key-primary
       </Text>
-      <Text variant="subhead1" color="key-secondary2">
-        key-secondary2
+      <Text variant="subhead1" color="key-secondary">
+        key-secondary
       </Text>
       <Text variant="subhead1" color="sub-saturday">
         sub-saturday

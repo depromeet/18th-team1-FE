@@ -4,7 +4,7 @@ import type { EmotionIntensity } from "../model/diary.types";
 const getChipClasses = (variant: EmotionIntensity | "default") => {
   if (variant === "HIGH") return "bg-key-secondary-0 text-key-secondary-100";
   if (variant === "MID") return "bg-key-primary-0 text-key-primary-100";
-  if (variant === "LOW") return "bg-key-secondary2-0 text-key-secondary2";
+  if (variant === "LOW") return "bg-key-secondary-0 text-key-secondary";
   return "bg-gray-0 text-gray-600";
 };
 
