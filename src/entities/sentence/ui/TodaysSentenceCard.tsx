@@ -38,7 +38,7 @@ export const TodaysSentenceCard = ({
           return {
             wordKey: `W${idx}`,
             word,
-            delay: 0.28 + idx * 0.07,
+            delay: 0.28 + idx * 0.15,
             hasSpaceAfter: wordIndex < words.length - 1,
           };
         }),
@@ -115,9 +115,9 @@ export const TodaysSentenceCard = ({
                       {animateWords ? (
                         <motion.span
                           className="inline-block"
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.55, delay, ease: [0.25, 0.1, 0.25, 1] }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.05, delay }}
                         >
                           {word}
                         </motion.span>
