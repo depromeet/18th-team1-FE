@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
+import { IcProfileS } from "@/shared/ui/icons";
 import { Logo } from "@/shared/ui/logo";
-import { HomeDiarySection } from "@/widgets/home";
+import { HomeView } from "@/widgets/home";
 
 const RANDOM_BANNER_HEIGHT = 289;
 const ACCENT_BAR_HEIGHT = 6;
@@ -36,7 +37,7 @@ const HomePage = () => {
       >
         <header
           className={cn(
-            "sticky top-0 z-10 flex items-center px-5 py-4.75",
+            "sticky top-0 z-10 flex items-center justify-between px-5 py-4.75",
             isPastBanner ? "bg-key-secondary" : "bg-gray-100",
           )}
         >
@@ -46,8 +47,14 @@ const HomePage = () => {
               isPastBanner ? "text-key-secondary-0-1" : "text-key-secondary",
             )}
           />
+          <button
+            type="button"
+            className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#d1e9ea]"
+          >
+            <IcProfileS className="text-key-primary" />
+          </button>
         </header>
-        <HomeDiarySection />
+        <HomeView />
       </div>
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-35 bg-linear-to-b from-transparent to-white" />
     </div>
