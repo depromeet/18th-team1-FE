@@ -43,7 +43,7 @@ export const SituationStep = ({ onValidChange }: SituationStepProps) => {
           오늘은 어떤 하루였나요?
         </Text>
         <Text variant="body1" color="gray-300">
-          최대 5개까지 선택할 수있어요
+          최대 5개까지 선택할 수 있어요
         </Text>
       </div>
       <TagList
