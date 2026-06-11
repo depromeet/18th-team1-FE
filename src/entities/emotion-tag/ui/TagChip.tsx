@@ -12,7 +12,7 @@ interface TagChipProps {
 
 const VARIANT_CLASS: Record<TagChipVariant, string> = {
   default: "bg-gray-50 border border-dashed border-gray-200 text-gray-500",
-  bad: "bg-key-secondary2 text-gray-0",
+  bad: "bg-key-secondary text-gray-0",
   neutral: "bg-key-primary text-gray-0",
   good: "bg-key-secondary-100 text-gray-0",
   label: "bg-gray-600 text-gray-0",
