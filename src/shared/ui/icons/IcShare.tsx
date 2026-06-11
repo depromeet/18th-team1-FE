@@ -4,16 +4,25 @@ import type { IconProps } from "./icon.types";
 export const IcShare = (props: IconProps) => (
   <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
     <path
-      d="M8.57141 5.68391L12.2553 2L15.9392 5.68391"
+      d="M9.9797 9.2979L11.9982 7.2794L14.0167 9.2979"
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="square"
+      strokeWidth="1.0958"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
-    <path d="M12.2552 2.45996V15.3536" stroke="currentColor" strokeWidth="2" />
     <path
-      d="M16.7102 9.06836H17.7143C18.9767 9.06836 20 10.0917 20 11.3541V19.3541C20 20.6164 18.9767 21.6398 17.7143 21.6398H6.28571C5.02335 21.6398 4 20.6164 4 19.3541V11.3541C4 10.0917 5.02335 9.06836 6.28571 9.06836H7.4694"
+      d="M11.9983 7.53L11.9983 13.5186"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.0958"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.5 11.1607V15.4678C16.5 16.1595 15.9393 16.7143 15.2476 16.7143H8.7524C8.0607 16.7143 7.5 16.1595 7.5 15.4678V11.1607"
+      stroke="currentColor"
+      strokeWidth="1.0958"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </BaseIcon>
 );
