@@ -42,7 +42,7 @@ export const useEmotionSelectStore = create<EmotionSelectFormState>()(
       (set) => ({
         ...INITIAL_STATE,
         setSelectedEmotionId: (id: string | null): void => {
-          set({ selectedEmotionId: id }, false, "setSelectedEmotionId");
+          set({ selectedEmotionId: id, selectedSituationIds: [] }, false, "setSelectedEmotionId");
         },
         setSelectedSituationIds: (ids: string[]): void => {
           set({ selectedSituationIds: ids }, false, "setSelectedSituationIds");
