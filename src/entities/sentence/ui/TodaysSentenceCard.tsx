@@ -79,14 +79,14 @@ export const TodaysSentenceCard = ({
             WebkitBackfaceVisibility: "hidden",
           }}
         >
-          <div className="flex h-11.75 shrink-0 items-center bg-key-secondary2 px-4.5">
+          <div className="flex h-11.75 shrink-0 items-center bg-key-secondary px-4.5">
             <Text as="span" variant="point3" color="gray-0">
               {date}
             </Text>
           </div>
 
           <div className="flex flex-1 flex-col justify-start bg-background px-4.5 pt-5 pb-4.5">
-            <div className="subhead1 text-key-secondary2">
+            <div className="head4 text-key-secondary">
               {(() => {
                 let n = 0;
                 return quote.split("\n").map((line) => {
@@ -119,8 +119,8 @@ export const TodaysSentenceCard = ({
 
           <div className="h-3 shrink-0 bg-key-point" />
 
-          <div className="flex h-13 shrink-0 items-center bg-key-secondary px-4.5">
-            <Text as="span" variant="body2" color="key-secondary" className="font-semibold!">
+          <div className="flex h-13 shrink-0 items-center bg-key-primary px-4.5">
+            <Text as="span" variant="body2" color="key-secondary">
               {bookTitle}, {bookAuthor}
             </Text>
           </div>
