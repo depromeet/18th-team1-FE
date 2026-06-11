@@ -7,12 +7,12 @@ import type { ReactNode } from "react";
 import { cn } from "@/shared/lib/utils";
 
 const newButtonVariants = cva(
-  "subhead6 flex h-14 w-full items-center justify-center gap-2 px-[10px] transition-colors disabled:pointer-events-none disabled:cursor-not-allowed",
+  "subhead4 flex h-14 w-full items-center justify-center gap-2 px-[10px] transition-colors disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         default: "bg-gray-700 text-gray-0 disabled:bg-gray-100 disabled:text-gray-300",
-        secondary: "bg-transparent text-[rgba(58,58,58,0.80)]",
+        secondary: "bg-transparent text-gray-500",
       },
     },
     defaultVariants: {

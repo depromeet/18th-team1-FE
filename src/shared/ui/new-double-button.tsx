@@ -20,7 +20,7 @@ interface NewDoubleButtonProps {
 }
 
 const itemBaseClass =
-  "subhead6 flex flex-1 h-full items-center justify-center gap-2 bg-transparent transition-colors disabled:pointer-events-none disabled:cursor-not-allowed";
+  "subhead4 flex flex-1 h-full items-center justify-center gap-2 bg-transparent transition-colors disabled:pointer-events-none disabled:cursor-not-allowed";
 
 export const NewDoubleButton = ({
   left,
