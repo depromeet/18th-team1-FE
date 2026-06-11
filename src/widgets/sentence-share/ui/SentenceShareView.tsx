@@ -61,10 +61,11 @@ export const SentenceShareView = ({
       return;
     }
 
+    const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
+    if (!dailyRecommendationId) return;
+
     setIsSharing(true);
     try {
-      const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
-      if (!dailyRecommendationId) return;
       const blob = await fetchSentenceShareImage(dailyRecommendationId);
       const file = new File([blob], "sentence-share.png", { type: "image/png" });
 
