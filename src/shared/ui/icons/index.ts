@@ -13,6 +13,8 @@ export { IcHome } from "./IcHome";
 export { IcInfoCircle } from "./IcInfoCircle";
 export { IcKakao } from "./IcKakao";
 export { IcMinusCircleFill } from "./IcMinusCircleFill";
+export { IcMonthBack } from "./IcMonthBack";
+export { IcMonthNext } from "./IcMonthNext";
 export { IcNextCard } from "./IcNextCard";
 export { IcOption } from "./IcOption";
 export { IcOptionHeader } from "./IcOptionHeader";

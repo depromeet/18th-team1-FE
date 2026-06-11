@@ -2,7 +2,12 @@ import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
 export const IcPlus = (props: IconProps) => (
-  <BaseIcon viewBox="0 0 11 11" {...props}>
-    <path d="M5.47266 10.9688C4.94842 10.9688 4.52344 10.5438 4.52344 10.0195V6.42188H0.949219C0.42498 6.42188 0 5.9969 0 5.47266C0 4.94842 0.42498 4.52344 0.949219 4.52344H4.52344V0.949219C4.52344 0.42498 4.94842 0 5.47266 0C5.9969 0 6.42188 0.42498 6.42188 0.949219V4.52344H10.0195C10.5438 4.52344 10.9688 4.94842 10.9688 5.47266C10.9688 5.9969 10.5438 6.42188 10.0195 6.42188H6.42188V10.0195C6.42188 10.5438 5.9969 10.9688 5.47266 10.9688Z" />
+  <BaseIcon viewBox="0 0 9 9" fill="none" {...props}>
+    <path
+      d="M4.35001 0.850098V7.8501M0.850006 4.3501H7.85001"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+    />
   </BaseIcon>
 );

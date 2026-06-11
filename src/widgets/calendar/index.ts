@@ -3,3 +3,4 @@ export { CalendarDiarySection } from "./ui/CalendarDiarySection";
 export { CalendarHeader } from "./ui/CalendarHeader";
 export { CalendarView } from "./ui/CalendarView";
 export { CalendarWidget } from "./ui/CalendarWidget";
+export { MonthlyReportBanner } from "./ui/MonthlyReportBanner";

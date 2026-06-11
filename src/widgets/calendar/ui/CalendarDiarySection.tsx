@@ -1,13 +1,12 @@
 "use client";
 
-import { format, isToday } from "date-fns";
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import Link from "next/link";
 import { DiaryCard, useDiaryStore } from "@/entities/diary";
 import { DiaryOptionMenu, useDiaryOptions } from "@/features/diary-actions";
 import { IcOption } from "@/shared/ui/icons";
 import { useCalendarDiary } from "../model/useCalendarDiary";
-import { CalendarWritingTimer } from "./CalendarWritingTimer";
 
 export const CalendarDiarySection = () => {
   const { diary, selectedDate, viewDate, isFutureView } = useCalendarDiary();
@@ -35,10 +34,6 @@ export const CalendarDiarySection = () => {
           />
         </Link>
       );
-    }
-
-    if (isToday(selectedDate)) {
-      return <CalendarWritingTimer />;
     }
 
     return <p className="body2 text-gray-400 text-center mt-21.25">작성된 일기가 없어요.</p>;

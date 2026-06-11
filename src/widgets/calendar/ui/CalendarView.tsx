@@ -1,14 +1,16 @@
 import { Suspense } from "react";
-import { UserProfileCard } from "@/entities/user";
 import { CalendarDiarySection } from "./CalendarDiarySection";
 import { CalendarWidget } from "./CalendarWidget";
+import { MonthlyReportBanner } from "./MonthlyReportBanner";
 
-export const CalendarView = (): React.ReactElement => {
+export const CalendarView = () => {
   return (
     <>
-      <UserProfileCard />
+      <MonthlyReportBanner month={6} />
       <Suspense>
         <CalendarWidget />
+      </Suspense>
+      <Suspense>
         <CalendarDiarySection />
       </Suspense>
     </>

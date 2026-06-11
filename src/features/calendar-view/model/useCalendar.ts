@@ -21,6 +21,7 @@ interface UseCalendarReturn {
   days: Date[];
   handlePrev: () => void;
   handleNext: () => void;
+  navigateToMonth: (year: number, month: number) => void;
 }
 
 export const useCalendar = (): UseCalendarReturn => {
@@ -55,6 +56,15 @@ export const useCalendar = (): UseCalendarReturn => {
     }
   };
 
+  const navigateToMonth = (year: number, month: number) => {
+    const today = startOfDay(new Date());
+    const newViewDate = new Date(year, month - 1, 1);
+    setViewDate(newViewDate);
+    if (!isAfter(startOfMonth(newViewDate), today)) {
+      setSelectedDate(getMostRecentSelectableDate(endOfMonth(newViewDate)));
+    }
+  };
+
   return {
     viewDate,
     selectedDate,
@@ -62,5 +72,6 @@ export const useCalendar = (): UseCalendarReturn => {
     days,
     handlePrev,
     handleNext,
+    navigateToMonth,
   };
 };
