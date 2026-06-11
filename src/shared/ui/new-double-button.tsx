@@ -19,7 +19,7 @@ interface NewDoubleButtonProps {
   className?: string;
 }
 
-const itemBaseClass =
+const ITEM_BASE_CLASS =
   "subhead4 flex flex-1 h-full items-center justify-center gap-2 bg-transparent transition-colors disabled:pointer-events-none disabled:cursor-not-allowed";
 
 export const NewDoubleButton = ({
@@ -32,7 +32,10 @@ export const NewDoubleButton = ({
       type="button"
       disabled={left.disabled}
       onClick={left.onClick}
-      className={cn(itemBaseClass, left.isMuted || left.disabled ? "text-gray-300" : "text-gray-0")}
+      className={cn(
+        ITEM_BASE_CLASS,
+        left.isMuted || left.disabled ? "text-gray-300" : "text-gray-0",
+      )}
     >
       {left.leftIcon && <span className="relative -top-px">{left.leftIcon}</span>}
       {left.label}
@@ -46,7 +49,7 @@ export const NewDoubleButton = ({
       disabled={right.disabled}
       onClick={right.onClick}
       className={cn(
-        itemBaseClass,
+        ITEM_BASE_CLASS,
         right.isMuted || right.disabled ? "text-gray-300" : "text-gray-0",
       )}
     >
