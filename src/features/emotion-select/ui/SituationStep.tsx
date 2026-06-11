@@ -39,7 +39,7 @@ export const SituationStep = ({ onValidChange }: SituationStepProps) => {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col items-center gap-1 text-center">
-        <Text variant="head1-2" color="gray-700">
+        <Text variant="head1" color="gray-700">
           오늘은 어떤 하루였나요?
         </Text>
         <Text variant="body1" color="gray-300">

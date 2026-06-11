@@ -56,7 +56,7 @@ export const SentenceTypeStep = ({
       {/* 헤더 + 스크롤 영역 */}
       <div className="relative flex min-h-0 flex-1 flex-col">
         <div className="flex shrink-0 flex-col gap-1 px-5 text-center">
-          <Text variant="head1-2" color="gray-700">
+          <Text variant="head1" color="gray-700">
             오늘 어떤 문장이 필요하세요?
           </Text>
           <Text variant="body1" color="gray-300">
