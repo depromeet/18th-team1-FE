@@ -5,7 +5,7 @@ import type { StorybookConfig } from "@storybook/nextjs";
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const config: StorybookConfig = {
-  stories: ["../src/shared/ui/**/*.stories.@(ts|tsx)"],
+  stories: ["../**/*.stories.@(ts|tsx)"],
   framework: {
     name: "@storybook/nextjs",
     options: {},
