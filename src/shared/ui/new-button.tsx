@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
-const newButtonVariants = cva(
+const NEW_BUTTON_VARIANTS = cva(
   "subhead4 flex h-14 w-full items-center justify-center gap-2 px-[10px] transition-colors disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
@@ -21,7 +21,7 @@ const newButtonVariants = cva(
   },
 );
 
-interface NewButtonProps extends VariantProps<typeof newButtonVariants> {
+interface NewButtonProps extends VariantProps<typeof NEW_BUTTON_VARIANTS> {
   label?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
@@ -46,7 +46,7 @@ export const NewButton = ({
     <Comp
       type={asChild ? undefined : "button"}
       disabled={disabled}
-      className={cn(newButtonVariants({ variant }), className)}
+      className={cn(NEW_BUTTON_VARIANTS({ variant }), className)}
       onClick={onClick}
     >
       {leftIcon}
@@ -56,4 +56,4 @@ export const NewButton = ({
   );
 };
 
-export { newButtonVariants };
+export { NEW_BUTTON_VARIANTS };
