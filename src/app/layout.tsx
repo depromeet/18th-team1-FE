@@ -14,7 +14,16 @@ const pretendard = localFont({
 });
 
 const gtPressura = localFont({
-  src: "../../public/fonts/GT-Pressura-Extended-Bold-Trial.otf",
+  src: [
+    {
+      path: "../../public/fonts/GT-Pressura-Bold-Trial.otf",
+      weight: "700",
+    },
+    {
+      path: "../../public/fonts/GT-Pressura-Regular-Trial.otf",
+      weight: "400",
+    },
+  ],
   variable: "--font-gt-pressura",
   display: "swap",
 });
