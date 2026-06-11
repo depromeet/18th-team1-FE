@@ -8,7 +8,7 @@ import { Text } from "@/shared/ui/text";
 
 const today = new Date();
 const MOCK_QUOTE = {
-  date: `${today.getDate()}, ${today.toLocaleDateString("en-US", { weekday: "long" })}`,
+  date: `${today.toLocaleDateString("en-US", { weekday: "long" })} ${today.getDate()}`,
   quote: "세상에는 두 종류의 고통이 있다.\n너를 아프게 하는 고통과 너를 변하게하는 고통",
   bookTitle: "『아픔이 길이 되려면』",
   bookAuthor: "김승섭",

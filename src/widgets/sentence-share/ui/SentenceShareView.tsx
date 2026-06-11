@@ -41,7 +41,7 @@ export const SentenceShareView = ({
 
   const today = new Date();
   const month = today.toLocaleDateString("en-US", { month: "long" });
-  const date = `${today.getDate()}, ${today.toLocaleDateString("en-US", { weekday: "long" })}`;
+  const date = `${today.toLocaleDateString("en-US", { weekday: "long" })} ${today.getDate()}`;
 
   const handleReveal = (): void => {
     setPhase("card");
