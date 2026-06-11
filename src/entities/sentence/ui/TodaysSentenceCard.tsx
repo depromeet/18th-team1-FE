@@ -120,7 +120,7 @@ export const TodaysSentenceCard = ({
           <div className="h-3 shrink-0 bg-key-point" />
 
           <div className="flex h-13 shrink-0 items-center bg-key-secondary px-4.5">
-            <Text as="span" variant="body2" color="key-secondary2" className="font-semibold!">
+            <Text as="span" variant="body2" color="key-secondary" className="font-semibold!">
               {bookTitle}, {bookAuthor}
             </Text>
           </div>
