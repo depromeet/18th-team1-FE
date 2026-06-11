@@ -17,17 +17,17 @@ export const HomeSentenceSection = ({ diaries }: HomeSentenceSectionProps) => {
   return (
     <section className="flex flex-col [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
       <div className="flex items-center gap-2 px-5 pt-7.5 pb-4">
-        <Text as="span" variant="point2" color="gray-600">
+        <Text as="span" variant="point-eng" color="gray-600">
           {monthNameEN}
         </Text>
         <div className="h-3.5 w-px bg-gray-400" />
         <Text as="span" variant="subhead1" color="gray-600" className="-translate-y-px">
-          {month}월에 함께한 문장
+          {month}월에 함께한 문장 {diaries.length}개
         </Text>
       </div>
       {diaries.length === 0 ? (
         <div className="flex flex-1 flex-col items-center pt-9.75">
-          <Text variant="body2" color="gray-400">
+          <Text variant="body3" color="gray-400">
             아직 작성된 일기가 없어요
           </Text>
         </div>
