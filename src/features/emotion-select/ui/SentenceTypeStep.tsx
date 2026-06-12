@@ -64,9 +64,9 @@ export const SentenceTypeStep = ({
           </Text>
         </div>
 
-        <div className="relative min-h-0 flex-1">
-          <div className="h-full overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex flex-col items-center gap-4 pb-12 pt-19.25">
+        <div className="relative flex min-h-0 flex-1 flex-col pt-19.25">
+          <div className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex flex-col items-center gap-4 pb-26">
               {MOCK_SENTENCE_TYPES.map((item) => (
                 <SentenceTypeChip
                   key={item.id}
