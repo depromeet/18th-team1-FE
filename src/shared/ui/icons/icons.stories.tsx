@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
 import { IcBack } from "./IcBack";
+import { IcBookmark } from "./IcBookmark";
 import { IcCalendar } from "./IcCalendar";
 import { IcCheck } from "./IcCheck";
 import { IcEdit } from "./IcEdit";
@@ -9,6 +10,7 @@ import { IcHome } from "./IcHome";
 import { IcKakao } from "./IcKakao";
 import { IcOption } from "./IcOption";
 import { IcReport } from "./IcReport";
+import { IcSearch } from "./IcSearch";
 import { IcSetting } from "./IcSetting";
 import { IcShare } from "./IcShare";
 import { IcTrash } from "./IcTrash";
@@ -67,6 +69,7 @@ export const AllIcons: Story = {
               { name: "IcEdit", icon: IcEdit },
               { name: "IcOption", icon: IcOption },
               { name: "IcReport", icon: IcReport },
+              { name: "IcSearch", icon: IcSearch },
               { name: "IcSetting", icon: IcSetting },
               { name: "IcShare", icon: IcShare },
               { name: "IcTrash", icon: IcTrash },
@@ -107,6 +110,17 @@ export const IcCalendarStory: Story = {
   args: { size: 24 },
 };
 
+export const IcBookmarkStory: Story = {
+  name: "IcBookmark",
+  render: (args: IconProps) => (
+    <div className="flex items-center gap-4">
+      <IcBookmark {...args} variant="default" className="text-foreground" />
+      <IcBookmark {...args} variant="line" className="text-foreground" />
+    </div>
+  ),
+  args: { size: 24 },
+};
+
 // ─── 단일 스타일 아이콘 ────────────────────────────────────────────────────────
 
 export const IcBackStory: Story = {
@@ -136,6 +150,12 @@ export const IcOptionStory: Story = {
 export const IcReportStory: Story = {
   name: "IcReport",
   render: (args: IconProps) => <IcReport {...args} className="text-foreground" />,
+  args: { size: 24 },
+};
+
+export const IcSearchStory: Story = {
+  name: "IcSearch",
+  render: (args: IconProps) => <IcSearch {...args} className="text-foreground" />,
   args: { size: 24 },
 };
 
