@@ -20,7 +20,7 @@ export const HomeSentenceItem = ({
     <div className="flex w-9.75 shrink-0 flex-col items-center">
       <Text
         as="span"
-        variant="body2"
+        variant="body3"
         className={cn("-mb-1 w-9.75 text-center", isSunday ? "text-sub-sunday" : "text-gray-500")}
       >
         {dayName}
@@ -36,7 +36,7 @@ export const HomeSentenceItem = ({
       </div>
     </div>
     <div className="h-15.5 w-px shrink-0 bg-gray-100" />
-    <Text variant="body3" color="gray-600" className="line-clamp-3 flex-1">
+    <Text variant="body4" color="gray-600" className="line-clamp-3 flex-1">
       {sentence}
     </Text>
   </div>

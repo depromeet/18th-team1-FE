@@ -100,6 +100,7 @@ export const SentenceCardPhase = ({
           bookTitle={bookTitle}
           bookAuthor={bookAuthor}
           bookCoverImage={bookCoverImage}
+          animateWords
         />
       </motion.div>
 
