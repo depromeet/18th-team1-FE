@@ -34,7 +34,7 @@ export const HomeDiarySection = () => {
   }));
 
   const handleBannerClick = () => {
-    router.push("/diary/emotion");
+    router.push("/emotion");
     // TODO: 분기 로직 복구 필요
     // const diaryExists = await fetchTodayDiaryExists();
     // if (diaryExists.exists && diaryExists.diaryId !== null) {
@@ -46,7 +46,7 @@ export const HomeDiarySection = () => {
     //   router.push("/diary/sentence");
     //   return;
     // }
-    // router.push("/diary/emotion");
+    // router.push("/emotion");
   };
 
   return (

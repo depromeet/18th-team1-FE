@@ -1,11 +1,9 @@
 "use client";
 
-import { endOfMonth, format, isAfter, startOfDay, startOfMonth, startOfWeek } from "date-fns";
-import { useSearchParams } from "next/navigation";
+import { endOfMonth, format, isAfter, startOfDay, startOfMonth } from "date-fns";
 import { useMemo } from "react";
 import type { DiaryListItem } from "@/entities/diary";
 import { useDiariesQuery } from "@/entities/diary";
-import type { CalendarMode } from "@/features/calendar-view";
 import { useCalendarStore } from "@/store/calendar/useCalendarStore";
 
 interface UseCalendarDiaryReturn {
@@ -17,8 +15,6 @@ interface UseCalendarDiaryReturn {
 
 export const useCalendarDiary = (): UseCalendarDiaryReturn => {
   const { selectedDate, viewDate } = useCalendarStore();
-  const searchParams = useSearchParams();
-  const mode: CalendarMode = searchParams.get("mode") === "monthly" ? "monthly" : "weekly";
 
   const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
   const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
@@ -29,11 +25,8 @@ export const useCalendarDiary = (): UseCalendarDiaryReturn => {
 
   const isFutureView = useMemo(() => {
     const today = startOfDay(new Date());
-    if (mode === "monthly") {
-      return isAfter(startOfMonth(viewDate), today);
-    }
-    return isAfter(startOfDay(startOfWeek(viewDate, { weekStartsOn: 0 })), today);
-  }, [viewDate, mode]);
+    return isAfter(startOfMonth(viewDate), today);
+  }, [viewDate]);
 
   return { diary, selectedDate, viewDate, isFutureView };
 };

@@ -99,8 +99,3 @@ export const MOCK_SENTENCES: SentenceQuote[] = [
     image: "",
   },
 ];
-
-export const MOCK_USER_PROFILE = {
-  nickname: "연결한 계정의 이름",
-  profileImageUrl: "",
-};

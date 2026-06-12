@@ -1,21 +1,16 @@
-import { format, getDate, isFuture, isSameDay, isSameMonth, isToday } from "date-fns";
+import { format, isFuture, isSameMonth, isToday } from "date-fns";
+import Link from "next/link";
 import type { EmotionIntensity } from "@/entities/diary";
 import { cn } from "@/shared/lib/utils";
-import type { CalendarMode } from "../model/calendar.types";
-
-const INTENSITY_STYLE: Record<EmotionIntensity, string> = {
-  HIGH: "bg-key-secondary-0 text-key-secondary-100",
-  MID: "bg-key-primary-0 text-key-primary-100",
-  LOW: "bg-key-secondary2-0 text-key-secondary2",
-};
+import { CalendarDay } from "./CalendarDay";
 
 interface CalendarBoardProps {
   days: Date[];
   viewDate: Date;
-  selectedDate: Date;
-  mode: CalendarMode;
   onSelectDate: (date: Date) => void;
-  diaryIntensityByDate?: Record<string, EmotionIntensity>;
+  diaryIntensitiesByDate?: Record<string, EmotionIntensity[]>;
+  diaryCoverByDate?: Record<string, string[]>;
+  viewTab?: "emotion" | "cover";
 }
 
 const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"] as const;
@@ -23,10 +18,10 @@ const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"] as const;
 export const CalendarBoard = ({
   days,
   viewDate,
-  selectedDate,
-  mode,
   onSelectDate,
-  diaryIntensityByDate,
+  diaryIntensitiesByDate,
+  diaryCoverByDate,
+  viewTab = "emotion",
 }: CalendarBoardProps) => {
   return (
     <div className="flex w-full flex-col gap-2.5">
@@ -35,7 +30,7 @@ export const CalendarBoard = ({
           <div key={day} className="flex h-5 items-center justify-center">
             <span
               className={cn(
-                "body2",
+                "caption2",
                 i === 0 ? "text-sub-sunday" : i === 6 ? "text-sub-saturday" : "text-gray-400",
               )}
             >
@@ -44,37 +39,57 @@ export const CalendarBoard = ({
           </div>
         ))}
       </div>
-      <div className={cn("grid grid-cols-7 px-4", mode === "monthly" && "gap-y-2.5")}>
+      <div className="grid grid-cols-7 items-center gap-y-4 px-4">
         {days.map((day) => {
-          const isSelected = isSameDay(day, selectedDate);
+          const dateKey = format(day, "yyyy-MM-dd");
           const isCurrentMonth = isSameMonth(day, viewDate);
           const isTodayDate = isToday(day);
           const isFutureDate = isFuture(day);
-          const intensity = diaryIntensityByDate?.[format(day, "yyyy-MM-dd")];
+          const intensities = diaryIntensitiesByDate?.[dateKey];
+          const hasDiary = !!intensities?.length;
+          const coverUrls = diaryCoverByDate?.[dateKey] ?? [];
+          const isCoverView = viewTab === "cover";
+
+          const dayContent = (
+            <CalendarDay
+              isCoverView={isCoverView}
+              coverUrls={coverUrls}
+              hasDiary={hasDiary}
+              intensities={intensities}
+              isTodayDate={isTodayDate}
+              isFutureDate={isFutureDate}
+              date={day}
+            />
+          );
 
           return (
-            <div key={day.toISOString()} className="flex justify-center py-2">
-              <button
-                type="button"
-                onClick={() => onSelectDate(day)}
-                disabled={isFutureDate}
-                className={cn(
-                  "relative flex size-11 items-center justify-center rounded transition-all",
-                  !isCurrentMonth && "pointer-events-none opacity-0",
-                  isSelected ? "bg-key-secondary2 text-key-secondary" : "text-foreground",
-                  !isSelected && intensity && INTENSITY_STYLE[intensity],
-                  !isSelected && isFutureDate && "cursor-default text-gray-200",
-                )}
-              >
-                {isTodayDate && !isSelected && (
-                  <span className="absolute text-key-secondary2 top-1.5 size-1 rounded-full bg-current" />
-                )}
-                <span
-                  className={cn("subhead2", isTodayDate && !isSelected && "text-key-secondary2")}
+            <div
+              key={day.toISOString()}
+              className={cn(
+                "flex justify-center",
+                !isCurrentMonth && "pointer-events-none opacity-0",
+              )}
+            >
+              {isTodayDate && !hasDiary ? (
+                <Link
+                  href="/diary/emotion"
+                  className="relative flex size-11 items-center justify-center"
                 >
-                  {getDate(day)}
-                </span>
-              </button>
+                  {dayContent}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => onSelectDate(day)}
+                  disabled={isFutureDate || !hasDiary}
+                  className={cn(
+                    "relative flex items-center justify-center disabled:cursor-default",
+                    isCoverView && coverUrls.length > 0 ? "h-19.25 w-11.5" : "size-11",
+                  )}
+                >
+                  {dayContent}
+                </button>
+              )}
             </div>
           );
         })}
