@@ -1,12 +1,11 @@
 "use client";
 
+import { EMOTIONS } from "@/features/emotion-select/model/emotion";
+import { useEmotionBookDrag } from "@/features/emotion-select/model/useEmotionBookDrag";
+import { EmotionBookBadge } from "@/features/emotion-select/ui/EmotionBookBadge";
+import { type BookType, EmotionBookItem } from "@/features/emotion-select/ui/EmotionBookItem";
+import { OpenBook } from "@/features/emotion-select/ui/OpenBook";
 import { Text } from "@/shared/ui/text";
-
-import { EMOTIONS } from "../model/emotion";
-import { useEmotionBookDrag } from "../model/useEmotionBookDrag";
-import { EmotionBookBadge } from "./EmotionBookBadge";
-import { type BookType, EmotionBookItem } from "./EmotionBookItem";
-import { OpenBook } from "./OpenBook";
 
 // 피그마 375px 프레임 기준 left값 - px-5(20px) 패딩 = marginLeft
 const BOOK_CONFIG: { type: BookType; ml: number; width: number; height: number }[] = [

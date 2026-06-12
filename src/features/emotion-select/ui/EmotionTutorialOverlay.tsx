@@ -3,7 +3,7 @@
 import { animate, motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { useEffect } from "react";
 
-import { useOverlayPosition } from "../model/useOverlayPosition";
+import { useOverlayPosition } from "@/features/emotion-select/model/useOverlayPosition";
 
 interface EmotionTutorialOverlayProps {
   onDismiss: () => void;
