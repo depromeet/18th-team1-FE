@@ -16,9 +16,7 @@ interface CalendarDiarySectionProps {
   onClose: () => void;
 }
 
-export const CalendarDiarySection = ({
-  onClose,
-}: CalendarDiarySectionProps): React.ReactElement => {
+export const CalendarDiarySection = ({ onClose }: CalendarDiarySectionProps) => {
   const { diaries, selectedDate, isFutureView } = useCalendarDiary();
   const hasSnap = diaries.length >= 3;
   const hasDefaultScroll = diaries.length >= 4;
@@ -124,9 +122,11 @@ export const CalendarDiarySection = ({
       </div>
       <div className="flex items-center justify-between px-5 py-3 shrink-0">
         <p className="head1 text-gray-700">{format(selectedDate, "yyyy.MM.dd")}</p>
-        <Link href="/emotion" className="flex size-7.5 items-center justify-center">
-          <IcRecord size={30} className="text-key-secondary" />
-        </Link>
+        {diaries.length < 5 && (
+          <Link href="/emotion" className="flex size-7.5 items-center justify-center">
+            <IcRecord size={30} className="text-key-secondary" />
+          </Link>
+        )}
       </div>
       <div
         className={cn(
