@@ -1,6 +1,7 @@
 import { type ChangeEvent, useEffect } from "react";
 
 import { TagChip, useEmotionTagsQuery } from "@/entities/emotion-tag";
+import { IcPlusCount } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
@@ -34,7 +35,7 @@ export const SituationDescriptionStep = ({ onValidChange }: SituationDescription
 
   return (
     <div className="flex flex-col gap-10">
-      <Text as="h2" variant="head1-2" color="gray-700" className="text-center">
+      <Text as="h2" variant="head1" color="gray-700" className="text-center">
         왜 이런 감정을 느끼셨나요?
       </Text>
       <div className="flex flex-col gap-4">
@@ -53,8 +54,9 @@ export const SituationDescriptionStep = ({ onValidChange }: SituationDescription
             <TagChip key={chip.id} label={chip.label} variant="label" />
           ))}
           {overflowCount > 0 && (
-            <div className="flex shrink-0 size-10.25 items-center justify-center rounded-full bg-gray-400">
-              <span className="point3 text-[1.125rem] text-gray-0">+{overflowCount}</span>
+            <div className="flex h-10.25 min-w-10.25 shrink-0 items-center justify-center rounded-full bg-gray-400 px-2.5">
+              <IcPlusCount size={14} className="shrink-0 text-gray-0" />
+              <span className="point2 relative -top-px text-gray-0">{overflowCount}</span>
             </div>
           )}
         </div>

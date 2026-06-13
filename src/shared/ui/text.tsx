@@ -21,6 +21,7 @@ type TypographyVariant =
   | "body2-1"
   | "body2"
   | "body3"
+  | "body4"
   | "caption1"
   | "caption2"
   | "point1"

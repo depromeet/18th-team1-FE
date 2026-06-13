@@ -23,13 +23,13 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
   if (sentences.length === 0) {
     return (
       <div className="flex w-full flex-col">
-        <div className="h-72.25 overflow-hidden bg-key-secondary">
+        <div className="h-72.25 overflow-hidden bg-key-primary">
           <div className="flex w-full shrink-0 flex-col gap-5 p-5">
             <div className="h-31.5" />
             <div className="caption2" />
           </div>
         </div>
-        <div className="h-1.5 bg-key-primary-0-1" />
+        <div className="h-1.5 bg-key-point-50" />
       </div>
     );
   }
@@ -47,7 +47,7 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
 
   return (
     <div className="flex w-full flex-col">
-      <div className="relative h-72.25 overflow-hidden bg-key-secondary">
+      <div className="relative h-72.25 overflow-hidden bg-key-primary">
         <div
           className="flex"
           style={{
@@ -58,7 +58,7 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
         >
           {slides.map((slide) => (
             <div key={slide.slideKey} className="flex w-full shrink-0 flex-col gap-5 p-5">
-              <p className="title1-3 line-clamp-3 h-31.5 text-key-secondary">{slide.quote}</p>
+              <p className="title1 line-clamp-3 h-31.5 text-key-secondary">{slide.quote}</p>
               <Text variant="caption2" color="key-secondary">
                 &#x300E;{slide.bookTitle}&#x300F;, {slide.bookAuthor}
               </Text>
@@ -72,7 +72,7 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
           onToggle={togglePause}
         />
       </div>
-      <div className="h-1.5 bg-key-primary-0-1" />
+      <div className="h-1.5 bg-key-point-50" />
     </div>
   );
 };

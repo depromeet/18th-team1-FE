@@ -12,6 +12,7 @@ interface TodaysSentenceCardProps {
   bookTitle: string;
   bookAuthor: string;
   bookCoverImage?: string;
+  animateWords?: boolean;
 }
 
 export const TodaysSentenceCard = ({
@@ -20,6 +21,7 @@ export const TodaysSentenceCard = ({
   bookTitle,
   bookAuthor,
   bookCoverImage = "/images/book.webp",
+  animateWords = false,
 }: TodaysSentenceCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -36,7 +38,7 @@ export const TodaysSentenceCard = ({
           return {
             wordKey: `W${idx}`,
             word,
-            delay: 0.28 + idx * 0.07,
+            delay: 0.28 + idx * 0.15,
             hasSpaceAfter: wordIndex < words.length - 1,
           };
         }),
@@ -110,14 +112,18 @@ export const TodaysSentenceCard = ({
                 <p key={lineKey} className="m-0">
                   {words.map(({ wordKey, word, delay, hasSpaceAfter }) => (
                     <span key={wordKey} className="inline-block">
-                      <motion.span
-                        className="inline-block"
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.55, delay, ease: [0.25, 0.1, 0.25, 1] }}
-                      >
-                        {word}
-                      </motion.span>
+                      {animateWords ? (
+                        <motion.span
+                          className="inline-block"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.05, delay }}
+                        >
+                          {word}
+                        </motion.span>
+                      ) : (
+                        word
+                      )}
                       {hasSpaceAfter && <span>&nbsp;</span>}
                     </span>
                   ))}

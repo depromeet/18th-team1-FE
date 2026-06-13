@@ -1,1 +1,1 @@
-export { HomeDiarySection } from "./ui/HomeDiarySection";
+export { HomeView } from "./ui/HomeView";

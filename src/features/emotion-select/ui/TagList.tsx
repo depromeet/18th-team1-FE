@@ -100,7 +100,7 @@ export const TagList = ({
         if (!group) return null;
         return (
           <div key={groupId} className="flex flex-col gap-3">
-            {group.name && <p className="body2 text-gray-400">{group.name}</p>}
+            {group.name && <p className="body3 text-gray-400">{group.name}</p>}
             <div className="flex flex-wrap gap-2">{group.items.map(renderChip)}</div>
           </div>
         );

@@ -13,13 +13,13 @@ interface TagChipProps {
 const VARIANT_CLASS: Record<TagChipVariant, string> = {
   default: "bg-gray-50 border border-dashed border-gray-200 text-gray-500",
   bad: "bg-key-secondary text-gray-0",
-  neutral: "bg-key-primary text-gray-0",
-  good: "bg-key-secondary-100 text-gray-0",
+  neutral: "bg-key-point text-gray-0",
+  good: "bg-key-primary-100 text-gray-0",
   label: "bg-gray-600 text-gray-0",
   dim: "bg-gray-500 text-gray-0",
 };
 
-const BASE = "body2 inline-flex h-[41px] items-center gap-1 rounded-[30px] px-[14px] py-[10px]";
+const BASE = "body3 inline-flex h-[41px] items-center gap-1 rounded-[30px] px-[14px] py-[10px]";
 
 export const TagChip = ({
   label,

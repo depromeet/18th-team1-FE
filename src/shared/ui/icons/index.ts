@@ -28,6 +28,7 @@ export { IcPlus } from "./IcPlus";
 export { IcPlusCircleFill } from "./IcPlusCircleFill";
 export { IcPlusCount } from "./IcPlusCount";
 export { IcProfileNone } from "./IcProfileNone";
+export { IcProfileS } from "./IcProfileS";
 export { IcRecord } from "./IcRecord";
 export { IcReport } from "./IcReport";
 export { IcSearch } from "./IcSearch";
