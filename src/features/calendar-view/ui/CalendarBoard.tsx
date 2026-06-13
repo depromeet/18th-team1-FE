@@ -71,17 +71,14 @@ export const CalendarBoard = ({
               )}
             >
               {isTodayDate && !hasDiary ? (
-                <Link
-                  href="/diary/emotion"
-                  className="relative flex size-11 items-center justify-center"
-                >
+                <Link href="/emotion" className="relative flex size-11 items-center justify-center">
                   {dayContent}
                 </Link>
               ) : (
                 <button
                   type="button"
                   onClick={() => onSelectDate(day)}
-                  disabled={isFutureDate || !hasDiary}
+                  disabled={isFutureDate}
                   className={cn(
                     "relative flex items-center justify-center disabled:cursor-default",
                     isCoverView && coverUrls.length > 0 ? "h-19.25 w-11.5" : "size-11",

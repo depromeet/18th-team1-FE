@@ -9,7 +9,7 @@ export const DiaryDetailView = () => {
   if (!diary) return null;
 
   return (
-    <div className="flex-1 overflow-y-auto px-5 py-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex-1 overflow-y-auto py-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <DiaryDetailCard diary={diary} />
     </div>
   );

@@ -23,6 +23,7 @@ export interface DiaryListItem {
   content: string | null;
   emotionValue: number;
   quoteContent: string;
+  tags: string[];
   coverImageUrl: string;
   author: string;
   title: string;
@@ -37,6 +38,6 @@ export interface DiaryListResponse {
 export interface DiaryDetail extends DiaryListItem {
   diaryImageUrl?: string | null;
   aladinLink?: string;
-  emotionIntensity?: EmotionIntensity;
   emotions?: string[];
+  purpose?: string;
 }

@@ -1,10 +1,10 @@
 "use client";
 
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { format } from "date-fns";
 import { useState } from "react";
 import type { EmotionIntensity } from "@/entities/diary";
-import { useDiariesQuery } from "@/entities/diary";
 import { CalendarBoard, useCalendar } from "@/features/calendar-view";
+import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
 import { MonthPicker } from "./MonthPicker";
@@ -15,26 +15,25 @@ const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
   return "LOW";
 };
 
-export const CalendarWidget = () => {
+interface CalendarWidgetProps {
+  onDateSelect?: () => void;
+}
+
+export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const { viewDate, setSelectedDate, days, handlePrev, handleNext, navigateToMonth } =
     useCalendar();
   const [viewTab, setViewTab] = useState<"emotion" | "cover">("emotion");
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-  const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
-  const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
-  const { data } = useDiariesQuery(start, end);
+  const diaryIntensitiesByDate = MOCK_CALENDAR_DIARIES.diaries.reduce<
+    Record<string, EmotionIntensity[]>
+  >((acc, diary) => {
+    const key = diary.createdAt;
+    acc[key] = [...(acc[key] ?? []), getEmotionIntensity(diary.emotionValue)];
+    return acc;
+  }, {});
 
-  const diaryIntensitiesByDate = (data?.diaries ?? []).reduce<Record<string, EmotionIntensity[]>>(
-    (acc, diary) => {
-      const key = diary.createdAt;
-      acc[key] = [...(acc[key] ?? []), getEmotionIntensity(diary.emotionValue)];
-      return acc;
-    },
-    {},
-  );
-
-  const diaryCoverByDate: Record<string, string[]> = [...(data?.diaries ?? [])]
+  const diaryCoverByDate: Record<string, string[]> = [...MOCK_CALENDAR_DIARIES.diaries]
     .filter((diary) => diary.coverImageUrl)
     .sort((a, b) => a.id - b.id)
     .reduce<Record<string, string[]>>((acc, diary) => {
@@ -45,7 +44,7 @@ export const CalendarWidget = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col gap-4 pt-6 pb-4 border-b-2 border-gray-100">
+      <div className="flex w-full flex-col gap-4 pt-6">
         <div className="flex items-center gap-2 px-5">
           <button type="button" onClick={handlePrev}>
             <IcMonthBack size={24} className="text-gray-300" />
@@ -76,7 +75,10 @@ export const CalendarWidget = () => {
         <CalendarBoard
           days={days}
           viewDate={viewDate}
-          onSelectDate={setSelectedDate}
+          onSelectDate={(date) => {
+            setSelectedDate(date);
+            onDateSelect?.();
+          }}
           diaryIntensitiesByDate={diaryIntensitiesByDate}
           diaryCoverByDate={diaryCoverByDate}
           viewTab={viewTab}
