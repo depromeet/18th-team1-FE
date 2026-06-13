@@ -36,7 +36,20 @@ const millingTrial = localFont({
 
 export const metadata: Metadata = {
   title: "Senti",
-  description: "책 문장으로 나의 하루를 기록할 수 있는 일기 서비스",
+  description: "하루를 책 문장으로 기록하고 친구에게 공유해보세요",
+  openGraph: {
+    title: "Senti",
+    description: "하루를 책 문장으로 기록하고 친구에게 공유해보세요",
+    url: "https://senti.today",
+    type: "website",
+    images: [{ url: "/images/og_image.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Senti",
+    description: "하루를 책 문장으로 기록하고 친구에게 공유해보세요",
+    images: ["/images/og_image.png"],
+  },
 };
 
 export const viewport: Viewport = {
