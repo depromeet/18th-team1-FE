@@ -11,12 +11,11 @@ import { IcShare2, IcTrash } from "@/shared/ui/icons";
 
 interface DiaryOptionMenuProps {
   trigger: ReactNode;
-  onEdit?: () => void;
   onShare?: () => void;
   onDelete?: () => void;
 }
 
-export const DiaryOptionMenu = ({ trigger, onEdit, onShare, onDelete }: DiaryOptionMenuProps) => (
+export const DiaryOptionMenu = ({ trigger, onShare, onDelete }: DiaryOptionMenuProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <button

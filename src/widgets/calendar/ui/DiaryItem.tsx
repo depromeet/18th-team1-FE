@@ -3,7 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { type DiaryListItem, DiaryTagSection, useDiaryStore } from "@/entities/diary";
-import { DiaryOptionMenu, useDiaryOptions } from "@/features/diary-actions";
+import {
+  DiaryDeleteModal,
+  DiaryOptionMenu,
+  useDiaryDeleteModal,
+  useDiaryOptions,
+} from "@/features/diary-actions";
 import { IcOptionCard } from "@/shared/ui/icons";
 
 interface DiaryItemProps {
@@ -13,6 +18,13 @@ interface DiaryItemProps {
 export const DiaryItem = ({ diary }: DiaryItemProps) => {
   const { setSelectedDiary } = useDiaryStore();
   const { handleShare, handleDelete } = useDiaryOptions();
+  const { isDeleteModalOpen, handleDeleteClick, handleConfirmDelete, handleCancelDelete } =
+    useDiaryDeleteModal({ onDelete: handleDelete });
+
+  const handleDeleteOpen = () => {
+    setSelectedDiary(diary);
+    handleDeleteClick();
+  };
 
   return (
     <div className="relative pt-5 px-5">
@@ -44,12 +56,14 @@ export const DiaryItem = ({ diary }: DiaryItemProps) => {
         <DiaryOptionMenu
           trigger={<IcOptionCard size={24} className="text-gray-300" />}
           onShare={handleShare}
-          onDelete={() => {
-            setSelectedDiary(diary);
-            handleDelete();
-          }}
+          onDelete={handleDeleteOpen}
         />
       </div>
+      <DiaryDeleteModal
+        isOpen={isDeleteModalOpen}
+        onConfirm={handleConfirmDelete}
+        onClose={handleCancelDelete}
+      />
     </div>
   );
 };

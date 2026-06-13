@@ -3,15 +3,21 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import type { ReactNode } from "react";
-
-import { DiaryOptionMenu, useDiaryOptions } from "@/features/diary-actions";
+import { DiaryDeleteModal, DiaryOptionMenu } from "@/features/diary-actions";
 import { IcOptionHeader } from "@/shared/ui/icons";
-import { useDiaryDetail } from "@/widgets/diary-detail";
+import { useDiaryDetail, useDiaryDetailOptions } from "@/widgets/diary-detail";
 import { Header } from "@/widgets/header";
 
 const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
-  const { handleBack, handleShare, handleDelete } = useDiaryOptions();
   const diary = useDiaryDetail();
+  const {
+    handleBack,
+    handleShare,
+    handleDeleteClick,
+    handleConfirmDelete,
+    handleCancelDelete,
+    isDeleteModalOpen,
+  } = useDiaryDetailOptions();
 
   return (
     <div className="flex h-full flex-col">
@@ -22,11 +28,16 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
           <DiaryOptionMenu
             trigger={<IcOptionHeader size={24} className="text-gray-700" />}
             onShare={handleShare}
-            onDelete={handleDelete}
+            onDelete={handleDeleteClick}
           />
         }
       />
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</main>
+      <DiaryDeleteModal
+        isOpen={isDeleteModalOpen}
+        onConfirm={handleConfirmDelete}
+        onClose={handleCancelDelete}
+      />
     </div>
   );
 };

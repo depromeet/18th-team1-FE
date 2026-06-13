@@ -22,7 +22,7 @@ export const DoubleButton = ({
   <div className={cn("flex w-full h-14 items-center gap-2", className)}>
     <button
       type="button"
-      className="subhead6 flex h-full flex-1 items-center justify-center rounded-2xl bg-gray-200 text-gray-500"
+      className="subhead3 flex h-full flex-1 items-center justify-center rounded-md bg-gray-100 text-gray-300"
       onClick={onSecondaryClick}
     >
       {secondaryLabel}
@@ -30,7 +30,7 @@ export const DoubleButton = ({
     <button
       type="button"
       disabled={isPrimaryDisabled}
-      className="subhead6 flex h-full flex-1 items-center justify-center rounded-2xl bg-gray-700 text-gray-0 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300"
+      className="subhead3 flex h-full flex-1 items-center justify-center rounded-md bg-gray-700 text-gray-0 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300"
       onClick={onPrimaryClick}
     >
       {primaryLabel}
