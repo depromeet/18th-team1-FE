@@ -6,10 +6,10 @@ import { useState } from "react";
 
 import type { SentenceTag } from "@/entities/sentence";
 import {
-  fetchSentenceShareImage,
+  fetchSentenceTodayImage,
   SentenceCardPhase,
   SentenceDatePhase,
-} from "@/features/sentence-share";
+} from "@/features/sentence-select";
 import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { Header } from "@/widgets/header";
@@ -26,13 +26,13 @@ const MOCK_TAGS: SentenceTag[] = [
   { id: 3, label: "위로받고 싶은", type: "tone", emotionRangeId: 3 },
 ];
 
-interface SentenceShareViewProps {
+interface SentenceTodayViewProps {
   initialPhase?: "date" | "card";
 }
 
-export const SentenceShareView = ({
+export const SentenceTodayView = ({
   initialPhase = "date",
-}: SentenceShareViewProps): React.ReactElement => {
+}: SentenceTodayViewProps): React.ReactElement => {
   const router = useRouter();
   const pathname = usePathname();
   const [phase, setPhase] = useState<"date" | "card">(initialPhase);
@@ -66,8 +66,8 @@ export const SentenceShareView = ({
 
     setIsSharing(true);
     try {
-      const blob = await fetchSentenceShareImage(dailyRecommendationId);
-      const file = new File([blob], "sentence-share.png", { type: "image/png" });
+      const blob = await fetchSentenceTodayImage(dailyRecommendationId);
+      const file = new File([blob], "sentence-today.png", { type: "image/png" });
 
       if (!navigator.canShare?.({ files: [file] })) {
         alert("이 기기에서는 이미지 공유를 지원하지 않아요.");

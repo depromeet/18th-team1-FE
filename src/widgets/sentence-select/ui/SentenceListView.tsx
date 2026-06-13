@@ -45,7 +45,7 @@ export const SentenceListView = () => {
       title: selected.title,
       author: selected.author,
     });
-    router.push("/sentence/share");
+    router.push("/sentence/today");
   };
 
   return (

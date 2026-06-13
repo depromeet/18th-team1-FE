@@ -5,15 +5,15 @@ import { Suspense } from "react";
 
 import { SentenceErrorBoundary, SentenceLoadingView } from "@/features/sentence-select";
 
-const SentenceDetailView = dynamic(
-  () => import("@/widgets/sentence-select").then((m) => ({ default: m.SentenceDetailView })),
+const SentenceView = dynamic(
+  () => import("@/widgets/sentence-select").then((m) => ({ default: m.SentenceView })),
   { ssr: false },
 );
 
 const SentencePage = (): React.ReactElement => (
   <SentenceErrorBoundary>
     <Suspense fallback={<SentenceLoadingView />}>
-      <SentenceDetailView />
+      <SentenceView />
     </Suspense>
   </SentenceErrorBoundary>
 );

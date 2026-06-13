@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 
-const SentenceShareLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
+const SentenceTodayLayout = ({ children }: { children: ReactNode }): React.ReactElement => {
   useViewportHeight();
 
   return (
@@ -17,4 +17,4 @@ const SentenceShareLayout = ({ children }: { children: ReactNode }): React.React
   );
 };
 
-export default SentenceShareLayout;
+export default SentenceTodayLayout;
