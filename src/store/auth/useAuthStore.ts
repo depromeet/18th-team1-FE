@@ -10,7 +10,8 @@ type AuthState = {
 export const useAuthStore = create<AuthState>()(
   devtools(
     (set) => ({
-      accessToken: null,
+      accessToken:
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MDAyIiwiZXhwIjoxNzgxMzUwMDMyLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzgxMzQ5MTMyLCJqdGkiOiIyYjM5OGIxOS1hOTFiLTQ2N2QtODk1ZS04M2Y5YzU2MTEyNWYifQ.V9oo6qKQe7M3vCGQPCRfX-D1F528oH9_ql0rAOCDm-A",
       setAuth: (accessToken: string) => {
         set({ accessToken }, false, "auth/setAuth");
       },
