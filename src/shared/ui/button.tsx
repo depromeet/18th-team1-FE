@@ -16,7 +16,7 @@ export const Button = ({ label, icon, isDisabled = false, className, onClick }: 
   <button
     type="button"
     className={cn(
-      "subhead6 flex w-full h-14 items-center justify-center gap-[7px] rounded-2xl bg-gray-700 capitalize text-gray-0 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300",
+      "subhead4 flex w-full h-14 items-center justify-center gap-[7px] rounded-2xl bg-gray-700 capitalize text-gray-0 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300",
       className,
     )}
     disabled={isDisabled}
