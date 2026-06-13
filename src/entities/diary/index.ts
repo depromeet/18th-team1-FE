@@ -10,6 +10,5 @@ export type {
   TodayDiary,
 } from "./model/diary.types";
 export { useDiaryStore } from "./model/useDiaryStore";
-export { DiaryCard } from "./ui/DiaryCard";
 export { DiaryChip } from "./ui/DiaryChip";
 export { DiaryDetailCard } from "./ui/DiaryDetailCard";

@@ -113,7 +113,7 @@ export const MonthPicker = ({ isOpen, onClose, onChange, selectedValue }: MonthP
                       onClick={() => handleMonthClick(month)}
                       aria-disabled={disabled}
                       className={cn(
-                        "body1 flex items-center justify-center rounded-md px-7.5 py-2.5 transition-colors",
+                        "body1 flex items-center justify-center rounded-md w-17.5 h-11 transition-colors",
                         selected
                           ? "bg-gray-700 text-gray-0"
                           : disabled

@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 interface UseDiaryOptionsReturn {
   handleBack: () => void;
-  handleEdit: () => void;
   handleShare: () => void;
   handleDelete: () => void;
 }
@@ -16,10 +15,6 @@ export const useDiaryOptions = (): UseDiaryOptionsReturn => {
     router.back();
   };
 
-  const handleEdit = () => {
-    // TODO: 수정 로직
-  };
-
   const handleShare = () => {
     // TODO: 공유 로직
   };
@@ -28,5 +23,5 @@ export const useDiaryOptions = (): UseDiaryOptionsReturn => {
     // TODO: 삭제 로직
   };
 
-  return { handleBack, handleEdit, handleShare, handleDelete };
+  return { handleBack, handleShare, handleDelete };
 };

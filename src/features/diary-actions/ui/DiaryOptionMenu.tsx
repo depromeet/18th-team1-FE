@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import { IcEdit, IcShare2, IcTrash } from "@/shared/ui/icons";
+import { IcShare2, IcTrash } from "@/shared/ui/icons";
 
 interface DiaryOptionMenuProps {
   trigger: ReactNode;
@@ -33,13 +33,6 @@ export const DiaryOptionMenu = ({ trigger, onEdit, onShare, onDelete }: DiaryOpt
       className="flex min-w-33 flex-col gap-4 rounded-[20px] border-0 bg-background p-4 shadow-modal"
       onClick={(e) => e.stopPropagation()}
     >
-      <DropdownMenuItem
-        className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"
-        onClick={onEdit}
-      >
-        <IcEdit size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
-        <span>수정하기</span>
-      </DropdownMenuItem>
       <DropdownMenuItem
         className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"
         onClick={onShare}
