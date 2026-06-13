@@ -15,6 +15,7 @@ export { IcGoogle } from "./IcGoogle";
 export { IcHome } from "./IcHome";
 export { IcInfoCircle } from "./IcInfoCircle";
 export { IcKakao } from "./IcKakao";
+export { IcLink } from "./IcLink";
 export { IcMinusCircleFill } from "./IcMinusCircleFill";
 export { IcMonthBack } from "./IcMonthBack";
 export { IcMonthNext } from "./IcMonthNext";

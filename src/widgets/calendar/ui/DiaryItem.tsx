@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type DiaryListItem, useDiaryStore } from "@/entities/diary";
+import { type DiaryListItem, DiaryTagSection, useDiaryStore } from "@/entities/diary";
 import { DiaryOptionMenu, useDiaryOptions } from "@/features/diary-actions";
 import { IcOptionCard } from "@/shared/ui/icons";
-import { DiaryTagChips } from "./DiaryTagChips";
 
 interface DiaryItemProps {
   diary: DiaryListItem;
@@ -36,7 +35,7 @@ export const DiaryItem = ({ diary }: DiaryItemProps) => {
                 <p className="caption2 text-gray-600 truncate">{`『${diary.title}』, ${diary.author}`}</p>
               </div>
             </div>
-            <DiaryTagChips tags={diary.tags} emotionValue={diary.emotionValue} />
+            <DiaryTagSection tags={diary.tags} emotionValue={diary.emotionValue} />
           </div>
           <div className="h-px w-full bg-gray-100" />
         </div>

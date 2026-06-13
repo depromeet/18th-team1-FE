@@ -38,6 +38,6 @@ export interface DiaryListResponse {
 export interface DiaryDetail extends DiaryListItem {
   diaryImageUrl?: string | null;
   aladinLink?: string;
-  emotionIntensity?: EmotionIntensity;
   emotions?: string[];
+  purpose?: string;
 }

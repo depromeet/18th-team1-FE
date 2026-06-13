@@ -111,10 +111,12 @@ export const MOCK_CALENDAR_DIARIES = {
       emotionValue: 1,
       quoteContent:
         "가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.가장 중요한 것은 보이지 않는다.",
-      tags: ["더없이 행복한", "자책하고 싶은", "자책하고 싶은"],
+      tags: ["더없이 행복한", "자책하고 싶은"],
       coverImageUrl: "https://image.aladin.co.kr/product/36566/52/cover500/s632135953_1.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
     {
       id: 2,
@@ -126,6 +128,8 @@ export const MOCK_CALENDAR_DIARIES = {
       coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
     {
       id: 3,
@@ -137,6 +141,8 @@ export const MOCK_CALENDAR_DIARIES = {
       coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
     {
       id: 4,
@@ -148,6 +154,8 @@ export const MOCK_CALENDAR_DIARIES = {
       coverImageUrl: "https://image.aladin.co.kr/product/27045/43/cover500/k692135851_3.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
     {
       id: 5,
@@ -159,17 +167,21 @@ export const MOCK_CALENDAR_DIARIES = {
       coverImageUrl: "https://image.aladin.co.kr/product/27045/43/cover500/k692135851_3.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
     {
       id: 6,
       createdAt: "2026-06-01",
-      content: "오늘은 책을 읽고 산책을 했다.",
+      content: "오늘은 책을 읽고 산책을 했다. ",
       emotionValue: 8,
       quoteContent: "가장 중요한 것은 보이지 않는다.",
       tags: ["불안"],
       coverImageUrl: "https://image.aladin.co.kr/product/25184/75/cover500/8931021291_1.jpg",
       author: "앙투안 드 생텍쥐페리",
       title: "어린 왕자",
+      aladinLink: "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=251847567",
+      purpose: "그냥 위로 받고 싶어요.",
     },
   ],
 };

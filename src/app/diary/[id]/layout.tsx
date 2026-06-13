@@ -10,18 +10,17 @@ import { useDiaryDetail } from "@/widgets/diary-detail";
 import { Header } from "@/widgets/header";
 
 const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
-  const { handleBack, handleEdit, handleShare, handleDelete } = useDiaryOptions();
+  const { handleBack, handleShare, handleDelete } = useDiaryOptions();
   const diary = useDiaryDetail();
 
   return (
-    <div className="flex h-full flex-col bg-gray-100">
+    <div className="flex h-full flex-col">
       <Header
         title={diary ? format(new Date(diary.createdAt), "M월 d일", { locale: ko }) : ""}
         onBack={handleBack}
         right={
           <DiaryOptionMenu
             trigger={<IcOptionHeader size={24} className="text-gray-700" />}
-            onEdit={handleEdit}
             onShare={handleShare}
             onDelete={handleDelete}
           />

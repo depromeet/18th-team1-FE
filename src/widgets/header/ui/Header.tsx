@@ -37,7 +37,7 @@ export const Header = ({ title, onBack, right, className }: HeaderProps) => {
       )}
 
       {title && (
-        <span className="subhead1 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
+        <span className="head1 absolute left-1/2 -translate-x-1/2 cursor-default select-none text-gray-700">
           {title}
         </span>
       )}
