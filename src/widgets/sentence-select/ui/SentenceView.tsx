@@ -14,11 +14,11 @@ const MOCK_QUOTE = {
   bookAuthor: "김승섭",
 };
 
-export const SentenceDetailView = (): React.ReactElement => {
+export const SentenceView = (): React.ReactElement => {
   const router = useRouter();
 
   const handleNext = (): void => {
-    router.push("/sentence/share");
+    router.push("/sentence/today");
   };
 
   const handleViewList = (): void => {
