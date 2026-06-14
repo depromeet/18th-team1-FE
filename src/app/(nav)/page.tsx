@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
@@ -13,6 +14,7 @@ const HOME_BANNER_HEIGHT = 126;
 const BANNER_SCROLL_THRESHOLD = RANDOM_BANNER_HEIGHT + ACCENT_BAR_HEIGHT + HOME_BANNER_HEIGHT;
 
 const HomePage = () => {
+  const router = useRouter();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isPastBanner, setIsPastBanner] = useState(false);
 
@@ -49,6 +51,7 @@ const HomePage = () => {
           />
           <button
             type="button"
+            onClick={() => router.push("/my-page")}
             className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#d1e9ea]"
           >
             <IcProfileS className="text-key-primary" />
