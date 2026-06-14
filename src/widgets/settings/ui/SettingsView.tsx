@@ -73,7 +73,11 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
             <div className="flex flex-col gap-1">
               <p className="subhead4 text-gray-700">{profile?.nickname ?? ""}</p>
               <p className="body3 text-gray-700">
-                {profile?.provider === "GOOGLE" ? "구글 계정 회원" : "카카오 계정 회원"}
+                {profile?.provider === "GOOGLE"
+                  ? "구글 계정 회원"
+                  : profile?.provider === "KAKAO"
+                    ? "카카오 계정 회원"
+                    : ""}
               </p>
             </div>
           </div>

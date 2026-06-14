@@ -23,11 +23,14 @@ export const redirectToGoogleLogin = () => {
 
 const logout = async (): Promise<void> => {
   const token = useAuthStore.getState().accessToken;
-  await fetch(`${BASE_URL}/auth/logout`, {
+  const response = await fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
     credentials: "include",
     headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   });
+  if (!response.ok) {
+    throw new Error(`Logout failed: ${response.status}`);
+  }
 };
 
 export const useLogoutMutation = () => useMutation({ mutationFn: logout });

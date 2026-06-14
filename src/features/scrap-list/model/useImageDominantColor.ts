@@ -26,31 +26,35 @@ const sampleBottomRegionColor = (imageUrl: string): Promise<DominantColorResult>
         resolve(FALLBACK);
         return;
       }
-      ctx.drawImage(img, 0, img.height - sampleH, img.width, sampleH, 0, 0, img.width, sampleH);
-      const { data } = ctx.getImageData(0, 0, img.width, sampleH);
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      const pixelCount = data.length / 4;
-      for (let i = 0; i < data.length; i += 4) {
-        r += data[i] ?? 0;
-        g += data[i + 1] ?? 0;
-        b += data[i + 2] ?? 0;
+      try {
+        ctx.drawImage(img, 0, img.height - sampleH, img.width, sampleH, 0, 0, img.width, sampleH);
+        const { data } = ctx.getImageData(0, 0, img.width, sampleH);
+        let r = 0;
+        let g = 0;
+        let b = 0;
+        const pixelCount = data.length / 4;
+        for (let i = 0; i < data.length; i += 4) {
+          r += data[i] ?? 0;
+          g += data[i + 1] ?? 0;
+          b += data[i + 2] ?? 0;
+        }
+        let avgR = Math.round(r / pixelCount);
+        let avgG = Math.round(g / pixelCount);
+        let avgB = Math.round(b / pixelCount);
+        const isDark = getLuminance(avgR, avgG, avgB) < 0.5;
+        // 어두운 계열 이미지는 Figma 결과에 맞게 추가 다크닝
+        if (isDark) {
+          avgR = Math.round(avgR * 0.8);
+          avgG = Math.round(avgG * 0.8);
+          avgB = Math.round(avgB * 0.8);
+        }
+        resolve({
+          color: `rgb(${avgR}, ${avgG}, ${avgB})`,
+          isDark,
+        });
+      } catch {
+        resolve(FALLBACK);
       }
-      let avgR = Math.round(r / pixelCount);
-      let avgG = Math.round(g / pixelCount);
-      let avgB = Math.round(b / pixelCount);
-      const isDark = getLuminance(avgR, avgG, avgB) < 0.5;
-      // 어두운 계열 이미지는 Figma 결과에 맞게 추가 다크닝
-      if (isDark) {
-        avgR = Math.round(avgR * 0.8);
-        avgG = Math.round(avgG * 0.8);
-        avgB = Math.round(avgB * 0.8);
-      }
-      resolve({
-        color: `rgb(${avgR}, ${avgG}, ${avgB})`,
-        isDark,
-      });
     };
     img.onerror = () => resolve(FALLBACK);
     img.src = imageUrl;
@@ -60,7 +64,10 @@ export const useImageDominantColor = (imageUrl: string | null | undefined): Domi
   const [result, setResult] = useState<DominantColorResult>(FALLBACK);
 
   useEffect(() => {
-    if (!imageUrl) return;
+    if (!imageUrl) {
+      setResult(FALLBACK);
+      return;
+    }
     let cancelled = false;
     sampleBottomRegionColor(imageUrl).then((res) => {
       if (!cancelled) setResult(res);

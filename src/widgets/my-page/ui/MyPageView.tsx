@@ -16,7 +16,6 @@ export const MyPageView = () => {
         profile={profile}
         onEditNickname={() => router.push("/my-page/nickname-edit")}
       />
-      <div className="h-px bg-gray-50" />
       <ScrapSentenceSection />
     </div>
   );

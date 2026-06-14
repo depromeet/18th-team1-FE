@@ -51,12 +51,15 @@ export const ScrapActionSheet = ({
           </button>
           <button
             type="button"
+            aria-label="공유"
             className="flex size-8.5 items-center justify-center rounded-full bg-gray-100"
           >
             <IcShare size={30} className="text-gray-500" />
           </button>
           <button
             type="button"
+            aria-label="북마크"
+            aria-pressed={isBookmarked}
             className="flex size-8.5 items-center justify-center"
             onClick={() => setIsBookmarked((prev) => !prev)}
           >
