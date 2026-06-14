@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+
+import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcClose, IcTrash } from "@/shared/ui/icons";
+
 import { MOCK_SCRAP_ITEMS, type ScrapItem } from "../model/mock";
 import { ScrapActionSheet } from "./ScrapActionSheet";
 import { ScrapBookCard } from "./ScrapBookCard";
-import { ScrapDeleteDialog } from "./ScrapDeleteDialog";
 
 export const ScrapSentenceSection = () => {
   const items = MOCK_SCRAP_ITEMS;
@@ -24,7 +26,6 @@ export const ScrapSentenceSection = () => {
   const handleConfirmDelete = () => {
     setSelectedIds(new Set());
     setIsSelectMode(false);
-    setIsDeleteDialogOpen(false);
   };
 
   const handleToggleSelect = (id: string) => {
@@ -120,10 +121,19 @@ export const ScrapSentenceSection = () => {
           </button>
         </div>
       )}
-      <ScrapDeleteDialog
+
+      <ConfirmModal
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
-        selectedCount={selectedIds.size}
+        description={
+          <p>
+            <span className="subhead3 text-gray-700">{selectedIds.size}개의 문장</span>을
+            <br />
+            스크랩 삭제할까요?
+          </p>
+        }
+        cancelLabel="취소"
+        confirmLabel="삭제"
         onConfirm={handleConfirmDelete}
       />
       <ScrapActionSheet
