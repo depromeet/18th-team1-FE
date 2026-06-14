@@ -1,7 +1,7 @@
 import { BaseIcon } from "./BaseIcon";
 import type { IconProps } from "./icon.types";
 
-export const IcCloseCircle = (props: IconProps): React.ReactElement => (
+export const IcCloseCircle = (props: IconProps) => (
   <BaseIcon viewBox="0 0 30 30" {...props}>
     <path
       opacity="0.6"

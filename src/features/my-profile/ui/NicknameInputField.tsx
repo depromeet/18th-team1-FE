@@ -20,7 +20,7 @@ export const NicknameInputField = ({
   placeholder,
   maxLength = 10,
   errorMessage,
-}: NicknameInputFieldProps): React.ReactElement => {
+}: NicknameInputFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const hasError = !!errorMessage;

@@ -10,7 +10,7 @@ interface NicknameEditViewProps {
   onBack: () => void;
 }
 
-export const NicknameEditView = ({ onBack }: NicknameEditViewProps): React.ReactElement => {
+export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
   useViewportHeight();
   const { data: profile } = useUserProfileQuery();
   const initialNickname = profile?.nickname ?? "";
