@@ -1,9 +1,9 @@
 "use client";
 
-import { type UseQueryResult, useQuery } from "@tanstack/react-query";
+import { type UseQueryResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import type { UserProfile } from "../model/user.types";
-import { fetchUserProfile } from "./userApi";
+import type { UpdateProfileRequest, UserProfile } from "../model/user.types";
+import { fetchUserProfile, updateUserProfile } from "./userApi";
 
 export const userKeys = {
   all: ["user"] as const,
@@ -16,3 +16,11 @@ export const useUserProfileQuery = (): UseQueryResult<UserProfile> =>
     queryFn: fetchUserProfile,
     staleTime: 10 * 60 * 1000,
   });
+
+export const useUpdateProfileMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: UpdateProfileRequest) => updateUserProfile(body),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: userKeys.me() }),
+  });
+};
