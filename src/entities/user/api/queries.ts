@@ -14,4 +14,5 @@ export const useUserProfileQuery = (): UseQueryResult<UserProfile> =>
   useQuery({
     queryKey: userKeys.me(),
     queryFn: fetchUserProfile,
+    staleTime: 10 * 60 * 1000,
   });

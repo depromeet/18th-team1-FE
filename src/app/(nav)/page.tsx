@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { useUserProfileQuery } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
 import { IcProfileS } from "@/shared/ui/icons";
 import { Logo } from "@/shared/ui/logo";
@@ -17,6 +19,7 @@ const HomePage = () => {
   const router = useRouter();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isPastBanner, setIsPastBanner] = useState(false);
+  const { data: profile } = useUserProfileQuery();
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -54,7 +57,17 @@ const HomePage = () => {
             onClick={() => router.push("/my-page")}
             className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#d1e9ea]"
           >
-            <IcProfileS className="text-key-primary" />
+            {profile?.profileImageUrl ? (
+              <Image
+                src={profile.profileImageUrl}
+                alt="프로필"
+                width={36}
+                height={36}
+                className="size-full object-cover"
+              />
+            ) : (
+              <IcProfileS className="text-key-primary" />
+            )}
           </button>
         </header>
         <HomeView />

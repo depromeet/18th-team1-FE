@@ -2,8 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import type { Diary } from "@/entities/diary";
-import type { RecommendedSentence } from "@/entities/sentence";
+import { fetchTodayStatus, type RecommendedSentence } from "@/entities/sentence";
 import {
   HomeBanner,
   HomeSentenceSection,
@@ -11,19 +10,15 @@ import {
   useHomeRandomQuery,
   useHomeSummaryQuery,
 } from "@/features/home";
+import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
 export const HomeView = () => {
   const router = useRouter();
   const { data: summary } = useHomeSummaryQuery();
   const { data: randomQuote } = useHomeRandomQuery();
+  const { setCurrentRecommendationId } = useEmotionSelectStore();
 
-  const diaries: Diary[] = (summary?.monthlyDiaries ?? []).map((item) => ({
-    diaryId: item.diaryId,
-    day: new Date(item.createdAt).getDate(),
-    sentence: item.quoteContent,
-    temperature: 0,
-    dotColor: "",
-  }));
+  const monthlyRecommendations = (summary?.monthlyRecommendations ?? []).slice().reverse();
 
   const sentences: RecommendedSentence[] = (randomQuote ?? []).map((quote) => ({
     id: String(quote.quoteId),
@@ -33,27 +28,28 @@ export const HomeView = () => {
     date: "",
   }));
 
-  const handleBannerClick = () => {
+  const handleBannerClick = async (): Promise<void> => {
+    const status = await fetchTodayStatus();
+
+    if (!status.canCreateTodayRecommendation && !status.hasOngoingRecommendation) {
+      alert("오늘의 문장 추천은 이미 완료되었어요.");
+      return;
+    }
+
+    if (status.hasOngoingRecommendation && status.ongoingRecommendationId !== null) {
+      setCurrentRecommendationId(status.ongoingRecommendationId);
+      router.push("/sentence");
+      return;
+    }
+
     router.push("/emotion");
-    // TODO: 분기 로직 복구 필요
-    // const diaryExists = await fetchTodayDiaryExists();
-    // if (diaryExists.exists && diaryExists.diaryId !== null) {
-    //   router.push(`/diary/${diaryExists.diaryId}`);
-    //   return;
-    // }
-    // const sentenceExists = await fetchTodaySentenceExists();
-    // if (sentenceExists.exists) {
-    //   router.push("/diary/sentence");
-    //   return;
-    // }
-    // router.push("/emotion");
   };
 
   return (
     <>
       <RandomSentenceBanner sentences={sentences} />
       <HomeBanner onClick={handleBannerClick} />
-      <HomeSentenceSection diaries={diaries} />
+      <HomeSentenceSection items={monthlyRecommendations} />
     </>
   );
 };
