@@ -1,15 +1,3 @@
-// TODO: API 완성 후 useToneTagsQuery로 교체
-export const MOCK_SENTENCE_TYPES = [
-  { id: "1", label: "영감을 주는 문장" },
-  { id: "2", label: "위로를 주는 문장" },
-  { id: "3", label: "관점을 전환하는 문장" },
-  { id: "4", label: "용기를 주는 문장" },
-  { id: "5", label: "자존감을 채우는 문장" },
-  { id: "6", label: "공감해주는 문장" },
-  { id: "7", label: "시작을 응원하는 문장" },
-  { id: "8", label: "마음정리를 돕는 문장" },
-] as const;
-
 export const PLACEHOLDER_TEXTS = [
   "오래된 것을 떠나보내는 중일 때",
   "선택 앞에서 망설일 때",

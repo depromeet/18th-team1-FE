@@ -8,9 +8,10 @@ import { AnimatedPlaceholder } from "./AnimatedPlaceholder";
 interface DirectInputBarProps {
   onValidChange: (isEmpty: boolean) => void;
   onSubmit: (value: string) => void;
+  isLoading?: boolean;
 }
 
-export const DirectInputBar = ({ onValidChange, onSubmit }: DirectInputBarProps) => {
+export const DirectInputBar = ({ onValidChange, onSubmit, isLoading }: DirectInputBarProps) => {
   const [value, setValue] = useState("");
   const { placeholderText, animationKey, isExiting } = usePlaceholderCycle(true);
 
@@ -45,7 +46,7 @@ export const DirectInputBar = ({ onValidChange, onSubmit }: DirectInputBarProps)
       <button
         type="button"
         onClick={handleSubmit}
-        disabled={value.length === 0}
+        disabled={value.length === 0 || isLoading}
         className="ml-2 flex size-7.75 shrink-0 items-center justify-center rounded-full bg-gray-700 disabled:bg-gray-200"
         aria-label="입력 완료"
       >

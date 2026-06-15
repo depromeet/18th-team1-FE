@@ -1,49 +1,45 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import type { SentenceQuote } from "@/entities/sentence";
-import {
-  fetchAdditionalSentenceQuotes,
-  useAdditionalSentenceQuotesQuery,
-} from "@/entities/sentence";
+import { useRecommendationQuotesQuery, useSelectQuoteMutation } from "@/entities/sentence";
 import { SentenceSelectCard, useSentenceList } from "@/features/sentence-select";
 import { NewDoubleButton } from "@/shared/ui/new-double-button";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
-const MAX_LOAD_COUNT = 3;
+const PAGE_SIZE = 3;
 
 export const SentenceListView = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const dailyRecommendationId = Number(searchParams.get("dailyRecommendationId"));
-  const { data: initialData } = useAdditionalSentenceQuotesQuery(dailyRecommendationId);
-  const [quotes, setQuotes] = useState<SentenceQuote[]>(initialData);
-  const [loadCount, setLoadCount] = useState(0);
+  const { currentRecommendationId, listVisibleCount, setListVisibleCount, setSelectedQuote } =
+    useEmotionSelectStore();
+  const recommendationId = currentRecommendationId ?? 0;
 
-  const { setSelectedQuote } = useEmotionSelectStore();
-  const { selectedId, handleSelect } = useSentenceList(quotes[0]?.quoteId ?? -1);
+  const { data: quotes } = useRecommendationQuotesQuery(recommendationId);
 
-  const handleLoadMore = async (): Promise<void> => {
-    if (loadCount >= MAX_LOAD_COUNT) {
-      alert("추천 문장은 최대 3번까지 더 불러올 수 있어요.");
-      return;
-    }
-    const newQuotes = await fetchAdditionalSentenceQuotes(dailyRecommendationId);
-    setQuotes((prev) => [...prev, ...newQuotes]);
-    setLoadCount((prev) => prev + 1);
+  const visibleQuotes = quotes.slice(0, listVisibleCount);
+  const hasMore = listVisibleCount < quotes.length;
+
+  const { mutateAsync: selectQuote } = useSelectQuoteMutation();
+  const { selectedId, handleSelect } = useSentenceList(visibleQuotes[0]?.quoteId ?? -1);
+
+  const handleLoadMore = (): void => {
+    if (!hasMore) return;
+    setListVisibleCount(listVisibleCount + PAGE_SIZE);
   };
 
-  const handleNext = (): void => {
-    const selected = quotes.find((q) => q.quoteId === selectedId);
+  const handleNext = async (): Promise<void> => {
+    const selected = visibleQuotes.find((q) => q.quoteId === selectedId);
     if (!selected) return;
+    const result = await selectQuote({ recommendationId, quoteId: selected.quoteId });
     setSelectedQuote({
-      dailyRecommendationId,
-      quoteId: selected.quoteId,
-      content: selected.content,
-      title: selected.title,
-      author: selected.author,
+      recommendationId: result.recommendationId,
+      quoteId: result.quote.quoteId,
+      content: result.quote.content,
+      title: result.quote.title,
+      author: result.quote.author,
+      image: result.quote.image,
+      tags: [...result.emotionTags, ...(result.needTag ? [result.needTag] : [])],
     });
     router.push("/sentence/today");
   };
@@ -52,7 +48,7 @@ export const SentenceListView = () => {
     <div className="flex h-full flex-col">
       <div className="flex-1 overflow-y-auto px-5 pt-4.5 pb-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex flex-col gap-3">
-          {quotes.map((quote) => (
+          {visibleQuotes.map((quote) => (
             <SentenceSelectCard
               key={quote.quoteId}
               quote={quote.content}

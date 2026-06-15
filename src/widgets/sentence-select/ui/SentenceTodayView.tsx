@@ -4,7 +4,6 @@ import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-import type { SentenceTag } from "@/entities/sentence";
 import {
   fetchSentenceTodayImage,
   SentenceCardPhase,
@@ -13,18 +12,6 @@ import {
 import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { Header } from "@/widgets/header";
-
-const MOCK_QUOTE = {
-  quote: "세상에는 두 종류의 고통이 있다.\n너를 아프게 하는 고통과 너를 변하게하는 고통",
-  bookTitle: "『아픔이 길이 되려면』",
-  bookAuthor: "김승섭",
-};
-
-const MOCK_TAGS: SentenceTag[] = [
-  { id: 1, label: "자책하고 싶은", type: "emotion", emotionRangeId: 1 },
-  { id: 2, label: "위로받고 싶은", type: "tone", emotionRangeId: 2 },
-  { id: 3, label: "위로받고 싶은", type: "tone", emotionRangeId: 3 },
-];
 
 interface SentenceTodayViewProps {
   initialPhase?: "date" | "card";
@@ -61,12 +48,12 @@ export const SentenceTodayView = ({
       return;
     }
 
-    const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
-    if (!dailyRecommendationId) return;
+    const recommendationId = selectedQuote?.recommendationId;
+    if (!recommendationId) return;
 
     setIsSharing(true);
     try {
-      const blob = await fetchSentenceTodayImage(dailyRecommendationId);
+      const blob = await fetchSentenceTodayImage(recommendationId);
       const file = new File([blob], "sentence-today.png", { type: "image/png" });
 
       if (!navigator.canShare?.({ files: [file] })) {
@@ -95,10 +82,11 @@ export const SentenceTodayView = ({
               header={<Header onBack={() => router.back()} />}
               month={month}
               date={date}
-              quote={MOCK_QUOTE.quote}
-              bookTitle={MOCK_QUOTE.bookTitle}
-              bookAuthor={MOCK_QUOTE.bookAuthor}
-              tags={MOCK_TAGS}
+              quote={selectedQuote?.content ?? ""}
+              bookTitle={selectedQuote?.title ?? ""}
+              bookAuthor={selectedQuote?.author ?? ""}
+              bookCoverImage={selectedQuote?.image}
+              tags={selectedQuote?.tags ?? []}
               leftButton={{ label: "확인", isMuted: false, onClick: handleConfirm }}
               rightButton={{
                 label: "공유하기",

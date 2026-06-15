@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
@@ -7,7 +9,6 @@ import type { EmotionCategory } from "../model/emotion";
 import { EMOTIONS, getEmotionValue } from "../model/emotion";
 import { TagList } from "./TagList";
 
-// TODO: API에서 그룹명(emotionRangeName)을 내려줄 때 이 상수 제거 후 API 응답값 사용
 const GROUP_NAMES: Record<EmotionCategory, string[]> = {
   bad: ["무기력과 우울", "불안과 위축", "분노와 상처"],
   neutral: ["평온과 여유", "사색과 고립", "무감각과 모호함"],
@@ -19,14 +20,23 @@ interface SituationStepProps {
 }
 
 export const SituationStep = ({ onValidChange }: SituationStepProps) => {
-  const { selectedEmotionId, selectedSituationIds, setSelectedSituationIds } =
-    useEmotionSelectStore();
+  const {
+    selectedEmotionId,
+    selectedSituationIds,
+    setSelectedSituationIds,
+    setSelectedEmotionRangeId,
+  } = useEmotionSelectStore();
   const emotionCategory = EMOTIONS.find((e) => e.id === selectedEmotionId)?.category;
   const { data } = useEmotionTagsQuery(getEmotionValue(selectedEmotionId));
 
-  // TODO: API에서 emotionRangeName을 내려주면 tag.emotionRangeName으로 대체 후 이 로직 제거
   const groupNames = emotionCategory ? GROUP_NAMES[emotionCategory] : [];
   const rawTags = data?.tags ?? [];
+
+  useEffect(() => {
+    if (rawTags.length > 0) {
+      setSelectedEmotionRangeId(rawTags[0]?.emotionRangeId ?? null);
+    }
+  }, [rawTags, setSelectedEmotionRangeId]);
   const chunkSize = Math.ceil(rawTags.length / 3);
 
   const tags = rawTags.map((tag, index) => ({

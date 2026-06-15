@@ -17,7 +17,7 @@ import { Header } from "@/widgets/header";
 
 export const EmotionSelectView = (): React.ReactElement => {
   useViewportHeight();
-  const { currentStep, handleBack, handleNext } = useEmotionStep();
+  const { currentStep, isLoading, handleBack, handleNext } = useEmotionStep();
   const { showTutorial, dismissTutorial, shouldDropAnimate } = useEmotionTutorial();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isDirectInputActive, setIsDirectInputActive] = useState(false);
@@ -64,7 +64,11 @@ export const EmotionSelectView = (): React.ReactElement => {
       {currentStep === 1 && showTutorial && <EmotionTutorialOverlay onDismiss={dismissTutorial} />}
       {!(currentStep === 4 && isDirectInputActive) && (
         <div style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
-          <NewButton label="다음" disabled={isNextDisabled} onClick={handleNextWithKeyboard} />
+          <NewButton
+            label="다음"
+            disabled={isNextDisabled || isLoading}
+            onClick={handleNextWithKeyboard}
+          />
         </div>
       )}
     </div>

@@ -20,7 +20,7 @@ export const TodaysSentenceCard = ({
   quote,
   bookTitle,
   bookAuthor,
-  bookCoverImage = "/images/book.webp",
+  bookCoverImage,
   animateWords = false,
 }: TodaysSentenceCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -151,14 +151,9 @@ export const TodaysSentenceCard = ({
           }}
         >
           {/* 책 표지 이미지 */}
-          <Image alt="book cover" fill className="object-cover object-top" src={bookCoverImage} />
-          {/* 책 질감 오버레이 */}
-          <Image
-            alt=""
-            fill
-            className="pointer-events-none object-cover mix-blend-multiply opacity-20"
-            src="/images/book-texture-overlay.png"
-          />
+          {bookCoverImage && (
+            <Image alt="book cover" fill className="object-cover object-top" src={bookCoverImage} />
+          )}
           {/* 제본 spine 효과 */}
           <Image
             alt=""

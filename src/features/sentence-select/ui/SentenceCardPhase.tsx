@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 import { TagChip } from "@/entities/emotion-tag";
-import type { SentenceTag } from "@/entities/sentence";
+import type { TagDto } from "@/entities/sentence";
 import { TodaysSentenceCard } from "@/entities/sentence";
 import { IcPlusCount } from "@/shared/ui/icons";
 import { NewDoubleButton } from "@/shared/ui/new-double-button";
@@ -25,7 +25,7 @@ interface SentenceCardPhaseProps {
   bookTitle: string;
   bookAuthor: string;
   bookCoverImage?: string;
-  tags: SentenceTag[];
+  tags: TagDto[];
   leftButton: ButtonConfig;
   rightButton: ButtonConfig;
 }

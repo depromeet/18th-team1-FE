@@ -1,20 +1,18 @@
 export {
   sentenceKeys,
-  useAdditionalSentenceQuotesQuery,
-  useSentenceQuotesQuery,
-  useTodaySentenceExistsQuery,
+  useRecommendationQuotesQuery,
+  useSelectQuoteMutation,
+  useTodayStatusQuery,
 } from "./api/queries";
-export {
-  createSentenceQuotes,
-  fetchAdditionalSentenceQuotes,
-  fetchTodaySentenceExists,
-} from "./api/sentenceApi";
+export { fetchTodayStatus, startRecommendation } from "./api/sentenceApi";
 export type {
+  RecommendationDetailResponse,
   RecommendedSentence,
   SentenceQuote,
-  SentenceQuotesRequest,
-  SentenceQuotesResponse,
   SentenceTag,
-  TodaySentenceExistsResponse,
+  StartRecommendationRequest,
+  StartRecommendationResponse,
+  TagDto,
+  TodayStatusResponse,
 } from "./model/sentence.types";
 export { TodaysSentenceCard } from "./ui/TodaysSentenceCard";
