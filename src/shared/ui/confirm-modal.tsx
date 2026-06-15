@@ -26,7 +26,11 @@ export const ConfirmModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent showCloseButton={false} className="w-71 gap-7 px-2.5 pb-2.5 pt-7">
+      <DialogContent
+        showCloseButton={false}
+        className="w-71 gap-7 px-2.5 pb-2.5 pt-7"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogTitle className="sr-only">{confirmLabel}</DialogTitle>
         <div className="body1 flex items-center justify-center text-center text-gray-600">
           {description}

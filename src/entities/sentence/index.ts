@@ -4,7 +4,13 @@ export {
   useSelectQuoteMutation,
   useTodayStatusQuery,
 } from "./api/queries";
-export { fetchTodayStatus, startRecommendation } from "./api/sentenceApi";
+export {
+  bulkDeleteScraps,
+  fetchTodayStatus,
+  scrapQuote,
+  startRecommendation,
+  unscrapQuote,
+} from "./api/sentenceApi";
 export type {
   RecommendationDetailResponse,
   RecommendedSentence,

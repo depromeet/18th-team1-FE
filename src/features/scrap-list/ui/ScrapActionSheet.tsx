@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 import { IcBookmark, IcLink, IcShare } from "@/shared/ui/icons";
-import { Sheet, SheetContent } from "@/shared/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet";
+
+import { useScrapMutation, useUnscrapMutation } from "../api/queries";
 
 interface ScrapActionSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  quoteId: number;
   quote: string;
   bookTitle: string;
   author: string;
@@ -17,12 +22,28 @@ interface ScrapActionSheetProps {
 export const ScrapActionSheet = ({
   open,
   onOpenChange,
+  quoteId,
   quote,
   bookTitle,
   author,
   coverImageUrl,
 }: ScrapActionSheetProps): React.ReactElement => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(true);
+  const { mutateAsync: scrapAsync } = useScrapMutation();
+  const { mutateAsync: unscrapAsync } = useUnscrapMutation();
+
+  useEffect(() => {
+    if (open) setIsBookmarked(true);
+  }, [open]);
+
+  const handleBookmarkToggle = async () => {
+    if (isBookmarked) {
+      await unscrapAsync(quoteId);
+    } else {
+      await scrapAsync(quoteId);
+    }
+    setIsBookmarked((prev) => !prev);
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -30,7 +51,9 @@ export const ScrapActionSheet = ({
         side="bottom"
         showCloseButton={false}
         className="overflow-visible gap-0 rounded-t-[20px] border-0 p-0 md:max-w-93.75 md:mx-auto"
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
+        <SheetTitle className="sr-only">{bookTitle}</SheetTitle>
         {/* 책 표지 — 버튼 하단(54px)에 맞춰 위로 돌출 */}
         <div className="absolute -top-37 left-8 h-50.5 w-32 overflow-hidden rounded-lg">
           {coverImageUrl ? (
@@ -61,7 +84,7 @@ export const ScrapActionSheet = ({
             aria-label="북마크"
             aria-pressed={isBookmarked}
             className="flex size-8.5 items-center justify-center"
-            onClick={() => setIsBookmarked((prev) => !prev)}
+            onClick={handleBookmarkToggle}
           >
             <IcBookmark
               size={34}

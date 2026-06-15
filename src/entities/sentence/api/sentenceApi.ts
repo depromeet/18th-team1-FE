@@ -26,3 +26,12 @@ export const selectRecommendationQuote = (
 
 export const fetchTodayStatus = (): Promise<TodayStatusResponse> =>
   httpClient.get<TodayStatusResponse>("/home/today/status");
+
+export const scrapQuote = (quoteId: number): Promise<void> =>
+  httpClient.put(`/quotes/${quoteId}/scrap`);
+
+export const unscrapQuote = (quoteId: number): Promise<void> =>
+  httpClient.delete(`/quotes/${quoteId}/scrap`);
+
+export const bulkDeleteScraps = (quoteIds: number[]): Promise<void> =>
+  httpClient.postVoid("/quote-scraps/bulk-delete", { quoteIds });
