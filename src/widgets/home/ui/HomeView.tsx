@@ -10,6 +10,7 @@ import {
   useHomeRandomQuery,
   useHomeSummaryQuery,
 } from "@/features/home";
+import { useToast } from "@/shared/hooks/useToast";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
 export const HomeView = () => {
@@ -17,6 +18,7 @@ export const HomeView = () => {
   const { data: summary } = useHomeSummaryQuery();
   const { data: randomQuote } = useHomeRandomQuery();
   const { setCurrentRecommendationId } = useEmotionSelectStore();
+  const { toast } = useToast();
 
   const monthlyRecommendations = (summary?.monthlyRecommendations ?? []).slice().reverse();
 
@@ -32,7 +34,7 @@ export const HomeView = () => {
     const status = await fetchTodayStatus();
 
     if (!status.canCreateTodayRecommendation && !status.hasOngoingRecommendation) {
-      alert("오늘의 문장 추천은 이미 완료되었어요.");
+      toast("오늘의 문장 추천은 이미 완료되었어요.");
       return;
     }
 

@@ -63,7 +63,12 @@ export const SentenceListView = () => {
       <section className="relative shrink-0">
         <div className="relative z-10">
           <NewDoubleButton
-            left={{ label: "문장 더 불러오기", isMuted: true, onClick: handleLoadMore }}
+            left={{
+              label: "문장 더 불러오기",
+              isMuted: true,
+              onClick: handleLoadMore,
+              disabled: !hasMore,
+            }}
             right={{ label: "다음", onClick: handleNext }}
           />
         </div>
