@@ -14,6 +14,7 @@ import {
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { NewButton } from "@/shared/ui/new-button";
 import { Header } from "@/widgets/header";
+import { RecommendationLoadingView } from "./RecommendationLoadingView";
 
 export const EmotionSelectView = (): React.ReactElement => {
   useViewportHeight();
@@ -21,7 +22,10 @@ export const EmotionSelectView = (): React.ReactElement => {
   const { showTutorial, dismissTutorial, shouldDropAnimate } = useEmotionTutorial();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isDirectInputActive, setIsDirectInputActive] = useState(false);
+  const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
   const hiddenTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const isRecommending = isLoading || isDirectSubmitting;
 
   const handleNextWithKeyboard = (): void => {
     if (currentStep === 2) {
@@ -29,6 +33,10 @@ export const EmotionSelectView = (): React.ReactElement => {
     }
     handleNext();
   };
+
+  if (isRecommending) {
+    return <RecommendationLoadingView />;
+  }
 
   return (
     <div
@@ -54,6 +62,7 @@ export const EmotionSelectView = (): React.ReactElement => {
         <SentenceTypeStep
           onValidChange={setIsNextDisabled}
           onDirectInputActiveChange={setIsDirectInputActive}
+          onLoadingChange={setIsDirectSubmitting}
         />
       ) : (
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-4">

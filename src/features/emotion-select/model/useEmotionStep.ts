@@ -61,7 +61,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
       setCurrentRecommendationId(result.recommendationId);
       setInitialRecommendedQuote(result.quote);
       router.push("/sentence");
-    } finally {
+    } catch {
       setIsLoading(false);
     }
   };

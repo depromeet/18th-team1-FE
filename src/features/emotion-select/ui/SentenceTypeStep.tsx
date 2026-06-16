@@ -15,11 +15,13 @@ import { SentenceTypeChip } from "./SentenceTypeChip";
 interface SentenceTypeStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
   onDirectInputActiveChange?: (isActive: boolean) => void;
+  onLoadingChange?: (isLoading: boolean) => void;
 }
 
 export const SentenceTypeStep = ({
   onValidChange,
   onDirectInputActiveChange,
+  onLoadingChange,
 }: SentenceTypeStepProps) => {
   const router = useRouter();
   const {
@@ -62,6 +64,7 @@ export const SentenceTypeStep = ({
     if (isSubmitting) return;
     setDirectSentenceInput(value);
     setIsSubmitting(true);
+    onLoadingChange?.(true);
     try {
       const result = await startRecommendation({
         emotionRangeId: selectedEmotionRangeId,
@@ -73,8 +76,9 @@ export const SentenceTypeStep = ({
       setCurrentRecommendationId(result.recommendationId);
       setInitialRecommendedQuote(result.quote);
       router.push("/sentence");
-    } finally {
+    } catch {
       setIsSubmitting(false);
+      onLoadingChange?.(false);
     }
   };
 
