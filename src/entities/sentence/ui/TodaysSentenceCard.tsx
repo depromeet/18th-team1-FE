@@ -136,7 +136,7 @@ export const TodaysSentenceCard = ({
 
           <div className="flex h-13 shrink-0 items-center bg-key-primary px-4.5">
             <Text as="span" variant="body2" color="key-secondary">
-              {bookTitle}, {bookAuthor}
+              『{bookTitle}』, {bookAuthor}
             </Text>
           </div>
         </div>
