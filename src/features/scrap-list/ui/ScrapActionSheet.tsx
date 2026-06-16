@@ -17,6 +17,7 @@ interface ScrapActionSheetProps {
   bookTitle: string;
   author: string;
   coverImageUrl?: string;
+  bookPurchaseLink: string;
 }
 
 export const ScrapActionSheet = ({
@@ -27,6 +28,7 @@ export const ScrapActionSheet = ({
   bookTitle,
   author,
   coverImageUrl,
+  bookPurchaseLink,
 }: ScrapActionSheetProps): React.ReactElement => {
   const [isBookmarked, setIsBookmarked] = useState(true);
   const { mutateAsync: scrapAsync } = useScrapMutation();
@@ -65,13 +67,15 @@ export const ScrapActionSheet = ({
 
         {/* 액션 버튼 — 오른쪽 정렬 */}
         <div className="flex items-center justify-end gap-2 pl-47.5 pr-5 pt-5 pb-2.5">
-          <button
-            type="button"
+          <a
+            href={bookPurchaseLink}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-2"
           >
             <IcLink size={16} className="text-gray-500" />
             <span className="caption2 text-gray-500">책 링크</span>
-          </button>
+          </a>
           <button
             type="button"
             aria-label="공유"

@@ -179,6 +179,7 @@ export const ScrapSentenceSection = () => {
         bookTitle={activeItem?.title ?? ""}
         author={activeItem?.author ?? ""}
         coverImageUrl={activeItem?.bookCoverImageUrl}
+        bookPurchaseLink={activeItem?.bookPurchaseLink ?? ""}
       />
     </section>
   );

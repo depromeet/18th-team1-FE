@@ -2,6 +2,7 @@ export interface ScrappedQuote {
   quoteId: number;
   bookId: number;
   bookCoverImageUrl: string;
+  bookPurchaseLink: string;
   content: string;
   title: string;
   author: string;
