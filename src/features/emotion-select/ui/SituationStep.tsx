@@ -30,13 +30,15 @@ export const SituationStep = ({ onValidChange }: SituationStepProps) => {
     }
   }, [rawTags, setSelectedEmotionRangeId]);
 
-  const visibleTags = rawTags.filter((t) => t.displayGroup !== null);
-  const orderedGroups = [...new Set(visibleTags.map((t) => t.displayGroup as string))];
+  const visibleTags = rawTags.filter(
+    (t): t is typeof t & { displayGroup: string } => t.displayGroup !== null,
+  );
+  const orderedGroups = [...new Set(visibleTags.map((t) => t.displayGroup))];
   const tags = visibleTags.map((tag) => ({
     id: String(tag.id),
     label: tag.label,
-    groupId: orderedGroups.indexOf(tag.displayGroup as string),
-    groupName: tag.displayGroup as string,
+    groupId: orderedGroups.indexOf(tag.displayGroup),
+    groupName: tag.displayGroup,
   }));
 
   return (

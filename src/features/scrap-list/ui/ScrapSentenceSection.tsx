@@ -68,8 +68,15 @@ export const ScrapSentenceSection = () => {
     });
   };
 
-  const leftItems = useMemo(() => items.filter((_, index) => index % 2 === 0), [items]);
-  const rightItems = useMemo(() => items.filter((_, index) => index % 2 === 1), [items]);
+  const [leftItems, rightItems] = useMemo(() => {
+    const left: ScrappedQuote[] = [];
+    const right: ScrappedQuote[] = [];
+    items.forEach((item, index) => {
+      if (index % 2 === 0) left.push(item);
+      else right.push(item);
+    });
+    return [left, right] as const;
+  }, [items]);
 
   return (
     <section className="flex flex-1 flex-col overflow-hidden bg-background">
@@ -104,38 +111,29 @@ export const ScrapSentenceSection = () => {
           </div>
         ) : (
           <div className="flex justify-center gap-1.75 px-2.5 pb-4">
-            <div className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
-              {leftItems.map((item) => (
-                <ScrapBookCard
-                  key={String(item.quoteId)}
-                  coverImageUrl={item.bookCoverImageUrl}
-                  quote={item.content}
-                  bookTitle={item.title}
-                  author={item.author}
-                  isSelected={selectedIds.has(String(item.quoteId))}
-                  onSelect={
-                    isSelectMode ? () => handleToggleSelect(String(item.quoteId)) : undefined
-                  }
-                  onPress={!isSelectMode ? () => setActiveItem(item) : undefined}
-                />
-              ))}
-            </div>
-            <div className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
-              {rightItems.map((item) => (
-                <ScrapBookCard
-                  key={String(item.quoteId)}
-                  coverImageUrl={item.bookCoverImageUrl}
-                  quote={item.content}
-                  bookTitle={item.title}
-                  author={item.author}
-                  isSelected={selectedIds.has(String(item.quoteId))}
-                  onSelect={
-                    isSelectMode ? () => handleToggleSelect(String(item.quoteId)) : undefined
-                  }
-                  onPress={!isSelectMode ? () => setActiveItem(item) : undefined}
-                />
-              ))}
-            </div>
+            {(
+              [
+                ["left", leftItems],
+                ["right", rightItems],
+              ] as const
+            ).map(([side, columnItems]) => (
+              <div key={side} className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
+                {columnItems.map((item) => (
+                  <ScrapBookCard
+                    key={String(item.quoteId)}
+                    coverImageUrl={item.bookCoverImageUrl}
+                    quote={item.content}
+                    bookTitle={item.title}
+                    author={item.author}
+                    isSelected={selectedIds.has(String(item.quoteId))}
+                    onSelect={
+                      isSelectMode ? () => handleToggleSelect(String(item.quoteId)) : undefined
+                    }
+                    onPress={!isSelectMode ? () => setActiveItem(item) : undefined}
+                  />
+                ))}
+              </div>
+            ))}
           </div>
         )}
         <div ref={sentinelRef} className="h-px" />
