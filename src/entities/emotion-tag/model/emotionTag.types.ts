@@ -9,6 +9,7 @@ export interface EmotionTag {
   label: string;
   type: "EMOTION";
   emotionRangeId: number;
+  displayGroup: string | null;
 }
 
 export interface NeedTag {

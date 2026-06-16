@@ -5,15 +5,8 @@ import { useEffect } from "react";
 import { useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
-import type { EmotionCategory } from "../model/emotion";
 import { EMOTIONS, getEmotionValue } from "../model/emotion";
 import { TagList } from "./TagList";
-
-const GROUP_NAMES: Record<EmotionCategory, string[]> = {
-  bad: ["무기력과 우울", "불안과 위축", "분노와 상처"],
-  neutral: ["평온과 여유", "사색과 고립", "무감각과 모호함"],
-  good: ["행복하고 충만한", "열정과 활기", "안도와 평화"],
-};
 
 interface SituationStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
@@ -29,7 +22,6 @@ export const SituationStep = ({ onValidChange }: SituationStepProps) => {
   const emotionCategory = EMOTIONS.find((e) => e.id === selectedEmotionId)?.category;
   const { data } = useEmotionTagsQuery(getEmotionValue(selectedEmotionId));
 
-  const groupNames = emotionCategory ? GROUP_NAMES[emotionCategory] : [];
   const rawTags = data?.tags ?? [];
 
   useEffect(() => {
@@ -37,13 +29,14 @@ export const SituationStep = ({ onValidChange }: SituationStepProps) => {
       setSelectedEmotionRangeId(rawTags[0]?.emotionRangeId ?? null);
     }
   }, [rawTags, setSelectedEmotionRangeId]);
-  const chunkSize = Math.ceil(rawTags.length / 3);
 
-  const tags = rawTags.map((tag, index) => ({
+  const visibleTags = rawTags.filter((t) => t.displayGroup !== null);
+  const orderedGroups = [...new Set(visibleTags.map((t) => t.displayGroup as string))];
+  const tags = visibleTags.map((tag) => ({
     id: String(tag.id),
     label: tag.label,
-    groupId: Math.floor(index / chunkSize),
-    groupName: groupNames[Math.floor(index / chunkSize)],
+    groupId: orderedGroups.indexOf(tag.displayGroup as string),
+    groupName: tag.displayGroup as string,
   }));
 
   return (
