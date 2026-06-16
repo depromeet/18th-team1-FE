@@ -3,36 +3,52 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
+import type { SentenceQuote, TagDto } from "@/entities/sentence";
+
 type SelectedQuote = {
-  dailyRecommendationId: number;
+  recommendationId: number;
   quoteId: number;
   content: string;
   title: string;
   author: string;
+  image?: string;
+  tags: TagDto[];
 };
 
 type EmotionSelectFormState = {
   selectedEmotionId: string | null;
+  selectedEmotionRangeId: number | null;
   selectedSituationIds: string[];
   situationDescription: string;
-  selectedSentenceTypeIds: string[];
+  selectedNeedTagId: number | null;
   directSentenceInput: string;
+  currentRecommendationId: number | null;
+  initialRecommendedQuote: SentenceQuote | null;
+  listVisibleCount: number;
   selectedQuote: SelectedQuote | null;
   setSelectedEmotionId: (id: string | null) => void;
+  setSelectedEmotionRangeId: (id: number | null) => void;
   setSelectedSituationIds: (ids: string[]) => void;
   setSituationDescription: (text: string) => void;
-  setSelectedSentenceTypeIds: (ids: string[]) => void;
+  setSelectedNeedTagId: (id: number | null) => void;
   setDirectSentenceInput: (text: string) => void;
+  setCurrentRecommendationId: (id: number | null) => void;
+  setInitialRecommendedQuote: (quote: SentenceQuote | null) => void;
+  setListVisibleCount: (count: number) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
   reset: () => void;
 };
 
 const INITIAL_STATE = {
   selectedEmotionId: null,
+  selectedEmotionRangeId: null,
   selectedSituationIds: [] as string[],
   situationDescription: "",
-  selectedSentenceTypeIds: [] as string[],
+  selectedNeedTagId: null,
   directSentenceInput: "",
+  currentRecommendationId: null,
+  initialRecommendedQuote: null,
+  listVisibleCount: 4,
   selectedQuote: null,
 };
 
@@ -44,17 +60,29 @@ export const useEmotionSelectStore = create<EmotionSelectFormState>()(
         setSelectedEmotionId: (id: string | null): void => {
           set({ selectedEmotionId: id, selectedSituationIds: [] }, false, "setSelectedEmotionId");
         },
+        setSelectedEmotionRangeId: (id: number | null): void => {
+          set({ selectedEmotionRangeId: id }, false, "setSelectedEmotionRangeId");
+        },
         setSelectedSituationIds: (ids: string[]): void => {
           set({ selectedSituationIds: ids }, false, "setSelectedSituationIds");
         },
         setSituationDescription: (text: string): void => {
           set({ situationDescription: text }, false, "setSituationDescription");
         },
-        setSelectedSentenceTypeIds: (ids: string[]): void => {
-          set({ selectedSentenceTypeIds: ids }, false, "setSelectedSentenceTypeIds");
+        setSelectedNeedTagId: (id: number | null): void => {
+          set({ selectedNeedTagId: id }, false, "setSelectedNeedTagId");
         },
         setDirectSentenceInput: (text: string): void => {
           set({ directSentenceInput: text }, false, "setDirectSentenceInput");
+        },
+        setCurrentRecommendationId: (id: number | null): void => {
+          set({ currentRecommendationId: id }, false, "setCurrentRecommendationId");
+        },
+        setInitialRecommendedQuote: (quote: SentenceQuote | null): void => {
+          set({ initialRecommendedQuote: quote }, false, "setInitialRecommendedQuote");
+        },
+        setListVisibleCount: (count: number): void => {
+          set({ listVisibleCount: count }, false, "setListVisibleCount");
         },
         setSelectedQuote: (quote: SelectedQuote | null): void => {
           set({ selectedQuote: quote }, false, "setSelectedQuote");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserProfileQuery } from "@/entities/user";
+import { useUpdateProfileMutation, useUserProfileQuery } from "@/entities/user";
 import { NicknameInputField, useNicknameEdit } from "@/features/my-profile";
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { NewButton } from "@/shared/ui/new-button";
@@ -17,6 +17,13 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
 
   const { value, isValid, validationError, handleChange, handleClear, maxLength } =
     useNicknameEdit(initialNickname);
+
+  const { mutateAsync: updateProfile, isPending } = useUpdateProfileMutation();
+
+  const handleSubmit = async () => {
+    await updateProfile({ nickname: value });
+    onBack();
+  };
 
   return (
     <div
@@ -35,7 +42,7 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
         />
       </div>
       <div style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
-        <NewButton label="변경 완료" disabled={!isValid} onClick={onBack} />
+        <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
       </div>
     </div>
   );

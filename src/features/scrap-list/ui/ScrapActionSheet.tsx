@@ -1,28 +1,51 @@
+"use client";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 import { IcBookmark, IcLink, IcShare } from "@/shared/ui/icons";
-import { Sheet, SheetContent } from "@/shared/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet";
+
+import { useScrapMutation, useUnscrapMutation } from "../api/queries";
 
 interface ScrapActionSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  quoteId: number;
   quote: string;
   bookTitle: string;
   author: string;
   coverImageUrl?: string;
+  bookPurchaseLink: string;
 }
 
 export const ScrapActionSheet = ({
   open,
   onOpenChange,
+  quoteId,
   quote,
   bookTitle,
   author,
   coverImageUrl,
+  bookPurchaseLink,
 }: ScrapActionSheetProps): React.ReactElement => {
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(true);
+  const { mutateAsync: scrapAsync } = useScrapMutation();
+  const { mutateAsync: unscrapAsync } = useUnscrapMutation();
+
+  useEffect(() => {
+    if (open) setIsBookmarked(true);
+  }, [open]);
+
+  const handleBookmarkToggle = async () => {
+    if (isBookmarked) {
+      await unscrapAsync(quoteId);
+    } else {
+      await scrapAsync(quoteId);
+    }
+    setIsBookmarked((prev) => !prev);
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -30,7 +53,9 @@ export const ScrapActionSheet = ({
         side="bottom"
         showCloseButton={false}
         className="overflow-visible gap-0 rounded-t-[20px] border-0 p-0 md:max-w-93.75 md:mx-auto"
+        onOpenAutoFocus={(e) => e.preventDefault()}
       >
+        <SheetTitle className="sr-only">{bookTitle}</SheetTitle>
         {/* 책 표지 — 버튼 하단(54px)에 맞춰 위로 돌출 */}
         <div className="absolute -top-37 left-8 h-50.5 w-32 overflow-hidden rounded-lg">
           {coverImageUrl ? (
@@ -42,13 +67,15 @@ export const ScrapActionSheet = ({
 
         {/* 액션 버튼 — 오른쪽 정렬 */}
         <div className="flex items-center justify-end gap-2 pl-47.5 pr-5 pt-5 pb-2.5">
-          <button
-            type="button"
+          <a
+            href={bookPurchaseLink}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-2"
           >
             <IcLink size={16} className="text-gray-500" />
             <span className="caption2 text-gray-500">책 링크</span>
-          </button>
+          </a>
           <button
             type="button"
             aria-label="공유"
@@ -61,7 +88,7 @@ export const ScrapActionSheet = ({
             aria-label="북마크"
             aria-pressed={isBookmarked}
             className="flex size-8.5 items-center justify-center"
-            onClick={() => setIsBookmarked((prev) => !prev)}
+            onClick={handleBookmarkToggle}
           >
             <IcBookmark
               size={34}

@@ -1,2 +1,2 @@
-export { useUserProfileQuery } from "./api/queries";
-export type { OAuthProvider, UserProfile } from "./model/user.types";
+export { useUpdateProfileMutation, useUserProfileQuery } from "./api/queries";
+export type { OAuthProvider, UpdateProfileRequest, UserProfile } from "./model/user.types";

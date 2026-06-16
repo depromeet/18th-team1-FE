@@ -9,6 +9,13 @@ export interface EmotionTag {
   label: string;
   type: "EMOTION";
   emotionRangeId: number;
+  displayGroup: string | null;
+}
+
+export interface NeedTag {
+  id: number;
+  label: string;
+  type: "NEED";
 }
 
 export interface EmotionTagsResponse {
@@ -17,4 +24,8 @@ export interface EmotionTagsResponse {
 
 export interface ToneTagsResponse {
   tags: ToneTag[];
+}
+
+export interface NeedTagsResponse {
+  tags: NeedTag[];
 }

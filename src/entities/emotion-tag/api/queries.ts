@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchEmotionTags, fetchToneTags } from "./emotionTagApi";
+import { fetchEmotionTags, fetchNeedTags, fetchToneTags } from "./emotionTagApi";
 
 export const emotionTagKeys = {
   all: ["emotionTags"] as const,
@@ -11,6 +11,10 @@ export const emotionTagKeys = {
 
 export const toneTagKeys = {
   all: ["toneTags"] as const,
+};
+
+export const needTagKeys = {
+  all: ["needTags"] as const,
 };
 
 // 감정 강도값(1~9)에 따른 감정 태그 목록 조회
@@ -26,5 +30,13 @@ export const useToneTagsQuery = () =>
   useQuery({
     queryKey: toneTagKeys.all,
     queryFn: fetchToneTags,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
+
+// 니드 태그 목록 조회 — 정적 데이터
+export const useNeedTagsQuery = () =>
+  useQuery({
+    queryKey: needTagKeys.all,
+    queryFn: fetchNeedTags,
     staleTime: Number.POSITIVE_INFINITY,
   });

@@ -6,10 +6,6 @@ export interface RecommendedSentence {
   date?: string;
 }
 
-export interface TodaySentenceExistsResponse {
-  exists: boolean;
-}
-
 export interface SentenceQuote {
   quoteId: number;
   bookId: number;
@@ -17,6 +13,7 @@ export interface SentenceQuote {
   title: string;
   author: string;
   image: string;
+  link?: string;
 }
 
 export interface SentenceTag {
@@ -26,15 +23,41 @@ export interface SentenceTag {
   emotionRangeId: number;
 }
 
-export interface SentenceQuotesRequest {
+export interface StartRecommendationRequest {
+  emotionRangeId: number | null;
   emotionTagIds: number[];
-  toneTagIds: number[];
-  userContext?: string;
+  needTagId: number | null;
+  feelingText: string | null;
+  diaryText: string | null;
 }
 
-export interface SentenceQuotesResponse {
-  dailyRecommendationId: number;
+export interface StartRecommendationResponse {
+  recommendationId: number;
   quote: SentenceQuote;
   emotionTags: SentenceTag[];
-  toneTags: SentenceTag[];
+  needTags: SentenceTag[];
+}
+
+export interface TodayStatusResponse {
+  hasOngoingRecommendation: boolean;
+  ongoingRecommendationId: number | null;
+  canCreateTodayRecommendation: boolean;
+}
+
+export interface TagDto {
+  id: number;
+  label: string;
+  type: string;
+  emotionRangeId?: number | null;
+}
+
+export interface RecommendationDetailResponse {
+  recommendationId: number;
+  quote: SentenceQuote;
+  emotionRangeId: number;
+  emotionTags: TagDto[];
+  needTag: TagDto | null;
+  feelingText: string | null;
+  diaryText: string | null;
+  recommendationDate: string;
 }

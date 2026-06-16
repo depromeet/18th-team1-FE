@@ -3,40 +3,54 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { useNeedTagsQuery } from "@/entities/emotion-tag";
+import { startRecommendation } from "@/entities/sentence";
 import { IcPen } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
-import { MOCK_SENTENCE_TYPES } from "../config/sentenceType";
 import { DirectInputBar } from "./DirectInputBar";
 import { SentenceTypeChip } from "./SentenceTypeChip";
 
 interface SentenceTypeStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
   onDirectInputActiveChange?: (isActive: boolean) => void;
+  onLoadingChange?: (isLoading: boolean) => void;
 }
 
 export const SentenceTypeStep = ({
   onValidChange,
   onDirectInputActiveChange,
+  onLoadingChange,
 }: SentenceTypeStepProps) => {
   const router = useRouter();
-  const { selectedSentenceTypeIds, setSelectedSentenceTypeIds, setDirectSentenceInput } =
-    useEmotionSelectStore();
+  const {
+    selectedEmotionRangeId,
+    selectedSituationIds,
+    selectedNeedTagId,
+    situationDescription,
+    setSelectedNeedTagId,
+    setDirectSentenceInput,
+    setCurrentRecommendationId,
+    setInitialRecommendedQuote,
+  } = useEmotionSelectStore();
   const [isDirectInputActive, setIsDirectInputActive] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data } = useNeedTagsQuery();
+  const needTags = data?.tags ?? [];
 
-  const handleTagSelect = (id: string): void => {
-    const newSelected = selectedSentenceTypeIds[0] === id ? [] : [id];
-    setSelectedSentenceTypeIds(newSelected);
+  const handleTagSelect = (id: number): void => {
+    const newId = selectedNeedTagId === id ? null : id;
+    setSelectedNeedTagId(newId);
     setIsDirectInputActive(false);
     onDirectInputActiveChange?.(false);
-    onValidChange(newSelected.length === 0);
+    onValidChange(newId === null);
   };
 
   const handleDirectInputActivate = (): void => {
     setIsDirectInputActive(true);
     onDirectInputActiveChange?.(true);
-    setSelectedSentenceTypeIds([]);
+    setSelectedNeedTagId(null);
     onValidChange(true);
   };
 
@@ -46,9 +60,26 @@ export const SentenceTypeStep = ({
     onValidChange(true);
   };
 
-  const handleDirectInputSubmit = (value: string): void => {
+  const handleDirectInputSubmit = async (value: string): Promise<void> => {
+    if (isSubmitting) return;
     setDirectSentenceInput(value);
-    router.push("/sentence");
+    setIsSubmitting(true);
+    onLoadingChange?.(true);
+    try {
+      const result = await startRecommendation({
+        emotionRangeId: selectedEmotionRangeId,
+        emotionTagIds: selectedSituationIds.map(Number),
+        needTagId: null,
+        feelingText: value,
+        diaryText: situationDescription || null,
+      });
+      setCurrentRecommendationId(result.recommendationId);
+      setInitialRecommendedQuote(result.quote);
+      router.push("/sentence");
+    } catch {
+      setIsSubmitting(false);
+      onLoadingChange?.(false);
+    }
   };
 
   return (
@@ -67,12 +98,12 @@ export const SentenceTypeStep = ({
         <div className="relative flex min-h-0 flex-1 flex-col pt-19.25">
           <div className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex flex-col items-center gap-4 pb-26">
-              {MOCK_SENTENCE_TYPES.map((item) => (
+              {needTags.map((tag) => (
                 <SentenceTypeChip
-                  key={item.id}
-                  label={item.label}
-                  isSelected={selectedSentenceTypeIds[0] === item.id}
-                  onClick={() => handleTagSelect(item.id)}
+                  key={tag.id}
+                  label={tag.label}
+                  isSelected={selectedNeedTagId === tag.id}
+                  onClick={() => handleTagSelect(tag.id)}
                 />
               ))}
             </div>
@@ -105,7 +136,11 @@ export const SentenceTypeStep = ({
       {/* 직접 작성 영역 — 고정 100px */}
       {isDirectInputActive ? (
         <div className="relative flex h-25 shrink-0 items-center px-5">
-          <DirectInputBar onValidChange={onValidChange} onSubmit={handleDirectInputSubmit} />
+          <DirectInputBar
+            onValidChange={onValidChange}
+            onSubmit={handleDirectInputSubmit}
+            isLoading={isSubmitting}
+          />
         </div>
       ) : (
         <div className="flex h-25 shrink-0 items-center justify-center bg-white">
@@ -119,7 +154,7 @@ export const SentenceTypeStep = ({
             </Text>
             <IcPen
               size={18}
-              className="-translate-y-[1px] -scale-y-100 aspect-square shrink-0 text-gray-300"
+              className="-translate-y-px -scale-y-100 aspect-square shrink-0 text-gray-300"
             />
           </button>
         </div>

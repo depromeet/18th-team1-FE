@@ -9,6 +9,8 @@ interface DominantColorResult {
 
 const FALLBACK: DominantColorResult = { color: "rgb(28, 34, 137)", isDark: true };
 
+const colorCache = new Map<string, DominantColorResult>();
+
 const getLuminance = (r: number, g: number, b: number) => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
 // 이미지 하단 20% 영역 샘플링 후, 어두운 이미지는 추가로 0.6배 다크닝
@@ -68,9 +70,17 @@ export const useImageDominantColor = (imageUrl: string | null | undefined): Domi
       setResult(FALLBACK);
       return;
     }
+    const cached = colorCache.get(imageUrl);
+    if (cached) {
+      setResult(cached);
+      return;
+    }
     let cancelled = false;
     sampleBottomRegionColor(imageUrl).then((res) => {
-      if (!cancelled) setResult(res);
+      if (!cancelled) {
+        colorCache.set(imageUrl, res);
+        setResult(res);
+      }
     });
     return () => {
       cancelled = true;

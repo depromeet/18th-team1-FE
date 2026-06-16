@@ -117,6 +117,13 @@ const request = async <T>(path: string, options: RequestOptions = {}): Promise<T
   return response.json() as Promise<T>;
 };
 
+const requestVoid = async (path: string, options: RequestOptions = {}): Promise<void> => {
+  await executeRawRequest(path, {
+    ...options,
+    headers: { "Content-Type": "application/json", ...options.headers },
+  });
+};
+
 const requestBlob = async (path: string, options: RequestOptions = {}): Promise<Blob> => {
   const response = await executeRawRequest(path, options);
   return response.blob();
@@ -128,6 +135,18 @@ export const httpClient = {
 
   post: <T>(path: string, body?: unknown, options?: RequestOptions): Promise<T> =>
     request<T>(path, { ...options, method: "POST", body }),
+
+  postVoid: (path: string, body?: unknown, options?: RequestOptions): Promise<void> =>
+    requestVoid(path, { ...options, method: "POST", body }),
+
+  patch: <T>(path: string, body?: unknown, options?: RequestOptions): Promise<T> =>
+    request<T>(path, { ...options, method: "PATCH", body }),
+
+  put: (path: string, body?: unknown, options?: RequestOptions): Promise<void> =>
+    requestVoid(path, { ...options, method: "PUT", body }),
+
+  delete: (path: string, options?: RequestOptions): Promise<void> =>
+    requestVoid(path, { ...options, method: "DELETE" }),
 
   getBlob: (path: string, options?: RequestOptions): Promise<Blob> =>
     requestBlob(path, { ...options, method: "GET" }),

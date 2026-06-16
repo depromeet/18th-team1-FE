@@ -7,14 +7,14 @@ export interface QuoteResponse {
   image: string;
 }
 
-export interface MonthlyDiaryResponse {
-  diaryId: number;
+export interface MonthlyRecommendation {
+  recommendationId: number;
   createdAt: string;
   quoteContent: string;
 }
 
 export interface HomeSummaryResponse {
-  todayDiary: MonthlyDiaryResponse | null;
-  monthlyDiaries: MonthlyDiaryResponse[];
-  totalDiaryCount: number;
+  todayRecommendations: MonthlyRecommendation[];
+  monthlyRecommendations: MonthlyRecommendation[];
+  totalRecommendationCount: number;
 }
