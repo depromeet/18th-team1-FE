@@ -1,11 +1,11 @@
 "use client";
 
-import { format } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import { useState } from "react";
 import type { EmotionIntensity } from "@/entities/diary";
+import { useDiariesQuery } from "@/entities/diary";
 import { CalendarBoard, useCalendar } from "@/features/calendar-view";
 import { MonthPicker } from "@/features/month-picker";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
 
@@ -25,20 +25,26 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const [viewTab, setViewTab] = useState<"emotion" | "cover">("emotion");
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-  const diaryIntensitiesByDate = MOCK_CALENDAR_DIARIES.diaries.reduce<
-    Record<string, EmotionIntensity[]>
-  >((acc, diary) => {
-    const key = diary.createdAt;
-    acc[key] = [...(acc[key] ?? []), getEmotionIntensity(diary.emotionValue)];
-    return acc;
-  }, {});
+  const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
+  const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
+  const { data } = useDiariesQuery(start, end);
+  const diaries = data?.recommendations ?? [];
 
-  const diaryCoverByDate: Record<string, string[]> = [...MOCK_CALENDAR_DIARIES.diaries]
-    .filter((diary) => diary.coverImageUrl)
-    .sort((a, b) => a.id - b.id)
+  const diaryIntensitiesByDate = diaries.reduce<Record<string, EmotionIntensity[]>>(
+    (acc, diary) => {
+      const key = diary.recommendationDate;
+      acc[key] = [...(acc[key] ?? []), getEmotionIntensity(diary.emotionValue)];
+      return acc;
+    },
+    {},
+  );
+
+  const diaryCoverByDate: Record<string, string[]> = [...diaries]
+    .filter((diary) => diary.quote.image)
+    .sort((a, b) => a.recommendationId - b.recommendationId)
     .reduce<Record<string, string[]>>((acc, diary) => {
-      const key = diary.createdAt;
-      acc[key] = [...(acc[key] ?? []), diary.coverImageUrl];
+      const key = diary.recommendationDate;
+      acc[key] = [...(acc[key] ?? []), diary.quote.image];
       return acc;
     }, {});
 
