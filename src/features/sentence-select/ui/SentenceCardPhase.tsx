@@ -45,8 +45,9 @@ export const SentenceCardPhase = ({
   leftButton,
   rightButton,
 }: SentenceCardPhaseProps): React.ReactElement => {
-  const visibleTags = tags.slice(0, MAX_VISIBLE_TAGS);
-  const overflowCount = Math.max(0, tags.length - MAX_VISIBLE_TAGS);
+  const emotionTags = tags.filter((tag) => tag.type === "EMOTION");
+  const visibleTags = emotionTags.slice(0, MAX_VISIBLE_TAGS);
+  const overflowCount = Math.max(0, emotionTags.length - MAX_VISIBLE_TAGS);
 
   return (
     <motion.div
@@ -106,20 +107,22 @@ export const SentenceCardPhase = ({
 
       {/* Tags */}
       <motion.div
-        className="mt-6.5 flex flex-wrap justify-center gap-x-2 gap-y-6 px-5"
+        className="mt-6.5 flex justify-center"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...ENTER, delay: 0.26 }}
       >
-        {visibleTags.map((tag) => (
-          <TagChip key={tag.id} label={tag.label} variant="dim" />
-        ))}
-        {overflowCount > 0 && (
-          <div className="flex size-10.25 items-center justify-center rounded-full bg-[#898989]">
-            <IcPlusCount width={13.3} height={16.62} className="text-gray-0" />
-            <span className="point2 relative -top-[1.5px] text-gray-0">{overflowCount}</span>
-          </div>
-        )}
+        <div className="flex w-65 flex-wrap gap-x-2 gap-y-6">
+          {visibleTags.map((tag) => (
+            <TagChip key={tag.id} label={tag.label} variant="dim" />
+          ))}
+          {overflowCount > 0 && (
+            <div className="flex size-10.25 items-center justify-center rounded-full bg-[#898989]">
+              <IcPlusCount width={13.3} height={16.62} className="text-gray-0" />
+              <span className="point2 relative -top-[1.5px] text-gray-0">{overflowCount}</span>
+            </div>
+          )}
+        </div>
       </motion.div>
 
       <div className="flex-1" />
