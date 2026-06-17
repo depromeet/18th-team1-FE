@@ -35,6 +35,7 @@ const millingTrial = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://senti.today"),
   title: "Senti",
   description: "하루를 책 문장으로 기록하고 친구에게 공유해보세요",
   openGraph: {
