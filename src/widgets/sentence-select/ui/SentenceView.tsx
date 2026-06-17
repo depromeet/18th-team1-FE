@@ -49,7 +49,7 @@ const SentenceViewContent = ({
       title: result.quote.title,
       author: result.quote.author,
       image: result.quote.image,
-      tags: [...result.emotionTags, ...(result.needTag ? [result.needTag] : [])],
+      tags: result.emotionTags.filter((tag) => tag.type === "EMOTION"),
     });
     router.push("/sentence/today");
   };
