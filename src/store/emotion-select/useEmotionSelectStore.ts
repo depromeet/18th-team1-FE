@@ -15,6 +15,8 @@ type SelectedQuote = {
   tags: TagDto[];
 };
 
+export type LoadingQuote = { content: string; title: string; author: string };
+
 type EmotionSelectFormState = {
   selectedEmotionId: string | null;
   selectedEmotionRangeId: number | null;
@@ -26,6 +28,7 @@ type EmotionSelectFormState = {
   initialRecommendedQuote: SentenceQuote | null;
   listVisibleCount: number;
   selectedQuote: SelectedQuote | null;
+  loadingQuotes: LoadingQuote[];
   setSelectedEmotionId: (id: string | null) => void;
   setSelectedEmotionRangeId: (id: number | null) => void;
   setSelectedSituationIds: (ids: string[]) => void;
@@ -36,6 +39,7 @@ type EmotionSelectFormState = {
   setInitialRecommendedQuote: (quote: SentenceQuote | null) => void;
   setListVisibleCount: (count: number) => void;
   setSelectedQuote: (quote: SelectedQuote | null) => void;
+  setLoadingQuotes: (quotes: LoadingQuote[]) => void;
   reset: () => void;
 };
 
@@ -50,6 +54,7 @@ const INITIAL_STATE = {
   initialRecommendedQuote: null,
   listVisibleCount: 4,
   selectedQuote: null,
+  loadingQuotes: [] as LoadingQuote[],
 };
 
 export const useEmotionSelectStore = create<EmotionSelectFormState>()(
@@ -86,6 +91,9 @@ export const useEmotionSelectStore = create<EmotionSelectFormState>()(
         },
         setSelectedQuote: (quote: SelectedQuote | null): void => {
           set({ selectedQuote: quote }, false, "setSelectedQuote");
+        },
+        setLoadingQuotes: (quotes: LoadingQuote[]): void => {
+          set({ loadingQuotes: quotes }, false, "setLoadingQuotes");
         },
         reset: (): void => {
           set(INITIAL_STATE, false, "reset");
