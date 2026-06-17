@@ -49,15 +49,15 @@ const Content = ({ content, book }: ContentProps): React.ReactElement => (
 // ── Tags ──────────────────────────────────────────────────────────────────────
 
 interface TagsProps {
-  emotionTag: string;
-  toneTag: string;
+  emotionTag?: string;
+  toneTag?: string;
   mood: PostMood;
 }
 
 const Tags = ({ emotionTag, toneTag, mood }: TagsProps): React.ReactElement => (
   <div className="flex gap-2">
-    <PostTag label={emotionTag} variant={mood} />
-    <PostTag label={toneTag} variant={mood} />
+    {toneTag && <PostTag label={toneTag} variant={mood} />}
+    {emotionTag && <PostTag label={emotionTag} variant={mood} />}
   </div>
 );
 
