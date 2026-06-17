@@ -75,7 +75,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
             type="button"
             className="flex size-8.5 items-center justify-center rounded-full bg-muted"
           >
-            <IcShare size={24} className="text-gray-500" />
+            <IcShare size={34} className="text-gray-500" />
           </button>
         </div>
         <CalendarBoard
