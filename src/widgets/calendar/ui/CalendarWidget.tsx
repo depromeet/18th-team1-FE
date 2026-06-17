@@ -4,10 +4,10 @@ import { format } from "date-fns";
 import { useState } from "react";
 import type { EmotionIntensity } from "@/entities/diary";
 import { CalendarBoard, useCalendar } from "@/features/calendar-view";
+import { MonthPicker } from "@/features/month-picker";
 import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
-import { MonthPicker } from "./MonthPicker";
 
 const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
   if (emotionValue >= 7) return "HIGH";
@@ -44,7 +44,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
 
   return (
     <>
-      <div className="flex w-full flex-col gap-4 pt-6">
+      <div className="flex w-full flex-col gap-4">
         <div className="flex items-center gap-2 px-5">
           <button type="button" onClick={handlePrev}>
             <IcMonthBack size={24} className="text-gray-300" />
@@ -69,7 +69,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
             type="button"
             className="flex size-8.5 items-center justify-center rounded-full bg-muted"
           >
-            <IcShare size={34} className="text-gray-500" />
+            <IcShare size={24} className="text-gray-500" />
           </button>
         </div>
         <CalendarBoard
