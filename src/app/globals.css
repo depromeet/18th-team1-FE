@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 @import "../shared/ui/tokens.css";
 
-@keyframes slideInUp {
+@keyframes slide-in-up {
   from {
     opacity: 0;
     transform: translateY(16px);

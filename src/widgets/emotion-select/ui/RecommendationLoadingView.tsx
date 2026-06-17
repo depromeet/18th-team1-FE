@@ -74,7 +74,7 @@ export const RecommendationLoadingView = (): React.ReactElement => {
       <div
         key={stageKey}
         className="-mt-11 flex h-13.5 w-42.5 flex-col items-center gap-3 text-center"
-        style={{ animation: "slideInUp 0.4s ease-out" }}
+        style={{ animation: "slide-in-up 0.4s ease-out" }}
       >
         {stage === "finding" && (
           <p className="body3 text-gray-500">책을 펼쳐 문장을 찾는 중이에요</p>
