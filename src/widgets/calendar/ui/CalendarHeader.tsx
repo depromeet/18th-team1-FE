@@ -15,6 +15,7 @@ export const CalendarHeader = () => {
       <button
         type="button"
         onClick={() => router.push("/my-page")}
+        aria-label="마이페이지로 이동"
         className="relative flex items-center justify-center size-10 shrink-0 overflow-hidden rounded-full bg-[#d1e9ea]"
       >
         {profile?.profileImageUrl ? (
