@@ -41,12 +41,16 @@ export const PostShareModal = ({
 
           {/* Mood & tone tags */}
           <div className="flex flex-wrap justify-center gap-x-2 gap-y-6">
-            <span className="caption2 rounded-[30px] bg-gray-600 px-2 py-1 text-white">
-              {post.emotionTag}
-            </span>
-            <span className="caption2 rounded-[30px] bg-gray-600 px-2 py-1 text-white">
-              {post.toneTag}
-            </span>
+            {post.toneTag && (
+              <span className="caption2 rounded-[30px] bg-gray-600 px-2 py-1 text-white">
+                {post.toneTag}
+              </span>
+            )}
+            {post.emotionTag && (
+              <span className="caption2 rounded-[30px] bg-gray-600 px-2 py-1 text-white">
+                {post.emotionTag}
+              </span>
+            )}
           </div>
         </div>
       </div>
