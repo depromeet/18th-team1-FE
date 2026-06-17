@@ -40,7 +40,7 @@ export const HomeView = () => {
     }
 
     if (!status.canCreateTodayRecommendation && !status.hasOngoingRecommendation) {
-      toast("오늘의 문장 추천은 이미 완료되었어요.");
+      toast("오늘은 더 이상 문장을 추천받을 수 없어요.");
       return;
     }
 
