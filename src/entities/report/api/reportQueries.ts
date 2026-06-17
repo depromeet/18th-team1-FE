@@ -10,8 +10,13 @@ export const reportKeys = {
   monthly: (year: number, month: number) => [...reportKeys.all, "monthly", year, month] as const,
 };
 
-export const useMonthlyReportQuery = (year: number, month: number): UseQueryResult<MonthlyReport> =>
+export const useMonthlyReportQuery = (
+  year: number,
+  month: number,
+  enabled = true,
+): UseQueryResult<MonthlyReport> =>
   useQuery({
     queryKey: reportKeys.monthly(year, month),
     queryFn: () => fetchMonthlyReport(year, month),
+    enabled,
   });
