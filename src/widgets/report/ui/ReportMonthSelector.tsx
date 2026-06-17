@@ -1,0 +1,56 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { useUserProfileQuery } from "@/entities/user";
+import { MonthPicker } from "@/features/month-picker";
+import { IcDateDropdown } from "@/shared/ui/icons";
+
+interface ReportMonthSelectorProps {
+  year: number;
+  month: number;
+}
+
+const getLastMonth = () => {
+  const now = new Date();
+  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  return { year: lastMonth.getFullYear(), month: lastMonth.getMonth() + 1 };
+};
+
+export const ReportMonthSelector = ({ year, month }: ReportMonthSelectorProps) => {
+  const router = useRouter();
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const { data: userProfile } = useUserProfileQuery();
+
+  const { year: maxYear, month: maxMonth } = getLastMonth();
+  const signupDate = userProfile ? new Date(userProfile.createdAt) : undefined;
+
+  const handleMonthChange = (dateStr: string) => {
+    const [selectedYear, selectedMonth] = dateStr.split("-");
+    router.push(`/report/${selectedYear}/${selectedMonth}`);
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        className="flex items-center gap-1.5 pt-2 pb-4 px-5"
+        onClick={() => setIsPickerOpen(true)}
+      >
+        <h2 className="title2 text-gray-700">{month}월</h2>
+        <IcDateDropdown size={30} className="text-gray-300" />
+      </button>
+      <MonthPicker
+        isOpen={isPickerOpen}
+        selectedValue={`${year}-${String(month).padStart(2, "0")}`}
+        minYear={signupDate?.getFullYear()}
+        minMonth={signupDate ? signupDate.getMonth() + 1 : undefined}
+        maxYear={maxYear}
+        maxMonth={maxMonth}
+        onClose={() => setIsPickerOpen(false)}
+        onChange={handleMonthChange}
+      />
+    </>
+  );
+};

@@ -9,7 +9,7 @@ interface MonthlyReportBannerProps {
 
 export const MonthlyReportBanner = ({ month, onClick }: MonthlyReportBannerProps) => {
   return (
-    <div className="px-5">
+    <div className="px-5 mb-5">
       <button
         type="button"
         onClick={onClick}

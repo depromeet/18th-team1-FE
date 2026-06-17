@@ -1,16 +1,33 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
+import { useMonthlyReportQuery } from "@/entities/report";
 import { CalendarDiarySection } from "./CalendarDiarySection";
 import { CalendarWidget } from "./CalendarWidget";
 import { MonthlyReportBanner } from "./MonthlyReportBanner";
 
+const getLastMonth = () => {
+  const now = new Date();
+  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  return { year: lastMonth.getFullYear(), month: lastMonth.getMonth() + 1 };
+};
+
 export const CalendarView = () => {
+  const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  const { year: lastYear, month: lastMonth } = getLastMonth();
+  const { data: lastMonthReport } = useMonthlyReportQuery(lastYear, lastMonth);
 
   return (
     <>
-      <MonthlyReportBanner month={6} />
+      {lastMonthReport && (
+        <MonthlyReportBanner
+          month={lastMonth}
+          onClick={() => router.push(`/report/${lastYear}/${String(lastMonth).padStart(2, "0")}`)}
+        />
+      )}
       <Suspense>
         <CalendarWidget onDateSelect={() => setIsSheetOpen(true)} />
       </Suspense>

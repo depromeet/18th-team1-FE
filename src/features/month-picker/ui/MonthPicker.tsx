@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { cn } from "@/shared/lib/utils";
 import { IcMonthBack, IcMonthNext } from "@/shared/ui/icons";
 import { NewButton } from "@/shared/ui/new-button";
+import { useMonthPicker } from "../model/useMonthPicker";
 
 const MONTH_ROWS = [
   [1, 2, 3, 4],
@@ -16,54 +16,42 @@ interface MonthPickerProps {
   onClose: () => void;
   onChange?: (date: string) => void;
   selectedValue?: string;
+  minYear?: number;
+  minMonth?: number;
+  maxYear?: number;
+  maxMonth?: number;
 }
 
-const parseValue = (value?: string) => {
-  if (value) {
-    const [y, m] = value.split("-");
-    return { year: Number(y), month: Number(m) };
-  }
-  const now = new Date();
-  return { year: now.getFullYear(), month: now.getMonth() + 1 };
-};
-
-export const MonthPicker = ({ isOpen, onClose, onChange, selectedValue }: MonthPickerProps) => {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentMonth = now.getMonth() + 1;
-
-  const [displayYear, setDisplayYear] = useState(() => parseValue(selectedValue).year);
-  const [selectedYear, setSelectedYear] = useState(() => parseValue(selectedValue).year);
-  const [selectedMonth, setSelectedMonth] = useState(() => parseValue(selectedValue).month);
-
-  useEffect(() => {
-    if (isOpen) {
-      const { year, month } = parseValue(selectedValue);
-      setDisplayYear(year);
-      setSelectedYear(year);
-      setSelectedMonth(month);
-    }
-  }, [isOpen, selectedValue]);
-
-  const isDisabled = (month: number) => {
-    if (displayYear > currentYear) return true;
-    if (displayYear === currentYear && month > currentMonth) return true;
-    return false;
-  };
-
-  const isSelected = (month: number) => displayYear === selectedYear && month === selectedMonth;
-
-  const handleMonthClick = (month: number) => {
-    if (isDisabled(month)) return;
-    setSelectedYear(displayYear);
-    setSelectedMonth(month);
-  };
-
-  const handleSave = () => {
-    const value = `${selectedYear}-${String(selectedMonth).padStart(2, "0")}`;
-    onChange?.(value);
-    onClose();
-  };
+export const MonthPicker = ({
+  isOpen,
+  onClose,
+  onChange,
+  selectedValue,
+  minYear,
+  minMonth,
+  maxYear,
+  maxMonth,
+}: MonthPickerProps) => {
+  const {
+    displayYear,
+    isPrevYearDisabled,
+    isNextYearDisabled,
+    goToPrevYear,
+    goToNextYear,
+    isDisabled,
+    isSelected,
+    handleMonthClick,
+    handleSave,
+  } = useMonthPicker({
+    isOpen,
+    selectedValue,
+    minYear,
+    minMonth,
+    maxYear,
+    maxMonth,
+    onChange,
+    onClose,
+  });
 
   if (!isOpen) return null;
 
@@ -80,23 +68,27 @@ export const MonthPicker = ({ isOpen, onClose, onChange, selectedValue }: MonthP
           <div className="flex items-center justify-between px-11.25 pb-3 pt-8">
             <button
               type="button"
-              onClick={() => setDisplayYear((y) => y - 1)}
-              className="flex size-6 items-center justify-center"
+              onClick={goToPrevYear}
+              disabled={isPrevYearDisabled}
+              className="flex size-6 items-center justify-center disabled:cursor-default"
               aria-label="이전 연도"
             >
-              <IcMonthBack size={24} className="text-gray-300" />
+              <IcMonthBack
+                size={24}
+                className={isPrevYearDisabled ? "text-gray-200" : "text-gray-300"}
+              />
             </button>
             <span className="body1 text-gray-600">{displayYear}</span>
             <button
               type="button"
-              onClick={() => setDisplayYear((y) => y + 1)}
-              disabled={displayYear >= currentYear}
+              onClick={goToNextYear}
+              disabled={isNextYearDisabled}
               className="flex size-6 items-center justify-center disabled:cursor-default"
               aria-label="다음 연도"
             >
               <IcMonthNext
                 size={24}
-                className={displayYear >= currentYear ? "text-gray-200" : "text-gray-300"}
+                className={isNextYearDisabled ? "text-gray-200" : "text-gray-300"}
               />
             </button>
           </div>
