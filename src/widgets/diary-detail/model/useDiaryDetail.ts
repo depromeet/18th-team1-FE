@@ -5,8 +5,8 @@ import { type RecommendationDetailResponse, useDiaryDetailQuery } from "@/entiti
 
 export const useDiaryDetail = (): RecommendationDetailResponse | undefined => {
   const params = useParams();
-  const id = Number(params.id);
+  const recommendationId = Number(params.id);
 
-  const { data } = useDiaryDetailQuery(id);
+  const { data } = useDiaryDetailQuery(recommendationId);
   return data;
 };
