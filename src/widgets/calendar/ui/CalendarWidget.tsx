@@ -69,7 +69,11 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
               { value: "cover", label: "책 표지" },
             ]}
             value={viewTab}
-            onChange={(v) => router.replace(`${pathname}?tab=${v}`)}
+            onChange={(v) => {
+              const nextSearchParams = new URLSearchParams(searchParams.toString());
+              nextSearchParams.set("tab", v);
+              router.replace(`${pathname}?${nextSearchParams.toString()}`);
+            }}
           />
           <button
             type="button"
