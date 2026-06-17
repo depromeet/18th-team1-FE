@@ -1,19 +1,13 @@
 "use client";
 
 import { format } from "date-fns";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import type { EmotionIntensity } from "@/entities/diary";
-import { CalendarBoard, useCalendar } from "@/features/calendar-view";
+import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
 import { MonthPicker } from "@/features/month-picker";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
-
-const getEmotionIntensity = (emotionValue: number): EmotionIntensity => {
-  if (emotionValue >= 7) return "HIGH";
-  if (emotionValue >= 4) return "MID";
-  return "LOW";
-};
+import { useCalendarWidget } from "../model/useCalendarWidget";
 
 interface CalendarWidgetProps {
   onDateSelect?: () => void;
@@ -22,38 +16,50 @@ interface CalendarWidgetProps {
 export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const { viewDate, setSelectedDate, days, handlePrev, handleNext, navigateToMonth } =
     useCalendar();
-  const [viewTab, setViewTab] = useState<"emotion" | "cover">("emotion");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-  const diaryIntensitiesByDate = MOCK_CALENDAR_DIARIES.diaries.reduce<
-    Record<string, EmotionIntensity[]>
-  >((acc, diary) => {
-    const key = diary.createdAt;
-    acc[key] = [...(acc[key] ?? []), getEmotionIntensity(diary.emotionValue)];
-    return acc;
-  }, {});
+  const {
+    diaryIntensitiesByDate,
+    diaryCoverByDate,
+    isPrevDisabled,
+    isNextDisabled,
+    minYear,
+    minMonth,
+  } = useCalendarWidget(viewDate);
 
-  const diaryCoverByDate: Record<string, string[]> = [...MOCK_CALENDAR_DIARIES.diaries]
-    .filter((diary) => diary.coverImageUrl)
-    .sort((a, b) => a.id - b.id)
-    .reduce<Record<string, string[]>>((acc, diary) => {
-      const key = diary.createdAt;
-      acc[key] = [...(acc[key] ?? []), diary.coverImageUrl];
-      return acc;
-    }, {});
+  const { handlePointerDown, handlePointerUp } = useMonthSwipe({
+    onSwipeLeft: handleNext,
+    onSwipeRight: handlePrev,
+    isPrevDisabled,
+    isNextDisabled,
+  });
 
   return (
     <>
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center gap-2 px-5">
-          <button type="button" onClick={handlePrev}>
-            <IcMonthBack size={24} className="text-gray-300" />
+          <button
+            type="button"
+            onClick={handlePrev}
+            disabled={isPrevDisabled}
+            className="disabled:cursor-default"
+          >
+            <IcMonthBack size={24} className={isPrevDisabled ? "text-gray-200" : "text-gray-300"} />
           </button>
           <button type="button" onClick={() => setIsPickerOpen(true)}>
             <span className="subhead1 text-gray-700">{format(viewDate, "yyyy년 M월")}</span>
           </button>
-          <button type="button" onClick={handleNext}>
-            <IcMonthNext size={24} className="text-gray-300" />
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={isNextDisabled}
+            className="disabled:cursor-default"
+          >
+            <IcMonthNext size={24} className={isNextDisabled ? "text-gray-200" : "text-gray-300"} />
           </button>
         </div>
         <div className="flex items-center justify-between px-5">
@@ -63,13 +69,17 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
               { value: "cover", label: "책 표지" },
             ]}
             value={viewTab}
-            onChange={(v) => setViewTab(v as "emotion" | "cover")}
+            onChange={(v) => {
+              const nextSearchParams = new URLSearchParams(searchParams.toString());
+              nextSearchParams.set("tab", v);
+              router.replace(`${pathname}?${nextSearchParams.toString()}`);
+            }}
           />
           <button
             type="button"
             className="flex size-8.5 items-center justify-center rounded-full bg-muted"
           >
-            <IcShare size={24} className="text-gray-500" />
+            <IcShare size={34} className="text-gray-500" />
           </button>
         </div>
         <CalendarBoard
@@ -82,11 +92,15 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
           diaryIntensitiesByDate={diaryIntensitiesByDate}
           diaryCoverByDate={diaryCoverByDate}
           viewTab={viewTab}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
         />
       </div>
       <MonthPicker
         isOpen={isPickerOpen}
         selectedValue={format(viewDate, "yyyy-MM")}
+        minYear={minYear}
+        minMonth={minMonth}
         onClose={() => setIsPickerOpen(false)}
         onChange={(dateStr) => {
           const [year, month] = dateStr.split("-").map(Number) as [number, number];

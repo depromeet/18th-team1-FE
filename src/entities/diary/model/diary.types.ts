@@ -17,27 +17,43 @@ export interface TodayDiary {
   note: string;
 }
 
-export interface DiaryListItem {
-  id: number;
-  createdAt: string;
-  content: string | null;
-  emotionValue: number;
-  quoteContent: string;
-  tags: string[];
-  coverImageUrl: string;
-  author: string;
+export interface RecommendationQuote {
+  quoteId: number;
+  bookId: number;
+  content: string;
   title: string;
+  author: string;
+  image: string;
+  link: string;
 }
 
-export interface DiaryListResponse {
+export interface RecommendationTag {
+  id: number;
+  label: string;
+  type: string;
+}
+
+export interface RecommendationListItem {
+  recommendationId: number;
+  recommendationDate: string;
+  emotionValue: number;
+  emotionRangeName: string;
+  quote: RecommendationQuote;
+}
+
+export interface RecommendationListResponse {
   start: string;
   end: string;
-  diaries: DiaryListItem[];
+  recommendations: RecommendationListItem[];
 }
 
-export interface DiaryDetail extends DiaryListItem {
-  diaryImageUrl?: string | null;
-  aladinLink?: string;
-  emotions?: string[];
-  purpose?: string;
+export interface RecommendationDetailResponse {
+  recommendationId: number;
+  quote: RecommendationQuote;
+  emotionValue: number;
+  emotionTags: RecommendationTag[];
+  needTag: RecommendationTag | null;
+  feelingText: string | null;
+  diaryText: string | null;
+  recommendationDate: string;
 }

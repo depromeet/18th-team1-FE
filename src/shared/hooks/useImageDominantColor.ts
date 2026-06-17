@@ -7,19 +7,22 @@ interface DominantColorResult {
   isDark: boolean;
 }
 
+type SampleRegion = "top" | "bottom";
+
 const FALLBACK: DominantColorResult = { color: "rgb(28, 34, 137)", isDark: true };
 
 const colorCache = new Map<string, DominantColorResult>();
 
 const getLuminance = (r: number, g: number, b: number) => (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
-// 이미지 하단 20% 영역 샘플링 후, 어두운 이미지는 추가로 0.6배 다크닝
-const sampleBottomRegionColor = (imageUrl: string): Promise<DominantColorResult> =>
+// 이미지 상/하단 20% 영역 샘플링 후, 어두운 이미지는 추가로 0.6배 다크닝
+const sampleRegionColor = (imageUrl: string, region: SampleRegion): Promise<DominantColorResult> =>
   new Promise((resolve) => {
     const img = new window.Image();
     img.crossOrigin = "anonymous";
     img.onload = () => {
       const sampleH = Math.max(1, Math.floor(img.height * 0.2));
+      const sourceY = region === "bottom" ? img.height - sampleH : 0;
       const canvas = document.createElement("canvas");
       canvas.width = img.width;
       canvas.height = sampleH;
@@ -29,7 +32,7 @@ const sampleBottomRegionColor = (imageUrl: string): Promise<DominantColorResult>
         return;
       }
       try {
-        ctx.drawImage(img, 0, img.height - sampleH, img.width, sampleH, 0, 0, img.width, sampleH);
+        ctx.drawImage(img, 0, sourceY, img.width, sampleH, 0, 0, img.width, sampleH);
         const { data } = ctx.getImageData(0, 0, img.width, sampleH);
         let r = 0;
         let g = 0;
@@ -62,7 +65,10 @@ const sampleBottomRegionColor = (imageUrl: string): Promise<DominantColorResult>
     img.src = imageUrl;
   });
 
-export const useImageDominantColor = (imageUrl: string | null | undefined): DominantColorResult => {
+export const useImageDominantColor = (
+  imageUrl: string | null | undefined,
+  region: SampleRegion = "bottom",
+): DominantColorResult => {
   const [result, setResult] = useState<DominantColorResult>(FALLBACK);
 
   useEffect(() => {
@@ -70,22 +76,23 @@ export const useImageDominantColor = (imageUrl: string | null | undefined): Domi
       setResult(FALLBACK);
       return;
     }
-    const cached = colorCache.get(imageUrl);
+    const cacheKey = `${region}:${imageUrl}`;
+    const cached = colorCache.get(cacheKey);
     if (cached) {
       setResult(cached);
       return;
     }
     let cancelled = false;
-    sampleBottomRegionColor(imageUrl).then((res) => {
+    sampleRegionColor(imageUrl, region).then((res) => {
       if (!cancelled) {
-        colorCache.set(imageUrl, res);
+        colorCache.set(cacheKey, res);
         setResult(res);
       }
     });
     return () => {
       cancelled = true;
     };
-  }, [imageUrl]);
+  }, [imageUrl, region]);
 
   return result;
 };

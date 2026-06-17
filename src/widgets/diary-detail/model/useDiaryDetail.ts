@@ -1,18 +1,12 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import type { DiaryDetail } from "@/entities/diary";
-// import { useDiaryDetailQuery } from "@/entities/diary";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
+import { type RecommendationDetailResponse, useDiaryDetailQuery } from "@/entities/diary";
 
-export const useDiaryDetail = (): DiaryDetail | undefined => {
+export const useDiaryDetail = (): RecommendationDetailResponse | undefined => {
   const params = useParams();
-  const id = Number(params.id);
+  const recommendationId = Number(params.id);
 
-  // const { data } = useDiaryDetailQuery(id);
-  // return data;
-
-  const found = MOCK_CALENDAR_DIARIES.diaries.find((d) => d.id === id);
-  if (!found) return undefined;
-  return { ...found, emotions: found.tags };
+  const { data } = useDiaryDetailQuery(recommendationId);
+  return data;
 };

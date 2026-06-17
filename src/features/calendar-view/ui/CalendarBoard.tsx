@@ -11,6 +11,8 @@ interface CalendarBoardProps {
   diaryIntensitiesByDate?: Record<string, EmotionIntensity[]>;
   diaryCoverByDate?: Record<string, string[]>;
   viewTab?: "emotion" | "cover";
+  onPointerDown?: (e: React.PointerEvent) => void;
+  onPointerUp?: (e: React.PointerEvent) => void;
 }
 
 const DAY_NAMES = ["일", "월", "화", "수", "목", "금", "토"] as const;
@@ -22,9 +24,15 @@ export const CalendarBoard = ({
   diaryIntensitiesByDate,
   diaryCoverByDate,
   viewTab = "emotion",
+  onPointerDown,
+  onPointerUp,
 }: CalendarBoardProps) => {
   return (
-    <div className="flex w-full flex-col gap-2.5">
+    <div
+      className="flex w-full flex-col gap-2.5"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+    >
       <div className="grid grid-cols-7 px-4">
         {DAY_NAMES.map((day, i) => (
           <div key={day} className="flex h-5 items-center justify-center">

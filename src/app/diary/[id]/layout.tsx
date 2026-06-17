@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { ko } from "date-fns/locale";
 import type { ReactNode } from "react";
 import { DiaryDeleteModal, DiaryOptionMenu } from "@/features/diary-actions";
@@ -22,7 +22,13 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex h-full flex-col">
       <Header
-        title={diary ? format(new Date(diary.createdAt), "M월 d일", { locale: ko }) : ""}
+        title={
+          diary
+            ? format(parse(diary.recommendationDate, "yyyy-MM-dd", new Date()), "M월 d일", {
+                locale: ko,
+              })
+            : ""
+        }
         onBack={handleBack}
         right={
           <DiaryOptionMenu

@@ -15,7 +15,7 @@ export const DiaryTagSection = ({ tags, emotionValue, className }: DiaryTagSecti
   const hiddenCount = tags.length - visibleTags.length;
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div className={cn("flex min-h-6.5 items-center gap-1", className)}>
       {visibleTags.map((tag) => (
         <DiaryTagChip key={tag} label={tag} emotionValue={emotionValue} className="caption2" />
       ))}

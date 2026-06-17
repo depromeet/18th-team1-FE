@@ -3,10 +3,10 @@ export { fetchDiaries, fetchDiaryDetail, fetchTodayDiaryExists } from "./api/dia
 export { diaryKeys, useDiariesQuery, useDiaryDetailQuery } from "./api/diaryQueries";
 export type {
   Diary,
-  DiaryDetail,
-  DiaryListItem,
-  DiaryListResponse,
   EmotionIntensity,
+  RecommendationDetailResponse,
+  RecommendationListItem,
+  RecommendationListResponse,
   TodayDiary,
 } from "./model/diary.types";
 export { useDiaryStore } from "./model/useDiaryStore";

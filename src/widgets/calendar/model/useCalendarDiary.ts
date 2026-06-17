@@ -1,13 +1,13 @@
 "use client";
 
-import { format, isAfter, startOfDay, startOfMonth } from "date-fns";
+import { endOfMonth, format, isAfter, startOfDay, startOfMonth } from "date-fns";
 import { useMemo } from "react";
-import type { DiaryListItem } from "@/entities/diary";
-import { MOCK_CALENDAR_DIARIES } from "@/mock";
+import type { RecommendationListItem } from "@/entities/diary";
+import { useDiariesQuery } from "@/entities/diary";
 import { useCalendarStore } from "@/store/calendar/useCalendarStore";
 
 interface UseCalendarDiaryReturn {
-  diaries: DiaryListItem[];
+  diaries: RecommendationListItem[];
   selectedDate: Date;
   viewDate: Date;
   isFutureView: boolean;
@@ -16,13 +16,15 @@ interface UseCalendarDiaryReturn {
 export const useCalendarDiary = (): UseCalendarDiaryReturn => {
   const { selectedDate, viewDate } = useCalendarStore();
 
+  const start = format(startOfMonth(viewDate), "yyyy-MM-dd");
+  const end = format(endOfMonth(viewDate), "yyyy-MM-dd");
+  const { data } = useDiariesQuery(start, end);
+
   const selectedDateStr = format(selectedDate, "yyyy-MM-dd");
   const diaries = useMemo(
     () =>
-      MOCK_CALENDAR_DIARIES.diaries.filter(
-        (entry) => entry.createdAt === selectedDateStr,
-      ) as DiaryListItem[],
-    [selectedDateStr],
+      (data?.recommendations ?? []).filter((entry) => entry.recommendationDate === selectedDateStr),
+    [data, selectedDateStr],
   );
 
   const isFutureView = useMemo(() => {

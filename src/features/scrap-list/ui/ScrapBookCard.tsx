@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { memo } from "react";
 
+import { useImageDominantColor } from "@/shared/hooks/useImageDominantColor";
 import { cn } from "@/shared/lib/utils";
 import { IcCheckCircleFill } from "@/shared/ui/icons";
-import { useImageDominantColor } from "../model/useImageDominantColor";
 
 interface ScrapBookCardProps {
   coverImageUrl?: string;
