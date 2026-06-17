@@ -17,14 +17,14 @@ type Story = StoryObj<typeof GenreFilterDropdown>;
 
 export const Default: Story = {
   render: () => {
-    const [selected, setSelected] = useState<GenreFilter>("전체");
+    const [selected, setSelected] = useState<GenreFilter>("모든 장르");
     return <GenreFilterDropdown selectedGenre={selected} onSelect={setSelected} />;
   },
 };
 
 export const WithGenreSelected: Story = {
   render: () => {
-    const [selected, setSelected] = useState<GenreFilter>("한국소설");
+    const [selected, setSelected] = useState<GenreFilter>("일반문학");
     return <GenreFilterDropdown selectedGenre={selected} onSelect={setSelected} />;
   },
 };

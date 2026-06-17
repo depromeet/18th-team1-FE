@@ -1,7 +1,20 @@
 export { fetchPost, fetchPosts } from "./api/postApi";
-export { postKeys, usePostQuery, usePostsQuery } from "./api/postQueries";
+export {
+  discoveryKeys,
+  postKeys,
+  useDiscoveryFeedQuery,
+  useDiscoverySearchQuery,
+  usePostQuery,
+  usePostsQuery,
+} from "./api/postQueries";
 export { MOCK_POSTS } from "./model/mock";
 export type {
+  DiscoveryEmotion,
+  DiscoveryNeedTag,
+  DiscoveryQuoteDto,
+  DiscoveryQuoteListResponse,
+  DiscoveryQuoteSearchDto,
+  DiscoveryQuoteSearchListResponse,
   Post,
   PostAuthor,
   PostBook,
