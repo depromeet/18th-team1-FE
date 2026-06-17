@@ -1,6 +1,6 @@
 "use client";
 
-import { endOfMonth, format, startOfMonth } from "date-fns";
+import { endOfMonth, format, parse, startOfMonth } from "date-fns";
 import type { EmotionIntensity } from "@/entities/diary";
 import { useDiariesQuery } from "@/entities/diary";
 import { useUserProfileQuery } from "@/entities/user";
@@ -27,7 +27,9 @@ export const useCalendarWidget = (viewDate: Date): UseCalendarWidgetReturn => {
   const diaries = data?.recommendations ?? [];
 
   const { data: userProfile } = useUserProfileQuery();
-  const signupDate = userProfile ? new Date(userProfile.createdAt) : undefined;
+  const signupDate = userProfile?.createdAt
+    ? parse(userProfile.createdAt.slice(0, 10), "yyyy-MM-dd", new Date())
+    : undefined;
 
   const viewMonthStart = startOfMonth(viewDate);
   const isPrevDisabled = signupDate ? viewMonthStart <= startOfMonth(signupDate) : false;
