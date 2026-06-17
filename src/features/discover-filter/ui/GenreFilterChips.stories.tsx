@@ -22,14 +22,14 @@ type Story = StoryObj<typeof GenreFilterChips>;
 
 export const Default: Story = {
   render: () => {
-    const [selected, setSelected] = useState<GenreFilter>("전체");
+    const [selected, setSelected] = useState<GenreFilter>("모든 장르");
     return <GenreFilterChips selected={selected} onChange={setSelected} />;
   },
 };
 
 export const SelectedMid: Story = {
   render: () => {
-    const [selected, setSelected] = useState<GenreFilter>("에세이･시");
+    const [selected, setSelected] = useState<GenreFilter>("시･에세이");
     return <GenreFilterChips selected={selected} onChange={setSelected} />;
   },
 };
