@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/dist/client/components/navigation";
+import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { useMonthlyReportQuery } from "@/entities/report";
 import { CalendarDiarySection } from "./CalendarDiarySection";
