@@ -1,14 +1,17 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 
 import type { SentenceQuote } from "@/entities/sentence";
 import {
+  sentenceKeys,
   TodaysSentenceCard,
   useRecommendationQuotesQuery,
   useSelectQuoteMutation,
 } from "@/entities/sentence";
+import { homeKeys } from "@/features/home";
 import { SentenceLoadingView } from "@/features/sentence-select";
 import { NewButton } from "@/shared/ui/new-button";
 import { Text } from "@/shared/ui/text";
@@ -27,6 +30,7 @@ const SentenceViewContent = ({
   recommendationId,
 }: SentenceViewContentProps): React.ReactElement => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutateAsync: selectQuote } = useSelectQuoteMutation();
   const { setSelectedQuote } = useEmotionSelectStore();
 
@@ -36,6 +40,8 @@ const SentenceViewContent = ({
 
   const handleNext = async (): Promise<void> => {
     const result = await selectQuote({ recommendationId, quoteId: quote.quoteId });
+    queryClient.invalidateQueries({ queryKey: homeKeys.summary() });
+    queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() });
     setSelectedQuote({
       recommendationId: result.recommendationId,
       quoteId: result.quote.quoteId,
