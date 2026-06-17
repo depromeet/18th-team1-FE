@@ -105,6 +105,7 @@ export const useEmotionCloud = (emotionTags: EmotionTag[]) => {
 
   useEffect(() => {
     let cancelled = false;
+    let resizeObserver: ResizeObserver | undefined;
 
     const computeLayout = () => {
       if (cancelled || !containerRef.current) return;
@@ -128,8 +129,16 @@ export const useEmotionCloud = (emotionTags: EmotionTag[]) => {
       if (!cancelled) computeLayout();
     });
 
+    if (containerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        if (!cancelled) computeLayout();
+      });
+      resizeObserver.observe(containerRef.current);
+    }
+
     return () => {
       cancelled = true;
+      resizeObserver?.disconnect();
     };
   }, [sortedTags]);
 
