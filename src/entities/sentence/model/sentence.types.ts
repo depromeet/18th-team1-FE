@@ -24,7 +24,7 @@ export interface SentenceTag {
 }
 
 export interface StartRecommendationRequest {
-  emotionRangeId: number | null;
+  emotionValue: number | null;
   emotionTagIds: number[];
   needTagId: number | null;
   feelingText: string | null;
@@ -49,12 +49,13 @@ export interface TagDto {
   label: string;
   type: string;
   emotionRangeId?: number | null;
+  displayGroup?: string | null;
 }
 
 export interface RecommendationDetailResponse {
   recommendationId: number;
   quote: SentenceQuote;
-  emotionRangeId: number;
+  emotionValue: number;
   emotionTags: TagDto[];
   needTag: TagDto | null;
   feelingText: string | null;

@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { startRecommendation } from "@/entities/sentence";
+import { getEmotionValue } from "@/features/emotion-select/model/emotion";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
 const TOTAL_STEPS = 4;
@@ -26,7 +27,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     reset,
-    selectedEmotionRangeId,
+    selectedEmotionId,
     selectedSituationIds,
     selectedNeedTagId,
     situationDescription,
@@ -52,7 +53,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
     setIsLoading(true);
     try {
       const result = await startRecommendation({
-        emotionRangeId: selectedEmotionRangeId,
+        emotionValue: getEmotionValue(selectedEmotionId),
         emotionTagIds: selectedSituationIds.map(Number),
         needTagId: selectedNeedTagId,
         feelingText: null,

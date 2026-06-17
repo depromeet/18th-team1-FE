@@ -1,8 +1,15 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
-import { useRecommendationQuotesQuery, useSelectQuoteMutation } from "@/entities/sentence";
+import {
+  sentenceKeys,
+  useRecommendationQuotesQuery,
+  useSelectQuoteMutation,
+} from "@/entities/sentence";
+import { homeKeys } from "@/features/home";
 import { SentenceSelectCard, useSentenceList } from "@/features/sentence-select";
 import { NewDoubleButton } from "@/shared/ui/new-double-button";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
@@ -11,6 +18,7 @@ const PAGE_SIZE = 3;
 
 export const SentenceListView = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { currentRecommendationId, listVisibleCount, setListVisibleCount, setSelectedQuote } =
     useEmotionSelectStore();
   const recommendationId = currentRecommendationId ?? 0;
@@ -23,15 +31,30 @@ export const SentenceListView = () => {
   const { mutateAsync: selectQuote } = useSelectQuoteMutation();
   const { selectedId, handleSelect } = useSentenceList(visibleQuotes[0]?.quoteId ?? -1);
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const prevVisibleCountRef = useRef(listVisibleCount);
+
   const handleLoadMore = (): void => {
     if (!hasMore) return;
     setListVisibleCount(listVisibleCount + PAGE_SIZE);
   };
 
+  useEffect(() => {
+    const prevCount = prevVisibleCountRef.current;
+    prevVisibleCountRef.current = listVisibleCount;
+    if (prevCount === listVisibleCount) return;
+    const firstNewCard = scrollContainerRef.current?.firstElementChild?.children[prevCount] as
+      | HTMLElement
+      | undefined;
+    firstNewCard?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [listVisibleCount]);
+
   const handleNext = async (): Promise<void> => {
     const selected = visibleQuotes.find((q) => q.quoteId === selectedId);
     if (!selected) return;
     const result = await selectQuote({ recommendationId, quoteId: selected.quoteId });
+    queryClient.invalidateQueries({ queryKey: homeKeys.summary() });
+    queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() });
     setSelectedQuote({
       recommendationId: result.recommendationId,
       quoteId: result.quote.quoteId,
@@ -39,14 +62,17 @@ export const SentenceListView = () => {
       title: result.quote.title,
       author: result.quote.author,
       image: result.quote.image,
-      tags: [...result.emotionTags, ...(result.needTag ? [result.needTag] : [])],
+      tags: result.emotionTags.filter((tag) => tag.type === "EMOTION"),
     });
     router.push("/sentence/today");
   };
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-y-auto px-5 pt-4.5 pb-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-auto px-5 pt-4.5 pb-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
         <div className="flex flex-col gap-3">
           {visibleQuotes.map((quote) => (
             <SentenceSelectCard
