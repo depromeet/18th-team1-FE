@@ -22,14 +22,16 @@ export const useMonthSwipe = ({
   isPrevDisabled,
   isNextDisabled,
 }: UseMonthSwipeParams): UseMonthSwipeReturn => {
-  const pointerStartXRef = useRef(0);
+  const pointerStartXRef = useRef<number | null>(null);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     pointerStartXRef.current = e.clientX;
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
+    if (pointerStartXRef.current === null) return;
     const deltaX = e.clientX - pointerStartXRef.current;
+    pointerStartXRef.current = null;
     if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return;
 
     if (deltaX < 0 && !isNextDisabled) {
