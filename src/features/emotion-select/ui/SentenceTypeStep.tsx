@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { useNeedTagsQuery } from "@/entities/emotion-tag";
 import { startRecommendation } from "@/entities/sentence";
+import { getEmotionValue } from "@/features/emotion-select/model/emotion";
 import { IcPen } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
@@ -25,7 +26,7 @@ export const SentenceTypeStep = ({
 }: SentenceTypeStepProps) => {
   const router = useRouter();
   const {
-    selectedEmotionRangeId,
+    selectedEmotionId,
     selectedSituationIds,
     selectedNeedTagId,
     situationDescription,
@@ -67,7 +68,7 @@ export const SentenceTypeStep = ({
     onLoadingChange?.(true);
     try {
       const result = await startRecommendation({
-        emotionRangeId: selectedEmotionRangeId,
+        emotionValue: getEmotionValue(selectedEmotionId),
         emotionTagIds: selectedSituationIds.map(Number),
         needTagId: null,
         feelingText: value,
