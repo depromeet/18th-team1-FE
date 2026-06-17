@@ -1,6 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
 import { MonthPicker } from "@/features/month-picker";
@@ -15,7 +16,10 @@ interface CalendarWidgetProps {
 export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const { viewDate, setSelectedDate, days, handlePrev, handleNext, navigateToMonth } =
     useCalendar();
-  const [viewTab, setViewTab] = useState<"emotion" | "cover">("emotion");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
   const {
@@ -65,7 +69,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
               { value: "cover", label: "책 표지" },
             ]}
             value={viewTab}
-            onChange={(v) => setViewTab(v as "emotion" | "cover")}
+            onChange={(v) => router.replace(`${pathname}?tab=${v}`)}
           />
           <button
             type="button"
