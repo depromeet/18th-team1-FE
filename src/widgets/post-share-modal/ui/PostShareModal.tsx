@@ -8,12 +8,14 @@ interface PostShareModalProps {
   post: Post;
   isOpen: boolean;
   onClose: () => void;
+  onToggleBookmark?: (currentIsBookmarked: boolean) => void;
 }
 
 export const PostShareModal = ({
   post,
   isOpen,
   onClose,
+  onToggleBookmark,
 }: PostShareModalProps): React.ReactElement | null => {
   const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
 
@@ -23,6 +25,11 @@ export const PostShareModal = ({
     } else {
       await navigator.clipboard.writeText(post.content).catch(() => {});
     }
+  };
+
+  const handleToggleBookmark = () => {
+    onToggleBookmark?.(isBookmarked);
+    setIsBookmarked((prev) => !prev);
   };
 
   if (!isOpen) return null;
@@ -60,7 +67,7 @@ export const PostShareModal = ({
         <ShareScrap
           isBookmarked={isBookmarked}
           onShare={handleShare}
-          onToggleBookmark={() => setIsBookmarked((prev) => !prev)}
+          onToggleBookmark={handleToggleBookmark}
         />
       </div>
     </div>

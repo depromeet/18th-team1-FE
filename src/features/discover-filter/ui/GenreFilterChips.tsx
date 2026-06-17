@@ -21,7 +21,7 @@ export const GenreFilterChips = ({
             : "border border-gray-200 bg-background text-gray-500"
         }`}
       >
-        {genre}
+        {genre === "모든 장르" ? "전체" : genre}
       </button>
     ))}
   </div>

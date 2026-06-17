@@ -173,6 +173,9 @@ export const DiscoverSearchResults = ({
               }}
               isOpen={true}
               onClose={() => setSelectedQuote(null)}
+              onToggleBookmark={(currentIsBookmarked) =>
+                toggle(selectedQuote.quoteId, currentIsBookmarked)
+              }
             />
           )}
         </>
