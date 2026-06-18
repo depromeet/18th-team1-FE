@@ -7,6 +7,7 @@ import {
   PostAuthorProfile,
   PostListItem,
   useDiscoverySearchQuery,
+  useGenresQuery,
 } from "@/entities/post";
 import { GenreFilterDropdown, useDiscoverFilter } from "@/features/discover-filter";
 import { SearchHistoryList, useSearchHistory } from "@/features/discover-search";
@@ -53,11 +54,13 @@ export const DiscoverSearchResults = ({
   const debouncedQuery = useDebounce(inputQuery, 300);
 
   const { history, addToHistory, removeFromHistory } = useSearchHistory();
-  const { selectedGenre, setSelectedGenre } = useDiscoverFilter();
+  const { selectedGenreId, setSelectedGenreId } = useDiscoverFilter();
 
-  const genre = selectedGenre === "모든 장르" ? undefined : selectedGenre;
+  const { data: genresData } = useGenresQuery();
+  const genres = genresData ?? [];
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useDiscoverySearchQuery(debouncedQuery, activeSort, genre);
+    useDiscoverySearchQuery(debouncedQuery, activeSort, selectedGenreId);
 
   // 데이터가 전혀 없는 첫 로딩일 때만 500ms 지연 스피너 표시
   // isFetching(키워드 전환 중)은 placeholderData로 이전 결과를 유지하므로 스피너 불필요
@@ -125,7 +128,11 @@ export const DiscoverSearchResults = ({
                 스크랩순
               </button>
             </div>
-            <GenreFilterDropdown selectedGenre={selectedGenre} onSelect={setSelectedGenre} />
+            <GenreFilterDropdown
+              genres={genres}
+              selectedGenreId={selectedGenreId}
+              onSelect={setSelectedGenreId}
+            />
           </div>
 
           {/* Post list */}
