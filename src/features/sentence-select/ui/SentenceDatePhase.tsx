@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface SentenceDatePhaseProps {
   month: string;
@@ -16,10 +16,15 @@ export const SentenceDatePhase = ({
 }: SentenceDatePhaseProps): React.ReactElement => {
   const day = new Date().getDate();
 
+  const onRevealRef = useRef(onReveal);
   useEffect(() => {
-    const timer = setTimeout(onReveal, 2000);
-    return () => clearTimeout(timer);
+    onRevealRef.current = onReveal;
   }, [onReveal]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => onRevealRef.current(), 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div

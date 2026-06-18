@@ -9,17 +9,23 @@ export const useCharLimit = <T extends HTMLInputElement | HTMLTextAreaElement>(
 ) => {
   const { toast } = useToast();
   const hasToastedRef = useRef(false);
+  const prevLengthRef = useRef(0);
 
   const handleChange = (e: ChangeEvent<T>): void => {
-    if (e.target.value.length > maxLength) {
+    const newValue = e.target.value;
+    const isReducing = newValue.length < prevLengthRef.current;
+
+    if (newValue.length > maxLength && !isReducing) {
       if (!hasToastedRef.current) {
         toast(toastMessage);
         hasToastedRef.current = true;
       }
       return;
     }
-    hasToastedRef.current = false;
-    onChange(e.target.value);
+
+    hasToastedRef.current = newValue.length >= maxLength;
+    prevLengthRef.current = newValue.length;
+    onChange(newValue);
   };
 
   const handlePaste = (e: ClipboardEvent<T>): void => {
