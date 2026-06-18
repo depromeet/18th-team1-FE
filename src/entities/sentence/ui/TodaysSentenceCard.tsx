@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef } from "react";
 
 import { Text } from "@/shared/ui/text";
 
-const FLIP_INTERVAL_MS = 2000;
+const FLIP_INTERVAL_MS = 4000;
 
 interface TodaysSentenceCardProps {
   date: string;
