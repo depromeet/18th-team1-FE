@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 
+import { diaryKeys } from "@/entities/diary";
 import type { SentenceQuote } from "@/entities/sentence";
 import {
   sentenceKeys,
@@ -42,6 +43,7 @@ const SentenceViewContent = ({
     const result = await selectQuote({ recommendationId, quoteId: quote.quoteId });
     queryClient.invalidateQueries({ queryKey: homeKeys.summary() });
     queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() });
+    queryClient.invalidateQueries({ queryKey: diaryKeys.lists() });
     setSelectedQuote({
       recommendationId: result.recommendationId,
       quoteId: result.quote.quoteId,

@@ -94,7 +94,7 @@ export const CalendarDiarySection = ({ onClose }: CalendarDiarySectionProps) => 
     }
     return diaries.map((diary, index) => (
       <div
-        key={diary.id}
+        key={diary.recommendationId}
         ref={(el) => {
           itemRefs.current[index] = el;
         }}

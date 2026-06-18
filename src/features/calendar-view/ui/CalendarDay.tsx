@@ -1,6 +1,7 @@
 import { getDate } from "date-fns";
 import Image from "next/image";
 import type { EmotionIntensity } from "@/entities/diary";
+import { useImageDominantColor } from "@/shared/hooks/useImageDominantColor";
 import { cn } from "@/shared/lib/utils";
 import { IcPlus } from "@/shared/ui/icons";
 import { CalendarDayEmotion } from "./CalendarDayEmotion";
@@ -24,6 +25,11 @@ export const CalendarDay = ({
   isFutureDate,
   date,
 }: CalendarDayProps) => {
+  const { isDark: isMainCoverDark } = useImageDominantColor(
+    isCoverView ? coverUrls?.[0] : undefined,
+    "top",
+  );
+
   if (isCoverView && coverUrls && coverUrls.length > 0) {
     const [mainCover, subCover] = coverUrls as [string, string | undefined];
 
@@ -45,7 +51,12 @@ export const CalendarDay = ({
           />
         </div>
         {coverUrls.length > 1 && (
-          <span className="absolute right-0.75 top-2.5 z-20 backdrop-blur-[4.7px] point4 text-gray-0 bg-gray-0-20 w-4.25 h-4.25 rounded-full flex items-center justify-center">
+          <span
+            className={cn(
+              "absolute right-0.75 top-2.5 z-20 backdrop-blur-[4.7px] point4 text-gray-0 w-4.25 h-4.25 rounded-full flex items-center justify-center",
+              isMainCoverDark ? "bg-gray-0-20" : "bg-gray-500-50",
+            )}
+          >
             {coverUrls.length}
           </span>
         )}

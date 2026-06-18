@@ -18,7 +18,7 @@ export const CalendarView = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const { year: lastYear, month: lastMonth } = getLastMonth();
-  const { data: lastMonthReport } = useMonthlyReportQuery(lastYear, lastMonth);
+  const { data: lastMonthReport } = useMonthlyReportQuery(lastYear, lastMonth, true, false);
 
   return (
     <>
