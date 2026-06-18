@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   DiaryTagSection,
   type RecommendationListItem,
@@ -14,6 +15,7 @@ import {
   useDiaryDeleteModal,
   useDiaryOptions,
 } from "@/features/diary-actions";
+import { SentenceShareCardDrawer } from "@/features/sentence-share";
 import { IcOptionCard } from "@/shared/ui/icons";
 
 interface DiaryItemProps {
@@ -21,8 +23,10 @@ interface DiaryItemProps {
 }
 
 export const DiaryItem = ({ diary }: DiaryItemProps) => {
+  const [isShareDrawerOpen, setIsShareDrawerOpen] = useState(false);
+
   const { setSelectedDiary } = useDiaryStore();
-  const { handleShare, handleDelete } = useDiaryOptions(diary.recommendationId);
+  const { handleDelete } = useDiaryOptions(diary.recommendationId);
   const { isDeleteModalOpen, handleDeleteClick, handleConfirmDelete, handleCancelDelete } =
     useDiaryDeleteModal({ onDelete: handleDelete });
   const { data: detail } = useDiaryDetailQuery(diary.recommendationId);
@@ -62,7 +66,7 @@ export const DiaryItem = ({ diary }: DiaryItemProps) => {
       <div className="absolute right-5 top-5">
         <DiaryOptionMenu
           trigger={<IcOptionCard size={24} className="text-gray-300" />}
-          onShare={handleShare}
+          onShare={() => setIsShareDrawerOpen(true)}
           onDelete={handleDeleteOpen}
         />
       </div>
@@ -70,6 +74,17 @@ export const DiaryItem = ({ diary }: DiaryItemProps) => {
         isOpen={isDeleteModalOpen}
         onConfirm={handleConfirmDelete}
         onClose={handleCancelDelete}
+      />
+      <SentenceShareCardDrawer
+        isOpen={isShareDrawerOpen}
+        shareType="sentence-pick"
+        date={diary.recommendationDate}
+        sentencePickData={{
+          quote: diary.quote.content,
+          title: diary.quote.title,
+          author: diary.quote.author,
+        }}
+        onClose={() => setIsShareDrawerOpen(false)}
       />
     </div>
   );
