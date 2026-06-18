@@ -6,7 +6,6 @@ import type { ReactNode } from "react";
 
 import { createQueryClient } from "@/shared/api/query-client";
 import { ToastContainer } from "@/shared/ui/toast";
-import { PosthogProvider } from "./posthog-provider";
 
 let browserQueryClient: QueryClient | undefined;
 
@@ -29,14 +28,10 @@ export const Providers = ({ children }: ProvidersProps) => {
   const queryClient = getQueryClient();
 
   return (
-    <PosthogProvider>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        {process.env.NODE_ENV === "development" ? (
-          <ReactQueryDevtools initialIsOpen={false} />
-        ) : null}
-        <ToastContainer />
-      </QueryClientProvider>
-    </PosthogProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+      <ToastContainer />
+    </QueryClientProvider>
   );
 };
