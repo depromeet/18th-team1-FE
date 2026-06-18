@@ -1,9 +1,11 @@
-export { fetchPost, fetchPosts } from "./api/postApi";
+export { fetchGenres, fetchPost, fetchPosts } from "./api/postApi";
 export {
   discoveryKeys,
+  genreKeys,
   postKeys,
   useDiscoveryFeedQuery,
   useDiscoverySearchQuery,
+  useGenresQuery,
   usePostQuery,
   usePostsQuery,
 } from "./api/postQueries";
@@ -15,6 +17,7 @@ export type {
   DiscoveryQuoteListResponse,
   DiscoveryQuoteSearchDto,
   DiscoveryQuoteSearchListResponse,
+  GenreDto,
   Post,
   PostAuthor,
   PostBook,

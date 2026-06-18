@@ -1,5 +1,11 @@
 import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { fetchDiscoveryQuotes, fetchDiscoveryQuotesSearch, fetchPost, fetchPosts } from "./postApi";
+import {
+  fetchDiscoveryQuotes,
+  fetchDiscoveryQuotesSearch,
+  fetchGenres,
+  fetchPost,
+  fetchPosts,
+} from "./postApi";
 
 export const postKeys = {
   all: ["posts"] as const,
@@ -22,22 +28,35 @@ export const usePostQuery = (id: string) =>
     enabled: !!id,
   });
 
+// ── Genres ───────────────────────────────────────────────────────────────────
+
+export const genreKeys = {
+  all: ["genres"] as const,
+};
+
+export const useGenresQuery = () =>
+  useQuery({
+    queryKey: genreKeys.all,
+    queryFn: fetchGenres,
+    staleTime: Infinity,
+  });
+
 // ── Discovery ────────────────────────────────────────────────────────────────
 
 export const discoveryKeys = {
   all: ["discovery"] as const,
   feeds: () => [...discoveryKeys.all, "feed"] as const,
-  feed: (genre?: string) => [...discoveryKeys.feeds(), { genre }] as const,
+  feed: (genreId?: number) => [...discoveryKeys.feeds(), { genreId }] as const,
   searches: () => [...discoveryKeys.all, "search"] as const,
-  search: (query: string, sort: string, genre?: string) =>
-    [...discoveryKeys.searches(), { query, sort, genre }] as const,
+  search: (query: string, sort: string, genreId?: number) =>
+    [...discoveryKeys.searches(), { query, sort, genreId }] as const,
 };
 
-export const useDiscoveryFeedQuery = (genre?: string) =>
+export const useDiscoveryFeedQuery = (genreId?: number) =>
   useInfiniteQuery({
-    queryKey: discoveryKeys.feed(genre),
+    queryKey: discoveryKeys.feed(genreId),
     queryFn: ({ pageParam }) =>
-      fetchDiscoveryQuotes({ cursor: pageParam as string | undefined, genre }),
+      fetchDiscoveryQuotes({ cursor: pageParam as string | undefined, genreId }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) =>
       lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
@@ -47,16 +66,16 @@ export const useDiscoveryFeedQuery = (genre?: string) =>
 export const useDiscoverySearchQuery = (
   query: string,
   sort: "latest" | "scrap" = "latest",
-  genre?: string,
+  genreId?: number,
 ) =>
   useInfiniteQuery({
-    queryKey: discoveryKeys.search(query, sort, genre),
+    queryKey: discoveryKeys.search(query, sort, genreId),
     queryFn: ({ pageParam }) =>
       fetchDiscoveryQuotesSearch({
         query,
         sort,
         cursor: pageParam as string | undefined,
-        genre,
+        genreId,
       }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage) =>

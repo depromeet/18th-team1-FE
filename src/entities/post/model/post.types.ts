@@ -1,3 +1,8 @@
+export interface GenreDto {
+  label: string;
+  genreId: number;
+}
+
 export interface PostAuthor {
   id: string;
   nickname: string;
