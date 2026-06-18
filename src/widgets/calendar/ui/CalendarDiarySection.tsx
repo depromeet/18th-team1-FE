@@ -1,6 +1,6 @@
 "use client";
 
-import { format } from "date-fns";
+import { format, isToday } from "date-fns";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/shared/lib/utils";
@@ -122,7 +122,7 @@ export const CalendarDiarySection = ({ onClose }: CalendarDiarySectionProps) => 
       </div>
       <div className="flex items-center justify-between px-5 py-3 shrink-0">
         <p className="head1 text-gray-700">{format(selectedDate, "yyyy.MM.dd")}</p>
-        {diaries.length < 5 && (
+        {isToday(selectedDate) && diaries.length < 5 && (
           <Link href="/emotion" className="flex size-7.5 items-center justify-center">
             <IcRecord size={30} className="text-key-secondary" />
           </Link>
