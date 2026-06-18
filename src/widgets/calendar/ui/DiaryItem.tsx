@@ -22,7 +22,7 @@ interface DiaryItemProps {
 
 export const DiaryItem = ({ diary }: DiaryItemProps) => {
   const { setSelectedDiary } = useDiaryStore();
-  const { handleShare, handleDelete } = useDiaryOptions();
+  const { handleShare, handleDelete } = useDiaryOptions(diary.recommendationId);
   const { isDeleteModalOpen, handleDeleteClick, handleConfirmDelete, handleCancelDelete } =
     useDiaryDeleteModal({ onDelete: handleDelete });
   const { data: detail } = useDiaryDetailQuery(diary.recommendationId);

@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchDiaries, fetchDiaryDetail } from "./diaryApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteDiary, fetchDiaries, fetchDiaryDetail } from "./diaryApi";
 
 export const diaryKeys = {
   all: ["diaries"] as const,
@@ -21,3 +21,13 @@ export const useDiaryDetailQuery = (id: number) =>
     queryFn: () => fetchDiaryDetail(id),
     enabled: id > 0,
   });
+
+export const useDeleteDiaryMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (recommendationId: number) => deleteDiary(recommendationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: diaryKeys.all });
+    },
+  });
+};

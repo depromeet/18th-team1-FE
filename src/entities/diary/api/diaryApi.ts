@@ -17,3 +17,6 @@ export const fetchDiaries = (start: string, end: string): Promise<Recommendation
 
 export const fetchDiaryDetail = (recommendationId: number): Promise<RecommendationDetailResponse> =>
   httpClient.get<RecommendationDetailResponse>(`/recommendations/${recommendationId}`);
+
+export const deleteDiary = (recommendationId: number) =>
+  httpClient.delete(`/recommendations/${recommendationId}`);

@@ -1,11 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useDiaryDeleteModal, useDiaryOptions } from "@/features/diary-actions";
 
 export const useDiaryDetailOptions = () => {
   const router = useRouter();
-  const { handleBack, handleShare, handleDelete } = useDiaryOptions();
+  const params = useParams();
+  const recommendationId = Number(params.id);
+  const { handleBack, handleShare, handleDelete } = useDiaryOptions(recommendationId);
   const {
     isDeleteModalOpen,
     handleDeleteClick,

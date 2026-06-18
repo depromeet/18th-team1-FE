@@ -1,6 +1,11 @@
 export type { TodayDiaryExistsResponse } from "./api/diaryApi";
-export { fetchDiaries, fetchDiaryDetail, fetchTodayDiaryExists } from "./api/diaryApi";
-export { diaryKeys, useDiariesQuery, useDiaryDetailQuery } from "./api/diaryQueries";
+export { deleteDiary, fetchDiaries, fetchDiaryDetail, fetchTodayDiaryExists } from "./api/diaryApi";
+export {
+  diaryKeys,
+  useDeleteDiaryMutation,
+  useDiariesQuery,
+  useDiaryDetailQuery,
+} from "./api/diaryQueries";
 export type {
   Diary,
   EmotionIntensity,
