@@ -32,6 +32,9 @@
   body {
     word-break: keep-all;
     touch-action: manipulation;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
   }
 
   button:not(:disabled),
