@@ -4,6 +4,7 @@ import { isServer, type QueryClient, QueryClientProvider } from "@tanstack/react
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
 
+import { SentenceShareDrawerRoot } from "@/features/sentence-share";
 import { createQueryClient } from "@/shared/api/query-client";
 import { ToastContainer } from "@/shared/ui/toast";
 
@@ -32,6 +33,7 @@ export const Providers = ({ children }: ProvidersProps) => {
       {children}
       {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
       <ToastContainer />
+      <SentenceShareDrawerRoot />
     </QueryClientProvider>
   );
 };

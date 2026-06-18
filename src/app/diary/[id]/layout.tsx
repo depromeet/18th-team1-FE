@@ -3,16 +3,15 @@
 import { format, parse } from "date-fns";
 import { ko } from "date-fns/locale";
 import type { ReactNode } from "react";
-import { useState } from "react";
 import { DiaryDeleteModal, DiaryOptionMenu } from "@/features/diary-actions";
-import { SentenceShareCardDrawer } from "@/features/sentence-share";
+import { useSentenceShareCardDrawer } from "@/features/sentence-share";
 import { IcOptionHeader } from "@/shared/ui/icons";
 import { useDiaryDetail, useDiaryDetailOptions } from "@/widgets/diary-detail";
 import { Header } from "@/widgets/header";
 
 const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
   const diary = useDiaryDetail();
-  const [isShareDrawerOpen, setIsShareDrawerOpen] = useState(false);
+  const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
   const {
     handleBack,
     handleDeleteClick,
@@ -20,6 +19,19 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
     handleCancelDelete,
     isDeleteModalOpen,
   } = useDiaryDetailOptions();
+
+  const handleShare = (): void => {
+    if (!diary) return;
+    openSentenceShareCardDrawer({
+      shareType: "sentence-pick",
+      date: diary.recommendationDate,
+      sentencePickData: {
+        quote: diary.quote.content,
+        title: diary.quote.title,
+        author: diary.quote.author,
+      },
+    });
+  };
 
   return (
     <div className="flex h-full flex-col">
@@ -35,7 +47,7 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
         right={
           <DiaryOptionMenu
             trigger={<IcOptionHeader size={24} className="text-gray-700" />}
-            onShare={() => setIsShareDrawerOpen(true)}
+            onShare={handleShare}
             onDelete={handleDeleteClick}
           />
         }
@@ -46,19 +58,6 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
         onConfirm={handleConfirmDelete}
         onClose={handleCancelDelete}
       />
-      {diary && (
-        <SentenceShareCardDrawer
-          isOpen={isShareDrawerOpen}
-          shareType="sentence-pick"
-          date={diary.recommendationDate}
-          sentencePickData={{
-            quote: diary.quote.content,
-            title: diary.quote.title,
-            author: diary.quote.author,
-          }}
-          onClose={() => setIsShareDrawerOpen(false)}
-        />
-      )}
     </div>
   );
 };

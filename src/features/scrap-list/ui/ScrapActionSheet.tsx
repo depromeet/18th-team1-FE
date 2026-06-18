@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { SentenceShareCardDrawer } from "@/features/sentence-share";
+import { useSentenceShareCardDrawer } from "@/features/sentence-share";
 import { cn } from "@/shared/lib/utils";
 import { IcBookmark, IcLink, IcShare } from "@/shared/ui/icons";
 import { Sheet, SheetContent, SheetTitle } from "@/shared/ui/sheet";
@@ -33,11 +33,11 @@ export const ScrapActionSheet = ({
   bookPurchaseLink,
 }: ScrapActionSheetProps): React.ReactElement => {
   const [isBookmarked, setIsBookmarked] = useState(true);
-  const [isShareDrawerOpen, setIsShareDrawerOpen] = useState(false);
   // 시트 닫힘 애니메이션 완료 후 드로어를 열기 위한 플래그
   const [pendingShare, setPendingShare] = useState(false);
   const { mutateAsync: scrapAsync } = useScrapMutation();
   const { mutateAsync: unscrapAsync } = useUnscrapMutation();
+  const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
 
   useEffect(() => {
     if (open) setIsBookmarked(true);
@@ -46,10 +46,14 @@ export const ScrapActionSheet = ({
   // 시트가 완전히 닫힌 후 pendingShare가 true면 드로어 열기
   useEffect(() => {
     if (!open && pendingShare) {
-      setIsShareDrawerOpen(true);
+      openSentenceShareCardDrawer({
+        shareType: "sentence-pick",
+        date: format(new Date(), "yyyy-MM-dd"),
+        sentencePickData: { quote, title: bookTitle, author },
+      });
       setPendingShare(false);
     }
-  }, [open, pendingShare]);
+  }, [open, pendingShare, openSentenceShareCardDrawer, quote, bookTitle, author]);
 
   const handleBookmarkToggle = async () => {
     if (isBookmarked) {
@@ -66,72 +70,62 @@ export const ScrapActionSheet = ({
   };
 
   return (
-    <>
-      <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent
-          side="bottom"
-          showCloseButton={false}
-          className="overflow-visible gap-0 rounded-t-[20px] border-0 p-0 md:max-w-93.75 md:mx-auto"
-          onOpenAutoFocus={(e) => e.preventDefault()}
-        >
-          <SheetTitle className="sr-only">{bookTitle}</SheetTitle>
-          {/* 책 표지 — 버튼 하단(54px)에 맞춰 위로 돌출 */}
-          <div className="absolute -top-37 left-8 h-50.5 w-32 overflow-hidden rounded-lg">
-            {coverImageUrl ? (
-              <Image src={coverImageUrl} alt={bookTitle} fill className="object-cover" />
-            ) : (
-              <div className="size-full bg-gray-100" />
-            )}
-          </div>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        showCloseButton={false}
+        className="overflow-visible gap-0 rounded-t-[20px] border-0 p-0 md:max-w-93.75 md:mx-auto"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
+        <SheetTitle className="sr-only">{bookTitle}</SheetTitle>
+        {/* 책 표지 — 버튼 하단(54px)에 맞춰 위로 돌출 */}
+        <div className="absolute -top-37 left-8 h-50.5 w-32 overflow-hidden rounded-lg">
+          {coverImageUrl ? (
+            <Image src={coverImageUrl} alt={bookTitle} fill className="object-cover" />
+          ) : (
+            <div className="size-full bg-gray-100" />
+          )}
+        </div>
 
-          {/* 액션 버튼 — 오른쪽 정렬 */}
-          <div className="flex items-center justify-end gap-2 pl-47.5 pr-5 pt-5 pb-2.5">
-            <a
-              href={bookPurchaseLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-2"
-            >
-              <IcLink size={16} className="text-gray-500" />
-              <span className="caption2 text-gray-500">책 링크</span>
-            </a>
-            <button
-              type="button"
-              aria-label="공유"
-              onClick={handleShare}
-              className="flex size-8.5 items-center justify-center rounded-full bg-gray-100"
-            >
-              <IcShare size={30} className="text-gray-500" />
-            </button>
-            <button
-              type="button"
-              aria-label="북마크"
-              aria-pressed={isBookmarked}
-              className="flex size-8.5 items-center justify-center"
-              onClick={handleBookmarkToggle}
-            >
-              <IcBookmark
-                size={34}
-                className={cn(isBookmarked ? "text-gray-600" : "text-gray-200")}
-              />
-            </button>
-          </div>
+        {/* 액션 버튼 — 오른쪽 정렬 */}
+        <div className="flex items-center justify-end gap-2 pl-47.5 pr-5 pt-5 pb-2.5">
+          <a
+            href={bookPurchaseLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-2"
+          >
+            <IcLink size={16} className="text-gray-500" />
+            <span className="caption2 text-gray-500">책 링크</span>
+          </a>
+          <button
+            type="button"
+            aria-label="공유"
+            onClick={handleShare}
+            className="flex size-8.5 items-center justify-center rounded-full bg-gray-100"
+          >
+            <IcShare size={30} className="text-gray-500" />
+          </button>
+          <button
+            type="button"
+            aria-label="북마크"
+            aria-pressed={isBookmarked}
+            className="flex size-8.5 items-center justify-center"
+            onClick={handleBookmarkToggle}
+          >
+            <IcBookmark
+              size={34}
+              className={cn(isBookmarked ? "text-gray-600" : "text-gray-200")}
+            />
+          </button>
+        </div>
 
-          {/* 텍스트 */}
-          <div className="flex flex-col gap-3 px-5 pt-5 pb-12">
-            <p className="subhead4 text-gray-700">{quote}</p>
-            <p className="caption2 text-gray-600">{`『${bookTitle}』, ${author}`}</p>
-          </div>
-        </SheetContent>
-      </Sheet>
-
-      <SentenceShareCardDrawer
-        isOpen={isShareDrawerOpen}
-        shareType="sentence-pick"
-        date={format(new Date(), "yyyy-MM-dd")}
-        sentencePickData={{ quote, title: bookTitle, author }}
-        onClose={() => setIsShareDrawerOpen(false)}
-      />
-    </>
+        {/* 텍스트 */}
+        <div className="flex flex-col gap-3 px-5 pt-5 pb-12">
+          <p className="subhead4 text-gray-700">{quote}</p>
+          <p className="caption2 text-gray-600">{`『${bookTitle}』, ${author}`}</p>
+        </div>
+      </SheetContent>
+    </Sheet>
   );
 };
