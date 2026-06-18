@@ -219,10 +219,15 @@ export const SentenceShareCardDrawer = ({
                     <img
                       src={previewUrl}
                       alt={`공유 카드 ${variant}`}
-                      className="size-full object-cover"
+                      className="size-full object-cover rounded-2xl"
                     />
                   ) : (
-                    <div className={cn("size-full bg-gray-100", isLoading && "animate-pulse")} />
+                    <div
+                      className={cn(
+                        "size-full bg-gray-100 rounded-2xl",
+                        isLoading && "animate-pulse",
+                      )}
+                    />
                   )}
                 </div>
               );
