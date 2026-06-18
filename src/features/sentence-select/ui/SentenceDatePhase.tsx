@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface SentenceDatePhaseProps {
   month: string;
@@ -14,11 +16,14 @@ export const SentenceDatePhase = ({
 }: SentenceDatePhaseProps): React.ReactElement => {
   const day = new Date().getDate();
 
+  useEffect(() => {
+    const timer = setTimeout(onReveal, 2000);
+    return () => clearTimeout(timer);
+  }, [onReveal]);
+
   return (
-    <motion.button
-      type="button"
-      className="absolute inset-0 cursor-pointer bg-transparent"
-      onClick={onReveal}
+    <motion.div
+      className="absolute inset-0 bg-transparent"
       exit={{ y: -70, opacity: 0, transition: { duration: 0.45, ease: [0.4, 0, 1, 1] } }}
     >
       {/* Month: layoutId allows smooth shared-element transition to CardPhase */}
@@ -40,6 +45,6 @@ export const SentenceDatePhase = ({
       <div className="pointer-events-none absolute left-1/2 top-89.75 -translate-x-1/2">
         <Image src="/images/diary-write.png" alt="" width={140} height={137} priority />
       </div>
-    </motion.button>
+    </motion.div>
   );
 };

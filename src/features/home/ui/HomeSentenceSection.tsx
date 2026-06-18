@@ -42,6 +42,7 @@ export const HomeSentenceSection = ({ items }: HomeSentenceSectionProps) => {
             return (
               <HomeSentenceItem
                 key={item.recommendationId}
+                diaryId={item.recommendationId}
                 day={day}
                 sentence={item.quoteContent}
                 dayName={dayName}

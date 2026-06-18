@@ -1,9 +1,12 @@
 "use client";
 
+import Link from "next/link";
+
 import { cn } from "@/shared/lib/utils";
 import { Text } from "@/shared/ui/text";
 
 interface HomeSentenceItemProps {
+  diaryId: number;
   day: number;
   sentence: string;
   dayName: string;
@@ -11,12 +14,16 @@ interface HomeSentenceItemProps {
 }
 
 export const HomeSentenceItem = ({
+  diaryId,
   day,
   sentence,
   dayName,
   isSunday = false,
 }: HomeSentenceItemProps) => (
-  <div className="flex h-21.5 items-center gap-4 border-b border-gray-200 py-5 pl-5 pr-1.5">
+  <Link
+    href={`/diary/${diaryId}`}
+    className="flex h-21.5 items-center gap-4 border-b border-gray-200 py-5 pl-5 pr-1.5"
+  >
     <div className="flex w-9.75 shrink-0 flex-col items-center">
       <Text
         as="span"
@@ -39,5 +46,5 @@ export const HomeSentenceItem = ({
     <Text variant="body4" color="gray-600" className="line-clamp-3 flex-1">
       {sentence}
     </Text>
-  </div>
+  </Link>
 );
