@@ -13,6 +13,7 @@ import {
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
 import { MonthPicker } from "@/features/month-picker";
 import { useSentenceShareCardDrawer } from "@/features/sentence-share";
+import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
@@ -33,6 +34,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const { step, openTypeSheet, selectType, selectDate, close } = useCalendarShareFlow();
   const { selectedQuote } = useEmotionSelectStore();
   const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
+  const [isNoSentenceModalOpen, setIsNoSentenceModalOpen] = useState(false);
 
   // 캘린더 공유 플로우의 card-drawer 단계 도달 시 전역 드로어로 위임
   useEffect(() => {
@@ -48,11 +50,15 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
 
   const handleSelectType = (shareType: ShareType): void => {
     if (shareType === "today-sentence" && !selectedQuote) {
-      router.push("/emotion");
-      close();
+      setIsNoSentenceModalOpen(true);
       return;
     }
     selectType(shareType);
+  };
+
+  const handleConfirmGoToEmotion = (): void => {
+    close();
+    router.push("/emotion");
   };
 
   const {
@@ -160,6 +166,21 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
         year={viewDate.getFullYear()}
         month={viewDate.getMonth() + 1}
         onClose={close}
+      />
+
+      <ConfirmModal
+        open={isNoSentenceModalOpen}
+        onOpenChange={setIsNoSentenceModalOpen}
+        description={
+          <>
+            아직 오늘의 문장이 없어요.
+            <br />
+            바로 추천 받으러 갈까요?
+          </>
+        }
+        confirmLabel="확인"
+        cancelLabel="취소"
+        onConfirm={handleConfirmGoToEmotion}
       />
     </>
   );
