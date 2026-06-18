@@ -83,7 +83,7 @@ export const CalendarDay = ({
         !isFutureDate && "bg-gray-50",
       )}
     >
-      <span className={cn("body3", isFutureDate ? "text-gray-100" : "text-gray-400")}>
+      <span className={cn("body3", isFutureDate ? "text-gray-100" : "text-gray-200")}>
         {getDate(date)}
       </span>
     </div>
