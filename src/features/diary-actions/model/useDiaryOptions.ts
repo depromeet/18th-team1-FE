@@ -1,15 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useDeleteDiaryMutation } from "@/entities/diary";
 
-interface UseDiaryOptionsReturn {
-  handleBack: () => void;
-  handleShare: () => void;
-  handleDelete: () => void;
-}
-
-export const useDiaryOptions = (): UseDiaryOptionsReturn => {
+export const useDiaryOptions = (recommendationId: number) => {
   const router = useRouter();
+  const { mutate: deleteDiary } = useDeleteDiaryMutation();
 
   const handleBack = () => {
     router.back();
@@ -20,7 +16,7 @@ export const useDiaryOptions = (): UseDiaryOptionsReturn => {
   };
 
   const handleDelete = () => {
-    // TODO: 삭제 로직
+    deleteDiary(recommendationId);
   };
 
   return { handleBack, handleShare, handleDelete };
