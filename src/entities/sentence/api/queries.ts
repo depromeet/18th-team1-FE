@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 import {
   fetchRecommendationQuotes,
@@ -31,8 +31,11 @@ export const useRecommendationQuotesQuery = (recommendationId: number) =>
   });
 
 // 최종 문장 선택 뮤테이션
-export const useSelectQuoteMutation = () =>
-  useMutation({
+export const useSelectQuoteMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
     mutationFn: ({ recommendationId, quoteId }: { recommendationId: number; quoteId: number }) =>
       selectRecommendationQuote(recommendationId, quoteId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() }),
   });
+};

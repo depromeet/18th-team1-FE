@@ -1,10 +1,11 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { useNeedTagsQuery } from "@/entities/emotion-tag";
-import { startRecommendation } from "@/entities/sentence";
+import { sentenceKeys, startRecommendation } from "@/entities/sentence";
 import { getEmotionValue } from "@/features/emotion-select/model/emotion";
 import { IcPen } from "@/shared/ui/icons";
 import { Text } from "@/shared/ui/text";
@@ -25,6 +26,7 @@ export const SentenceTypeStep = ({
   onLoadingChange,
 }: SentenceTypeStepProps) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const {
     selectedEmotionId,
     selectedSituationIds,
@@ -76,6 +78,7 @@ export const SentenceTypeStep = ({
       });
       setCurrentRecommendationId(result.recommendationId);
       setInitialRecommendedQuote(result.quote);
+      queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() });
       router.push("/sentence");
     } catch {
       setIsSubmitting(false);

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { type ReactNode, useLayoutEffect, useRef, useState } from "react";
 
 import { TagChip } from "@/entities/emotion-tag";
 import type { TagDto } from "@/entities/sentence";
@@ -49,6 +49,38 @@ export const SentenceCardPhase = ({
   const visibleTags = emotionTags.slice(0, MAX_VISIBLE_TAGS);
   const overflowCount = Math.max(0, emotionTags.length - MAX_VISIBLE_TAGS);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tagsRef = useRef<HTMLDivElement>(null);
+  const [isWrapped, setIsWrapped] = useState(false);
+  const [tagsLeftOffset, setTagsLeftOffset] = useState(0);
+
+  const BubbleSize = 41; // size-10.25 = 10.25 * 4px
+  const ChipGap = 8; // gap-x-2 = 8px
+
+  useLayoutEffect(() => {
+    if (!overflowCount) return;
+
+    const update = () => {
+      const container = containerRef.current;
+      const tagsEl = tagsRef.current;
+      if (!container || !tagsEl) return;
+
+      const containerWidth = container.offsetWidth;
+      const tagsWidth = tagsEl.offsetWidth;
+
+      const willWrap = tagsWidth + ChipGap + BubbleSize > containerWidth;
+      setIsWrapped(willWrap);
+      if (willWrap) {
+        setTagsLeftOffset((containerWidth - tagsWidth) / 2);
+      }
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [overflowCount]);
+
   return (
     <motion.div
       className="absolute inset-0 flex flex-col overflow-hidden"
@@ -76,59 +108,74 @@ export const SentenceCardPhase = ({
         </span>
       </motion.div>
 
-      {/* Today's Text */}
-      <motion.div
-        className="relative z-10 text-center"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...ENTER, delay: 0.12 }}
-      >
-        <Text as="span" variant="point-eng" color="gray-300">
-          Today<span className="font-pretendard font-semibold">&apos;</span>s Text
-        </Text>
-      </motion.div>
+      {/* Scrollable content — Month stays absolute above, button stays absolute below */}
+      <div className="min-h-0 flex-1 overflow-y-auto pb-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {/* Today's Text */}
+        <motion.div
+          className="relative z-10 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...ENTER, delay: 0.12 }}
+        >
+          <Text as="span" variant="point-eng" color="gray-300">
+            Today<span className="font-pretendard font-semibold">&apos;</span>s Text
+          </Text>
+        </motion.div>
 
-      {/* Sentence card — centered */}
-      <motion.div
-        className="relative z-10 mt-15.75 flex justify-center"
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...ENTER, delay: 0.18 }}
-      >
-        <TodaysSentenceCard
-          date={date}
-          quote={quote}
-          bookTitle={bookTitle}
-          bookAuthor={bookAuthor}
-          bookCoverImage={bookCoverImage}
-          animateWords
-        />
-      </motion.div>
+        {/* Sentence card — centered */}
+        <motion.div
+          className="relative z-10 mt-15.75 flex justify-center"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...ENTER, delay: 0.18 }}
+        >
+          <TodaysSentenceCard
+            date={date}
+            quote={quote}
+            bookTitle={bookTitle}
+            bookAuthor={bookAuthor}
+            bookCoverImage={bookCoverImage}
+            animateWords
+          />
+        </motion.div>
 
-      {/* Tags */}
-      <motion.div
-        className="mt-6.5 flex justify-center"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...ENTER, delay: 0.26 }}
-      >
-        <div className="flex w-65 flex-wrap gap-x-2 gap-y-6">
-          {visibleTags.map((tag) => (
-            <TagChip key={tag.id} label={tag.label} variant="dim" />
-          ))}
-          {overflowCount > 0 && (
-            <div className="flex size-10.25 items-center justify-center rounded-full bg-[#898989]">
-              <IcPlusCount width={13.3} height={16.62} className="text-gray-0" />
-              <span className="point2 relative -top-[1.5px] text-gray-0">{overflowCount}</span>
+        {/* Tags */}
+        <motion.div
+          className="mt-6.5 flex justify-center px-5"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...ENTER, delay: 0.26 }}
+        >
+          <div ref={containerRef} className="w-full">
+            <div className="flex justify-center gap-x-2">
+              <div ref={tagsRef} className="flex flex-nowrap gap-x-2">
+                {visibleTags.map((tag) => (
+                  <TagChip key={tag.id} label={tag.label} variant="dim" />
+                ))}
+              </div>
+              {overflowCount > 0 && !isWrapped && (
+                <div className="flex size-10.25 items-center justify-center rounded-full bg-[#898989]">
+                  <IcPlusCount width={13.3} height={16.62} className="text-gray-0" />
+                  <span className="point2 relative -top-[1.5px] text-gray-0">{overflowCount}</span>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </motion.div>
+            {overflowCount > 0 && isWrapped && (
+              <div
+                className="mt-2 flex size-10.25 items-center justify-center rounded-full bg-[#898989]"
+                style={{ marginLeft: tagsLeftOffset }}
+              >
+                <IcPlusCount width={13.3} height={16.62} className="text-gray-0" />
+                <span className="point2 relative -top-[1.5px] text-gray-0">{overflowCount}</span>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </div>
 
-      <div className="flex-1" />
-
-      {/* Button bar */}
+      {/* Button bar — absolute bottom so it's always visible regardless of screen height */}
       <motion.div
+        className="absolute bottom-0 left-0 right-0 z-10"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...ENTER, delay: 0.32 }}
