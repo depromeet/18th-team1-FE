@@ -9,6 +9,7 @@ import {
   SentenceCardPhase,
   SentenceDatePhase,
 } from "@/features/sentence-select";
+import { fetchTodaySentenceCardImage } from "@/features/sentence-share";
 import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { Header } from "@/widgets/header";
@@ -54,6 +55,7 @@ export const SentenceTodayView = ({
     setIsSharing(true);
     try {
       const blob = await fetchSentenceTodayImage(recommendationId);
+      const blob = await fetchTodaySentenceCardImage(dailyRecommendationId, 1);
       const file = new File([blob], "sentence-today.png", { type: "image/png" });
 
       if (!navigator.canShare?.({ files: [file] })) {
