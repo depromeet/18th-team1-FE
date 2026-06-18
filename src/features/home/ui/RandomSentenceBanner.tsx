@@ -10,9 +10,10 @@ const AUTO_SCROLL_INTERVAL_MS = 5000;
 
 interface RandomSentenceBannerProps {
   sentences: RecommendedSentence[];
+  onSlideClick?: (sentence: RecommendedSentence) => void;
 }
 
-export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) => {
+export const RandomSentenceBanner = ({ sentences, onSlideClick }: RandomSentenceBannerProps) => {
   const { slideIndex, isAnimating, isPaused, togglePause, handleTransitionEnd } = useInfiniteSlider(
     {
       count: sentences.length,
@@ -57,12 +58,17 @@ export const RandomSentenceBanner = ({ sentences }: RandomSentenceBannerProps) =
           onTransitionEnd={handleTransitionEnd}
         >
           {slides.map((slide) => (
-            <div key={slide.slideKey} className="flex w-full shrink-0 flex-col gap-5 p-5">
-              <p className="title1 line-clamp-3 h-31.5 text-key-secondary">{slide.quote}</p>
+            <button
+              key={slide.slideKey}
+              type="button"
+              className="flex w-full shrink-0 flex-col gap-5 p-5 text-left"
+              onClick={() => onSlideClick?.(slide)}
+            >
+              <p className="title1 line-clamp-3 text-key-secondary">{slide.quote}</p>
               <Text variant="caption2" color="key-secondary">
                 &#x300E;{slide.bookTitle}&#x300F;, {slide.bookAuthor}
               </Text>
-            </div>
+            </button>
           ))}
         </div>
         <PlaybackControlChip

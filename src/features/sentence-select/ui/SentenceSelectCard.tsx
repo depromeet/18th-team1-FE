@@ -36,11 +36,11 @@ export const SentenceSelectCard = ({
           </div>
         </div>
         <div className="flex h-37.5 flex-col items-start justify-center gap-4 bg-background px-4 py-5.5">
-          <Text variant="body1" color="gray-500" className="w-full whitespace-pre-wrap">
+          <Text variant="subhead4" color="gray-600" className="w-full whitespace-pre-wrap">
             {quote}
           </Text>
           <Text variant="caption2" color="gray-300">
-            {bookTitle}, {bookAuthor}
+            {`『${bookTitle}』, ${bookAuthor}`}
           </Text>
         </div>
       </div>
@@ -50,7 +50,7 @@ export const SentenceSelectCard = ({
           {quote}
         </Text>
         <Text variant="caption2" color="gray-300">
-          {bookTitle}, {bookAuthor}
+          {`『${bookTitle}』, ${bookAuthor}`}
         </Text>
       </div>
     )}

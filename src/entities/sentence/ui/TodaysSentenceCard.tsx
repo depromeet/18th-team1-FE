@@ -2,9 +2,11 @@
 
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { Text } from "@/shared/ui/text";
+
+const FLIP_INTERVAL_MS = 4000;
 
 interface TodaysSentenceCardProps {
   date: string;
@@ -23,9 +25,10 @@ export const TodaysSentenceCard = ({
   bookCoverImage,
   animateWords = false,
 }: TodaysSentenceCardProps) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [isFlipping, setIsFlipping] = useState(false);
   const controls = useAnimation();
+  const isFlippedRef = useRef(false);
+  const isFlippingRef = useRef(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const wordLines = useMemo(() => {
     let globalIndex = 0;
@@ -46,21 +49,17 @@ export const TodaysSentenceCard = ({
     });
   }, [quote]);
 
-  const handleClick = async () => {
-    if (isFlipping) return;
-    setIsFlipping(true);
-    const nextFlipped = !isFlipped;
-    setIsFlipped(nextFlipped);
+  const flipRef = useRef<() => Promise<void>>(async () => {});
+  flipRef.current = async () => {
+    if (isFlippingRef.current) return;
+    isFlippingRef.current = true;
+    isFlippedRef.current = !isFlippedRef.current;
     await controls.start({
-      rotateY: nextFlipped ? 180 : 0,
+      rotateY: isFlippedRef.current ? 180 : 0,
       y: [0, -30, -30, 0],
       scale: [1, 1.05, 1.05, 1],
       transition: {
-        rotateY: {
-          duration: 0.9,
-          ease: [0.4, 0, 0.2, 1],
-        },
-        // 착지 easing에 spring 곡선을 녹여서 자연스러운 탄성
+        rotateY: { duration: 0.9, ease: [0.4, 0, 0.2, 1] },
         y: {
           duration: 0.9,
           times: [0, 0.28, 0.6, 1],
@@ -73,7 +72,24 @@ export const TodaysSentenceCard = ({
         },
       },
     });
-    setIsFlipping(false);
+    isFlippingRef.current = false;
+  };
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      flipRef.current();
+    }, FLIP_INTERVAL_MS);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const handleClick = () => {
+    flipRef.current();
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      flipRef.current();
+    }, FLIP_INTERVAL_MS);
   };
 
   return (
@@ -150,11 +166,9 @@ export const TodaysSentenceCard = ({
             transform: "rotateY(180deg)",
           }}
         >
-          {/* 책 표지 이미지 */}
           {bookCoverImage && (
             <Image alt="book cover" fill className="object-cover object-top" src={bookCoverImage} />
           )}
-          {/* 제본 spine 효과 */}
           <Image
             alt=""
             width={11}

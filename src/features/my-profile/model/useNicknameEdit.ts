@@ -8,7 +8,7 @@ export const useNicknameEdit = (initialNickname = "") => {
   const [value, setValue] = useState("");
 
   const validationError =
-    value.length > 0 && value.trim().length < 2 ? "닉네임을 2~10글자로 입력해주세요." : "";
+    value.length > 0 && value.trim().length < 2 ? "닉네임을 2~10글자로 입력해주세요." : undefined;
 
   const isValid = value.trim().length >= 2 && value !== initialNickname;
 

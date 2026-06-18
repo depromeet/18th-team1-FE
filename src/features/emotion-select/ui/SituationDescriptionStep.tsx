@@ -1,4 +1,4 @@
-import { type ChangeEvent, useEffect } from "react";
+import { useEffect } from "react";
 
 import { TagChip, useEmotionTagsQuery } from "@/entities/emotion-tag";
 import { IcPlusCount } from "@/shared/ui/icons";
@@ -6,6 +6,7 @@ import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
 import { getEmotionValue } from "../model/emotion";
+import { useCharLimit } from "../model/useCharLimit";
 
 interface SituationDescriptionStepProps {
   onValidChange: (isNextDisabled: boolean) => void;
@@ -29,9 +30,11 @@ export const SituationDescriptionStep = ({ onValidChange }: SituationDescription
     onValidChange(false);
   }, [onValidChange]);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setSituationDescription(e.target.value);
-  };
+  const { handleChange, handlePaste } = useCharLimit<HTMLTextAreaElement>(
+    300,
+    setSituationDescription,
+    "최대 300자까지만 작성 가능해요.",
+  );
 
   return (
     <div className="flex flex-col gap-10">
@@ -47,6 +50,7 @@ export const SituationDescriptionStep = ({ onValidChange }: SituationDescription
             placeholder={"구체적으로 작성할수록\n딱 맞는 문장을 추천 받을 수 있어요"}
             value={situationDescription}
             onChange={handleChange}
+            onPaste={handlePaste}
           />
         </div>
         <div className="flex flex-wrap gap-x-2 gap-y-3">

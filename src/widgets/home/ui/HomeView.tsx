@@ -1,7 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
+import type { Post } from "@/entities/post";
 import { fetchTodayStatus, type RecommendedSentence } from "@/entities/sentence";
 import {
   HomeBanner,
@@ -10,8 +12,10 @@ import {
   useHomeRandomQuery,
   useHomeSummaryQuery,
 } from "@/features/home";
+import { useScrapMutation } from "@/features/post-bookmark";
 import { useToast } from "@/shared/hooks/useToast";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
+import { PostShareModal } from "@/widgets/post-share-modal";
 
 export const HomeView = () => {
   const router = useRouter();
@@ -19,6 +23,8 @@ export const HomeView = () => {
   const { data: randomQuote } = useHomeRandomQuery();
   const { setCurrentRecommendationId, setLoadingQuotes } = useEmotionSelectStore();
   const { toast } = useToast();
+  const { toggle } = useScrapMutation();
+  const [selectedSentence, setSelectedSentence] = useState<RecommendedSentence | null>(null);
 
   const monthlyRecommendations = (summary?.monthlyRecommendations ?? []).slice().reverse();
 
@@ -29,6 +35,21 @@ export const HomeView = () => {
     bookAuthor: quote.author,
     date: "",
   }));
+
+  const selectedPost: Post | null = selectedSentence
+    ? {
+        id: selectedSentence.id,
+        author: { id: "", nickname: "" },
+        content: selectedSentence.quote,
+        book: { title: selectedSentence.bookTitle, author: selectedSentence.bookAuthor },
+        date: `${new Date().getDate()}, ${new Date().toLocaleDateString("en-US", { weekday: "long" })}`,
+        mood: "good",
+        emotionTag: "",
+        toneTag: "",
+        isBookmarked: false,
+        createdAt: "",
+      }
+    : null;
 
   const handleBannerClick = async (): Promise<void> => {
     let status: Awaited<ReturnType<typeof fetchTodayStatus>>;
@@ -60,9 +81,22 @@ export const HomeView = () => {
 
   return (
     <>
-      <RandomSentenceBanner sentences={sentences} />
+      <RandomSentenceBanner sentences={sentences} onSlideClick={setSelectedSentence} />
       <HomeBanner onClick={handleBannerClick} />
       <HomeSentenceSection items={monthlyRecommendations} />
+      {selectedPost && selectedSentence && (
+        <PostShareModal
+          post={selectedPost}
+          isOpen={true}
+          onClose={() => {
+            setSelectedSentence(null);
+            router.push("/discover");
+          }}
+          onToggleBookmark={(currentIsBookmarked) =>
+            toggle(Number(selectedSentence.id), currentIsBookmarked)
+          }
+        />
+      )}
     </>
   );
 };

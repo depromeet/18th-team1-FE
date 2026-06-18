@@ -42,16 +42,14 @@ export const TagChip = ({
   }
 
   return (
-    <div className={chipClass}>
+    <button
+      type="button"
+      onClick={onRemove}
+      className={cn(chipClass, "cursor-pointer")}
+      aria-label={`${label} 선택 취소`}
+    >
       <span>{label}</span>
-      <button
-        type="button"
-        onClick={onRemove}
-        className="flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center"
-        aria-label={`${label} 선택 취소`}
-      >
-        <IcMinusCircleFill size={16} className="relative -top-px text-gray-0" />
-      </button>
-    </div>
+      <IcMinusCircleFill size={16} className="relative -top-px text-gray-0" />
+    </button>
   );
 };

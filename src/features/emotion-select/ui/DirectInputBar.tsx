@@ -1,7 +1,8 @@
-import { type ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 import { IcArrowUp } from "@/shared/ui/icons";
 
+import { useCharLimit } from "../model/useCharLimit";
 import { usePlaceholderCycle } from "../model/usePlaceholderCycle";
 import { AnimatedPlaceholder } from "./AnimatedPlaceholder";
 
@@ -14,11 +15,14 @@ interface DirectInputBarProps {
 export const DirectInputBar = ({ onValidChange, onSubmit, isLoading }: DirectInputBarProps) => {
   const [value, setValue] = useState("");
   const { placeholderText, animationKey, isExiting } = usePlaceholderCycle(true);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value);
-    onValidChange(e.target.value.length === 0);
-  };
+  const { handleChange, handlePaste } = useCharLimit<HTMLInputElement>(
+    30,
+    (newValue) => {
+      setValue(newValue);
+      onValidChange(newValue.length === 0);
+    },
+    "최대 30자까지만 작성 가능해요.",
+  );
 
   const handleSubmit = (): void => {
     onSubmit(value);
@@ -33,6 +37,7 @@ export const DirectInputBar = ({ onValidChange, onSubmit, isLoading }: DirectInp
           className="body1 w-full bg-transparent text-gray-700 outline-none"
           value={value}
           onChange={handleChange}
+          onPaste={handlePaste}
         />
         {value.length === 0 && (
           <div

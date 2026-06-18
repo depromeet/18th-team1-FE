@@ -69,6 +69,7 @@ export const useScrapMutation = () => {
       console.error("스크랩 처리 실패, 롤백됨:", error);
     } finally {
       queryClient.invalidateQueries({ queryKey: discoveryKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["scraps"] });
     }
   };
 

@@ -23,7 +23,10 @@ export const NicknameInputField = ({
 }: NicknameInputFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const hasError = !!errorMessage;
+  const isAtMaxLength = value.length >= maxLength;
+  const displayErrorMessage =
+    errorMessage ?? (isAtMaxLength ? `최대 ${maxLength}자까지 입력 가능해요.` : undefined);
+  const hasError = !!displayErrorMessage;
   const hasValue = value.length > 0;
   const showClearButton = (isFocused || hasError) && hasValue && !!onClear;
   const displayCount = hasValue ? value.length : (placeholder?.length ?? 0);
@@ -64,7 +67,7 @@ export const NicknameInputField = ({
         )}
       </div>
       <div className={`flex items-start ${hasError ? "justify-between" : "justify-end"}`}>
-        {hasError && <p className="caption3 flex-1 text-sub-error">* {errorMessage}</p>}
+        {hasError && <p className="caption3 flex-1 text-sub-error">* {displayErrorMessage}</p>}
         <p className={`caption3 text-right ${hasError ? "text-sub-error" : "text-midgray1"}`}>
           {displayCount}/{maxLength}
         </p>

@@ -68,7 +68,7 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
       style={{ height: "var(--vh, 100dvh)" }}
     >
       <Header title="설정" onBack={onBack} />
-      <div className="flex flex-col gap-4 overflow-y-auto px-5 pt-[15px]">
+      <div className="flex flex-1 min-h-0 flex-col gap-4 overflow-y-auto px-5 pt-3.75 pb-8">
         <div className="rounded-[20px] bg-background px-5 py-6">
           <div className="flex items-center gap-2.5">
             <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#d1e9ea]">

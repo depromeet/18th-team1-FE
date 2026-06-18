@@ -50,7 +50,9 @@ export const PostShareModal = ({
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-5">
         <div className="flex flex-col items-center gap-6">
           <div className="flex flex-col gap-5">
-            <PostAuthorProfile author={post.author} createdAt={post.createdAt} variant="light" />
+            {post.author.nickname && (
+              <PostAuthorProfile author={post.author} createdAt={post.createdAt} variant="light" />
+            )}
             <PostShareCard post={post} />
           </div>
 

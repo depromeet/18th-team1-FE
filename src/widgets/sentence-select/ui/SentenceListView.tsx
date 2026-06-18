@@ -93,7 +93,7 @@ export const SentenceListView = () => {
           <NewDoubleButton
             left={{
               label: "문장 더 불러오기",
-              isMuted: true,
+              isMuted: !hasMore,
               onClick: handleLoadMore,
               disabled: !hasMore,
             }}
