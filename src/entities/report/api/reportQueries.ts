@@ -14,9 +14,11 @@ export const useMonthlyReportQuery = (
   year: number,
   month: number,
   enabled = true,
+  shouldThrowOnError?: boolean,
 ): UseQueryResult<MonthlyReport> =>
   useQuery({
     queryKey: reportKeys.monthly(year, month),
     queryFn: () => fetchMonthlyReport(year, month),
     enabled,
+    ...(shouldThrowOnError === undefined ? {} : { throwOnError: shouldThrowOnError }),
   });
