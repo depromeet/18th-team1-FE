@@ -125,7 +125,10 @@ const requestVoid = async (path: string, options: RequestOptions = {}): Promise<
 };
 
 const requestBlob = async (path: string, options: RequestOptions = {}): Promise<Blob> => {
-  const response = await executeRawRequest(path, options);
+  const response = await executeRawRequest(path, {
+    ...options,
+    headers: { Accept: "image/png", ...options.headers },
+  });
   return response.blob();
 };
 

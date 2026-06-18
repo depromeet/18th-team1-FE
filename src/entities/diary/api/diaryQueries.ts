@@ -9,10 +9,11 @@ export const diaryKeys = {
   detail: (id: number) => [...diaryKeys.details(), id] as const,
 };
 
-export const useDiariesQuery = (start: string, end: string) =>
+export const useDiariesQuery = (start: string, end: string, options?: { enabled?: boolean }) =>
   useQuery({
     queryKey: diaryKeys.list(start, end),
     queryFn: () => fetchDiaries(start, end),
+    enabled: options?.enabled ?? true,
   });
 
 export const useDiaryDetailQuery = (id: number) =>

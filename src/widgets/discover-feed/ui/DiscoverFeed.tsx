@@ -12,6 +12,7 @@ import { DiscoverSearchBar, useDiscoverSearch } from "@/features/discover-search
 import { BookmarkButton, useScrapMutation } from "@/features/post-bookmark";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { PostShareModal } from "@/widgets/post-share-modal";
+import { DiscoverFeedSkeleton } from "./DiscoverFeedSkeleton";
 
 const getMood = (emotionValue: number) => {
   if (emotionValue >= 7) return "good" as const;
@@ -60,11 +61,7 @@ export const DiscoverFeed = (): React.ReactElement => {
       </div>
 
       <div ref={sentinelRef} className="min-h-0 flex-1 overflow-y-auto px-5">
-        {isLoading && (
-          <div className="flex items-center justify-center py-20">
-            <span className="caption1 text-gray-300">불러오는 중...</span>
-          </div>
-        )}
+        {isLoading && <DiscoverFeedSkeleton />}
 
         {!isLoading &&
           quotes.map((quote) => (

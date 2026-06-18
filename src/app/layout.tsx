@@ -2,10 +2,9 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
-import { AuthGuard } from "@/features/auth";
-
 import { Providers } from "./providers";
 import "./globals.css";
+import { AuthGuard } from "@/features/auth";
 
 const pretendard = localFont({
   src: "../../public/fonts/subset-PretendardVariable.woff2",
@@ -68,6 +67,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
     <html
       lang="ko"
       className={`${pretendard.variable} ${gtPressura.variable} ${millingTrial.variable}`}
+      suppressHydrationWarning
     >
       <body
         className="h-dvh overflow-hidden bg-gray-50 font-pretendard text-gray-700 antialiased"
