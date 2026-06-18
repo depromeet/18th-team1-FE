@@ -128,6 +128,9 @@ export const DiscoverFeed = (): React.ReactElement => {
           }}
           isOpen={true}
           onClose={() => setSelectedQuote(null)}
+          onToggleBookmark={(currentIsBookmarked) =>
+            toggle(selectedQuote.quoteId, currentIsBookmarked)
+          }
         />
       )}
     </div>
