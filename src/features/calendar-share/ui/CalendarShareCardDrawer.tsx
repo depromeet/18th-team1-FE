@@ -179,7 +179,7 @@ export const CalendarShareCardDrawer = ({
                       className="size-full object-cover rounded-2xl"
                     />
                   ) : (
-                    <div className="size-full animate-pulse bg-gray-50" />
+                    <div className="size-full animate-pulse bg-gray-50 rounded-2xl" />
                   )}
                 </div>
               );

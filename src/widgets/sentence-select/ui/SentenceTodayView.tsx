@@ -1,12 +1,11 @@
 "use client";
 
-import { format } from "date-fns";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { SentenceCardPhase, SentenceDatePhase } from "@/features/sentence-select";
-import { fetchSentenceCardImage } from "@/features/sentence-share";
+import { SentenceShareCardDrawer } from "@/features/sentence-share";
 import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { Header } from "@/widgets/header";
@@ -21,7 +20,7 @@ export const SentenceTodayView = ({
   const router = useRouter();
   const pathname = usePathname();
   const [phase, setPhase] = useState<"date" | "card">(initialPhase);
-  const [isSharing, setIsSharing] = useState(false);
+  const [isShareDrawerOpen, setIsShareDrawerOpen] = useState(false);
   const { selectedQuote, reset } = useEmotionSelectStore();
 
   const today = new Date();
@@ -38,68 +37,40 @@ export const SentenceTodayView = ({
     router.push("/");
   };
 
-  const handleShare = async (): Promise<void> => {
-    if (isSharing) return;
-
-    if (!navigator.share) {
-      alert("이 브라우저에서는 공유 기능을 지원하지 않아요.");
-      return;
-    }
-
-    if (!selectedQuote) return;
-
-    setIsSharing(true);
-    try {
-      const blob = await fetchSentenceCardImage({
-        variant: 1,
-        createdAt: format(new Date(), "yyyy-MM-dd"),
-        quote: selectedQuote.content,
-        title: selectedQuote.title,
-        author: selectedQuote.author,
-      });
-      const file = new File([blob], "sentence-today.png", { type: "image/png" });
-
-      if (!navigator.canShare?.({ files: [file] })) {
-        alert("이 기기에서는 이미지 공유를 지원하지 않아요.");
-        return;
-      }
-
-      await navigator.share({ files: [file] });
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
-      alert("공유에 실패했어요. 다시 시도해주세요.");
-    } finally {
-      setIsSharing(false);
-    }
-  };
-
   return (
-    <div className="relative flex-1 overflow-hidden">
-      <LayoutGroup>
-        <AnimatePresence mode="sync">
-          {phase === "date" ? (
-            <SentenceDatePhase key="date" month={month} onReveal={handleReveal} />
-          ) : (
-            <SentenceCardPhase
-              key="card"
-              header={<Header onBack={() => router.back()} />}
-              month={month}
-              date={date}
-              quote={selectedQuote?.content ?? ""}
-              bookTitle={selectedQuote?.title ?? ""}
-              bookAuthor={selectedQuote?.author ?? ""}
-              bookCoverImage={selectedQuote?.image}
-              tags={selectedQuote?.tags ?? []}
-              leftButton={{ label: "확인", isMuted: false, onClick: handleConfirm }}
-              rightButton={{
-                label: "공유하기",
-                icon: <IcShare3 size={24} className="text-gray-0" />,
-                onClick: handleShare,
-              }}
-            />
-          )}
-        </AnimatePresence>
-      </LayoutGroup>
-    </div>
+    <>
+      <div className="relative flex-1 overflow-hidden">
+        <LayoutGroup>
+          <AnimatePresence mode="sync">
+            {phase === "date" ? (
+              <SentenceDatePhase key="date" month={month} onReveal={handleReveal} />
+            ) : (
+              <SentenceCardPhase
+                key="card"
+                header={<Header onBack={() => router.back()} />}
+                month={month}
+                date={date}
+                quote={selectedQuote?.content ?? ""}
+                bookTitle={selectedQuote?.title ?? ""}
+                bookAuthor={selectedQuote?.author ?? ""}
+                bookCoverImage={selectedQuote?.image}
+                tags={selectedQuote?.tags ?? []}
+                leftButton={{ label: "확인", isMuted: false, onClick: handleConfirm }}
+                rightButton={{
+                  label: "공유하기",
+                  icon: <IcShare3 size={24} className="text-gray-0" />,
+                  onClick: () => setIsShareDrawerOpen(true),
+                }}
+              />
+            )}
+          </AnimatePresence>
+        </LayoutGroup>
+      </div>
+      <SentenceShareCardDrawer
+        isOpen={isShareDrawerOpen}
+        shareType="today-sentence"
+        onClose={() => setIsShareDrawerOpen(false)}
+      />
+    </>
   );
 };
