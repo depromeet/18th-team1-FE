@@ -130,9 +130,10 @@ export const ScrapSentenceSection = () => {
         </div>
       )}
       <div ref={sentinelRef} className="h-px" />
+      {isSelectMode && <div className="h-16 shrink-0" />}
 
       {isSelectMode && (
-        <div className="flex shrink-0 items-center justify-between bg-background px-5 py-3.75 shadow-[0_-4px_15px_rgba(0,27,55,0.1)]">
+        <div className="fixed bottom-0 left-1/2 z-20 flex w-full -translate-x-1/2 items-center justify-between bg-background px-5 py-3.75 shadow-[0_-4px_15px_rgba(0,27,55,0.1)] md:max-w-93.75">
           <span className="subhead1 text-gray-700">{selectedIds.size}개의 문장이 선택됨</span>
           <button
             type="button"
