@@ -9,24 +9,12 @@ export const useEmotionTutorial = () => {
   const [showTutorial, setShowTutorial] = useState<boolean | null>(null);
   const [shouldDropAnimate, setShouldDropAnimate] = useState(false);
   const dropTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const mountedRef = useRef(false);
 
   useEffect(() => {
-    mountedRef.current = true;
     setShowTutorial(sessionStorage.getItem(TUTORIAL_KEY) !== "true");
 
     return () => {
-      mountedRef.current = false;
       clearTimeout(dropTimerRef.current);
-
-      // React Strict Mode는 동기적으로 cleanup → remount 실행.
-      // setTimeout(0) 시점엔 remount로 인해 mountedRef가 이미 true로 복구됨 → 클리어 안 함.
-      // 실제 페이지 이탈(unmount 후 remount 없음) 시에만 sessionStorage 제거 → 다음 진입 때 오버레이 재표시.
-      setTimeout(() => {
-        if (!mountedRef.current) {
-          sessionStorage.removeItem(TUTORIAL_KEY);
-        }
-      }, 0);
     };
   }, []);
 
