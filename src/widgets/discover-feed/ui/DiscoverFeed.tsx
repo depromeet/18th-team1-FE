@@ -7,6 +7,7 @@ import {
   PostAuthorProfile,
   PostListItem,
   useDiscoveryFeedQuery,
+  useGenresQuery,
 } from "@/entities/post";
 import { GenreFilterChips, useDiscoverFilter } from "@/features/discover-filter";
 import { DiscoverSearchBar, useDiscoverSearch } from "@/features/discover-search";
@@ -33,13 +34,15 @@ const formatRelativeTime = (isoString: string): string => {
 };
 
 export const DiscoverFeed = (): React.ReactElement => {
-  const { selectedGenre, setSelectedGenre } = useDiscoverFilter();
+  const { selectedGenreId, setSelectedGenreId } = useDiscoverFilter();
   const { navigateToSearch } = useDiscoverSearch();
   const [selectedQuote, setSelectedQuote] = useState<DiscoveryQuoteDto | null>(null);
 
-  const genre = selectedGenre === "모든 장르" ? undefined : selectedGenre;
+  const { data: genresData } = useGenresQuery();
+  const genres = genresData ?? [];
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useDiscoveryFeedQuery(genre);
+    useDiscoveryFeedQuery(selectedGenreId);
 
   const { toggle } = useScrapMutation();
 
@@ -58,7 +61,11 @@ export const DiscoverFeed = (): React.ReactElement => {
         <div className="px-5 pt-15">
           <DiscoverSearchBar onSubmit={(query) => navigateToSearch(query)} />
         </div>
-        <GenreFilterChips selected={selectedGenre} onChange={setSelectedGenre} />
+        <GenreFilterChips
+          genres={genres}
+          selectedGenreId={selectedGenreId}
+          onChange={setSelectedGenreId}
+        />
       </div>
 
       <div ref={sentinelRef} className="min-h-0 flex-1 overflow-y-auto px-5">
