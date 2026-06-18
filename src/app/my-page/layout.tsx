@@ -12,7 +12,7 @@ const MyPageLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header
-        onBack={() => router.back()}
+        onBack={() => (window.history.length > 1 ? router.back() : router.push("/"))}
         right={
           <button type="button" aria-label="설정" onClick={() => router.push("/my-page/settings")}>
             <IcSetting size={24} className="text-gray-700" />

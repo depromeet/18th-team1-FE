@@ -12,6 +12,7 @@ import {
   useHomeRandomQuery,
   useHomeSummaryQuery,
 } from "@/features/home";
+import { useScrapMutation } from "@/features/post-bookmark";
 import { useToast } from "@/shared/hooks/useToast";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { PostShareModal } from "@/widgets/post-share-modal";
@@ -22,6 +23,7 @@ export const HomeView = () => {
   const { data: randomQuote } = useHomeRandomQuery();
   const { setCurrentRecommendationId, setLoadingQuotes } = useEmotionSelectStore();
   const { toast } = useToast();
+  const { toggle } = useScrapMutation();
   const [selectedSentence, setSelectedSentence] = useState<RecommendedSentence | null>(null);
 
   const monthlyRecommendations = (summary?.monthlyRecommendations ?? []).slice().reverse();
@@ -82,11 +84,14 @@ export const HomeView = () => {
       <RandomSentenceBanner sentences={sentences} onSlideClick={setSelectedSentence} />
       <HomeBanner onClick={handleBannerClick} />
       <HomeSentenceSection items={monthlyRecommendations} />
-      {selectedPost && (
+      {selectedPost && selectedSentence && (
         <PostShareModal
           post={selectedPost}
           isOpen={true}
           onClose={() => setSelectedSentence(null)}
+          onToggleBookmark={(currentIsBookmarked) =>
+            toggle(Number(selectedSentence.id), currentIsBookmarked)
+          }
         />
       )}
     </>
