@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
-import type { CalendarShareStep, ShareType } from "./calendar-share.types";
+import type { CalendarShareStep, SentenceShareData, ShareType } from "./calendar-share.types";
 
 interface CalendarShareFlowReturn {
   step: CalendarShareStep;
   openTypeSheet: () => void;
   selectType: (shareType: ShareType) => void;
-  selectDate: (date: string) => void;
+  selectDate: (date: string, sentenceData?: SentenceShareData) => void;
   close: () => void;
 }
 
@@ -25,8 +25,8 @@ export const useCalendarShareFlow = (): CalendarShareFlowReturn => {
     setStep({ type: "card-drawer", shareType });
   };
 
-  const selectDate = (date: string): void => {
-    setStep({ type: "card-drawer", shareType: "sentence-pick", date });
+  const selectDate = (date: string, sentenceData?: SentenceShareData): void => {
+    setStep({ type: "card-drawer", shareType: "sentence-pick", date, sentenceData });
   };
 
   const close = (): void => setStep({ type: "idle" });

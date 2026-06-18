@@ -2,8 +2,14 @@ export type ShareType = "today-sentence" | "calendar" | "sentence-pick";
 
 export type CalendarCardVariant = 1 | 2;
 
+export type SentenceShareData = {
+  quote: string;
+  title: string;
+  author: string;
+};
+
 export type CalendarShareStep =
   | { type: "idle" }
   | { type: "type-sheet" }
   | { type: "date-drawer" }
-  | { type: "card-drawer"; shareType: ShareType; date?: string };
+  | { type: "card-drawer"; shareType: ShareType; date?: string; sentenceData?: SentenceShareData };

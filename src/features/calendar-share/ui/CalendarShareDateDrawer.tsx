@@ -4,12 +4,14 @@ import { addDays, format, getDay, isAfter, isSameDay, startOfDay } from "date-fn
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import type { DiaryListItem } from "@/entities/diary";
+import type { RecommendationListItem } from "@/entities/diary";
 import { useDiariesQuery } from "@/entities/diary";
 import { cn } from "@/shared/lib/utils";
 import { Drawer, DrawerContent } from "@/shared/ui/drawer";
 import { IcDelete, IcOption } from "@/shared/ui/icons";
 import { NewButton } from "@/shared/ui/new-button";
+
+import type { SentenceShareData } from "../model/calendar-share.types";
 
 // 56일(8주) + 오늘 + 우측 3칸(미래 버퍼) = 60일
 // inner flex에 paddingLeft = 3 * cellWidth를 줘서
@@ -24,7 +26,7 @@ const WEEKDAY_LABELS = ["일", "월", "화", "수", "목", "금", "토"] as cons
 
 interface DayCellProps {
   day: Date;
-  diaries: DiaryListItem[];
+  diaries: RecommendationListItem[];
   isSelected: boolean;
   isDisabled: boolean;
 }
@@ -60,8 +62,8 @@ const DayCell = ({ day, diaries, isSelected, isDisabled }: DayCellProps): React.
         )}
       >
         <Image
-          src={diary.coverImageUrl}
-          alt={diary.title}
+          src={diary.quote.image}
+          alt={diary.quote.title}
           fill
           sizes="55px"
           className="object-cover"
@@ -79,8 +81,8 @@ const DayCell = ({ day, diaries, isSelected, isDisabled }: DayCellProps): React.
     <div className={cn("relative transition-all duration-150", cellHeight, cellWidth)}>
       <div className="absolute inset-x-[6%] bottom-[17%] top-0 overflow-hidden rounded-[3.5px]">
         <Image
-          src={back.coverImageUrl}
-          alt={back.title}
+          src={back.quote.image}
+          alt={back.quote.title}
           fill
           sizes="40px"
           className="object-cover"
@@ -88,8 +90,8 @@ const DayCell = ({ day, diaries, isSelected, isDisabled }: DayCellProps): React.
       </div>
       <div className="absolute inset-x-0 bottom-0 top-[6.5%] overflow-hidden rounded-[4px] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]">
         <Image
-          src={front.coverImageUrl}
-          alt={front.title}
+          src={front.quote.image}
+          alt={front.quote.title}
           fill
           sizes="46px"
           className="object-cover"
@@ -105,16 +107,16 @@ const DayCell = ({ day, diaries, isSelected, isDisabled }: DayCellProps): React.
 // ── Sentence card ─────────────────────────────────────────────────────────────
 
 interface SentenceCardProps {
-  diary: DiaryListItem;
+  diary: RecommendationListItem;
 }
 
 const SentenceCard = ({ diary }: SentenceCardProps): React.ReactElement => (
   <div className="relative flex w-full flex-col gap-2 px-5 pt-5">
     <div className="flex w-full flex-col gap-5">
       <div className="flex flex-col gap-1.5 pr-9">
-        <p className="subhead4 whitespace-pre-wrap text-gray-700">{diary.quoteContent}</p>
+        <p className="subhead4 whitespace-pre-wrap text-gray-700">{diary.quote.content}</p>
         <p className="caption2 text-gray-600">
-          『{diary.title}』, {diary.author}
+          『{diary.quote.title}』, {diary.quote.author}
         </p>
       </div>
       <div className="h-px w-full bg-gray-100" />
@@ -133,7 +135,7 @@ const SentenceCard = ({ diary }: SentenceCardProps): React.ReactElement => (
 
 interface CalendarShareDateDrawerProps {
   isOpen: boolean;
-  onSelectDate: (date: string) => void;
+  onSelectDate: (date: string, sentenceData: SentenceShareData) => void;
   onClose: () => void;
 }
 
@@ -158,9 +160,9 @@ export const CalendarShareDateDrawer = ({
   const { data } = useDiariesQuery(queryStart, queryEnd, { enabled: isOpen });
 
   const diaryByDate = useMemo(() => {
-    const map = new Map<string, DiaryListItem[]>();
-    for (const diary of data?.diaries ?? []) {
-      map.set(diary.createdAt, [...(map.get(diary.createdAt) ?? []), diary]);
+    const map = new Map<string, RecommendationListItem[]>();
+    for (const diary of data?.recommendations ?? []) {
+      map.set(diary.recommendationDate, [...(map.get(diary.recommendationDate) ?? []), diary]);
     }
     return map;
   }, [data]);
@@ -202,6 +204,15 @@ export const CalendarShareDateDrawer = ({
     if (!el) return;
     el.scrollTo({ left: index * (el.clientWidth / 7), behavior: "smooth" });
     setSelectedDate(day);
+  };
+
+  const handleConfirm = (): void => {
+    if (!selectedDiary) return;
+    onSelectDate(format(selectedDate, "yyyy-MM-dd"), {
+      quote: selectedDiary.quote.content,
+      title: selectedDiary.quote.title,
+      author: selectedDiary.quote.author,
+    });
   };
 
   return (
@@ -309,7 +320,7 @@ export const CalendarShareDateDrawer = ({
         <NewButton
           label="다음"
           disabled={!selectedDiary}
-          onClick={() => onSelectDate(format(selectedDate, "yyyy-MM-dd"))}
+          onClick={handleConfirm}
           className="mt-5"
         />
       </DrawerContent>

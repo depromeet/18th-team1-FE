@@ -1,15 +1,12 @@
 "use client";
 
+import { format } from "date-fns";
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-import {
-  fetchSentenceTodayImage,
-  SentenceCardPhase,
-  SentenceDatePhase,
-} from "@/features/sentence-select";
-import { fetchTodaySentenceCardImage } from "@/features/sentence-share";
+import { SentenceCardPhase, SentenceDatePhase } from "@/features/sentence-select";
+import { fetchSentenceCardImage } from "@/features/sentence-share";
 import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { Header } from "@/widgets/header";
@@ -49,13 +46,17 @@ export const SentenceTodayView = ({
       return;
     }
 
-    const recommendationId = selectedQuote?.recommendationId;
-    if (!recommendationId) return;
+    if (!selectedQuote) return;
 
     setIsSharing(true);
     try {
-      const blob = await fetchSentenceTodayImage(recommendationId);
-      const blob = await fetchTodaySentenceCardImage(dailyRecommendationId, 1);
+      const blob = await fetchSentenceCardImage({
+        variant: 1,
+        createdAt: format(new Date(), "yyyy-MM-dd"),
+        quote: selectedQuote.content,
+        title: selectedQuote.title,
+        author: selectedQuote.author,
+      });
       const file = new File([blob], "sentence-today.png", { type: "image/png" });
 
       if (!navigator.canShare?.({ files: [file] })) {

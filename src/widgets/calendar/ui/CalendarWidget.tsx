@@ -7,6 +7,7 @@ import {
   CalendarShareCardDrawer,
   CalendarShareDateDrawer,
   CalendarShareTypeSheet,
+  type ShareType,
   useCalendarShareFlow,
 } from "@/features/calendar-share";
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
@@ -14,6 +15,7 @@ import { MonthPicker } from "@/features/month-picker";
 import { SentenceShareCardDrawer } from "@/features/sentence-share";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
+import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { useCalendarWidget } from "../model/useCalendarWidget";
 
 interface CalendarWidgetProps {
@@ -29,6 +31,16 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const { step, openTypeSheet, selectType, selectDate, close } = useCalendarShareFlow();
+  const { selectedQuote } = useEmotionSelectStore();
+
+  const handleSelectType = (shareType: ShareType): void => {
+    if (shareType === "today-sentence" && !selectedQuote) {
+      router.push("/emotion");
+      close();
+      return;
+    }
+    selectType(shareType);
+  };
 
   const {
     diaryIntensitiesByDate,
@@ -120,14 +132,16 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
 
       <CalendarShareTypeSheet
         isOpen={step.type === "type-sheet"}
-        onSelect={selectType}
+        onSelect={handleSelectType}
         onClose={close}
       />
+
       <CalendarShareDateDrawer
         isOpen={step.type === "date-drawer"}
         onSelectDate={selectDate}
         onClose={close}
       />
+
       <SentenceShareCardDrawer
         isOpen={step.type === "card-drawer" && step.shareType !== "calendar"}
         shareType={
@@ -136,6 +150,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
             : undefined
         }
         date={step.type === "card-drawer" ? step.date : undefined}
+        sentencePickData={step.type === "card-drawer" ? step.sentenceData : undefined}
         onClose={close}
       />
       <CalendarShareCardDrawer

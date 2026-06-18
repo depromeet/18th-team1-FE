@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { createPortal } from "react-dom";
 
 import type { ShareType } from "../model/calendar-share.types";
 import { Calendar, SelectText, TodayText } from "./CalendarShareTypeCard";
@@ -65,7 +66,7 @@ export const CalendarShareTypeSheet = ({
 }: CalendarShareTypeSheetProps): React.ReactElement | null => {
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50">
       {/* 뒷배경 탭하면 닫힘 */}
       <button type="button" className="absolute inset-0" onClick={onClose} aria-label="닫기" />
@@ -74,7 +75,7 @@ export const CalendarShareTypeSheet = ({
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-background via-background/85 to-transparent" />
 
       {/* 카드 3종 — 왼쪽부터 순서대로 stagger 등장 */}
-      <div className="absolute bottom-14 left-0 right-0 flex items-end justify-center">
+      <div className="absolute bottom-15 left-0 right-0 flex items-end justify-center">
         {SHARE_OPTIONS.map(
           ({ type, label, card: CardComponent, rotation, overlap, zIndex }, index) => (
             <motion.button
@@ -105,6 +106,7 @@ export const CalendarShareTypeSheet = ({
       >
         <span className="body1 text-gray-500">공유하기</span>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
