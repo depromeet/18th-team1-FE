@@ -88,7 +88,10 @@ export const HomeView = () => {
         <PostShareModal
           post={selectedPost}
           isOpen={true}
-          onClose={() => setSelectedSentence(null)}
+          onClose={() => {
+            setSelectedSentence(null);
+            router.push("/discover");
+          }}
           onToggleBookmark={(currentIsBookmarked) =>
             toggle(Number(selectedSentence.id), currentIsBookmarked)
           }
