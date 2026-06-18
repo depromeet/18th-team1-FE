@@ -35,7 +35,7 @@ export const ReportMonthSelector = ({ year, month }: ReportMonthSelectorProps) =
     <>
       <button
         type="button"
-        className="flex items-center gap-1.5 pt-2 pb-4 px-5"
+        className="inline-flex items-center self-start gap-1.5 mt-2 mb-4 mx-5"
         onClick={() => setIsPickerOpen(true)}
       >
         <h2 className="title2 text-gray-700">{month}월</h2>
