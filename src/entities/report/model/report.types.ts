@@ -22,9 +22,9 @@ export interface MonthlyReport {
   year: number;
   month: number;
   sharedQuoteCount: number;
-  mostFrequentGenre: string;
-  recommendationMessage: string;
+  mostFrequentGenre: string | null;
+  recommendationMessage: string | null;
   monthlyBooks: MonthlyBookSummary[];
   emotionTags: EmotionTag[];
-  monthlyBook: MonthlyBookQuote;
+  monthlyBook: MonthlyBookQuote | null;
 }

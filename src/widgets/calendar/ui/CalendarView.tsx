@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
-import { useMonthlyReportQuery } from "@/entities/report";
+import { type MonthlyReport, useMonthlyReportQuery } from "@/entities/report";
 import { CalendarDiarySection } from "./CalendarDiarySection";
 import { CalendarWidget } from "./CalendarWidget";
 import { MonthlyReportBanner } from "./MonthlyReportBanner";
@@ -13,6 +13,13 @@ const getLastMonth = () => {
   return { year: lastMonth.getFullYear(), month: lastMonth.getMonth() + 1 };
 };
 
+const hasReportContent = (report: MonthlyReport) =>
+  report.sharedQuoteCount > 0 &&
+  report.monthlyBooks.length > 0 &&
+  report.mostFrequentGenre !== null &&
+  report.recommendationMessage !== null &&
+  report.monthlyBook !== null;
+
 export const CalendarView = () => {
   const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -22,7 +29,7 @@ export const CalendarView = () => {
 
   return (
     <>
-      {lastMonthReport && (
+      {lastMonthReport && hasReportContent(lastMonthReport) && (
         <MonthlyReportBanner
           month={lastMonth}
           onClick={() => router.push(`/report/${lastYear}/${String(lastMonth).padStart(2, "0")}`)}

@@ -27,7 +27,13 @@ export const ReportView = () => {
 
   if (!isValidReportMonth) return null;
 
-  if (isLoading || !report) {
+  if (
+    isLoading ||
+    !report ||
+    report.mostFrequentGenre === null ||
+    report.recommendationMessage === null ||
+    report.monthlyBook === null
+  ) {
     return null;
   }
 
