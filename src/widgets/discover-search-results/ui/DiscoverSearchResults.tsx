@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   type DiscoveryQuoteSearchDto,
   PostAuthorProfile,
@@ -11,6 +11,7 @@ import {
 import { GenreFilterDropdown, useDiscoverFilter } from "@/features/discover-filter";
 import { SearchHistoryList, useSearchHistory } from "@/features/discover-search";
 import { BookmarkButton, useScrapMutation } from "@/features/post-bookmark";
+import { useDebounce } from "@/shared/hooks/useDebounce";
 import { useInfiniteScroll } from "@/shared/hooks/useInfiniteScroll";
 import { PostShareModal } from "@/widgets/post-share-modal";
 import { DiscoverSearchResultsHeader } from "./DiscoverSearchResultsHeader";
@@ -42,13 +43,33 @@ export const DiscoverSearchResults = ({
   const router = useRouter();
   const [activeSort, setActiveSort] = useState<"latest" | "scrap">("latest");
   const [selectedQuote, setSelectedQuote] = useState<DiscoveryQuoteSearchDto | null>(null);
+  const [inputQuery, setInputQuery] = useState(initialQuery);
+
+  // URL(initialQuery)이 바뀌면(명시적 제출) 로컬 상태 동기화
+  useEffect(() => {
+    setInputQuery(initialQuery);
+  }, [initialQuery]);
+
+  const debouncedQuery = useDebounce(inputQuery, 300);
 
   const { history, addToHistory, removeFromHistory } = useSearchHistory();
   const { selectedGenre, setSelectedGenre } = useDiscoverFilter();
 
   const genre = selectedGenre === "모든 장르" ? undefined : selectedGenre;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useDiscoverySearchQuery(initialQuery, activeSort, genre);
+    useDiscoverySearchQuery(debouncedQuery, activeSort, genre);
+
+  // 데이터가 전혀 없는 첫 로딩일 때만 500ms 지연 스피너 표시
+  // isFetching(키워드 전환 중)은 placeholderData로 이전 결과를 유지하므로 스피너 불필요
+  const [showLoading, setShowLoading] = useState(false);
+  useEffect(() => {
+    if (!isLoading) {
+      setShowLoading(false);
+      return;
+    }
+    const timer = setTimeout(() => setShowLoading(true), 500);
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   const { toggle } = useScrapMutation();
 
@@ -74,9 +95,13 @@ export const DiscoverSearchResults = ({
 
   return (
     <div className="flex h-full flex-col">
-      <DiscoverSearchResultsHeader initialQuery={initialQuery} onConfirm={handleConfirm} />
+      <DiscoverSearchResultsHeader
+        initialQuery={initialQuery}
+        onConfirm={handleConfirm}
+        onChange={setInputQuery}
+      />
 
-      {initialQuery ? (
+      {inputQuery ? (
         <>
           {/* Sort & Filter */}
           <div className="flex items-center justify-between px-5 py-3">
@@ -105,9 +130,9 @@ export const DiscoverSearchResults = ({
 
           {/* Post list */}
           <div ref={sentinelRef} className="min-h-0 flex-1 overflow-y-auto px-5">
-            {isLoading && (
+            {showLoading && (
               <div className="flex items-center justify-center py-20">
-                <span className="caption1 text-gray-300">불러오는 중...</span>
+                <span className="body1 text-gray-400">불러오는 중...</span>
               </div>
             )}
 
@@ -141,15 +166,15 @@ export const DiscoverSearchResults = ({
                 </PostListItem>
               ))}
 
-            {!isLoading && quotes.length === 0 && (
-              <div className="flex items-center justify-center py-20">
-                <span className="caption1 text-gray-300">검색 결과가 없어요.</span>
+            {!isLoading && !showLoading && quotes.length === 0 && (
+              <div className="flex items-center justify-center py-25">
+                <span className="body1 text-gray-400">검색 결과가 없어요.</span>
               </div>
             )}
 
             {isFetchingNextPage && (
-              <div className="flex items-center justify-center py-4">
-                <span className="caption1 text-gray-300">불러오는 중...</span>
+              <div className="flex items-center justify-center py-25">
+                <span className="body1 text-gray-400">불러오는 중...</span>
               </div>
             )}
           </div>

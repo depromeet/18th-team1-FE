@@ -7,11 +7,13 @@ import { IcBack, IcDelete } from "@/shared/ui/icons";
 interface DiscoverSearchResultsHeaderProps {
   initialQuery: string;
   onConfirm: (value: string) => void;
+  onChange?: (value: string) => void;
 }
 
 export const DiscoverSearchResultsHeader = ({
   initialQuery,
   onConfirm,
+  onChange,
 }: DiscoverSearchResultsHeaderProps): React.ReactElement => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState(initialQuery);
@@ -28,6 +30,11 @@ export const DiscoverSearchResultsHeader = ({
     }
     if (inputValue === "") router.push("/discover?search=");
   }, [inputValue, router]);
+
+  const handleChange = (value: string) => {
+    setInputValue(value);
+    onChange?.(value);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") onConfirm(inputValue);
@@ -46,7 +53,7 @@ export const DiscoverSearchResultsHeader = ({
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="문장을 검색해보세요"
           className="subhead2 flex-1 bg-transparent text-center text-gray-700 placeholder:text-gray-400 outline-none"

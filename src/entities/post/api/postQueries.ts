@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { fetchDiscoveryQuotes, fetchDiscoveryQuotesSearch, fetchPost, fetchPosts } from "./postApi";
 
 export const postKeys = {
@@ -63,4 +63,5 @@ export const useDiscoverySearchQuery = (
       lastPage.hasNext ? (lastPage.nextCursor ?? undefined) : undefined,
     enabled: query.length > 0,
     staleTime: 30 * 1000,
+    placeholderData: keepPreviousData,
   });
