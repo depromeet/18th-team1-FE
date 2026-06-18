@@ -27,7 +27,7 @@ export const DiscoverSearchBar = ({ onSubmit }: DiscoverSearchBarProps): React.R
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="문장을 검색해보세요"
-        className="body1 flex-1 bg-transparent text-gray-700 placeholder:text-gray-300 outline-none"
+        className="body1 min-w-0 flex-1 bg-transparent text-gray-700 placeholder:text-gray-300 outline-none"
       />
       <button type="button" onClick={handleSubmit} className="shrink-0">
         <IcSearch size={24} className="text-gray-300" />
