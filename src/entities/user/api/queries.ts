@@ -3,7 +3,7 @@
 import { type UseQueryResult, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import type { UpdateProfileRequest, UserProfile } from "../model/user.types";
-import { fetchUserProfile, updateUserProfile } from "./userApi";
+import { deleteUserAccount, fetchUserProfile, updateUserProfile } from "./userApi";
 
 export const userKeys = {
   all: ["user"] as const,
@@ -24,3 +24,5 @@ export const useUpdateProfileMutation = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: userKeys.me() }),
   });
 };
+
+export const useDeleteAccountMutation = () => useMutation({ mutationFn: deleteUserAccount });

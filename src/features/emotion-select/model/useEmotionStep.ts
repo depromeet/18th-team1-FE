@@ -1,9 +1,10 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-import { startRecommendation } from "@/entities/sentence";
+import { sentenceKeys, startRecommendation } from "@/entities/sentence";
 import { getEmotionValue } from "@/features/emotion-select/model/emotion";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
@@ -20,6 +21,7 @@ interface UseEmotionStepReturn {
 
 export const useEmotionStep = (): UseEmotionStepReturn => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const rawStep = Number(searchParams.get("step"));
   const currentStep = Number.isNaN(rawStep) || rawStep < 1 || rawStep > TOTAL_STEPS ? 1 : rawStep;
@@ -61,6 +63,7 @@ export const useEmotionStep = (): UseEmotionStepReturn => {
       });
       setCurrentRecommendationId(result.recommendationId);
       setInitialRecommendedQuote(result.quote);
+      queryClient.invalidateQueries({ queryKey: sentenceKeys.todayStatus() });
       router.push("/sentence");
     } catch {
       setIsLoading(false);

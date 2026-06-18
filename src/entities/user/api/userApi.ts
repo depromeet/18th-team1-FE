@@ -7,3 +7,5 @@ export const fetchUserProfile = (): Promise<UserProfile> =>
 
 export const updateUserProfile = (body: UpdateProfileRequest): Promise<UserProfile> =>
   httpClient.patch<UserProfile>("/users/me", body);
+
+export const deleteUserAccount = (): Promise<void> => httpClient.delete("/users/me");

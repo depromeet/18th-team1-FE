@@ -6,18 +6,20 @@ interface ConfirmModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   description: React.ReactNode;
-  cancelLabel?: string;
   confirmLabel: string;
   onConfirm?: () => void;
+  isSingleButton?: boolean;
+  cancelLabel?: string;
 }
 
 export const ConfirmModal = ({
   open,
   onOpenChange,
   description,
-  cancelLabel = "취소",
   confirmLabel,
   onConfirm,
+  isSingleButton = false,
+  cancelLabel = "취소",
 }: ConfirmModalProps) => {
   const handleConfirm = () => {
     onConfirm?.();
@@ -35,22 +37,32 @@ export const ConfirmModal = ({
         <div className="body1 flex items-center justify-center text-center text-gray-600">
           {description}
         </div>
-        <div className="flex gap-2.5">
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            className="subhead4 flex h-11.5 flex-1 items-center justify-center rounded-lg bg-gray-100 text-gray-300"
-          >
-            {cancelLabel}
-          </button>
+        {isSingleButton ? (
           <button
             type="button"
             onClick={handleConfirm}
-            className="subhead4 flex h-11.5 flex-1 items-center justify-center rounded-lg bg-gray-700 text-gray-0"
+            className="subhead4 flex h-11.5 w-full items-center justify-center rounded-lg bg-gray-700 text-gray-0"
           >
             {confirmLabel}
           </button>
-        </div>
+        ) : (
+          <div className="flex gap-2.5">
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="subhead4 flex h-11.5 flex-1 items-center justify-center rounded-lg bg-gray-100 text-gray-300"
+            >
+              {cancelLabel}
+            </button>
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className="subhead4 flex h-11.5 flex-1 items-center justify-center rounded-lg bg-gray-700 text-gray-0"
+            >
+              {confirmLabel}
+            </button>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
