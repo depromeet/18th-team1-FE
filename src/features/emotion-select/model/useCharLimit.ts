@@ -23,7 +23,7 @@ export const useCharLimit = <T extends HTMLInputElement | HTMLTextAreaElement>(
       return;
     }
 
-    hasToastedRef.current = newValue.length >= maxLength;
+    hasToastedRef.current = false;
     prevLengthRef.current = newValue.length;
     onChange(newValue);
   };
@@ -40,6 +40,7 @@ export const useCharLimit = <T extends HTMLInputElement | HTMLTextAreaElement>(
       const maxPasteLength = maxLength - before.length - after.length;
       const truncated = before + pastedText.slice(0, Math.max(0, maxPasteLength)) + after;
       onChange(truncated);
+      prevLengthRef.current = truncated.length;
       if (!hasToastedRef.current) {
         toast(toastMessage);
         hasToastedRef.current = true;

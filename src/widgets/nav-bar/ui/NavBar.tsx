@@ -12,18 +12,31 @@ const NAV_ITEMS = [
   { href: "/calendar", label: "캘린더", icon: IcCalendar },
 ] as const;
 
-const HIDE_DELAY_MS = 50;
+const SHOW_DELAY_MS = 150;
+const SCROLL_THRESHOLD = 3;
 
 export const NavBar = () => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastScrollTopRef = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(false);
+    const handleScroll = (e: Event) => {
+      const currentScrollTop = (e.target as Element).scrollTop;
+      const delta = currentScrollTop - lastScrollTopRef.current;
+      lastScrollTopRef.current = currentScrollTop;
+
+      if (Math.abs(delta) < SCROLL_THRESHOLD) return;
+
       if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setIsVisible(true), HIDE_DELAY_MS);
+
+      if (delta > 0) {
+        setIsVisible(false);
+        timerRef.current = setTimeout(() => setIsVisible(true), SHOW_DELAY_MS);
+      } else {
+        setIsVisible(true);
+      }
     };
 
     document.addEventListener("scroll", handleScroll, { capture: true, passive: true });
