@@ -10,7 +10,7 @@ const MyPageLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   return (
-    <div className="h-full overflow-y-auto bg-gray-50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex h-full flex-col overflow-y-auto bg-gray-50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <Header
         onBack={() => (window.history.length > 1 ? router.back() : router.push("/"))}
         right={
@@ -19,7 +19,7 @@ const MyPageLayout = ({ children }: { children: ReactNode }) => {
           </button>
         }
       />
-      <main className="flex flex-col">{children}</main>
+      <main className="flex flex-1 flex-col">{children}</main>
     </div>
   );
 };
