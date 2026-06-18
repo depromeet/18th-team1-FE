@@ -29,6 +29,7 @@ export const HomeView = () => {
     quote: quote.content,
     bookTitle: quote.title,
     bookAuthor: quote.author,
+    coverImageUrl: quote.image,
     date: "",
   }));
 

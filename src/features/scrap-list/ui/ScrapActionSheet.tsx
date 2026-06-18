@@ -35,6 +35,13 @@ export const ScrapActionSheet = ({
   const [isBookmarked, setIsBookmarked] = useState(true);
   // 시트 닫힘 애니메이션 완료 후 드로어를 열기 위한 플래그
   const [pendingShare, setPendingShare] = useState(false);
+  // 시트 닫히면 부모가 activeItem을 null로 초기화하므로, 공유 데이터를 미리 캡처해둠
+  const [capturedShareData, setCapturedShareData] = useState<{
+    quote: string;
+    title: string;
+    author: string;
+    coverImageUrl?: string;
+  } | null>(null);
   const { mutateAsync: scrapAsync } = useScrapMutation();
   const { mutateAsync: unscrapAsync } = useUnscrapMutation();
   const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
@@ -45,15 +52,16 @@ export const ScrapActionSheet = ({
 
   // 시트가 완전히 닫힌 후 pendingShare가 true면 드로어 열기
   useEffect(() => {
-    if (!open && pendingShare) {
+    if (!open && pendingShare && capturedShareData) {
       openSentenceShareCardDrawer({
         shareType: "sentence-pick",
         date: format(new Date(), "yyyy-MM-dd"),
-        sentencePickData: { quote, title: bookTitle, author, coverImageUrl },
+        sentencePickData: capturedShareData,
       });
       setPendingShare(false);
+      setCapturedShareData(null);
     }
-  }, [open, pendingShare, openSentenceShareCardDrawer, quote, bookTitle, author, coverImageUrl]);
+  }, [open, pendingShare, capturedShareData, openSentenceShareCardDrawer]);
 
   const handleBookmarkToggle = async () => {
     if (isBookmarked) {
@@ -65,6 +73,7 @@ export const ScrapActionSheet = ({
   };
 
   const handleShare = (): void => {
+    setCapturedShareData({ quote, title: bookTitle, author, coverImageUrl });
     setPendingShare(true);
     onOpenChange(false);
   };
