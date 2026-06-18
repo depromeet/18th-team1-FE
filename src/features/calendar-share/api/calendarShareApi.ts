@@ -6,4 +6,7 @@ export const fetchCalendarCardImage = (
   year: number,
   month: number,
   variant: CalendarCardVariant,
-): Promise<Blob> => httpClient.getBlob(`/calendars/${year}/${month}/share?variant=${variant}`);
+): Promise<Blob> => {
+  const type = variant === 1 ? 4 : 5;
+  return httpClient.getBlob(`/images/share/calendar?type=${type}&year=${year}&month=${month}`);
+};
