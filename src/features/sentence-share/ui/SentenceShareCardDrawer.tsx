@@ -202,8 +202,9 @@ export const SentenceShareCardDrawer = ({
         <div
           ref={scrollRef}
           data-vaul-no-drag
-          className="mt-4 h-95 shrink-0 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-4 h-95 shrink-0 touch-pan-x overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           style={{ scrollPaddingLeft: CARD_CENTER_OFFSET }}
+          onPointerDown={(e) => e.stopPropagation()}
           onScroll={handleScroll}
         >
           <div className="flex h-full" style={{ paddingLeft: CARD_CENTER_OFFSET, gap: CARD_GAP }}>
