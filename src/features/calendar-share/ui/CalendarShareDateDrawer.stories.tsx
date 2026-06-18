@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { format, startOfWeek, subDays, subWeeks } from "date-fns";
 import { useState } from "react";
-import type { DiaryListResponse } from "@/entities/diary";
+import type { RecommendationListResponse } from "@/entities/diary";
 import { diaryKeys } from "@/entities/diary";
 
 import { CalendarShareDateDrawer } from "./CalendarShareDateDrawer";
@@ -17,60 +17,84 @@ const weekStart = startOfWeek(subWeeks(today, WEEK_COUNT - 1), { weekStartsOn: 0
 const queryStart = format(weekStart, "yyyy-MM-dd");
 const queryEnd = format(today, "yyyy-MM-dd");
 
-const mockDiaries: DiaryListResponse = {
+const mockDiaries: RecommendationListResponse = {
   start: queryStart,
   end: queryEnd,
-  diaries: [
+  recommendations: [
     {
-      id: 1,
-      createdAt: format(today, "yyyy-MM-dd"),
-      content: null,
+      recommendationId: 1,
+      recommendationDate: format(today, "yyyy-MM-dd"),
       emotionValue: 80,
-      quoteContent:
-        "우리는 우리가 반복적으로 하는 것의 산물이다.\n탁월함은 행동이 아니라 습관이다.",
-      coverImageUrl: "https://picsum.photos/seed/diary1/100/150",
-      author: "아리스토텔레스",
-      title: "니코마코스 윤리학",
+      emotionRangeName: "기쁨",
+      quote: {
+        quoteId: 1,
+        bookId: 1,
+        content: "우리는 우리가 반복적으로 하는 것의 산물이다.\n탁월함은 행동이 아니라 습관이다.",
+        title: "니코마코스 윤리학",
+        author: "아리스토텔레스",
+        image: "https://picsum.photos/seed/diary1/100/150",
+        link: "",
+      },
     },
     {
-      id: 2,
-      createdAt: format(subDays(today, 2), "yyyy-MM-dd"),
-      content: null,
+      recommendationId: 2,
+      recommendationDate: format(subDays(today, 2), "yyyy-MM-dd"),
       emotionValue: 60,
-      quoteContent: "행복은 준비된 자에게 찾아온다.",
-      coverImageUrl: "https://picsum.photos/seed/diary2/100/150",
-      author: "루이 파스퇴르",
-      title: "과학의 시대",
+      emotionRangeName: "평온",
+      quote: {
+        quoteId: 2,
+        bookId: 2,
+        content: "행복은 준비된 자에게 찾아온다.",
+        title: "과학의 시대",
+        author: "루이 파스퇴르",
+        image: "https://picsum.photos/seed/diary2/100/150",
+        link: "",
+      },
     },
     {
-      id: 3,
-      createdAt: format(subDays(today, 3), "yyyy-MM-dd"),
-      content: null,
+      recommendationId: 3,
+      recommendationDate: format(subDays(today, 3), "yyyy-MM-dd"),
       emotionValue: 70,
-      quoteContent: "인간은 생각하는 갈대다.",
-      coverImageUrl: "https://picsum.photos/seed/diary3/100/150",
-      author: "블레즈 파스칼",
-      title: "팡세",
+      emotionRangeName: "사색",
+      quote: {
+        quoteId: 3,
+        bookId: 3,
+        content: "인간은 생각하는 갈대다.",
+        title: "팡세",
+        author: "블레즈 파스칼",
+        image: "https://picsum.photos/seed/diary3/100/150",
+        link: "",
+      },
     },
     {
-      id: 4,
-      createdAt: format(subDays(today, 3), "yyyy-MM-dd"),
-      content: null,
+      recommendationId: 4,
+      recommendationDate: format(subDays(today, 3), "yyyy-MM-dd"),
       emotionValue: 50,
-      quoteContent: "두 번째 일기.",
-      coverImageUrl: "https://picsum.photos/seed/diary4/100/150",
-      author: "저자",
-      title: "책 제목",
+      emotionRangeName: "평온",
+      quote: {
+        quoteId: 4,
+        bookId: 4,
+        content: "두 번째 일기.",
+        title: "책 제목",
+        author: "저자",
+        image: "https://picsum.photos/seed/diary4/100/150",
+        link: "",
+      },
     },
     {
-      id: 5,
-      createdAt: format(subDays(today, 10), "yyyy-MM-dd"),
-      content: null,
+      recommendationId: 5,
+      recommendationDate: format(subDays(today, 10), "yyyy-MM-dd"),
       emotionValue: 90,
-      quoteContent: "지식은 힘이다.",
-      coverImageUrl: "https://picsum.photos/seed/diary5/100/150",
-      author: "프랜시스 베이컨",
-      title: "신기관",
+      emotionRangeName: "기쁨",
+      quote: {
+        quoteId: 5,
+        bookId: 5,
+        content: "지식은 힘이다.",
+        title: "신기관",
+        author: "프랜시스 베이컨",
+        image: "https://picsum.photos/seed/diary5/100/150",
+        link: "",
+      },
     },
   ],
 };
