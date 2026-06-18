@@ -20,7 +20,7 @@ interface SentenceShareCardDrawerProps {
   isOpen: boolean;
   shareType?: "today-sentence" | "sentence-pick";
   date?: string;
-  sentencePickData?: { quote: string; title: string; author: string };
+  sentencePickData?: { quote: string; title: string; author: string; coverImageUrl?: string };
   onClose: () => void;
 }
 
@@ -59,6 +59,7 @@ export const SentenceShareCardDrawer = ({
             quote: sentencePickData.quote,
             title: sentencePickData.title,
             author: sentencePickData.author,
+            coverImageUrl: sentencePickData.coverImageUrl,
           }
         : selectedQuote
           ? {
@@ -66,6 +67,7 @@ export const SentenceShareCardDrawer = ({
               quote: selectedQuote.content,
               title: selectedQuote.title,
               author: selectedQuote.author,
+              coverImageUrl: selectedQuote.image,
             }
           : null;
 
@@ -162,6 +164,7 @@ export const SentenceShareCardDrawer = ({
                 quote: sentencePickData.quote,
                 title: sentencePickData.title,
                 author: sentencePickData.author,
+                coverImageUrl: sentencePickData.coverImageUrl,
               }
             : selectedQuote
               ? {
@@ -169,6 +172,7 @@ export const SentenceShareCardDrawer = ({
                   quote: selectedQuote.content,
                   title: selectedQuote.title,
                   author: selectedQuote.author,
+                  coverImageUrl: selectedQuote.image,
                 }
               : null;
         if (!params) return;

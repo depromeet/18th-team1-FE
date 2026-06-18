@@ -6,7 +6,7 @@ import { devtools } from "zustand/middleware";
 export interface SentenceShareDrawerData {
   shareType: "today-sentence" | "sentence-pick";
   date?: string;
-  sentencePickData?: { quote: string; title: string; author: string };
+  sentencePickData?: { quote: string; title: string; author: string; coverImageUrl?: string };
 }
 
 type SentenceShareDrawerStore = {

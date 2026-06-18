@@ -43,6 +43,7 @@ export const DiaryItem = ({ diary }: DiaryItemProps) => {
         quote: diary.quote.content,
         title: diary.quote.title,
         author: diary.quote.author,
+        coverImageUrl: diary.quote.image,
       },
     });
   };

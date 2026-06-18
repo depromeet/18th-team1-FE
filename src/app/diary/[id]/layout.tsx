@@ -29,6 +29,7 @@ const DiaryDetailLayout = ({ children }: { children: ReactNode }) => {
         quote: diary.quote.content,
         title: diary.quote.title,
         author: diary.quote.author,
+        coverImageUrl: diary.quote.image,
       },
     });
   };

@@ -6,6 +6,7 @@ export type SentenceShareData = {
   quote: string;
   title: string;
   author: string;
+  coverImageUrl?: string;
 };
 
 export type CalendarShareStep =

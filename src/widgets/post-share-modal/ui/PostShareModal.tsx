@@ -30,6 +30,7 @@ export const PostShareModal = ({
         quote: post.content,
         title: post.book.title,
         author: post.book.author,
+        coverImageUrl: post.book.coverImageUrl,
       },
     });
   };

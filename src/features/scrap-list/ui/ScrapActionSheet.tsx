@@ -49,11 +49,11 @@ export const ScrapActionSheet = ({
       openSentenceShareCardDrawer({
         shareType: "sentence-pick",
         date: format(new Date(), "yyyy-MM-dd"),
-        sentencePickData: { quote, title: bookTitle, author },
+        sentencePickData: { quote, title: bookTitle, author, coverImageUrl },
       });
       setPendingShare(false);
     }
-  }, [open, pendingShare, openSentenceShareCardDrawer, quote, bookTitle, author]);
+  }, [open, pendingShare, openSentenceShareCardDrawer, quote, bookTitle, author, coverImageUrl]);
 
   const handleBookmarkToggle = async () => {
     if (isBookmarked) {
