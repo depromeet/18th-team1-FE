@@ -70,7 +70,7 @@ export const CalendarDay = ({
 
   if (isTodayDate) {
     return (
-      <div className="size-11 rounded-lg border-2 border-dashed border-key-secondary flex items-center justify-center">
+      <div className="size-11 rounded-lg border border-dashed border-key-secondary flex items-center justify-center">
         <IcPlus size={7} className="text-key-secondary" />
       </div>
     );
@@ -83,7 +83,7 @@ export const CalendarDay = ({
         !isFutureDate && "bg-gray-50",
       )}
     >
-      <span className={cn("body3", isFutureDate ? "text-gray-100" : "text-gray-400")}>
+      <span className={cn("body3", isFutureDate ? "text-gray-100" : "text-gray-200")}>
         {getDate(date)}
       </span>
     </div>
