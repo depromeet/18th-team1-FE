@@ -1,24 +1,26 @@
 "use client";
 
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { format } from "date-fns";
 import { useCallback, useEffect, useRef, useState } from "react";
-
 import { cn } from "@/shared/lib/utils";
-import { Drawer, DrawerContent } from "@/shared/ui/drawer";
-import { NewButton } from "@/shared/ui/new-button";
+
+import { Drawer, DrawerContent, DrawerTitle } from "@/shared/ui/drawer";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
 import type { SentenceCardVariant } from "../api/sentenceShareApi";
-import { fetchSentencePickCardImage, fetchTodaySentenceCardImage } from "../api/sentenceShareApi";
+import { fetchSentenceCardImage } from "../api/sentenceShareApi";
 
 const CARD_VARIANTS: SentenceCardVariant[] = [1, 2, 3];
 const CARD_WIDTH = 275;
 const CARD_GAP = 12;
-const CARD_SIDE_OFFSET = 50; // (375 - 275) / 2
+const CARD_CENTER_OFFSET = `calc(50% - ${CARD_WIDTH / 2}px)`;
 
 interface SentenceShareCardDrawerProps {
   isOpen: boolean;
   shareType?: "today-sentence" | "sentence-pick";
   date?: string;
+  sentencePickData?: { quote: string; title: string; author: string };
   onClose: () => void;
 }
 
@@ -26,24 +28,21 @@ export const SentenceShareCardDrawer = ({
   isOpen,
   shareType = "today-sentence",
   date,
+  sentencePickData,
   onClose,
 }: SentenceShareCardDrawerProps): React.ReactElement => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isSharing, setIsSharing] = useState(false);
-  const [isCopying, setIsCopying] = useState(false);
-  // 클라이언트에서만 판별 (SSR/PC 기본값 false → 복사 버튼 표시)
-  const [isShareSupported, setIsShareSupported] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<Partial<Record<SentenceCardVariant, string>>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const blobCacheRef = useRef<Partial<Record<SentenceCardVariant, Blob>>>({});
   const objectUrlsRef = useRef<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  // setState 대신 ref 사용: 공유 시트가 열린 상태에서 리렌더가 발생하면 iOS Safari가 시트를 닫아버림
+  const isSharingRef = useRef(false);
   const { selectedQuote } = useEmotionSelectStore();
 
   const selectedVariant = CARD_VARIANTS[activeIndex] ?? 1;
-
-  useEffect(() => {
-    setIsShareSupported(!!navigator.share);
-  }, []);
 
   // 카드 프리뷰 이미지 선-패치 + 닫힐 때 초기화
   useEffect(() => {
@@ -53,21 +52,34 @@ export const SentenceShareCardDrawer = ({
       return;
     }
 
+    const params =
+      shareType === "sentence-pick" && date && sentencePickData
+        ? {
+            createdAt: date,
+            quote: sentencePickData.quote,
+            title: sentencePickData.title,
+            author: sentencePickData.author,
+          }
+        : selectedQuote
+          ? {
+              createdAt: format(new Date(), "yyyy-MM-dd"),
+              quote: selectedQuote.content,
+              title: selectedQuote.title,
+              author: selectedQuote.author,
+            }
+          : null;
+
+    if (!params) return;
+
     const loadPreviews = async (): Promise<void> => {
+      setIsLoading(true);
       const urls: Partial<Record<SentenceCardVariant, string>> = {};
       const blobs: Partial<Record<SentenceCardVariant, Blob>> = {};
 
       await Promise.all(
         CARD_VARIANTS.map(async (variant) => {
           try {
-            let blob: Blob;
-            if (shareType === "sentence-pick" && date) {
-              blob = await fetchSentencePickCardImage(date, variant);
-            } else {
-              const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
-              if (!dailyRecommendationId) return;
-              blob = await fetchTodaySentenceCardImage(dailyRecommendationId, variant);
-            }
+            const blob = await fetchSentenceCardImage({ variant, ...params });
             const url = URL.createObjectURL(blob);
             objectUrlsRef.current.push(url);
             urls[variant] = url;
@@ -80,6 +92,7 @@ export const SentenceShareCardDrawer = ({
 
       blobCacheRef.current = blobs;
       setPreviewUrls(urls);
+      setIsLoading(false);
     };
 
     loadPreviews();
@@ -92,7 +105,7 @@ export const SentenceShareCardDrawer = ({
       blobCacheRef.current = {};
       setPreviewUrls({});
     };
-  }, [isOpen, shareType, date, selectedQuote?.dailyRecommendationId]);
+  }, [isOpen, shareType, date, sentencePickData, selectedQuote]);
 
   const handleScroll = useCallback((): void => {
     const el = scrollRef.current;
@@ -101,77 +114,85 @@ export const SentenceShareCardDrawer = ({
     setActiveIndex(Math.min(index, CARD_VARIANTS.length - 1));
   }, []);
 
-  // 모바일(iOS/Android): Web Share API로 이미지 공유
-  const handleShare = async (variant?: SentenceCardVariant): Promise<void> => {
-    if (!isShareSupported || isSharing) return;
+  // iOS Safari: navigator.share()는 사용자 제스처의 동기 콜스택 안에서 호출해야 함.
+  // async/await를 쓰면 마이크로태스크 경계에서 사용자 활성화 컨텍스트가 끊길 수 있으므로
+  // 동기 함수로 선언 후 .then()/.catch()로 처리한다.
+  const handleShare = (): void => {
+    if (isSharingRef.current) return;
 
-    const targetVariant = variant ?? selectedVariant;
-    setIsSharing(true);
-    try {
-      let blob = blobCacheRef.current[targetVariant];
-      if (!blob) {
-        if (shareType === "sentence-pick" && date) {
-          blob = await fetchSentencePickCardImage(date, targetVariant);
-        } else {
-          const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
-          if (!dailyRecommendationId) {
-            alert("공유할 문장 정보가 없어요.");
-            return;
-          }
-          blob = await fetchTodaySentenceCardImage(dailyRecommendationId, targetVariant);
-        }
-      }
-
-      const file = new File([blob], "sentence-share.png", { type: "image/png" });
-      if (!navigator.canShare?.({ files: [file] })) {
-        alert("이 기기에서는 이미지 공유를 지원하지 않아요.");
-        return;
-      }
-      await navigator.share({ files: [file] });
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
-      alert("공유에 실패했어요. 다시 시도해주세요.");
-    } finally {
-      setIsSharing(false);
+    if (!navigator.share) {
+      alert("이 브라우저에서는 공유 기능을 지원하지 않아요.");
+      return;
     }
+
+    const blob = blobCacheRef.current[selectedVariant];
+    if (!blob) {
+      alert("카드를 불러오는 중이에요. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    const file = new File([blob], "sentence-share.png", { type: "image/png" });
+    if (navigator.canShare && !navigator.canShare({ files: [file] })) {
+      alert("이 기기에서는 이미지 공유를 지원하지 않아요.");
+      return;
+    }
+
+    isSharingRef.current = true;
+    navigator
+      .share({ files: [file] })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        alert("공유에 실패했어요. 다시 시도해주세요.");
+      })
+      .finally(() => {
+        isSharingRef.current = false;
+      });
   };
 
-  // PC 전용: 클립보드에 이미지 복사
-  const handleCopyImage = async (): Promise<void> => {
-    if (isCopying) return;
-    setIsCopying(true);
+  const handleSaveImage = async (): Promise<void> => {
+    if (isSaving) return;
+    setIsSaving(true);
     try {
       let blob = blobCacheRef.current[selectedVariant];
       if (!blob) {
-        if (shareType === "sentence-pick" && date) {
-          blob = await fetchSentencePickCardImage(date, selectedVariant);
-        } else {
-          const dailyRecommendationId = selectedQuote?.dailyRecommendationId;
-          if (!dailyRecommendationId) {
-            alert("공유할 문장 정보가 없어요.");
-            return;
-          }
-          blob = await fetchTodaySentenceCardImage(dailyRecommendationId, selectedVariant);
-        }
+        const params =
+          shareType === "sentence-pick" && date && sentencePickData
+            ? {
+                createdAt: date,
+                quote: sentencePickData.quote,
+                title: sentencePickData.title,
+                author: sentencePickData.author,
+              }
+            : selectedQuote
+              ? {
+                  createdAt: format(new Date(), "yyyy-MM-dd"),
+                  quote: selectedQuote.content,
+                  title: selectedQuote.title,
+                  author: selectedQuote.author,
+                }
+              : null;
+        if (!params) return;
+        blob = await fetchSentenceCardImage({ variant: selectedVariant, ...params });
       }
-      await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "sentence-share.png";
+      a.click();
+      URL.revokeObjectURL(url);
     } catch {
-      alert("이미지 복사에 실패했어요.");
+      alert("이미지 저장에 실패했어요.");
     } finally {
-      setIsCopying(false);
+      setIsSaving(false);
     }
   };
 
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent
-        className={cn(
-          "data-[vaul-drawer-direction=bottom]:max-h-[90vh]",
-          // 모바일: 네이티브 Share Sheet가 올라올 공간 확보
-          // 50vh → iOS ~400px, Android ~300px 모두 커버
-          isShareSupported && "pb-[50vh]",
-        )}
-      >
+      <DrawerContent className="data-[vaul-drawer-direction=bottom]:max-h-[90vh]">
+        <VisuallyHidden.Root>
+          <DrawerTitle>공유 카드 선택</DrawerTitle>
+        </VisuallyHidden.Root>
         {/* data-vaul-no-drag: vaul의 수직 드래그 감지가 수평 스크롤을 가로채지 않도록 */}
         {/*
           h-95 + shrink-0: DrawerContent flex 레이아웃에서 카드 높이(380px)가
@@ -182,22 +203,16 @@ export const SentenceShareCardDrawer = ({
           ref={scrollRef}
           data-vaul-no-drag
           className="mt-4 h-95 shrink-0 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{ scrollPaddingLeft: CARD_SIDE_OFFSET }}
+          style={{ scrollPaddingLeft: CARD_CENTER_OFFSET }}
           onScroll={handleScroll}
         >
-          <div
-            className="flex h-full"
-            style={{ paddingLeft: CARD_SIDE_OFFSET, paddingRight: CARD_SIDE_OFFSET, gap: CARD_GAP }}
-          >
+          <div className="flex h-full" style={{ paddingLeft: CARD_CENTER_OFFSET, gap: CARD_GAP }}>
             {CARD_VARIANTS.map((variant) => {
               const previewUrl = previewUrls[variant];
               return (
-                <button
+                <div
                   key={variant}
-                  type="button"
-                  disabled={isSharing}
-                  onClick={() => handleShare(variant)}
-                  className="h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl bg-muted"
+                  className="h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-50 px-11 py-5"
                 >
                   {previewUrl ? (
                     // biome-ignore lint/performance/noImgElement: blob URL은 next/image에서 지원하지 않음
@@ -207,11 +222,13 @@ export const SentenceShareCardDrawer = ({
                       className="size-full object-cover"
                     />
                   ) : (
-                    <div className="size-full animate-pulse bg-gray-100" />
+                    <div className={cn("size-full bg-gray-100", isLoading && "animate-pulse")} />
                   )}
-                </button>
+                </div>
               );
             })}
+            {/* overflow-x: auto 컨테이너에서 padding-right가 무시되는 브라우저 버그 우회 */}
+            <div aria-hidden style={{ width: CARD_CENTER_OFFSET, flexShrink: 0 }} />
           </div>
         </div>
 
@@ -228,14 +245,23 @@ export const SentenceShareCardDrawer = ({
           ))}
         </div>
 
-        {/* PC 전용: 클립보드 복사 버튼 (Web Share API 미지원 환경) */}
-        {!isShareSupported && (
-          <NewButton
-            label={isCopying ? "복사 중..." : "이미지 복사"}
-            disabled={isCopying}
-            onClick={handleCopyImage}
-          />
-        )}
+        <div className="flex gap-3 px-5 pb-6">
+          <button
+            type="button"
+            onClick={handleShare}
+            className="flex-1 rounded-xl border border-gray-300 py-3 text-sm font-medium"
+          >
+            더보기
+          </button>
+          <button
+            type="button"
+            disabled={isSaving}
+            onClick={() => void handleSaveImage()}
+            className="flex-1 rounded-xl bg-gray-900 py-3 text-sm font-medium text-white disabled:opacity-50"
+          >
+            {isSaving ? "저장 중..." : "저장"}
+          </button>
+        </div>
       </DrawerContent>
     </Drawer>
   );
