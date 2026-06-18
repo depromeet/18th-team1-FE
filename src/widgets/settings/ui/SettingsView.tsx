@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useUserProfileQuery } from "@/entities/user";
+import { useDeleteAccountMutation, useUserProfileQuery } from "@/entities/user";
 import { useLogoutMutation } from "@/features/auth";
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcProfileS } from "@/shared/ui/icons";
@@ -22,9 +22,11 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+  const [isWithdrawInfoModalOpen, setIsWithdrawInfoModalOpen] = useState(false);
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const router = useRouter();
   const { mutate: logoutMutate } = useLogoutMutation();
+  const { mutate: deleteAccountMutate } = useDeleteAccountMutation();
 
   const supportEmail = "sentitodayofficial@gmail.com";
 
@@ -42,9 +44,17 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
   };
 
   const handleWithdraw = () => {
-    // TODO: 탈퇴 API 연동
-    clearAuth();
-    router.push("/login");
+    setIsWithdrawModalOpen(false);
+    setIsWithdrawInfoModalOpen(true);
+  };
+
+  const handleWithdrawConfirm = () => {
+    deleteAccountMutate(undefined, {
+      onSuccess: () => {
+        clearAuth();
+        router.push("/login");
+      },
+    });
   };
 
   return (
@@ -163,6 +173,20 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
         cancelLabel="취소"
         confirmLabel="탈퇴"
         onConfirm={handleWithdraw}
+      />
+      <ConfirmModal
+        singleButton
+        open={isWithdrawInfoModalOpen}
+        onOpenChange={setIsWithdrawInfoModalOpen}
+        description={
+          <>
+            30일 이내 재로그인 시 탈퇴가
+            <br />
+            취소되고 계정이 복구됩니다.
+          </>
+        }
+        confirmLabel="확인"
+        onConfirm={handleWithdrawConfirm}
       />
     </div>
   );
