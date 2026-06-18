@@ -90,7 +90,7 @@ export const ScrapSentenceSection = () => {
           >
             <IcClose size={13} className="text-gray-600" />
           </button>
-        ) : (
+        ) : totalCount > 0 ? (
           <button
             type="button"
             onClick={handleEnterSelectMode}
@@ -98,7 +98,7 @@ export const ScrapSentenceSection = () => {
           >
             <span className="body3 text-gray-500">선택하기</span>
           </button>
-        )}
+        ) : null}
       </div>
 
       <div
