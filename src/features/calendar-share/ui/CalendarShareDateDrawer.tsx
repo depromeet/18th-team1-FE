@@ -212,6 +212,7 @@ export const CalendarShareDateDrawer = ({
       quote: selectedDiary.quote.content,
       title: selectedDiary.quote.title,
       author: selectedDiary.quote.author,
+      coverImageUrl: selectedDiary.quote.image,
     });
   };
 

@@ -2,7 +2,7 @@
 
 import { format } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CalendarShareCardDrawer,
   CalendarShareDateDrawer,
@@ -12,7 +12,8 @@ import {
 } from "@/features/calendar-share";
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
 import { MonthPicker } from "@/features/month-picker";
-import { SentenceShareCardDrawer } from "@/features/sentence-share";
+import { useSentenceShareCardDrawer } from "@/features/sentence-share";
+import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
@@ -32,14 +33,32 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const { step, openTypeSheet, selectType, selectDate, close } = useCalendarShareFlow();
   const { selectedQuote } = useEmotionSelectStore();
+  const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
+  const [isNoSentenceModalOpen, setIsNoSentenceModalOpen] = useState(false);
+
+  // 캘린더 공유 플로우의 card-drawer 단계 도달 시 전역 드로어로 위임
+  useEffect(() => {
+    if (step.type === "card-drawer" && step.shareType !== "calendar") {
+      openSentenceShareCardDrawer({
+        shareType: step.shareType as "today-sentence" | "sentence-pick",
+        date: step.date,
+        sentencePickData: step.sentenceData,
+      });
+      close();
+    }
+  }, [step, openSentenceShareCardDrawer, close]);
 
   const handleSelectType = (shareType: ShareType): void => {
     if (shareType === "today-sentence" && !selectedQuote) {
-      router.push("/emotion");
-      close();
+      setIsNoSentenceModalOpen(true);
       return;
     }
     selectType(shareType);
+  };
+
+  const handleConfirmGoToEmotion = (): void => {
+    close();
+    router.push("/emotion");
   };
 
   const {
@@ -142,22 +161,26 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
         onClose={close}
       />
 
-      <SentenceShareCardDrawer
-        isOpen={step.type === "card-drawer" && step.shareType !== "calendar"}
-        shareType={
-          step.type === "card-drawer"
-            ? (step.shareType as "today-sentence" | "sentence-pick")
-            : undefined
-        }
-        date={step.type === "card-drawer" ? step.date : undefined}
-        sentencePickData={step.type === "card-drawer" ? step.sentenceData : undefined}
-        onClose={close}
-      />
       <CalendarShareCardDrawer
         isOpen={step.type === "card-drawer" && step.shareType === "calendar"}
         year={viewDate.getFullYear()}
         month={viewDate.getMonth() + 1}
         onClose={close}
+      />
+
+      <ConfirmModal
+        open={isNoSentenceModalOpen}
+        onOpenChange={setIsNoSentenceModalOpen}
+        description={
+          <>
+            아직 오늘의 문장이 없어요.
+            <br />
+            바로 추천 받으러 갈까요?
+          </>
+        }
+        confirmLabel="확인"
+        cancelLabel="취소"
+        onConfirm={handleConfirmGoToEmotion}
       />
     </>
   );
