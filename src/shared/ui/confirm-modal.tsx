@@ -8,7 +8,7 @@ interface ConfirmModalProps {
   description: React.ReactNode;
   confirmLabel: string;
   onConfirm?: () => void;
-  singleButton?: boolean;
+  isSingleButton?: boolean;
   cancelLabel?: string;
 }
 
@@ -18,7 +18,7 @@ export const ConfirmModal = ({
   description,
   confirmLabel,
   onConfirm,
-  singleButton = false,
+  isSingleButton = false,
   cancelLabel = "취소",
 }: ConfirmModalProps) => {
   const handleConfirm = () => {
@@ -37,7 +37,7 @@ export const ConfirmModal = ({
         <div className="body1 flex items-center justify-center text-center text-gray-600">
           {description}
         </div>
-        {singleButton ? (
+        {isSingleButton ? (
           <button
             type="button"
             onClick={handleConfirm}

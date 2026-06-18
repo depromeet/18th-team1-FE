@@ -62,15 +62,15 @@ export const SentenceCardPhase = ({
 
     const update = () => {
       const container = containerRef.current;
-      const tagsEl = tagsRef.current;
-      if (!container || !tagsEl) return;
+      const tagsElement = tagsRef.current;
+      if (!container || !tagsElement) return;
 
       const containerWidth = container.offsetWidth;
-      const tagsWidth = tagsEl.offsetWidth;
+      const tagsWidth = tagsElement.offsetWidth;
 
-      const willWrap = tagsWidth + ChipGap + BubbleSize > containerWidth;
-      setIsWrapped(willWrap);
-      if (willWrap) {
+      const shouldWrap = tagsWidth + ChipGap + BubbleSize > containerWidth;
+      setIsWrapped(shouldWrap);
+      if (shouldWrap) {
         setTagsLeftOffset((containerWidth - tagsWidth) / 2);
       }
     };
@@ -78,6 +78,7 @@ export const SentenceCardPhase = ({
     update();
     const observer = new ResizeObserver(update);
     if (containerRef.current) observer.observe(containerRef.current);
+    if (tagsRef.current) observer.observe(tagsRef.current);
     return () => observer.disconnect();
   }, [overflowCount]);
 

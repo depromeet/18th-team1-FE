@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useDeleteAccountMutation, useUserProfileQuery } from "@/entities/user";
 import { useLogoutMutation } from "@/features/auth";
+import { useToast } from "@/shared/hooks/useToast";
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcProfileS } from "@/shared/ui/icons";
 import { useAuthStore } from "@/store/auth/useAuthStore";
@@ -27,6 +28,7 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
   const router = useRouter();
   const { mutate: logoutMutate } = useLogoutMutation();
   const { mutate: deleteAccountMutate } = useDeleteAccountMutation();
+  const { toast } = useToast();
 
   const supportEmail = "sentitodayofficial@gmail.com";
 
@@ -53,6 +55,9 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
       onSuccess: () => {
         clearAuth();
         router.push("/login");
+      },
+      onError: () => {
+        toast("탈퇴 처리에 실패했습니다. 다시 시도해주세요.");
       },
     });
   };
@@ -175,7 +180,7 @@ export const SettingsView = ({ onBack }: SettingsViewProps) => {
         onConfirm={handleWithdraw}
       />
       <ConfirmModal
-        singleButton
+        isSingleButton
         open={isWithdrawInfoModalOpen}
         onOpenChange={setIsWithdrawInfoModalOpen}
         description={
