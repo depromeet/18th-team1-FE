@@ -75,7 +75,10 @@ export const ScrapBookCard = memo(
             {quote}
           </p>
           <p
-            className={cn("caption2 truncate", isDark ? "text-white/70" : "text-[rgba(9,9,9,0.5)]")}
+            className={cn(
+              "caption2 truncate text-left",
+              isDark ? "text-white/70" : "text-[rgba(9,9,9,0.5)]",
+            )}
           >
             {`『${bookTitle}』, ${author}`}
           </p>
