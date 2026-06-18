@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { NavBar } from "@/widgets/nav-bar";
+import { HomeBannerModalPortal } from "./HomeBannerModalPortal";
 
 interface NavLayoutProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ const NavLayout = ({ children }: NavLayoutProps) => {
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-20">
         <NavBar />
       </div>
+      <HomeBannerModalPortal />
     </div>
   );
 };

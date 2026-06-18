@@ -26,8 +26,7 @@ export const ScrapSentenceSection = () => {
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    const scrollContainer = scrollContainerRef.current;
-    if (!sentinel || !scrollContainer) return;
+    if (!sentinel) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -35,7 +34,7 @@ export const ScrapSentenceSection = () => {
           fetchNextPage();
         }
       },
-      { root: scrollContainer, threshold: 0.1 },
+      { threshold: 0.1 },
     );
 
     observer.observe(sentinel);
@@ -78,8 +77,8 @@ export const ScrapSentenceSection = () => {
   }, [items]);
 
   return (
-    <section className="flex flex-1 flex-col overflow-hidden bg-background">
-      <div className="flex shrink-0 items-center justify-between bg-background px-5 py-4.5">
+    <section className="flex flex-col bg-background">
+      <div className="sticky top-0 z-10 flex items-center justify-between bg-background px-5 py-4.5">
         <span className="subhead1 text-gray-700">스크랩한 문장 {totalCount}개</span>
         {isSelectMode ? (
           <button
@@ -100,43 +99,38 @@ export const ScrapSentenceSection = () => {
         ) : null}
       </div>
 
-      <div
-        ref={scrollContainerRef}
-        className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {items.length === 0 ? (
-          <div className="flex items-center justify-center py-20">
-            <p className="body3 text-gray-400">아직 스크랩한 문장이 없어요.</p>
-          </div>
-        ) : (
-          <div className="flex justify-center gap-1.75 px-2.5 pb-4">
-            {(
-              [
-                ["left", leftItems],
-                ["right", rightItems],
-              ] as const
-            ).map(([side, columnItems]) => (
-              <div key={side} className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
-                {columnItems.map((item) => (
-                  <ScrapBookCard
-                    key={String(item.quoteId)}
-                    coverImageUrl={item.bookCoverImageUrl}
-                    quote={item.content}
-                    bookTitle={item.title}
-                    author={item.author}
-                    isSelected={selectedIds.has(String(item.quoteId))}
-                    onSelect={
-                      isSelectMode ? () => handleToggleSelect(String(item.quoteId)) : undefined
-                    }
-                    onPress={!isSelectMode ? () => setActiveItem(item) : undefined}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-        )}
-        <div ref={sentinelRef} className="h-px" />
-      </div>
+      {items.length === 0 ? (
+        <div className="flex items-center justify-center py-20">
+          <p className="body3 text-gray-400">아직 스크랩한 문장이 없어요.</p>
+        </div>
+      ) : (
+        <div className="flex justify-center gap-1.75 px-2.5 pb-4">
+          {(
+            [
+              ["left", leftItems],
+              ["right", rightItems],
+            ] as const
+          ).map(([side, columnItems]) => (
+            <div key={side} className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
+              {columnItems.map((item) => (
+                <ScrapBookCard
+                  key={String(item.quoteId)}
+                  coverImageUrl={item.bookCoverImageUrl}
+                  quote={item.content}
+                  bookTitle={item.title}
+                  author={item.author}
+                  isSelected={selectedIds.has(String(item.quoteId))}
+                  onSelect={
+                    isSelectMode ? () => handleToggleSelect(String(item.quoteId)) : undefined
+                  }
+                  onPress={!isSelectMode ? () => setActiveItem(item) : undefined}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+      <div ref={sentinelRef} className="h-px" />
 
       {isSelectMode && (
         <div className="flex shrink-0 items-center justify-between bg-background px-5 py-3.75 shadow-[0_-4px_15px_rgba(0,27,55,0.1)]">
