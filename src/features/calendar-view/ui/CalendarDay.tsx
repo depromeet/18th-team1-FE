@@ -70,7 +70,7 @@ export const CalendarDay = ({
 
   if (isTodayDate) {
     return (
-      <div className="size-11 rounded-lg border-2 border-dashed border-key-secondary flex items-center justify-center">
+      <div className="size-11 rounded-lg border border-dashed border-key-secondary flex items-center justify-center">
         <IcPlus size={7} className="text-key-secondary" />
       </div>
     );
