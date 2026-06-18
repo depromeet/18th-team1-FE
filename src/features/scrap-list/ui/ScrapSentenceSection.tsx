@@ -76,7 +76,7 @@ export const ScrapSentenceSection = () => {
   }, [items]);
 
   return (
-    <section className="flex flex-col bg-background">
+    <section className="flex flex-1 flex-col bg-background">
       <div className="sticky top-0 z-10 flex items-center justify-between bg-background px-5 py-4.5">
         <span className="subhead1 text-gray-700">스크랩한 문장 {totalCount}개</span>
         {isSelectMode ? (
