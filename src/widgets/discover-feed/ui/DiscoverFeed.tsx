@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import {
   type DiscoveryQuoteDto,
@@ -94,14 +95,19 @@ export const DiscoverFeed = (): React.ReactElement => {
           ))}
 
         {!isLoading && quotes.length === 0 && (
-          <div className="flex items-center justify-center py-20">
-            <span className="caption1 text-gray-300">아직 추천된 문장이 없어요.</span>
+          <div className="flex flex-col items-center justify-center gap-3 pt-40">
+            <Image src="/images/error.png" alt="" width={151} height={56} />
+            <p className="body3 text-center text-gray-500">
+              아직 발견할 수 있는
+              <br />
+              문장이 없어요
+            </p>
           </div>
         )}
 
         {isFetchingNextPage && (
           <div className="flex items-center justify-center py-4">
-            <span className="caption1 text-gray-300">불러오는 중...</span>
+            <span className="body1 text-gray-300">불러오는 중...</span>
           </div>
         )}
       </div>
