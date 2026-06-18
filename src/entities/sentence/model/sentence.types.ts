@@ -3,6 +3,7 @@ export interface RecommendedSentence {
   quote: string;
   bookTitle: string;
   bookAuthor: string;
+  coverImageUrl?: string;
   date?: string;
 }
 

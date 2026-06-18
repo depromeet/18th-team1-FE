@@ -128,7 +128,11 @@ export const DiscoverFeed = (): React.ReactElement => {
               nickname: selectedQuote.recommendedUserNickname,
             },
             content: selectedQuote.content,
-            book: { title: selectedQuote.title, author: selectedQuote.author },
+            book: {
+              title: selectedQuote.title,
+              author: selectedQuote.author,
+              coverImageUrl: selectedQuote.bookCoverImageUrl,
+            },
             date: "",
             mood: getMood(selectedQuote.emotion.value),
             emotionTag: selectedQuote.needTag ? `# ${selectedQuote.needTag.label}` : "",

@@ -15,7 +15,11 @@ export const HomeBannerModalPortal = () => {
     id: selectedSentence.id,
     author: { id: "", nickname: "" },
     content: selectedSentence.quote,
-    book: { title: selectedSentence.bookTitle, author: selectedSentence.bookAuthor },
+    book: {
+      title: selectedSentence.bookTitle,
+      author: selectedSentence.bookAuthor,
+      coverImageUrl: selectedSentence.coverImageUrl,
+    },
     date: `${new Date().getDate()}, ${new Date().toLocaleDateString("en-US", { weekday: "long" })}`,
     mood: "good",
     emotionTag: "",
