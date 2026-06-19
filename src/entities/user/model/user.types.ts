@@ -13,3 +13,7 @@ export interface UserProfile {
   profileImageUrl: string | null;
   createdAt: string;
 }
+
+export interface UserSignupDate {
+  signupDate: string;
+}

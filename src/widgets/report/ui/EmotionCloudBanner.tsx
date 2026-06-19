@@ -14,13 +14,13 @@ export const EmotionCloudBanner = ({
   month,
   emotionTags,
   recommendationMessage,
-}: EmotionCloudBannerProps): React.ReactElement => {
+}: EmotionCloudBannerProps) => {
   const { containerRef, sortedTags, positionMap } = useEmotionCloud(emotionTags);
 
   return (
-    <div className="bg-gray-50 pb-6">
+    <div className="flex flex-col bg-gray-50 pb-6 h-97.5">
       <p className="subhead4 text-key-secondary px-5 pt-5">{month}월의 감정</p>
-      <div ref={containerRef} className="relative m-5 overflow-hidden h-48">
+      <div ref={containerRef} className="relative m-5 overflow-hidden flex-1">
         {sortedTags.map((tag, index) => {
           const pos = positionMap.get(tag.tagId);
           if (!pos) return null;
