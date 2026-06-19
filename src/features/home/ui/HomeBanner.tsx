@@ -6,7 +6,7 @@ export const HomeBanner = ({ onClick }: HomeBannerProps) => (
   <button
     type="button"
     onClick={onClick}
-    className="flex h-31.5 w-full shrink-0 items-start justify-between bg-key-secondary p-5"
+    className="relative flex h-31.5 w-full shrink-0 items-start bg-key-secondary p-5"
   >
     <div className="flex flex-col items-start gap-1 text-left">
       <span className="head1 text-gray-100">나의 문장 찾기</span>
@@ -23,14 +23,11 @@ export const HomeBanner = ({ onClick }: HomeBannerProps) => (
       viewBox="0 0 28 20"
       fill="none"
       aria-hidden="true"
-      className="translate-y-5 self-center text-key-primary"
+      className="absolute right-[22.3px] top-[calc(50%+20.78px)] -translate-y-1/2"
     >
       <path
-        d="M1.43408 9.81049H26.337M18.5549 17.5927L26.337 9.81049L18.5549 2.02832"
-        stroke="currentColor"
-        strokeWidth={2.86861}
-        strokeLinecap="square"
-        strokeLinejoin="round"
+        d="M27.3516 8.7959C27.9116 9.35598 27.9115 10.2641 27.3516 10.8242L18.5557 19.6211L16.5273 17.5928L22.874 11.2451H0V8.37598H22.875L16.5273 2.02832L18.5557 0L27.3516 8.7959Z"
+        fill="#A4D4D6"
       />
     </svg>
   </button>
