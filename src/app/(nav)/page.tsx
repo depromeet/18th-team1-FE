@@ -42,7 +42,7 @@ const HomePage = () => {
       >
         <header
           className={cn(
-            "sticky top-0 z-10 flex items-center justify-between px-5 py-4.75",
+            "sticky top-0 z-10 flex items-center justify-between px-5 py-3",
             isPastBanner ? "bg-key-secondary" : "bg-gray-100",
           )}
         >
