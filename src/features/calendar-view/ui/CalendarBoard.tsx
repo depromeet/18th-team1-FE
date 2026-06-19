@@ -1,5 +1,4 @@
 import { format, isFuture, isSameMonth, isToday } from "date-fns";
-import Link from "next/link";
 import type { EmotionIntensity } from "@/entities/diary";
 import { cn } from "@/shared/lib/utils";
 import { CalendarDay } from "./CalendarDay";
@@ -78,23 +77,17 @@ export const CalendarBoard = ({
                 !isCurrentMonth && "pointer-events-none opacity-0",
               )}
             >
-              {isTodayDate && !hasDiary ? (
-                <Link href="/emotion" className="relative flex size-11 items-center justify-center">
-                  {dayContent}
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => onSelectDate(day)}
-                  disabled={isFutureDate}
-                  className={cn(
-                    "relative flex items-center justify-center disabled:cursor-default",
-                    isCoverView && coverUrls.length > 0 ? "h-19.25 w-11.5" : "size-11",
-                  )}
-                >
-                  {dayContent}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => onSelectDate(day)}
+                disabled={isFutureDate}
+                className={cn(
+                  "relative flex items-center justify-center disabled:cursor-default",
+                  isCoverView && coverUrls.length > 0 ? "h-19.25 w-11.5" : "size-11",
+                )}
+              >
+                {dayContent}
+              </button>
             </div>
           );
         })}
