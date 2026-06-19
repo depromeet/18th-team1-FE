@@ -12,7 +12,7 @@ interface HomeSentenceSectionProps {
 export const HomeSentenceSection = ({ items }: HomeSentenceSectionProps) => {
   const today = new Date();
   const month = today.getMonth() + 1;
-  const monthNameEN = today.toLocaleString("en-US", { month: "short" }).toUpperCase();
+  const monthNameEN = today.toLocaleString("en-US", { month: "long" });
 
   return (
     <section className="flex flex-col [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">

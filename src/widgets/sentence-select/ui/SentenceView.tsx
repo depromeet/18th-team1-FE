@@ -57,27 +57,37 @@ const SentenceViewContent = ({
   };
 
   return (
-    <div className="flex h-full flex-col bg-muted">
-      <div className="flex flex-1 flex-col items-center">
-        <Text variant="point-eng" color="gray-500" className="text-center">
-          Today<span className="font-pretendard font-semibold">&apos;</span>s Text
-        </Text>
-        <div className="flex flex-1 items-center justify-center">
-          <TodaysSentenceCard
-            date={date}
-            quote={quote.content}
-            bookTitle={quote.title}
-            bookAuthor={quote.author}
-            bookCoverImage={quote.image}
-          />
+    <>
+      <div className="flex h-full flex-col bg-muted">
+        <div className="flex flex-1 flex-col items-center">
+          <Text variant="point-eng" color="gray-500" className="text-center">
+            Today<span className="font-pretendard font-semibold">&apos;</span>s Text
+          </Text>
+          <div className="flex flex-1 items-center justify-center">
+            <TodaysSentenceCard
+              date={date}
+              quote={quote.content}
+              bookTitle={quote.title}
+              bookAuthor={quote.author}
+              bookCoverImage={quote.image}
+            />
+          </div>
         </div>
+        <section className="flex shrink-0 flex-col items-center gap-2">
+          <NewButton variant="secondary" label="다른 문장 더보기" onClick={handleViewList} />
+          <div
+            className="w-full shrink-0"
+            style={{ height: "calc(56px + env(safe-area-inset-bottom, 0px))" }}
+          />
+        </section>
       </div>
-      <section className="flex shrink-0 flex-col items-center gap-2">
-        <NewButton variant="secondary" label="다른 문장 더보기" onClick={handleViewList} />
+      <div
+        className="fixed inset-x-0 bottom-0 z-10 bg-gray-700 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
         <NewButton label="다음" onClick={handleNext} />
-        <div className="bg-gray-700" style={{ height: "env(safe-area-inset-bottom, 0px)" }} />
-      </section>
-    </div>
+      </div>
+    </>
   );
 };
 

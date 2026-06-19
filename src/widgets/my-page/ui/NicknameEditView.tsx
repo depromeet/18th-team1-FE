@@ -26,26 +26,33 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
   };
 
   return (
-    <div
-      className="fixed inset-x-0 top-0 z-50 flex flex-col bg-background md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
-      style={{ height: "var(--vh, 100dvh)" }}
-    >
-      <Header title="닉네임 수정" onBack={onBack} />
-      <div className="flex-1 px-5 pt-2.5">
-        <NicknameInputField
-          value={value}
-          onChange={handleChange}
-          onClear={handleClear}
-          placeholder={initialNickname}
-          maxLength={maxLength}
-          errorMessage={validationError}
+    <>
+      <div
+        className="fixed inset-x-0 top-0 z-50 flex flex-col bg-background md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
+        style={{ height: "var(--vh, 100dvh)" }}
+      >
+        <Header title="닉네임 수정" onBack={onBack} />
+        <div className="flex-1 px-5 pt-2.5">
+          <NicknameInputField
+            value={value}
+            onChange={handleChange}
+            onClear={handleClear}
+            placeholder={initialNickname}
+            maxLength={maxLength}
+            errorMessage={validationError}
+          />
+        </div>
+        <div
+          className="shrink-0"
+          style={{ height: "calc(56px + env(safe-area-inset-bottom, 0px))" }}
         />
       </div>
-      <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
       <div
-        className={`transition-colors ${!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}`}
-        style={{ height: "env(safe-area-inset-bottom, 0px)" }}
-      />
-    </div>
+        className={`fixed inset-x-0 bottom-0 z-[51] transition-colors md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}`}
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
+      </div>
+    </>
   );
 };

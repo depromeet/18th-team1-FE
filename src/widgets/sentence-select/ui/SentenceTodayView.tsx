@@ -2,7 +2,7 @@
 
 import { AnimatePresence, LayoutGroup } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SentenceCardPhase, SentenceDatePhase } from "@/features/sentence-select";
 import { useSentenceShareCardDrawer } from "@/features/sentence-share";
@@ -27,15 +27,28 @@ export const SentenceTodayView = ({
   const month = today.toLocaleDateString("en-US", { month: "long" });
   const date = `${today.toLocaleDateString("en-US", { weekday: "long" })} ${today.getDate()}`;
 
+  const handleGoHome = (): void => {
+    reset();
+    router.push("/");
+  };
+
   const handleReveal = (): void => {
     setPhase("card");
     router.replace(`${pathname}?phase=card`);
   };
 
-  const handleConfirm = (): void => {
-    reset();
-    router.push("/");
-  };
+  // 모바일 브라우저/Android 물리 뒤로가기를 가로채서 홈으로 이동
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+
+    const onPopState = (): void => {
+      reset();
+      router.push("/");
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [reset, router]);
 
   return (
     <div className="relative flex-1 overflow-hidden">
@@ -46,7 +59,7 @@ export const SentenceTodayView = ({
           ) : (
             <SentenceCardPhase
               key="card"
-              header={<Header onBack={() => router.back()} />}
+              header={<Header onBack={handleGoHome} />}
               month={month}
               date={date}
               quote={selectedQuote?.content ?? ""}
@@ -54,7 +67,7 @@ export const SentenceTodayView = ({
               bookAuthor={selectedQuote?.author ?? ""}
               bookCoverImage={selectedQuote?.image}
               tags={selectedQuote?.tags ?? []}
-              leftButton={{ label: "확인", isMuted: false, onClick: handleConfirm }}
+              leftButton={{ label: "확인", isMuted: false, onClick: handleGoHome }}
               rightButton={{
                 label: "공유하기",
                 icon: <IcShare3 size={24} className="text-gray-0" />,
