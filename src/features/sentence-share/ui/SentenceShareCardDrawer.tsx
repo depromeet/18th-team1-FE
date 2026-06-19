@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/performance/noImgElement: <explanation> */
 "use client";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
@@ -215,15 +216,25 @@ export const SentenceShareCardDrawer = ({
               return (
                 <div
                   key={variant}
-                  className="h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-50 px-11 py-5"
+                  className={cn(
+                    "h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl px-11 py-5 bg-gray-50",
+                  )}
                 >
                   {previewUrl ? (
-                    // biome-ignore lint/performance/noImgElement: blob URL은 next/image에서 지원하지 않음
-                    <img
-                      src={previewUrl}
-                      alt={`공유 카드 ${variant}`}
-                      className="size-full object-cover rounded-2xl"
-                    />
+                    <div className="relative w-full h-full">
+                      {variant === 3 && (
+                        <img
+                          src="/images/card-background.png"
+                          alt=""
+                          className="size-full object-cover rounded-2xl absolute top-0 left-0"
+                        />
+                      )}
+                      <img
+                        src={previewUrl}
+                        alt={`공유 카드 ${variant}`}
+                        className="size-full object-cover rounded-2xl absolute top-0 left-0"
+                      />
+                    </div>
                   ) : isLoading ? (
                     <Lottie animationData={skeletonAnimation} loop className="size-full" />
                   ) : (
@@ -250,29 +261,29 @@ export const SentenceShareCardDrawer = ({
           ))}
         </div>
 
-        <div className="flex flex-col gap-[15px] pb-15 w-full">
+        <div className="flex flex-col gap-3.75 pb-15 w-full">
           <div className="flex items-center border-t border-gray-200 mx-5 py-3">
             <span className="subhead4 text-gray-700">공유하기</span>
           </div>
-          <div className="flex gap-[26px] items-center justify-center">
-            <div className="flex flex-col gap-[5px] items-center">
+          <div className="flex gap-6.5 items-center justify-center">
+            <div className="flex flex-col gap-1.25 items-center">
               <button
                 type="button"
                 disabled={isSaving}
                 onClick={handleSaveImage}
-                className="flex items-center justify-center size-[60px] rounded-[14px] bg-gray-100 disabled:opacity-50"
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-100 disabled:opacity-50"
               >
                 <Download size={24} className="text-gray-500" />
               </button>
               <span className="caption2 text-gray-600">다운로드</span>
             </div>
-            <div className="flex flex-col gap-[5px] items-center">
+            <div className="flex flex-col gap-1.25 items-center">
               <button
                 type="button"
                 onClick={handleShare}
-                className="flex items-center justify-center size-[60px] rounded-[14px] bg-gray-600"
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-600"
               >
-                <IcShare3 size={24} className="text-white" />
+                <IcShare3 size={32} className="text-white" />
               </button>
               <span className="caption1 text-gray-600">더보기</span>
             </div>
