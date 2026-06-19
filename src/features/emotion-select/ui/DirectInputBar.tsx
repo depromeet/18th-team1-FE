@@ -21,7 +21,7 @@ export const DirectInputBar = ({ onValidChange, onSubmit, isLoading }: DirectInp
       setValue(newValue);
       onValidChange(newValue.length === 0);
     },
-    "최대 30자까지만 작성 가능해요.",
+    "최대 30자까지 작성 가능해요",
   );
 
   const handleSubmit = (): void => {

@@ -100,8 +100,9 @@ export const SentenceTypeStep = ({
         </div>
 
         <div className="relative flex min-h-0 flex-1 flex-col pt-19.25">
-          <div className="min-h-0 flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex flex-col items-center gap-4 pb-26">
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex-1" />
+            <div className="flex flex-col items-center gap-4 pb-12">
               {needTags.map((tag) => (
                 <SentenceTypeChip
                   key={tag.id}
@@ -113,8 +114,10 @@ export const SentenceTypeStep = ({
             </div>
           </div>
           <div
-            className="pointer-events-none absolute bottom-0 left-0 right-0 h-46"
-            style={{ background: "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFF 80%)" }}
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-23"
+            style={{
+              background: "linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%)",
+            }}
           />
         </div>
 
@@ -137,9 +140,9 @@ export const SentenceTypeStep = ({
         />
       )}
 
-      {/* 직접 작성 영역 — 고정 100px */}
+      {/* 직접 작성 영역 — 고정 77px */}
       {isDirectInputActive ? (
-        <div className="relative flex h-25 shrink-0 items-center px-5">
+        <div className="relative flex h-19.25 shrink-0 items-center px-5">
           <DirectInputBar
             onValidChange={onValidChange}
             onSubmit={handleDirectInputSubmit}
@@ -147,7 +150,7 @@ export const SentenceTypeStep = ({
           />
         </div>
       ) : (
-        <div className="flex h-25 shrink-0 items-center justify-center bg-white">
+        <div className="flex h-19.25 shrink-0 items-end justify-center pb-[27px] bg-white">
           <button
             type="button"
             onClick={handleDirectInputActivate}
