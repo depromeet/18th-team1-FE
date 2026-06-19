@@ -1,10 +1,12 @@
 "use client";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import Lottie from "lottie-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 import { Drawer, DrawerContent, DrawerTitle } from "@/shared/ui/drawer";
+import skeletonAnimation from "../../../../public/lottie/card-skeleton.json";
 
 import { fetchCalendarCardImage } from "../api/calendarShareApi";
 import type { CalendarCardVariant } from "../model/calendar-share.types";
@@ -28,6 +30,7 @@ export const CalendarShareCardDrawer = ({
   onClose,
 }: CalendarShareCardDrawerProps): React.ReactElement => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<Partial<Record<CalendarCardVariant, string>>>({});
   const blobCacheRef = useRef<Partial<Record<CalendarCardVariant, Blob>>>({});
@@ -51,6 +54,7 @@ export const CalendarShareCardDrawer = ({
     }
 
     const loadPreviews = async (): Promise<void> => {
+      setIsLoading(true);
       const urls: Partial<Record<CalendarCardVariant, string>> = {};
       const blobs: Partial<Record<CalendarCardVariant, Blob>> = {};
 
@@ -70,6 +74,7 @@ export const CalendarShareCardDrawer = ({
 
       blobCacheRef.current = blobs;
       setPreviewUrls(urls);
+      setIsLoading(false);
     };
 
     loadPreviews();
@@ -178,8 +183,10 @@ export const CalendarShareCardDrawer = ({
                       alt={`캘린더 공유 카드 ${variant}`}
                       className="size-full object-cover rounded-2xl"
                     />
+                  ) : isLoading ? (
+                    <Lottie animationData={skeletonAnimation} loop className="size-full" />
                   ) : (
-                    <div className="size-full animate-pulse bg-gray-50 rounded-2xl" />
+                    <div className="size-full bg-gray-100 rounded-2xl" />
                   )}
                 </div>
               );
