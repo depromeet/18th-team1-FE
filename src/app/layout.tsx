@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { Providers } from "./providers";
 import "./globals.css";
-import { AuthGuard } from "@/features/auth";
+// import { AuthGuard } from "@/features/auth";
 
 const pretendard = localFont({
   src: "../../public/fonts/subset-PretendardVariable.woff2",
@@ -75,11 +75,11 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         suppressHydrationWarning
       >
         <Providers>
-          <AuthGuard>
-            <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75 bg-gray-0">
-              {children}
-            </div>
-          </AuthGuard>
+          {/* <AuthGuard> */}
+          <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75 bg-gray-0">
+            {children}
+          </div>
+          {/* </AuthGuard> */}
         </Providers>
       </body>
     </html>

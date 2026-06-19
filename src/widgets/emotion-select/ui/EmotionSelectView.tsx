@@ -105,20 +105,24 @@ export const EmotionSelectView = (): React.ReactElement => {
 
       {ctaVariant === "normal" && (
         <>
-          <NewButton label="다음" disabled={ctaDisabled} onClick={handleNextWithKeyboard} />
           <div
-            className={`transition-colors ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
-            style={{ height: "env(safe-area-inset-bottom, 0px)" }}
+            className="shrink-0"
+            style={{ height: "calc(56px + env(safe-area-inset-bottom, 0px))" }}
           />
+          <div
+            className={`fixed inset-x-0 bottom-0 z-10 transition-colors md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
+            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+          >
+            <NewButton label="다음" disabled={ctaDisabled} onClick={handleNextWithKeyboard} />
+          </div>
         </>
       )}
       {ctaVariant === "fixed" && (
-        <div className="fixed inset-x-0 bottom-0 z-10 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2">
+        <div
+          className={`fixed inset-x-0 bottom-0 z-10 transition-colors md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        >
           <NewButton label="다음" disabled={ctaDisabled} onClick={handleNextWithKeyboard} />
-          <div
-            className={`transition-colors ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
-            style={{ height: "env(safe-area-inset-bottom, 0px)" }}
-          />
         </div>
       )}
     </div>

@@ -89,19 +89,23 @@ export const SentenceListView = () => {
         </div>
       </div>
       <section className="relative shrink-0">
-        <div className="relative z-10">
-          <NewDoubleButton
-            left={{
-              label: "문장 더 불러오기",
-              isMuted: !hasMore,
-              onClick: handleLoadMore,
-              disabled: !hasMore,
-            }}
-            right={{ label: "다음", onClick: handleNext }}
-          />
-        </div>
+        <div style={{ height: "calc(56px + env(safe-area-inset-bottom, 0px))" }} />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-[rgba(255,255,255,0)] to-white" />
       </section>
+      <div
+        className="fixed inset-x-0 bottom-0 z-10 bg-gray-700 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <NewDoubleButton
+          left={{
+            label: "문장 더 불러오기",
+            isMuted: !hasMore,
+            onClick: handleLoadMore,
+            disabled: !hasMore,
+          }}
+          right={{ label: "다음", onClick: handleNext }}
+        />
+      </div>
     </div>
   );
 };
