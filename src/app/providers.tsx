@@ -4,7 +4,9 @@ import { isServer, type QueryClient, QueryClientProvider } from "@tanstack/react
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
 
+import { SentenceShareDrawerRoot } from "@/features/sentence-share";
 import { createQueryClient } from "@/shared/api/query-client";
+import { ToastContainer } from "@/shared/ui/toast";
 
 let browserQueryClient: QueryClient | undefined;
 
@@ -19,17 +21,19 @@ const getQueryClient = (): QueryClient => {
   return browserQueryClient;
 };
 
-type ProvidersProps = {
+interface ProvidersProps {
   children: ReactNode;
-};
+}
 
-export const Providers = ({ children }: ProvidersProps): React.ReactElement => {
+export const Providers = ({ children }: ProvidersProps) => {
   const queryClient = getQueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
       {process.env.NODE_ENV === "development" ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+      <ToastContainer />
+      <SentenceShareDrawerRoot />
     </QueryClientProvider>
   );
 };

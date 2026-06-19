@@ -1,0 +1,33 @@
+<style>
+  @font-face {
+    font-family: "Pretendard";
+    src: url("/fonts/subset-PretendardVariable.woff2") format("woff2-variations");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "GT Pressura Trial";
+    src: url("/fonts/GT-Pressura-Extended-Bold-Trial.otf") format("opentype");
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Milling Trial";
+    src: url("/fonts/MillingTrial-Triplex1,5mm.otf") format("opentype");
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  :root {
+    --font-pretendard: "Pretendard", Arial, sans-serif;
+    --font-gt-pressura: "GT Pressura Trial", Arial, sans-serif;
+    --font-milling: "Milling Trial", serif;
+  }
+
+  body {
+    font-family: var(--font-pretendard);
+    color: var(--color-gray-700);
+  }
+</style>

@@ -1,0 +1,13 @@
+import { BaseIcon } from "./BaseIcon";
+import type { IconProps } from "./icon.types";
+
+export const IcCheck = (props: IconProps) => (
+  <BaseIcon viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M18.7838 7.21996C19.072 7.51327 19.0721 7.98884 18.7839 8.28218L10.4349 16.78C10.2965 16.9208 10.1087 17 9.913 17C9.71725 17 9.52952 16.9209 9.39111 16.78L5.21616 12.5311C4.92795 12.2378 4.92795 11.7622 5.21616 11.4689C5.50438 11.1756 5.97168 11.1756 6.2599 11.4689L9.91295 15.1866L17.7401 7.22002C18.0283 6.92668 18.4956 6.92666 18.7838 7.21996Z"
+      fill="currentColor"
+    />
+  </BaseIcon>
+);

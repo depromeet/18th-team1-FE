@@ -15,10 +15,10 @@ export const useAppStore = create<AppState>()(
   devtools(
     (set) => ({
       theme: "light",
-      setTheme: (theme: AppState["theme"]): void => {
+      setTheme: (theme: AppState["theme"]) => {
         set({ theme }, false, "app/setTheme");
       },
-      toggleTheme: (): void => {
+      toggleTheme: () => {
         set(
           (state: AppState) => ({ theme: state.theme === "light" ? "dark" : "light" }),
           false,

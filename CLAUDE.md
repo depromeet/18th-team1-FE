@@ -11,7 +11,7 @@ pnpm dlx shadcn@latest add <component> # shadcn/ui 컴포넌트 추가
 
 ## 폴더 구조 (FSD)
 
-```
+```text
 src/
 ├── app/        # Next.js 라우팅, Provider
 ├── widgets/    # feature 조합 UI 블록
@@ -46,7 +46,7 @@ src/
 
 새 기능 추가 시 슬라이스 내부 구조:
 
-```
+```text
 features/
 └── book-search/
     ├── index.ts          # public API (외부 노출 인터페이스)
@@ -61,7 +61,7 @@ features/
 ## 코딩 규칙 요약
 
 - 변수/함수 `camelCase`, 컴포넌트/타입 `PascalCase`, 상수 `UPPER_SNAKE_CASE`
-- 함수는 Arrow Function + 명시적 반환 타입 필수
+- 함수는 Arrow Function 사용
 - boolean: `is/has/should` 접두사 · 이벤트 핸들러: 내부 `handle*`, props `on*`
 - 절대 경로 `@/*` → `src/*`
 - 줄임말 지양: `btn` (✗) → `button` (✓)
@@ -85,3 +85,5 @@ features/
 | @docs/commit-convention.md | 커밋 태그, Gitmoji 옵션 |
 | @docs/packages.md | 패키지 목록 및 설정 방법 |
 | @docs/api-specification.md | API 엔드포인트, TanStack Query 가이드 |
+| @docs/ui-markup-guide.md | Figma MCP 활용, 디자인 토큰, 마크업 규칙 |
+| @docs/icon-guide.md | 아이콘 컴포넌트 추가 및 사용 규칙 |

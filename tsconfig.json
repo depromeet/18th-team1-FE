@@ -25,7 +25,6 @@
       }
     ],
     /* Absolute paths — use @/* to reference src/* */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

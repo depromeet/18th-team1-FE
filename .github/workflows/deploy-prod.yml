@@ -55,6 +55,8 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
 
       # 이번 빌드의 SHA 기반 이미지 레퍼런스를 output으로 저장
       - name: Set image reference output

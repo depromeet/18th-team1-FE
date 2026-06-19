@@ -73,6 +73,30 @@ Provider 는 [src/app/providers.tsx](../src/app/providers.tsx) 에 정의되어 
 | `pnpm check` | lint + format + import 정렬 일괄 수정 |
 | `pnpm typecheck` | TypeScript 타입 체크 |
 
+### Biome 활용법
+
+#### VSCode 저장 시 자동 포맷 (`.vscode/settings.json` 설정됨)
+
+- 파일 저장하면 포맷 + import 정렬 자동 적용
+- lint 에러는 VSCode에서 빨간줄/노란줄로 표시
+
+#### 커밋 시 자동 수정 (`lint-staged` + `--unsafe` 설정됨)
+
+- 스테이징된 파일에만 `biome check --write --unsafe` 실행
+- 포맷, 미사용 import/변수 자동 제거 후 커밋
+
+#### fix 범위 차이
+
+| | `--write` | `--write --unsafe` |
+| --- | --- | --- |
+| 포맷, 스타일 자동 수정 | ✅ | ✅ |
+| 미사용 import/변수 제거 | ❌ | ✅ |
+
+#### 에러 vs 경고
+
+- `error` → 커밋 차단 (예: `noExplicitAny`, `noUnusedVariables`)
+- `warn` → 커밋 허용, VSCode에서 노란줄 표시 (예: `useExplicitType`)
+
 ## 🔧 빌드/개발 스크립트
 
 | 스크립트 | 설명 |
