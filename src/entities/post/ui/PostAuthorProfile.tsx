@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IcProfileNone } from "@/shared/ui/icons";
+import { IcProfileS } from "@/shared/ui/icons";
 import type { PostAuthor } from "../model/post.types";
 
 interface PostAuthorProfileProps {
@@ -14,14 +14,11 @@ export const PostAuthorProfile = ({
   variant = "default",
 }: PostAuthorProfileProps): React.ReactElement => (
   <div className="flex items-center gap-2">
-    <div className="relative size-8 shrink-0 overflow-hidden rounded-full bg-key-primary-0">
+    <div className="relative flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-key-primary-0">
       {author.avatarUrl ? (
         <Image src={author.avatarUrl} alt={author.nickname} fill className="object-cover" />
       ) : (
-        <IcProfileNone
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-key-primary-100"
-          size={18}
-        />
+        <IcProfileS width={12} height={15} className="text-key-primary" />
       )}
     </div>
     <div className="flex items-center gap-1">
