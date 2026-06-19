@@ -10,8 +10,8 @@ import { fetchDevToken, refreshAccessToken } from "../api/authApi";
 // /login으로 시작하는 경로는 인증 없이 접근 허용 (/login/callback 포함)
 const PUBLIC_PATHS = ["/login"];
 
-// 공유된 월말결산(/report/{year}/{month}?userId=...)은 토큰 없이 접근 허용
-const SHARED_REPORT_PATH_PATTERN = /^\/report\/\d+\/\d+$/;
+// 공유된 월말결산(/report?year=...&month=...&userId=...)은 토큰 없이 접근 허용
+const SHARED_REPORT_PATH = "/report";
 
 const LoadingFallback = () => (
   <div className="flex min-h-dvh items-center justify-center">
@@ -33,8 +33,7 @@ const AuthGuardInner = ({ children }: AuthGuardProps) => {
 
   useEffect(() => {
     const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
-    const isSharedReportPath =
-      SHARED_REPORT_PATH_PATTERN.test(pathname) && searchParams.has("userId");
+    const isSharedReportPath = pathname === SHARED_REPORT_PATH && searchParams.has("userId");
 
     // 공개 경로는 인증 체크 없이 렌더링
     if (isPublicPath || isSharedReportPath) {
