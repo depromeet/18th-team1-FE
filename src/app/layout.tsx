@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { Providers } from "./providers";
@@ -70,6 +71,18 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       className={`${pretendard.variable} ${gtPressura.variable} ${millingTrial.variable}`}
       suppressHydrationWarning
     >
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-RGVHQMJ1V9"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RGVHQMJ1V9');
+        `}
+      </Script>
       <body
         className="h-dvh overflow-hidden bg-gray-50 font-pretendard text-gray-700 antialiased"
         suppressHydrationWarning
