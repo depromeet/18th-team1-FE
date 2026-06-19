@@ -90,7 +90,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
             <IcMonthBack size={24} className={isPrevDisabled ? "text-gray-200" : "text-gray-300"} />
           </button>
           <button type="button" onClick={() => setIsPickerOpen(true)}>
-            <span className="subhead1 text-gray-700">{format(viewDate, "yyyy년 M월")}</span>
+            <span className="subhead1 text-gray-700">{format(viewDate, "yyyy.MM")}</span>
           </button>
           <button
             type="button"
