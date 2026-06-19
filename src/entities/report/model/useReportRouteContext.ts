@@ -1,14 +1,15 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export const useReportRouteContext = () => {
-  const { year, month } = useParams<{ year: string; month: string }>();
   const searchParams = useSearchParams();
+  const yearParam = searchParams.get("year");
+  const monthParam = searchParams.get("month");
   const userIdParam = searchParams.get("userId");
 
-  const parsedYear = Number.parseInt(year, 10);
-  const parsedMonth = Number.parseInt(month, 10);
+  const parsedYear = Number.parseInt(yearParam ?? "", 10);
+  const parsedMonth = Number.parseInt(monthParam ?? "", 10);
   const isValidReportMonth =
     Number.isInteger(parsedYear) &&
     Number.isInteger(parsedMonth) &&

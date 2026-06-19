@@ -30,9 +30,10 @@ export const ReportMonthSelector = ({ year, month, userId }: ReportMonthSelector
   const signupDate = signupDateString ? new Date(signupDateString) : undefined;
 
   const handleMonthChange = (dateStr: string) => {
-    const [selectedYear, selectedMonth] = dateStr.split("-");
-    const query = isSharedView ? `?userId=${userId}` : "";
-    router.push(`/report/${selectedYear}/${selectedMonth}${query}`);
+    const [selectedYear, selectedMonth] = dateStr.split("-") as [string, string];
+    const query = new URLSearchParams({ year: selectedYear, month: selectedMonth });
+    if (isSharedView) query.set("userId", String(userId));
+    router.replace(`/report?${query.toString()}`);
   };
 
   return (
