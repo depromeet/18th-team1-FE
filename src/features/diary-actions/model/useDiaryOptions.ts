@@ -8,7 +8,11 @@ export const useDiaryOptions = (recommendationId: number) => {
   const { mutate: deleteDiary } = useDeleteDiaryMutation();
 
   const handleBack = () => {
-    router.back();
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/");
+    }
   };
 
   const handleShare = () => {
