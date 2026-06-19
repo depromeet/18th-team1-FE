@@ -16,7 +16,7 @@ export const GenreFilterChips = ({
       key="all"
       type="button"
       onClick={() => onChange(undefined)}
-      className={`caption1 shrink-0 whitespace-nowrap rounded-full px-3 py-1 ${
+      className={`caption1 shrink-0 whitespace-nowrap rounded-full px-3 py-1 body3 ${
         selectedGenreId === undefined
           ? "bg-gray-700 text-white"
           : "border border-gray-200 bg-background text-gray-500"
@@ -29,7 +29,7 @@ export const GenreFilterChips = ({
         key={genre.genreId}
         type="button"
         onClick={() => onChange(genre.genreId)}
-        className={`caption1 shrink-0 whitespace-nowrap rounded-full px-3 py-1 ${
+        className={`caption1 shrink-0 whitespace-nowrap rounded-full px-3 py-1 body3 ${
           selectedGenreId === genre.genreId
             ? "bg-gray-700 text-white"
             : "border border-gray-200 bg-background text-gray-500"

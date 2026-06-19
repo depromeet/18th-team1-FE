@@ -56,7 +56,7 @@ export const DiscoverSearchResultsHeader = ({
           onChange={(e) => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="문장을 검색해보세요"
-          className="subhead2 flex-1 bg-transparent text-center text-gray-700 placeholder:text-gray-400 outline-none"
+          className="subhead2 min-w-0 flex-1 bg-transparent text-center text-gray-700 placeholder:text-gray-400 outline-none caret-transparent"
           // biome-ignore lint/a11y/noAutofocus: intentional focus for search screen
           autoFocus={!initialQuery}
         />

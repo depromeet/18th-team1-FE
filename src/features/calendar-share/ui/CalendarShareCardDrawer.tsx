@@ -1,10 +1,15 @@
 "use client";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import Lottie from "lottie-react";
+import { Download } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { cn } from "@/shared/lib/utils";
 import { Drawer, DrawerContent, DrawerTitle } from "@/shared/ui/drawer";
+import { IcShare3 } from "@/shared/ui/icons";
+import skeletonAnimation from "../../../../public/lottie/card-skeleton.json";
 
 import { fetchCalendarCardImage } from "../api/calendarShareApi";
 import type { CalendarCardVariant } from "../model/calendar-share.types";
@@ -28,6 +33,7 @@ export const CalendarShareCardDrawer = ({
   onClose,
 }: CalendarShareCardDrawerProps): React.ReactElement => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<Partial<Record<CalendarCardVariant, string>>>({});
   const blobCacheRef = useRef<Partial<Record<CalendarCardVariant, Blob>>>({});
@@ -40,7 +46,13 @@ export const CalendarShareCardDrawer = ({
   const targetYear = year ?? now.getFullYear();
   const targetMonth = month ?? now.getMonth() + 1;
 
+  const pathname = usePathname();
   const selectedVariant = CARD_VARIANTS[activeIndex] ?? 1;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname 변경 시에만 실행
+  useEffect(() => {
+    if (isOpen) onClose();
+  }, [pathname]);
 
   // 카드 프리뷰 이미지 선-패치 + 닫힐 때 초기화
   useEffect(() => {
@@ -51,6 +63,7 @@ export const CalendarShareCardDrawer = ({
     }
 
     const loadPreviews = async (): Promise<void> => {
+      setIsLoading(true);
       const urls: Partial<Record<CalendarCardVariant, string>> = {};
       const blobs: Partial<Record<CalendarCardVariant, Blob>> = {};
 
@@ -70,6 +83,7 @@ export const CalendarShareCardDrawer = ({
 
       blobCacheRef.current = blobs;
       setPreviewUrls(urls);
+      setIsLoading(false);
     };
 
     loadPreviews();
@@ -178,8 +192,10 @@ export const CalendarShareCardDrawer = ({
                       alt={`캘린더 공유 카드 ${variant}`}
                       className="size-full object-cover rounded-2xl"
                     />
+                  ) : isLoading ? (
+                    <Lottie animationData={skeletonAnimation} loop className="size-full" />
                   ) : (
-                    <div className="size-full animate-pulse bg-gray-50 rounded-2xl" />
+                    <div className="size-full bg-gray-100 rounded-2xl" />
                   )}
                 </div>
               );
@@ -202,22 +218,33 @@ export const CalendarShareCardDrawer = ({
           ))}
         </div>
 
-        <div className="flex gap-3 px-5 pb-6">
-          <button
-            type="button"
-            onClick={handleShare}
-            className="flex-1 rounded-xl border border-gray-300 py-3 text-sm font-medium"
-          >
-            더보기
-          </button>
-          <button
-            type="button"
-            disabled={isSaving}
-            onClick={() => void handleSaveImage()}
-            className="flex-1 rounded-xl bg-gray-900 py-3 text-sm font-medium text-white disabled:opacity-50"
-          >
-            {isSaving ? "저장 중..." : "저장"}
-          </button>
+        <div className="flex flex-col gap-3.75 pb-15 w-full">
+          <div className="flex items-center border-t border-gray-200 mx-5 py-3">
+            <span className="subhead4 text-gray-700">공유하기</span>
+          </div>
+          <div className="flex gap-6.5 items-center justify-center">
+            <div className="flex flex-col gap-1.25 items-center">
+              <button
+                type="button"
+                disabled={isSaving}
+                onClick={handleSaveImage}
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-100 disabled:opacity-50"
+              >
+                <Download size={24} className="text-gray-500" />
+              </button>
+              <span className="caption2 text-gray-600">다운로드</span>
+            </div>
+            <div className="flex flex-col gap-1.25 items-center">
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-600"
+              >
+                <IcShare3 size={32} className="text-white" />
+              </button>
+              <span className="caption1 text-gray-600">더보기</span>
+            </div>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

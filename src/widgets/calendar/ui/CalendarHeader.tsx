@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useUserProfileQuery } from "@/entities/user";
-import { IcProfileS } from "@/shared/ui/icons";
+import { IcProfileDefault } from "@/shared/ui/icons";
 
 export const CalendarHeader = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ export const CalendarHeader = () => {
             className="object-cover"
           />
         ) : (
-          <IcProfileS width={15} height={18.7} className="text-key-primary" />
+          <IcProfileDefault size={40} />
         )}
       </button>
     </header>

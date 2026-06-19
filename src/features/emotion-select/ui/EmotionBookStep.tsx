@@ -115,7 +115,7 @@ export const EmotionBookStep = ({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         id="emotion-book-container"
-        className={`w-full max-w-[335px] mx-auto flex flex-col touch-none select-none${isTutorialActive ? " pointer-events-none" : ""}`}
+        className={`w-full max-w-[335px] mx-auto flex flex-col touch-none select-none [-webkit-tap-highlight-color:transparent]${isTutorialActive ? " pointer-events-none" : ""}`}
         style={{ transform: `scale(${booksScale})`, transformOrigin: "bottom center" }}
       >
         {EMOTIONS.map((emotion, index) => {

@@ -121,7 +121,7 @@ export const MonthPicker = ({
             ))}
           </div>
         </div>
-        <NewButton label="저장" onClick={handleSave} />
+        <NewButton label="확인" onClick={handleSave} />
       </div>
     </div>
   );

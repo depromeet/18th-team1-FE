@@ -20,7 +20,7 @@ export const useReportShare = () => {
       return;
     }
 
-    const url = `${window.location.origin}/report/${year}/${month}?userId=${ownerId}`;
+    const url = `${window.location.origin}/report?year=${year}&month=${month}&userId=${ownerId}`;
 
     try {
       await navigator.share({ title: "월말결산", url });

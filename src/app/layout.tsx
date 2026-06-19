@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import type { ReactNode } from "react";
 
 import { Providers } from "./providers";
 import "./globals.css";
-import { AuthGuard } from "@/features/auth";
+// import { AuthGuard } from "@/features/auth";
 
 const pretendard = localFont({
   src: "../../public/fonts/subset-PretendardVariable.woff2",
@@ -70,16 +71,28 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       className={`${pretendard.variable} ${gtPressura.variable} ${millingTrial.variable}`}
       suppressHydrationWarning
     >
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-RGVHQMJ1V9"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-RGVHQMJ1V9');
+        `}
+      </Script>
       <body
-        className="h-dvh overflow-hidden bg-gray-50 font-pretendard text-gray-700 antialiased"
+        className="h-dvh overflow-hidden bg-gray-0 font-pretendard text-gray-700 antialiased"
         suppressHydrationWarning
       >
         <Providers>
-          <AuthGuard>
-            <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75 bg-gray-0">
-              {children}
-            </div>
-          </AuthGuard>
+          {/* <AuthGuard> */}
+          <div className="h-dvh w-full overflow-hidden md:mx-auto md:max-w-93.75 bg-gray-0">
+            {children}
+          </div>
+          {/* </AuthGuard> */}
         </Providers>
       </body>
     </html>

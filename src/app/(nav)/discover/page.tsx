@@ -1,5 +1,10 @@
+import type { Viewport } from "next";
 import { DiscoverFeed } from "@/widgets/discover-feed";
 import { DiscoverSearchResults } from "@/widgets/discover-search-results";
+
+export const viewport: Viewport = {
+  themeColor: "#e7e4c4",
+};
 
 interface PageProps {
   searchParams: Promise<{ search?: string }>;

@@ -40,7 +40,7 @@ export const EmotionTutorialOverlay = ({
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 z-10 bg-black/80 pointer-events-auto"
+      className="fixed inset-0 z-20 bg-black/80 pointer-events-auto"
       onPointerDown={onDismiss}
     >
       {top !== null && left !== null && (

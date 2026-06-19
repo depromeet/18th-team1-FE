@@ -1,12 +1,17 @@
+/** biome-ignore-all lint/performance/noImgElement: <explanation> */
 "use client";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { format } from "date-fns";
+import Lottie from "lottie-react";
+import { Download } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/utils";
-
 import { Drawer, DrawerContent, DrawerTitle } from "@/shared/ui/drawer";
+import { IcShare3 } from "@/shared/ui/icons";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
+import skeletonAnimation from "../../../../public/lottie/card-skeleton.json";
 
 import type { SentenceCardVariant } from "../api/sentenceShareApi";
 import { fetchSentenceCardImage } from "../api/sentenceShareApi";
@@ -42,7 +47,13 @@ export const SentenceShareCardDrawer = ({
   const isSharingRef = useRef(false);
   const { selectedQuote } = useEmotionSelectStore();
 
+  const pathname = usePathname();
   const selectedVariant = CARD_VARIANTS[activeIndex] ?? 1;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname 변경 시에만 실행
+  useEffect(() => {
+    if (isOpen) onClose();
+  }, [pathname]);
 
   // 카드 프리뷰 이미지 선-패치 + 닫힐 때 초기화
   useEffect(() => {
@@ -197,12 +208,7 @@ export const SentenceShareCardDrawer = ({
         <VisuallyHidden.Root>
           <DrawerTitle>공유 카드 선택</DrawerTitle>
         </VisuallyHidden.Root>
-        {/* data-vaul-no-drag: vaul의 수직 드래그 감지가 수평 스크롤을 가로채지 않도록 */}
-        {/*
-          h-95 + shrink-0: DrawerContent flex 레이아웃에서 카드 높이(380px)가
-          눌려 이미지가 잘리지 않도록 고정. overflow-x-auto는 암묵적으로
-          overflow-y: auto를 유발하므로 명시적 높이가 필요함.
-        */}
+
         <div
           ref={scrollRef}
           data-vaul-no-drag
@@ -217,22 +223,29 @@ export const SentenceShareCardDrawer = ({
               return (
                 <div
                   key={variant}
-                  className="h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl bg-gray-50 px-11 py-5"
+                  className={cn(
+                    "h-full w-68.75 shrink-0 snap-start overflow-hidden rounded-2xl px-11 py-5 bg-gray-50",
+                  )}
                 >
                   {previewUrl ? (
-                    // biome-ignore lint/performance/noImgElement: blob URL은 next/image에서 지원하지 않음
-                    <img
-                      src={previewUrl}
-                      alt={`공유 카드 ${variant}`}
-                      className="size-full object-cover rounded-2xl"
-                    />
-                  ) : (
-                    <div
-                      className={cn(
-                        "size-full bg-gray-100 rounded-2xl",
-                        isLoading && "animate-pulse",
+                    <div className="relative w-full h-full">
+                      {variant === 3 && (
+                        <img
+                          src="/images/card-background.png"
+                          alt=""
+                          className="size-full object-cover rounded-2xl absolute top-0 left-0"
+                        />
                       )}
-                    />
+                      <img
+                        src={previewUrl}
+                        alt={`공유 카드 ${variant}`}
+                        className="size-full object-cover rounded-2xl absolute top-0 left-0"
+                      />
+                    </div>
+                  ) : isLoading ? (
+                    <Lottie animationData={skeletonAnimation} loop className="size-full" />
+                  ) : (
+                    <div className="size-full bg-gray-100 rounded-2xl" />
                   )}
                 </div>
               );
@@ -255,22 +268,33 @@ export const SentenceShareCardDrawer = ({
           ))}
         </div>
 
-        <div className="flex gap-3 px-5 pb-6">
-          <button
-            type="button"
-            onClick={handleShare}
-            className="flex-1 rounded-xl border border-gray-300 py-3 text-sm font-medium"
-          >
-            더보기
-          </button>
-          <button
-            type="button"
-            disabled={isSaving}
-            onClick={() => void handleSaveImage()}
-            className="flex-1 rounded-xl bg-gray-900 py-3 text-sm font-medium text-white disabled:opacity-50"
-          >
-            {isSaving ? "저장 중..." : "저장"}
-          </button>
+        <div className="flex flex-col gap-3.75 pb-15 w-full">
+          <div className="flex items-center border-t border-gray-200 mx-5 py-3">
+            <span className="subhead4 text-gray-700">공유하기</span>
+          </div>
+          <div className="flex gap-6.5 items-center justify-center">
+            <div className="flex flex-col gap-1.25 items-center">
+              <button
+                type="button"
+                disabled={isSaving}
+                onClick={handleSaveImage}
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-100 disabled:opacity-50"
+              >
+                <Download size={24} className="text-gray-500" />
+              </button>
+              <span className="caption2 text-gray-600">다운로드</span>
+            </div>
+            <div className="flex flex-col gap-1.25 items-center">
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex items-center justify-center size-15 rounded-xl bg-gray-600"
+              >
+                <IcShare3 size={32} className="text-white" />
+              </button>
+              <span className="caption1 text-gray-600">더보기</span>
+            </div>
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

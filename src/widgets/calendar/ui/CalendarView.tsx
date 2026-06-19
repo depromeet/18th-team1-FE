@@ -60,9 +60,7 @@ export const CalendarView = () => {
         <MonthlyReportBanner
           month={reportBanner.month}
           onClick={() =>
-            router.push(
-              `/report/${reportBanner.year}/${String(reportBanner.month).padStart(2, "0")}`,
-            )
+            router.push(`/report?year=${reportBanner.year}&month=${reportBanner.month}`)
           }
         />
       )}

@@ -58,7 +58,7 @@ export const DiscoverFeed = (): React.ReactElement => {
     <div className="flex h-full flex-col">
       {/* Header */}
       <div className="bg-key-point-50">
-        <div className="px-5 pt-15">
+        <div className="px-5 pt-3.25">
           <DiscoverSearchBar onSubmit={(query) => navigateToSearch(query)} />
         </div>
         <GenreFilterChips
