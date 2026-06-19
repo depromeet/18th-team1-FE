@@ -15,6 +15,7 @@ import {
 import { homeKeys } from "@/features/home";
 import { SentenceLoadingView } from "@/features/sentence-select";
 import { NewButton } from "@/shared/ui/new-button";
+import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 import { Text } from "@/shared/ui/text";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 
@@ -74,7 +75,9 @@ const SentenceViewContent = ({
       </div>
       <section className="flex shrink-0 flex-col items-center gap-2">
         <NewButton variant="secondary" label="다른 문장 더보기" onClick={handleViewList} />
-        <NewButton label="다음" onClick={handleNext} />
+        <SafeAreaBottom className="w-full bg-gray-700">
+          <NewButton label="다음" onClick={handleNext} />
+        </SafeAreaBottom>
       </section>
     </div>
   );

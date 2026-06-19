@@ -24,12 +24,14 @@ type EmotionSelectFormState = {
   situationDescription: string;
   selectedNeedTagId: number | null;
   directSentenceInput: string;
+  isAppleVisible: boolean;
   currentRecommendationId: number | null;
   initialRecommendedQuote: SentenceQuote | null;
   listVisibleCount: number;
   selectedQuote: SelectedQuote | null;
   loadingQuotes: LoadingQuote[];
   setSelectedEmotionId: (id: string | null) => void;
+  setIsAppleVisible: (visible: boolean) => void;
   setSelectedEmotionRangeId: (id: number | null) => void;
   setSelectedSituationIds: (ids: string[]) => void;
   setSituationDescription: (text: string) => void;
@@ -50,6 +52,7 @@ const INITIAL_STATE = {
   situationDescription: "",
   selectedNeedTagId: null,
   directSentenceInput: "",
+  isAppleVisible: false,
   currentRecommendationId: null,
   initialRecommendedQuote: null,
   listVisibleCount: 4,
@@ -64,6 +67,9 @@ export const useEmotionSelectStore = create<EmotionSelectFormState>()(
         ...INITIAL_STATE,
         setSelectedEmotionId: (id: string | null): void => {
           set({ selectedEmotionId: id, selectedSituationIds: [] }, false, "setSelectedEmotionId");
+        },
+        setIsAppleVisible: (visible: boolean): void => {
+          set({ isAppleVisible: visible }, false, "setIsAppleVisible");
         },
         setSelectedEmotionRangeId: (id: number | null): void => {
           set({ selectedEmotionRangeId: id }, false, "setSelectedEmotionRangeId");

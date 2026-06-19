@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcClose, IcTrash } from "@/shared/ui/icons";
+import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 
 import { useBulkDeleteScrapsMutation, useScrappedQuotesQuery } from "../api/queries";
 import type { ScrappedQuote } from "../model/scrap.types";
@@ -76,7 +78,7 @@ export const ScrapSentenceSection = () => {
   }, [items]);
 
   return (
-    <section className="flex flex-1 flex-col bg-background">
+    <SafeAreaBottom className="flex flex-1 flex-col bg-background">
       <div className="sticky top-0 z-10 flex items-center justify-between bg-background px-5 py-4.5">
         <span className="subhead1 text-gray-700">스크랩한 문장 {totalCount}개</span>
         {isSelectMode ? (
@@ -99,8 +101,9 @@ export const ScrapSentenceSection = () => {
       </div>
 
       {items.length === 0 ? (
-        <div className="flex items-center justify-center py-20">
-          <p className="body3 text-gray-400">아직 스크랩한 문장이 없어요.</p>
+        <div className="flex flex-col items-center justify-center gap-2.25 pb-20 pt-9.75">
+          <Image src="/images/scrap-empty.png" alt="" width={151} height={56} />
+          <p className="body3 text-gray-500">아직 스크랩한 문장이 없어요.</p>
         </div>
       ) : (
         <div className="flex justify-center gap-1.75 px-2.5 pb-4">
@@ -133,17 +136,19 @@ export const ScrapSentenceSection = () => {
       {isSelectMode && <div className="h-16 shrink-0" />}
 
       {isSelectMode && (
-        <div className="fixed bottom-0 left-1/2 z-20 flex w-full -translate-x-1/2 items-center justify-between bg-background px-5 py-3.75 shadow-[0_-4px_15px_rgba(0,27,55,0.1)] md:max-w-93.75">
-          <span className="subhead1 text-gray-700">{selectedIds.size}개의 문장이 선택됨</span>
-          <button
-            type="button"
-            className="relative -top-px"
-            disabled={selectedIds.size === 0}
-            onClick={() => setIsDeleteDialogOpen(true)}
-          >
-            <IcTrash size={24} className="text-gray-600" />
-          </button>
-        </div>
+        <SafeAreaBottom className="fixed bottom-0 left-1/2 z-20 flex w-full -translate-x-1/2 flex-col bg-background shadow-[0_-4px_15px_rgba(0,27,55,0.1)] md:max-w-93.75">
+          <div className="flex items-center justify-between px-5 py-3.75">
+            <span className="subhead1 text-gray-700">{selectedIds.size}개의 문장이 선택됨</span>
+            <button
+              type="button"
+              className="relative -top-px"
+              disabled={selectedIds.size === 0}
+              onClick={() => setIsDeleteDialogOpen(true)}
+            >
+              <IcTrash size={24} className="text-gray-600" />
+            </button>
+          </div>
+        </SafeAreaBottom>
       )}
 
       <ConfirmModal
@@ -172,6 +177,6 @@ export const ScrapSentenceSection = () => {
         coverImageUrl={activeItem?.bookCoverImageUrl}
         bookPurchaseLink={activeItem?.bookPurchaseLink ?? ""}
       />
-    </section>
+    </SafeAreaBottom>
   );
 };

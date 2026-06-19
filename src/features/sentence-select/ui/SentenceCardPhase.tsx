@@ -176,7 +176,8 @@ export const SentenceCardPhase = ({
 
       {/* Button bar — absolute bottom so it's always visible regardless of screen height */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 z-10"
+        className="absolute bottom-0 left-0 right-0 z-10 bg-gray-700"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ...ENTER, delay: 0.32 }}
