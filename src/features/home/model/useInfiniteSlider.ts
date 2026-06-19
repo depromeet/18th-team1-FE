@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseInfiniteSliderOptions {
   count: number;
@@ -25,6 +25,15 @@ export const useInfiniteSlider = ({
   const [slideIndex, setSlideIndex] = useState(count > 1 ? 1 : 0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const prevCountRef = useRef(count);
+
+  useEffect(() => {
+    if (prevCountRef.current === 0 && count > 0) {
+      setSlideIndex(count > 1 ? 1 : 0);
+      setIsAnimating(false);
+    }
+    prevCountRef.current = count;
+  }, [count]);
 
   const goNext = useCallback(() => {
     if (count <= 1) return;
