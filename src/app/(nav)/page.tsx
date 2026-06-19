@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useUserProfileQuery } from "@/entities/user";
 import { cn } from "@/shared/lib/utils";
-import { IcProfileS } from "@/shared/ui/icons";
+import { IcProfileDefault } from "@/shared/ui/icons";
 import { Logo } from "@/shared/ui/logo";
 import { HomeView } from "@/widgets/home";
 
@@ -66,7 +66,7 @@ const HomePage = () => {
                 className="size-full object-cover"
               />
             ) : (
-              <IcProfileS className="text-key-primary" />
+              <IcProfileDefault size={36} />
             )}
           </button>
         </header>

@@ -84,7 +84,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         `}
       </Script>
       <body
-        className="h-dvh overflow-hidden bg-gray-50 font-pretendard text-gray-700 antialiased"
+        className="h-dvh overflow-hidden bg-gray-0 font-pretendard text-gray-700 antialiased"
         suppressHydrationWarning
       >
         <Providers>
