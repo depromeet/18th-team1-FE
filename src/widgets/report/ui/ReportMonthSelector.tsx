@@ -10,6 +10,7 @@ import { IcDateDropdown } from "@/shared/ui/icons";
 interface ReportMonthSelectorProps {
   year: number;
   month: number;
+  userId?: number;
 }
 
 const getLastMonth = () => {
@@ -18,17 +19,19 @@ const getLastMonth = () => {
   return { year: lastMonth.getFullYear(), month: lastMonth.getMonth() + 1 };
 };
 
-export const ReportMonthSelector = ({ year, month }: ReportMonthSelectorProps) => {
+export const ReportMonthSelector = ({ year, month, userId }: ReportMonthSelectorProps) => {
   const router = useRouter();
   const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const { data: userProfile } = useUserProfileQuery();
+  const isSharedView = userId !== undefined;
+  const { data: userProfile } = useUserProfileQuery(!isSharedView);
 
   const { year: maxYear, month: maxMonth } = getLastMonth();
   const signupDate = userProfile ? new Date(userProfile.createdAt) : undefined;
 
   const handleMonthChange = (dateStr: string) => {
     const [selectedYear, selectedMonth] = dateStr.split("-");
-    router.push(`/report/${selectedYear}/${selectedMonth}`);
+    const query = isSharedView ? `?userId=${userId}` : "";
+    router.push(`/report/${selectedYear}/${selectedMonth}${query}`);
   };
 
   return (

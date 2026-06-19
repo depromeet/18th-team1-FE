@@ -39,12 +39,12 @@ export const MonthlyBookSection = ({ month, book }: MonthlyBookSectionProps) => 
           )}
         </div>
         <div className="flex justify-center pt-7 -mb-8.75 relative z-10">
-          <div className="relative h-65 w-41.5 rounded-lg overflow-hidden shadow-lg">
+          <div className="relative h-65 w-41.5 rounded-lg overflow-hidden">
             <Image src={book.bookCoverImageUrl} alt={book.title} fill className="object-cover" />
           </div>
         </div>
       </div>
-      <div className="bg-key-primary-100 px-5 pt-5 pb-10 flex flex-col gap-4 z-100">
+      <div className="bg-key-primary-100 px-5 pt-5 pb-10 flex flex-col gap-4 z-20">
         <div className="flex flex-wrap items-center gap-2.5">
           <p className="title2 text-gray-0">{book.title}</p>
           <p className="subhead2 text-gray-0">{book.author}</p>

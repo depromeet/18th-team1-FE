@@ -10,11 +10,12 @@ export const userKeys = {
   me: () => [...userKeys.all, "me"] as const,
 };
 
-export const useUserProfileQuery = (): UseQueryResult<UserProfile> =>
+export const useUserProfileQuery = (enabled = true): UseQueryResult<UserProfile> =>
   useQuery({
     queryKey: userKeys.me(),
     queryFn: fetchUserProfile,
     staleTime: 10 * 60 * 1000,
+    enabled,
   });
 
 export const useUpdateProfileMutation = () => {

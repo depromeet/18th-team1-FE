@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { type ReactNode, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { type ReactNode, Suspense, useEffect, useState } from "react";
 
 import { useAuthStore } from "@/store/auth/useAuthStore";
 
@@ -10,12 +10,22 @@ import { fetchDevToken, refreshAccessToken } from "../api/authApi";
 // /login으로 시작하는 경로는 인증 없이 접근 허용 (/login/callback 포함)
 const PUBLIC_PATHS = ["/login"];
 
+// 공유된 월말결산(/report/{year}/{month}?userId=...)은 토큰 없이 접근 허용
+const SHARED_REPORT_PATH_PATTERN = /^\/report\/\d+\/\d+$/;
+
+const LoadingFallback = () => (
+  <div className="flex min-h-dvh items-center justify-center">
+    <p className="body1 text-muted-foreground">로딩 중...</p>
+  </div>
+);
+
 interface AuthGuardProps {
   children: ReactNode;
 }
 
-export const AuthGuard = ({ children }: AuthGuardProps) => {
+const AuthGuardInner = ({ children }: AuthGuardProps) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const setAuth = useAuthStore((state) => state.setAuth);
   const clearAuth = useAuthStore((state) => state.clearAuth);
@@ -23,9 +33,11 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
 
   useEffect(() => {
     const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
+    const isSharedReportPath =
+      SHARED_REPORT_PATH_PATTERN.test(pathname) && searchParams.has("userId");
 
     // 공개 경로는 인증 체크 없이 렌더링
-    if (isPublicPath) {
+    if (isPublicPath || isSharedReportPath) {
       setIsReady(true);
       return;
     }
@@ -65,15 +77,17 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
     };
 
     initToken();
-  }, [pathname, router, setAuth, clearAuth]);
+  }, [pathname, searchParams, router, setAuth, clearAuth]);
 
   if (!isReady) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center">
-        <p className="body1 text-muted-foreground">로딩 중...</p>
-      </div>
-    );
+    return <LoadingFallback />;
   }
 
   return <>{children}</>;
 };
+
+export const AuthGuard = ({ children }: AuthGuardProps) => (
+  <Suspense fallback={<LoadingFallback />}>
+    <AuthGuardInner>{children}</AuthGuardInner>
+  </Suspense>
+);
