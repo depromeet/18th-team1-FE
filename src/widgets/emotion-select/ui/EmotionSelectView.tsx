@@ -13,6 +13,7 @@ import {
 } from "@/features/emotion-select";
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { NewButton } from "@/shared/ui/new-button";
+import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 import { Header } from "@/widgets/header";
 import { RecommendationLoadingView } from "./RecommendationLoadingView";
 
@@ -93,28 +94,24 @@ export const EmotionSelectView = (): React.ReactElement => {
         <EmotionTutorialOverlay onDismiss={dismissTutorial} />
       )}
       {!(currentStep === 4 && isDirectInputActive) && currentStep !== 3 && (
-        <div
-          className={isNextDisabled || isLoading ? "bg-gray-100" : "bg-gray-700"}
-          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
-        >
+        <SafeAreaBottom className={isNextDisabled || isLoading ? "bg-gray-100" : "bg-gray-700"}>
           <NewButton
             label="다음"
             disabled={isNextDisabled || isLoading}
             onClick={handleNextWithKeyboard}
           />
-        </div>
+        </SafeAreaBottom>
       )}
       {currentStep === 3 && (
-        <div
+        <SafeAreaBottom
           className={`fixed inset-x-0 bottom-0 z-10 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${isNextDisabled || isLoading ? "bg-gray-100" : "bg-gray-700"}`}
-          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
         >
           <NewButton
             label="다음"
             disabled={isNextDisabled || isLoading}
             onClick={handleNextWithKeyboard}
           />
-        </div>
+        </SafeAreaBottom>
       )}
     </div>
   );
