@@ -51,7 +51,7 @@ export const EmotionBookItem = ({
 
   return (
     <div style={{ width, height, marginLeft }} className="relative shrink-0 self-start">
-      <AnimatePresence mode="popLayout" initial={false}>
+      <AnimatePresence mode="popLayout">
         {isColored ? (
           <motion.div
             key="colored"
@@ -72,7 +72,7 @@ export const EmotionBookItem = ({
         ) : (
           <motion.div
             key="placeholder"
-            initial={{ opacity: 0, y: shouldDropAnimate ? DROP_Y : 0 }}
+            initial={{ opacity: shouldDropAnimate ? 0 : 1, y: shouldDropAnimate ? DROP_Y : 0 }}
             animate={{
               opacity: 1,
               y: shouldDropAnimate ? [DROP_Y, 0, BOUNCE_Y, 0] : 0,
