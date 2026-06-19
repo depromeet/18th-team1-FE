@@ -13,7 +13,6 @@ import {
 } from "@/features/emotion-select";
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { NewButton } from "@/shared/ui/new-button";
-import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 import { Header } from "@/widgets/header";
 import { RecommendationLoadingView } from "./RecommendationLoadingView";
 
@@ -105,16 +104,22 @@ export const EmotionSelectView = (): React.ReactElement => {
       )}
 
       {ctaVariant === "normal" && (
-        <SafeAreaBottom className={ctaDisabled ? "bg-gray-100" : "bg-gray-700"}>
+        <>
           <NewButton label="다음" disabled={ctaDisabled} onClick={handleNextWithKeyboard} />
-        </SafeAreaBottom>
+          <div
+            className={`transition-colors ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
+            style={{ height: "env(safe-area-inset-bottom, 0px)" }}
+          />
+        </>
       )}
       {ctaVariant === "fixed" && (
-        <SafeAreaBottom
-          className={`fixed inset-x-0 bottom-0 z-10 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
-        >
+        <div className="fixed inset-x-0 bottom-0 z-10 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2">
           <NewButton label="다음" disabled={ctaDisabled} onClick={handleNextWithKeyboard} />
-        </SafeAreaBottom>
+          <div
+            className={`transition-colors ${ctaDisabled ? "bg-gray-100" : "bg-gray-700"}`}
+            style={{ height: "env(safe-area-inset-bottom, 0px)" }}
+          />
+        </div>
       )}
     </div>
   );

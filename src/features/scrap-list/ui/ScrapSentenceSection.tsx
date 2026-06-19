@@ -5,7 +5,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcClose, IcTrash } from "@/shared/ui/icons";
-import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 
 import { useBulkDeleteScrapsMutation, useScrappedQuotesQuery } from "../api/queries";
 import type { ScrappedQuote } from "../model/scrap.types";
@@ -78,7 +77,10 @@ export const ScrapSentenceSection = () => {
   }, [items]);
 
   return (
-    <SafeAreaBottom className="flex flex-1 flex-col bg-background">
+    <div
+      className="flex flex-1 flex-col bg-background"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
       <div className="sticky top-0 z-10 flex items-center justify-between bg-background px-5 py-4.5">
         <span className="subhead1 text-gray-700">스크랩한 문장 {totalCount}개</span>
         {isSelectMode ? (
@@ -136,7 +138,10 @@ export const ScrapSentenceSection = () => {
       {isSelectMode && <div className="h-16 shrink-0" />}
 
       {isSelectMode && (
-        <SafeAreaBottom className="fixed bottom-0 left-1/2 z-20 flex w-full -translate-x-1/2 flex-col bg-background shadow-[0_-4px_15px_rgba(0,27,55,0.1)] md:max-w-93.75">
+        <div
+          className="fixed bottom-0 left-1/2 z-20 flex w-full -translate-x-1/2 flex-col bg-background shadow-[0_-4px_15px_rgba(0,27,55,0.1)] md:max-w-93.75"
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        >
           <div className="flex items-center justify-between px-5 py-3.75">
             <span className="subhead1 text-gray-700">{selectedIds.size}개의 문장이 선택됨</span>
             <button
@@ -148,7 +153,7 @@ export const ScrapSentenceSection = () => {
               <IcTrash size={24} className="text-gray-600" />
             </button>
           </div>
-        </SafeAreaBottom>
+        </div>
       )}
 
       <ConfirmModal
@@ -177,6 +182,6 @@ export const ScrapSentenceSection = () => {
         coverImageUrl={activeItem?.bookCoverImageUrl}
         bookPurchaseLink={activeItem?.bookPurchaseLink ?? ""}
       />
-    </SafeAreaBottom>
+    </div>
   );
 };
