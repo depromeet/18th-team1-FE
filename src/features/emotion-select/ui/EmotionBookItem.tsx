@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, type Transition } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 import Image from "next/image";
 
 export type BookType = "thin" | "thick";
@@ -51,54 +51,46 @@ export const EmotionBookItem = ({
 
   return (
     <div style={{ width, height, marginLeft }} className="relative shrink-0 self-start">
-      <AnimatePresence mode="popLayout">
-        {isColored ? (
-          <motion.div
-            key="colored"
-            initial={{ opacity: isTutorialActive ? 1 : 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.12 }}
-          >
-            <Image
-              src={coloredImageSrc}
-              width={width}
-              height={height}
-              alt=""
-              draggable={false}
-              className="pointer-events-none block"
-            />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="placeholder"
-            initial={{ opacity: shouldDropAnimate ? 0 : 1, y: shouldDropAnimate ? DROP_Y : 0 }}
-            animate={{
-              opacity: 1,
-              y: shouldDropAnimate ? [DROP_Y, 0, BOUNCE_Y, 0] : 0,
-              rotate: shouldDropAnimate ? [0, 0, tilt, residualTilt, 0] : 0,
-            }}
-            exit={{ opacity: 0, transition: { duration: 0.12 } }}
-            transition={{
-              opacity: {
-                duration: 0.12,
-                delay: shouldDropAnimate ? (8 - index) * STAGGER_DELAY : 0,
-              },
-              y: shouldDropAnimate ? getDropTransition(index) : { duration: 0 },
-              rotate: shouldDropAnimate ? getRotateTransition(index) : { duration: 0 },
-            }}
-          >
-            <Image
-              src={`/images/emotion/book-placeholder-${bookType}.png`}
-              width={width}
-              height={height}
-              alt=""
-              draggable={false}
-              className="pointer-events-none block"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* 항상 DOM에 유지해 이미지를 미리 로드 — opacity로만 크로스페이드 */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ opacity: isTutorialActive ? 1 : 0 }}
+        animate={{ opacity: isColored ? 1 : 0 }}
+        transition={{ duration: 0.12 }}
+      >
+        <Image
+          src={coloredImageSrc}
+          width={width}
+          height={height}
+          alt=""
+          draggable={false}
+          className="pointer-events-none block"
+        />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: shouldDropAnimate ? 0 : 1, y: shouldDropAnimate ? DROP_Y : 0 }}
+        animate={{
+          opacity: isColored ? 0 : 1,
+          y: shouldDropAnimate ? [DROP_Y, 0, BOUNCE_Y, 0] : 0,
+          rotate: shouldDropAnimate ? [0, 0, tilt, residualTilt, 0] : 0,
+        }}
+        transition={{
+          opacity: isColored
+            ? { duration: 0.12 }
+            : { duration: 0.12, delay: shouldDropAnimate ? (8 - index) * STAGGER_DELAY : 0 },
+          y: shouldDropAnimate ? getDropTransition(index) : { duration: 0 },
+          rotate: shouldDropAnimate ? getRotateTransition(index) : { duration: 0 },
+        }}
+      >
+        <Image
+          src={`/images/emotion/book-placeholder-${bookType}.png`}
+          width={width}
+          height={height}
+          alt=""
+          draggable={false}
+          className="pointer-events-none block"
+        />
+      </motion.div>
     </div>
   );
 };
