@@ -41,7 +41,10 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
           errorMessage={validationError}
         />
       </div>
-      <div style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+      <div
+        className={!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
         <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
       </div>
     </div>

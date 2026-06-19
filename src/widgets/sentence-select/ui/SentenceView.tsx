@@ -74,7 +74,12 @@ const SentenceViewContent = ({
       </div>
       <section className="flex shrink-0 flex-col items-center gap-2">
         <NewButton variant="secondary" label="다른 문장 더보기" onClick={handleViewList} />
-        <NewButton label="다음" onClick={handleNext} />
+        <div
+          className="w-full bg-gray-700"
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        >
+          <NewButton label="다음" onClick={handleNext} />
+        </div>
       </section>
     </div>
   );
