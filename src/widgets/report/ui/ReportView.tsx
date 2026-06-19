@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useMonthlyReportQuery,
-  useReportRouteContext,
-  useSharedMonthlyReportQuery,
-} from "@/entities/report";
+import { useReportData } from "@/entities/report";
 
 import { BookCategoryBanner } from "./BookCategoryBanner";
 import { EmotionCloudBanner } from "./EmotionCloudBanner";
@@ -12,28 +8,26 @@ import { MonthlyBookSection } from "./MonthlyBookSection";
 import { ReportMonthSelector } from "./ReportMonthSelector";
 
 export const ReportView = () => {
-  const { year, month, userId, isSharedView, isValidReportMonth } = useReportRouteContext();
-
-  const ownReportQuery = useMonthlyReportQuery(year, month, isValidReportMonth && !isSharedView);
-  const sharedReportQuery = useSharedMonthlyReportQuery(
-    userId ?? 0,
-    year,
-    month,
-    isValidReportMonth && isSharedView,
-  );
-
-  const { data: report, isLoading } = isSharedView ? sharedReportQuery : ownReportQuery;
+  const { year, month, userId, isValidReportMonth, report, isLoading } = useReportData();
 
   if (!isValidReportMonth) return null;
 
+  if (isLoading) return null;
+
   if (
-    isLoading ||
     !report ||
     report.mostFrequentGenre === null ||
     report.recommendationMessage === null ||
     report.monthlyBook === null
   ) {
-    return null;
+    return (
+      <div className="flex flex-col">
+        <ReportMonthSelector year={year} month={month} userId={userId} />
+        <div className="flex items-center justify-center py-25">
+          <p className="body1 text-gray-400">월말결산이 생성되지 않은 달입니다.</p>
+        </div>
+      </div>
+    );
   }
 
   return (

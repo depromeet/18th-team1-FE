@@ -9,4 +9,5 @@ export type {
   MonthlyBookSummary,
   MonthlyReport,
 } from "./model/report.types";
+export { useReportData } from "./model/useReportData";
 export { useReportRouteContext } from "./model/useReportRouteContext";

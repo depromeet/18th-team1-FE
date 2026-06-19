@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { useUserProfileQuery } from "@/entities/user";
+import { useUserProfileQuery, useUserSignupDateQuery } from "@/entities/user";
 import { MonthPicker } from "@/features/month-picker";
 import { IcDateDropdown } from "@/shared/ui/icons";
 
@@ -13,10 +13,9 @@ interface ReportMonthSelectorProps {
   userId?: number;
 }
 
-const getLastMonth = () => {
+const getCurrentMonth = () => {
   const now = new Date();
-  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  return { year: lastMonth.getFullYear(), month: lastMonth.getMonth() + 1 };
+  return { year: now.getFullYear(), month: now.getMonth() + 1 };
 };
 
 export const ReportMonthSelector = ({ year, month, userId }: ReportMonthSelectorProps) => {
@@ -24,9 +23,11 @@ export const ReportMonthSelector = ({ year, month, userId }: ReportMonthSelector
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const isSharedView = userId !== undefined;
   const { data: userProfile } = useUserProfileQuery(!isSharedView);
+  const { data: signupDateInfo } = useUserSignupDateQuery(userId ?? 0, isSharedView);
 
-  const { year: maxYear, month: maxMonth } = getLastMonth();
-  const signupDate = userProfile ? new Date(userProfile.createdAt) : undefined;
+  const { year: maxYear, month: maxMonth } = getCurrentMonth();
+  const signupDateString = isSharedView ? signupDateInfo?.signupDate : userProfile?.createdAt;
+  const signupDate = signupDateString ? new Date(signupDateString) : undefined;
 
   const handleMonthChange = (dateStr: string) => {
     const [selectedYear, selectedMonth] = dateStr.split("-");
