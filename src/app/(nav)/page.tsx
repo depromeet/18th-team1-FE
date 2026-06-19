@@ -38,7 +38,7 @@ const HomePage = () => {
     <div className="relative flex min-h-0 flex-1 flex-col">
       <div
         ref={scrollRef}
-        className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-gray-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+        className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-none bg-gray-0 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
       >
         <header
           className={cn(
