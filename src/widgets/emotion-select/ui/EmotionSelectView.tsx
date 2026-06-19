@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   EmotionBookStep,
@@ -19,11 +19,22 @@ import { RecommendationLoadingView } from "./RecommendationLoadingView";
 export const EmotionSelectView = (): React.ReactElement => {
   useViewportHeight();
   const { currentStep, isLoading, handleBack, handleNext } = useEmotionStep();
-  const { showTutorial, dismissTutorial, shouldDropAnimate } = useEmotionTutorial();
+  const { showTutorial, dismissTutorial, shouldDropAnimate, isResolved } = useEmotionTutorial();
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isDirectInputActive, setIsDirectInputActive] = useState(false);
   const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
   const hiddenTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (currentStep !== 3) return;
+    const h =
+      document.documentElement.style.getPropertyValue("--vh-no-keyboard") ||
+      `${window.visualViewport?.height ?? window.innerHeight}px`;
+    document.documentElement.style.setProperty("--step3-vh", h);
+    return () => {
+      document.documentElement.style.removeProperty("--step3-vh");
+    };
+  }, [currentStep]);
 
   const isRecommending = isLoading || isDirectSubmitting;
 
@@ -41,7 +52,7 @@ export const EmotionSelectView = (): React.ReactElement => {
   return (
     <div
       className={`fixed inset-x-0 top-0 flex flex-col gap-1 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${currentStep === 1 ? "bg-muted" : "bg-background"}`}
-      style={{ height: "var(--vh, 100dvh)" }}
+      style={{ height: currentStep === 3 ? "var(--step3-vh, 100vh)" : "var(--vh, 100lvh)" }}
     >
       <textarea
         ref={hiddenTextareaRef}
@@ -52,11 +63,13 @@ export const EmotionSelectView = (): React.ReactElement => {
       <Header onBack={handleBack} />
       {currentStep === 1 ? (
         <div className="flex min-h-0 flex-1 flex-col px-5">
-          <EmotionBookStep
-            onValidChange={setIsNextDisabled}
-            isTutorialActive={showTutorial}
-            shouldDropAnimate={shouldDropAnimate}
-          />
+          {isResolved && (
+            <EmotionBookStep
+              onValidChange={setIsNextDisabled}
+              isTutorialActive={showTutorial}
+              shouldDropAnimate={shouldDropAnimate}
+            />
+          )}
         </div>
       ) : currentStep === 4 ? (
         <SentenceTypeStep
@@ -64,15 +77,38 @@ export const EmotionSelectView = (): React.ReactElement => {
           onDirectInputActiveChange={setIsDirectInputActive}
           onLoadingChange={setIsDirectSubmitting}
         />
-      ) : (
+      ) : currentStep === 2 ? (
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-4">
-          {currentStep === 2 && <SituationStep onValidChange={setIsNextDisabled} />}
-          {currentStep === 3 && <SituationDescriptionStep onValidChange={setIsNextDisabled} />}
+          <SituationStep onValidChange={setIsNextDisabled} />
+        </div>
+      ) : (
+        <div
+          className="min-h-0 flex-1 flex flex-col px-5"
+          style={{ paddingBottom: "calc(76px + env(safe-area-inset-bottom, 0px))" }}
+        >
+          <SituationDescriptionStep onValidChange={setIsNextDisabled} />
         </div>
       )}
-      {currentStep === 1 && showTutorial && <EmotionTutorialOverlay onDismiss={dismissTutorial} />}
-      {!(currentStep === 4 && isDirectInputActive) && (
-        <div style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+      {currentStep === 1 && isResolved && showTutorial && (
+        <EmotionTutorialOverlay onDismiss={dismissTutorial} />
+      )}
+      {!(currentStep === 4 && isDirectInputActive) && currentStep !== 3 && (
+        <div
+          className={isNextDisabled || isLoading ? "bg-gray-100" : "bg-gray-700"}
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        >
+          <NewButton
+            label="다음"
+            disabled={isNextDisabled || isLoading}
+            onClick={handleNextWithKeyboard}
+          />
+        </div>
+      )}
+      {currentStep === 3 && (
+        <div
+          className={`fixed inset-x-0 bottom-0 z-10 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${isNextDisabled || isLoading ? "bg-gray-100" : "bg-gray-700"}`}
+          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        >
           <NewButton
             label="다음"
             disabled={isNextDisabled || isLoading}

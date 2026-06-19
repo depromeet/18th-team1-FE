@@ -33,27 +33,32 @@ export const SituationDescriptionStep = ({ onValidChange }: SituationDescription
   const { handleChange, handlePaste } = useCharLimit<HTMLTextAreaElement>(
     300,
     setSituationDescription,
-    "최대 300자까지만 작성 가능해요.",
+    "최대 300자까지 작성 가능해요",
   );
 
   return (
-    <div className="flex flex-col gap-10">
-      <Text as="h2" variant="head1" color="gray-700" className="text-center">
+    <div className="flex flex-1 flex-col gap-10 min-h-0">
+      <Text as="h2" variant="head1" color="gray-700" className="shrink-0 text-center">
         왜 이런 감정을 느끼셨나요?
       </Text>
-      <div className="flex flex-col gap-4">
-        <div className="rounded-[20px] bg-muted p-5">
+      <div className="flex flex-1 flex-col gap-4 min-h-0">
+        <div className="flex flex-1 flex-col rounded-[20px] bg-muted p-5 min-h-0 max-h-[386px]">
           <textarea
             // biome-ignore lint/a11y/noAutofocus: 감정 입력 스텝에서 즉시 입력 유도를 위해 의도적으로 사용
             autoFocus
-            className="body1 h-96.5 w-full resize-none bg-transparent text-foreground outline-none placeholder:text-gray-300"
+            className="body1 min-h-20 flex-1 w-full resize-none bg-transparent text-foreground outline-none placeholder:text-gray-300"
             placeholder={"구체적으로 작성할수록\n딱 맞는 문장을 추천 받을 수 있어요"}
             value={situationDescription}
             onChange={handleChange}
             onPaste={handlePaste}
           />
+          <p
+            className={`body1 shrink-0 text-right ${situationDescription.length >= 300 ? "text-sub-error" : "text-gray-400"}`}
+          >
+            {situationDescription.length}/300
+          </p>
         </div>
-        <div className="flex flex-wrap gap-x-2 gap-y-3">
+        <div className="shrink-0 flex flex-wrap gap-x-2 gap-y-3">
           {visibleChips.map((chip) => (
             <TagChip key={chip.id} label={chip.label} variant="label" />
           ))}

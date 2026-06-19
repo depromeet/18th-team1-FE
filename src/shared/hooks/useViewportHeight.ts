@@ -16,6 +16,10 @@ export const useViewportHeight = () => {
     const updateVH = () => {
       const h = vp ? vp.height : window.innerHeight;
       document.documentElement.style.setProperty("--vh", `${h}px`);
+      // textarea 포커스 중(키보드 열린 상태)엔 갱신하지 않아 키보드 이전 높이를 보존한다.
+      if (!(document.activeElement instanceof HTMLTextAreaElement)) {
+        document.documentElement.style.setProperty("--vh-no-keyboard", `${h}px`);
+      }
     };
 
     const preventTouchMove = (e: TouchEvent) => {
