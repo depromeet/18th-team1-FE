@@ -15,6 +15,7 @@ export const useAuthStore = create<AuthState>()(
         set({ accessToken }, false, "auth/setAuth");
       },
       clearAuth: () => {
+        sessionStorage.removeItem("emotion-tutorial-seen");
         set({ accessToken: null }, false, "auth/clearAuth");
       },
     }),

@@ -2,7 +2,7 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useNeedTagsQuery } from "@/entities/emotion-tag";
 import { sentenceKeys, startRecommendation } from "@/entities/sentence";
@@ -41,6 +41,10 @@ export const SentenceTypeStep = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data } = useNeedTagsQuery();
   const needTags = data?.tags ?? [];
+
+  useEffect(() => {
+    onValidChange(selectedNeedTagId === null);
+  }, [selectedNeedTagId, onValidChange]);
 
   const handleTagSelect = (id: number): void => {
     const newId = selectedNeedTagId === id ? null : id;

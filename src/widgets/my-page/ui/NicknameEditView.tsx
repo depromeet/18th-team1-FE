@@ -4,7 +4,6 @@ import { useUpdateProfileMutation, useUserProfileQuery } from "@/entities/user";
 import { NicknameInputField, useNicknameEdit } from "@/features/my-profile";
 import { useViewportHeight } from "@/shared/hooks/useViewportHeight";
 import { NewButton } from "@/shared/ui/new-button";
-import { SafeAreaBottom } from "@/shared/ui/safe-area-bottom";
 import { Header } from "@/widgets/header";
 
 interface NicknameEditViewProps {
@@ -42,9 +41,11 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
           errorMessage={validationError}
         />
       </div>
-      <SafeAreaBottom className={!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}>
-        <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
-      </SafeAreaBottom>
+      <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
+      <div
+        className={`transition-colors ${!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}`}
+        style={{ height: "env(safe-area-inset-bottom, 0px)" }}
+      />
     </div>
   );
 };
