@@ -103,9 +103,11 @@ export const SentenceTypeStep = ({
           </Text>
         </div>
 
-        <div className="relative flex min-h-0 flex-1 flex-col pt-19.25">
+        <div className="relative flex min-h-0 flex-1 flex-col">
           <div className="flex min-h-0 flex-1 flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="flex-1" />
+            {/* 헤더~칩 간격: 스크롤 콘텐츠 안에 배치해 위로 스크롤 시 자연스럽게 사라짐 */}
+            <div className="h-19.25 shrink-0" />
             <div className="flex flex-col items-center gap-4 pb-12">
               {needTags.map((tag) => (
                 <SentenceTypeChip
@@ -117,6 +119,12 @@ export const SentenceTypeStep = ({
               ))}
             </div>
           </div>
+          <div
+            className="pointer-events-none absolute top-0 left-0 right-0 h-23"
+            style={{
+              background: "linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%)",
+            }}
+          />
           <div
             className="pointer-events-none absolute bottom-0 left-0 right-0 h-23"
             style={{
