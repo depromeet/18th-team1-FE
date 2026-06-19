@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useReportData } from "@/entities/report";
 
 import { BookCategoryBanner } from "./BookCategoryBanner";
@@ -10,21 +11,21 @@ import { ReportMonthSelector } from "./ReportMonthSelector";
 export const ReportView = () => {
   const { year, month, userId, isValidReportMonth, report, isLoading } = useReportData();
 
-  if (!isValidReportMonth) return null;
-
   if (isLoading) return null;
 
   if (
+    !isValidReportMonth ||
     !report ||
     report.mostFrequentGenre === null ||
     report.recommendationMessage === null ||
     report.monthlyBook === null
   ) {
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <ReportMonthSelector year={year} month={month} userId={userId} />
-        <div className="flex items-center justify-center py-25">
-          <p className="body1 text-gray-400">월말결산이 생성되지 않은 달입니다.</p>
+        <div className="fixed inset-x-0 top-0 flex h-dvh flex-col items-center justify-center gap-2.25 bg-gray-0 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2">
+          <Image src="/images/error.png" alt="오류" width={151} height={56} />
+          <p className="body3 text-center text-gray-500">{month}월에 함께한 문장이 없어요.</p>
         </div>
       </div>
     );

@@ -24,6 +24,7 @@ const ReportLayout = ({ children }: ReportLayoutProps) => {
     <div className="flex flex-col h-full bg-gray-0">
       <Header
         title="월말결산"
+        className="z-10"
         onBack={handleBack}
         right={
           hasReportContent && (
