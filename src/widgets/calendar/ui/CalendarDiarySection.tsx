@@ -1,8 +1,8 @@
 "use client";
 
 import { format, isToday } from "date-fns";
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useEmotionNavigation } from "@/features/emotion-select";
 import { cn } from "@/shared/lib/utils";
 import { IcRecord } from "@/shared/ui/icons";
 import { useCalendarDiary } from "../model/useCalendarDiary";
@@ -18,6 +18,7 @@ interface CalendarDiarySectionProps {
 
 export const CalendarDiarySection = ({ onClose }: CalendarDiarySectionProps) => {
   const { diaries, selectedDate, isFutureView } = useCalendarDiary();
+  const { navigateToEmotion } = useEmotionNavigation();
   const hasSnap = diaries.length >= 3;
   const hasDefaultScroll = diaries.length >= 4;
 
@@ -123,9 +124,13 @@ export const CalendarDiarySection = ({ onClose }: CalendarDiarySectionProps) => 
       <div className="flex items-center justify-between px-5 py-3 shrink-0">
         <p className="head1 text-gray-700">{format(selectedDate, "yyyy.MM.dd")}</p>
         {isToday(selectedDate) && diaries.length < 5 && (
-          <Link href="/emotion" className="flex size-7.5 items-center justify-center">
+          <button
+            type="button"
+            onClick={() => navigateToEmotion()}
+            className="flex size-7.5 items-center justify-center"
+          >
             <IcRecord size={30} className="text-key-secondary" />
-          </Link>
+          </button>
         )}
       </div>
       <div
