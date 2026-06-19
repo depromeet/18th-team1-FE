@@ -11,6 +11,7 @@ import {
   useCalendarShareFlow,
 } from "@/features/calendar-share";
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
+import { useEmotionNavigation } from "@/features/emotion-select";
 import { MonthPicker } from "@/features/month-picker";
 import { useSentenceShareCardDrawer } from "@/features/sentence-share";
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
@@ -32,6 +33,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const { step, openTypeSheet, selectType, selectDate, close } = useCalendarShareFlow();
+  const { navigateToEmotion } = useEmotionNavigation();
   const { selectedQuote } = useEmotionSelectStore();
   const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
   const [isNoSentenceModalOpen, setIsNoSentenceModalOpen] = useState(false);
@@ -56,9 +58,9 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
     selectType(shareType);
   };
 
-  const handleConfirmGoToEmotion = (): void => {
+  const handleConfirmGoToEmotion = async (): Promise<void> => {
     close();
-    router.push("/emotion");
+    await navigateToEmotion();
   };
 
   const {
