@@ -11,7 +11,7 @@ export const MyPageView = () => {
   const { data: profile } = useUserProfileQuery();
 
   return (
-    <div className="flex flex-1 flex-col bg-gray-50">
+    <div className="flex flex-1 flex-col bg-background">
       <MyProfileSection
         profile={profile}
         onEditNickname={() => router.push("/my-page/nickname-edit")}

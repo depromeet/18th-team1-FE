@@ -31,6 +31,7 @@ export { IcPen } from "./IcPen";
 export { IcPlus } from "./IcPlus";
 export { IcPlusCircleFill } from "./IcPlusCircleFill";
 export { IcPlusCount } from "./IcPlusCount";
+export { IcProfileDefault } from "./IcProfileDefault";
 export { IcProfileNone } from "./IcProfileNone";
 export { IcProfileS } from "./IcProfileS";
 export { IcRecord } from "./IcRecord";

@@ -48,8 +48,11 @@ export const NicknameEditView = ({ onBack }: NicknameEditViewProps) => {
         />
       </div>
       <div
-        className={`fixed inset-x-0 bottom-0 z-[51] transition-colors md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}`}
-        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        className={`fixed inset-x-0 bottom-0 z-51 transition-colors md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${!isValid || isPending ? "bg-gray-100" : "bg-gray-700"}`}
+        style={{
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+          transform: "translateY(calc(var(--vh, 100dvh) - 100dvh))",
+        }}
       >
         <NewButton label="변경 완료" disabled={!isValid || isPending} onClick={handleSubmit} />
       </div>
