@@ -37,11 +37,11 @@ const getRestoredIndex = (emotionId: string | null): number | null => {
 export const useEmotionBookDrag = ({
   onValidChange,
 }: UseEmotionBookDragProps): UseEmotionBookDragReturn => {
-  const { selectedEmotionId, setSelectedEmotionId } = useEmotionSelectStore();
+  const { selectedEmotionId, setSelectedEmotionId, isAppleVisible, setIsAppleVisible } =
+    useEmotionSelectStore();
 
   const initialIndexRef = useRef(getRestoredIndex(selectedEmotionId));
   const [selectedIndex, setSelectedIndex] = useState<number | null>(initialIndexRef.current);
-  const [showApple, setShowApple] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const prevCategoryRef = useRef<EmotionCategory | null>(
     selectedEmotionId ? (EMOTIONS.find((e) => e.id === selectedEmotionId)?.category ?? null) : null,
@@ -55,8 +55,8 @@ export const useEmotionBookDrag = ({
   }, [onValidChange]);
 
   useEffect(() => {
-    if (selectedIndex !== 0) setShowApple(false);
-  }, [selectedIndex]);
+    if (selectedIndex !== 0) setIsAppleVisible(false);
+  }, [selectedIndex, setIsAppleVisible]);
 
   const getIndexFromClientY = (clientY: number): number => {
     if (!containerRef.current) return -1;
@@ -90,7 +90,7 @@ export const useEmotionBookDrag = ({
     trySelectEmotion(index);
   };
 
-  const dismissApple = (): void => setShowApple(false);
+  const dismissApple = (): void => setIsAppleVisible(false);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
     if (!containerRef.current) return;
@@ -113,7 +113,7 @@ export const useEmotionBookDrag = ({
     if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
     if (containerRef.current && selectedIndex === 0) {
       const relativeY = e.clientY - containerRef.current.getBoundingClientRect().top;
-      if (relativeY < 0) setShowApple(true);
+      if (relativeY < 0) setIsAppleVisible(true);
     }
     if (shouldDeselectRef.current) {
       const index = getIndexFromClientY(e.clientY);
@@ -138,7 +138,7 @@ export const useEmotionBookDrag = ({
 
   return {
     selectedIndex,
-    showApple,
+    showApple: isAppleVisible,
     dismissApple,
     containerRef,
     handlePointerDown,
