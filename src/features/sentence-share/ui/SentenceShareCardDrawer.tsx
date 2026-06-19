@@ -5,6 +5,7 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { format } from "date-fns";
 import Lottie from "lottie-react";
 import { Download } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/utils";
 import { Drawer, DrawerContent, DrawerTitle } from "@/shared/ui/drawer";
@@ -46,7 +47,13 @@ export const SentenceShareCardDrawer = ({
   const isSharingRef = useRef(false);
   const { selectedQuote } = useEmotionSelectStore();
 
+  const pathname = usePathname();
   const selectedVariant = CARD_VARIANTS[activeIndex] ?? 1;
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: pathname 변경 시에만 실행
+  useEffect(() => {
+    if (isOpen) onClose();
+  }, [pathname]);
 
   // 카드 프리뷰 이미지 선-패치 + 닫힐 때 초기화
   useEffect(() => {
