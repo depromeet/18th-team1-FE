@@ -8,10 +8,13 @@ import type { RecommendationListItem } from "@/entities/diary";
 import { useDiariesQuery } from "@/entities/diary";
 import { cn } from "@/shared/lib/utils";
 import { Drawer, DrawerContent } from "@/shared/ui/drawer";
-import { IcDelete, IcOption } from "@/shared/ui/icons";
-import { NewButton } from "@/shared/ui/new-button";
-
-import type { SentenceShareData } from "../model/calendar-share.types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
+import { IcDelete, IcOptionCard, IcShare2, IcTrash } from "@/shared/ui/icons";
 
 // 56일(8주) + 오늘 + 우측 3칸(미래 버퍼) = 60일
 // inner flex에 paddingLeft = 3 * cellWidth를 줘서
@@ -108,9 +111,11 @@ const DayCell = ({ day, diaries, isSelected, isDisabled }: DayCellProps): React.
 
 interface SentenceCardProps {
   diary: RecommendationListItem;
+  onShare?: () => void;
+  onDelete?: () => void;
 }
 
-const SentenceCard = ({ diary }: SentenceCardProps): React.ReactElement => (
+const SentenceCard = ({ diary, onShare, onDelete }: SentenceCardProps): React.ReactElement => (
   <div className="relative flex w-full flex-col gap-2 px-5 pt-5">
     <div className="flex w-full flex-col gap-5">
       <div className="flex flex-col gap-1.5 pr-9">
@@ -121,13 +126,40 @@ const SentenceCard = ({ diary }: SentenceCardProps): React.ReactElement => (
       </div>
       <div className="h-px w-full bg-gray-100" />
     </div>
-    <button
-      type="button"
-      className="absolute right-5 top-5 flex size-6 items-center justify-center"
-      aria-label="더보기"
-    >
-      <IcOption size={24} className="-rotate-90 text-gray-400" />
-    </button>
+    <div className="absolute right-5 top-5">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            className="flex items-center justify-center outline-none"
+            aria-label="더보기"
+          >
+            <IcOptionCard size={24} className="text-gray-300" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          sideOffset={22}
+          className="flex min-w-33 flex-col gap-4 rounded-[20px] border-0 bg-background p-4 shadow-modal"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <DropdownMenuItem
+            className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-gray-700 focus:text-gray-700"
+            onClick={onShare}
+          >
+            <IcShare2 size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-gray-700" />
+            <span>공유하기</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer gap-2.5 p-0 focus:bg-transparent text-destructive focus:text-destructive"
+            onClick={onDelete}
+          >
+            <IcTrash size={20} className="size-5 shrink-0 -translate-y-[0.5px] text-destructive" />
+            <span>삭제</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   </div>
 );
 
@@ -135,14 +167,16 @@ const SentenceCard = ({ diary }: SentenceCardProps): React.ReactElement => (
 
 interface CalendarShareDateDrawerProps {
   isOpen: boolean;
-  onSelectDate: (date: string, sentenceData: SentenceShareData) => void;
   onClose: () => void;
+  onShareSentence?: (diary: RecommendationListItem) => void;
+  onDeleteSentence?: (recommendationId: number) => void;
 }
 
 export const CalendarShareDateDrawer = ({
   isOpen,
-  onSelectDate,
   onClose,
+  onShareSentence,
+  onDeleteSentence,
 }: CalendarShareDateDrawerProps): React.ReactElement => {
   const today = useMemo(() => startOfDay(new Date()), []);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -167,7 +201,7 @@ export const CalendarShareDateDrawer = ({
     return map;
   }, [data]);
 
-  const selectedDiary = (diaryByDate.get(format(selectedDate, "yyyy-MM-dd")) ?? [])[0] ?? null;
+  const selectedDiaries = diaryByDate.get(format(selectedDate, "yyyy-MM-dd")) ?? [];
 
   // 현재 보이는 7칸: 선택일 ±3일 → 동적 요일 레이블
   const visibleDays = useMemo(
@@ -206,19 +240,9 @@ export const CalendarShareDateDrawer = ({
     setSelectedDate(day);
   };
 
-  const handleConfirm = (): void => {
-    if (!selectedDiary) return;
-    onSelectDate(format(selectedDate, "yyyy-MM-dd"), {
-      quote: selectedDiary.quote.content,
-      title: selectedDiary.quote.title,
-      author: selectedDiary.quote.author,
-      coverImageUrl: selectedDiary.quote.image,
-    });
-  };
-
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="data-[vaul-drawer-direction=bottom]:max-h-[90vh]">
+      <DrawerContent className="data-[vaul-drawer-direction=bottom]:max-h-[90vh] pb-12">
         {/* 헤더 */}
         <div className="relative flex h-15 items-center justify-center px-5">
           <h2 className="head1 text-gray-700">{format(selectedDate, "M월 d일")}</h2>
@@ -316,14 +340,14 @@ export const CalendarShareDateDrawer = ({
         </div>
 
         {/* 선택 날짜의 문장 카드 */}
-        {selectedDiary && <SentenceCard diary={selectedDiary} />}
-
-        <NewButton
-          label="다음"
-          disabled={!selectedDiary}
-          onClick={handleConfirm}
-          className="mt-5"
-        />
+        {selectedDiaries.map((diary) => (
+          <SentenceCard
+            key={diary.recommendationId}
+            diary={diary}
+            onShare={() => onShareSentence?.(diary)}
+            onDelete={() => onDeleteSentence?.(diary.recommendationId)}
+          />
+        ))}
       </DrawerContent>
     </Drawer>
   );

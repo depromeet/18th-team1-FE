@@ -3,7 +3,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { format, startOfWeek, subDays, subWeeks } from "date-fns";
-import { useState } from "react";
+
 import type { RecommendationListResponse } from "@/entities/diary";
 import { diaryKeys } from "@/entities/diary";
 
@@ -129,21 +129,5 @@ export default meta;
 type Story = StoryObj<typeof CalendarShareDateDrawer>;
 
 export const Default: Story = {
-  render: () => {
-    const [selected, setSelected] = useState<string | null>(null);
-    return (
-      <>
-        <div className="flex h-full items-center justify-center">
-          <span className="body3 text-gray-400">
-            {selected ? `선택됨: ${selected}` : "날짜를 선택해주세요"}
-          </span>
-        </div>
-        <CalendarShareDateDrawer
-          isOpen
-          onSelectDate={(date) => setSelected(date)}
-          onClose={() => {}}
-        />
-      </>
-    );
-  },
+  render: () => <CalendarShareDateDrawer isOpen onClose={() => {}} />,
 };

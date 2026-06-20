@@ -3,6 +3,7 @@
 import { format } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { type RecommendationListItem, useDeleteDiaryMutation } from "@/entities/diary";
 import {
   CalendarShareCardDrawer,
   CalendarShareDateDrawer,
@@ -11,6 +12,7 @@ import {
   useCalendarShareFlow,
 } from "@/features/calendar-share";
 import { CalendarBoard, useCalendar, useMonthSwipe } from "@/features/calendar-view";
+import { DiaryDeleteModal } from "@/features/diary-actions";
 import { useEmotionNavigation } from "@/features/emotion-select";
 import { MonthPicker } from "@/features/month-picker";
 import { useSentenceShareCardDrawer } from "@/features/sentence-share";
@@ -32,11 +34,31 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const searchParams = useSearchParams();
   const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
-  const { step, openTypeSheet, selectType, selectDate, close } = useCalendarShareFlow();
+  const { step, openTypeSheet, selectType, close } = useCalendarShareFlow();
   const { navigateToEmotion } = useEmotionNavigation();
   const { selectedQuote } = useEmotionSelectStore();
   const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
   const [isNoSentenceModalOpen, setIsNoSentenceModalOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
+  const { mutate: deleteDiary } = useDeleteDiaryMutation();
+
+  const handleShareSentence = (diary: RecommendationListItem): void => {
+    openSentenceShareCardDrawer({
+      shareType: "sentence-pick",
+      date: diary.recommendationDate,
+      sentencePickData: {
+        quote: diary.quote.content,
+        title: diary.quote.title,
+        author: diary.quote.author,
+        coverImageUrl: diary.quote.image,
+      },
+    });
+  };
+
+  const handleConfirmDelete = (): void => {
+    if (deleteTargetId === null) return;
+    deleteDiary(deleteTargetId, { onSuccess: () => setDeleteTargetId(null) });
+  };
 
   // 캘린더 공유 플로우의 card-drawer 단계 도달 시 전역 드로어로 위임
   useEffect(() => {
@@ -159,8 +181,9 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
 
       <CalendarShareDateDrawer
         isOpen={step.type === "date-drawer"}
-        onSelectDate={selectDate}
         onClose={close}
+        onShareSentence={handleShareSentence}
+        onDeleteSentence={setDeleteTargetId}
       />
 
       <CalendarShareCardDrawer
@@ -168,6 +191,12 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
         year={viewDate.getFullYear()}
         month={viewDate.getMonth() + 1}
         onClose={close}
+      />
+
+      <DiaryDeleteModal
+        isOpen={deleteTargetId !== null}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteTargetId(null)}
       />
 
       <ConfirmModal
