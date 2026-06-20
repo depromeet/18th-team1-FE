@@ -25,6 +25,8 @@ export const useViewportHeight = () => {
     const preventTouchMove = (e: TouchEvent) => {
       const target = e.target as HTMLElement;
       if (target.closest("textarea")) return;
+      // data-vaul-no-drag 요소(가로 스크롤 컨테이너 등) 내부는 네이티브 터치 스크롤을 허용
+      if (target.closest("[data-vaul-no-drag]")) return;
 
       let el: HTMLElement | null = target;
       while (el) {
