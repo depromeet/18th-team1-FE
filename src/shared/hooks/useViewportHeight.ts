@@ -28,8 +28,11 @@ export const useViewportHeight = () => {
 
       let el: HTMLElement | null = target;
       while (el) {
-        const { overflowY } = window.getComputedStyle(el);
+        const { overflowY, overflowX } = window.getComputedStyle(el);
         if ((overflowY === "auto" || overflowY === "scroll") && el.scrollHeight > el.clientHeight) {
+          return;
+        }
+        if ((overflowX === "auto" || overflowX === "scroll") && el.scrollWidth > el.clientWidth) {
           return;
         }
         el = el.parentElement;
