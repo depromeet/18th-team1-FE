@@ -3,7 +3,11 @@
 import { format } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { type RecommendationListItem, useDeleteDiaryMutation } from "@/entities/diary";
+import {
+  type RecommendationListItem,
+  useDeleteDiaryMutation,
+  useDiariesQuery,
+} from "@/entities/diary";
 import {
   CalendarShareCardDrawer,
   CalendarShareDateDrawer,
@@ -19,7 +23,6 @@ import { useSentenceShareCardDrawer } from "@/features/sentence-share";
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcMonthBack, IcMonthNext, IcShare } from "@/shared/ui/icons";
 import { OptionTab } from "@/shared/ui/option-tab";
-import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
 import { useCalendarWidget } from "../model/useCalendarWidget";
 
 interface CalendarWidgetProps {
@@ -36,8 +39,10 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const { step, openTypeSheet, selectType, close } = useCalendarShareFlow();
   const { navigateToEmotion } = useEmotionNavigation();
-  const { selectedQuote } = useEmotionSelectStore();
   const { openSentenceShareCardDrawer } = useSentenceShareCardDrawer();
+  const todayStr = format(new Date(), "yyyy-MM-dd");
+  const { data: todayDiaryData } = useDiariesQuery(todayStr, todayStr);
+  const todayDiaries = todayDiaryData?.recommendations ?? [];
   const [isNoSentenceModalOpen, setIsNoSentenceModalOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
   const { mutate: deleteDiary } = useDeleteDiaryMutation();
@@ -73,8 +78,23 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   }, [step, openSentenceShareCardDrawer, close]);
 
   const handleSelectType = (shareType: ShareType): void => {
-    if (shareType === "today-sentence" && !selectedQuote) {
-      setIsNoSentenceModalOpen(true);
+    if (shareType === "today-sentence") {
+      const firstDiary = todayDiaries[0];
+      if (!firstDiary) {
+        setIsNoSentenceModalOpen(true);
+        return;
+      }
+      openSentenceShareCardDrawer({
+        shareType: "today-sentence",
+        date: todayStr,
+        sentencePickData: {
+          quote: firstDiary.quote.content,
+          title: firstDiary.quote.title,
+          author: firstDiary.quote.author,
+          coverImageUrl: firstDiary.quote.image,
+        },
+      });
+      close();
       return;
     }
     selectType(shareType);
