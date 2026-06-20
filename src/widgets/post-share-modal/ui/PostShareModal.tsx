@@ -2,7 +2,8 @@
 
 import { format } from "date-fns";
 import { useState } from "react";
-import { type Post, PostAuthorProfile, PostShareCard } from "@/entities/post";
+import { type Post, PostAuthorProfile } from "@/entities/post";
+import { TodaysSentenceCard } from "@/entities/sentence";
 import { ShareScrap } from "@/features/post-share";
 import { useSentenceShareCardDrawer } from "@/features/sentence-share";
 
@@ -53,7 +54,13 @@ export const PostShareModal = ({
             {post.author.nickname && (
               <PostAuthorProfile author={post.author} createdAt={post.createdAt} variant="light" />
             )}
-            <PostShareCard post={post} />
+            <TodaysSentenceCard
+              date={post.date}
+              quote={post.content}
+              bookTitle={post.book.title}
+              bookAuthor={post.book.author}
+              bookCoverImage={post.book.coverImageUrl}
+            />
           </div>
 
           {/* Mood & tone tags */}
