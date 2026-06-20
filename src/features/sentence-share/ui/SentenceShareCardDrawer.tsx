@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/performance/noImgElement: <explanation> */
+/** biome-ignore-all lint/performance/noImgElement: next/image 미사용 — 외부 URL 동적 이미지 */
 "use client";
 
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
@@ -31,7 +31,6 @@ interface SentenceShareCardDrawerProps {
 
 export const SentenceShareCardDrawer = ({
   isOpen,
-  shareType = "today-sentence",
   date,
   sentencePickData,
   onClose,
@@ -63,24 +62,23 @@ export const SentenceShareCardDrawer = ({
       return;
     }
 
-    const params =
-      shareType === "sentence-pick" && date && sentencePickData
+    const params = sentencePickData
+      ? {
+          createdAt: date ?? format(new Date(), "yyyy-MM-dd"),
+          quote: sentencePickData.quote,
+          title: sentencePickData.title,
+          author: sentencePickData.author,
+          coverImageUrl: sentencePickData.coverImageUrl,
+        }
+      : selectedQuote
         ? {
-            createdAt: date,
-            quote: sentencePickData.quote,
-            title: sentencePickData.title,
-            author: sentencePickData.author,
-            coverImageUrl: sentencePickData.coverImageUrl,
+            createdAt: format(new Date(), "yyyy-MM-dd"),
+            quote: selectedQuote.content,
+            title: selectedQuote.title,
+            author: selectedQuote.author,
+            coverImageUrl: selectedQuote.image,
           }
-        : selectedQuote
-          ? {
-              createdAt: format(new Date(), "yyyy-MM-dd"),
-              quote: selectedQuote.content,
-              title: selectedQuote.title,
-              author: selectedQuote.author,
-              coverImageUrl: selectedQuote.image,
-            }
-          : null;
+        : null;
 
     if (!params) return;
 
@@ -118,7 +116,7 @@ export const SentenceShareCardDrawer = ({
       blobCacheRef.current = {};
       setPreviewUrls({});
     };
-  }, [isOpen, shareType, date, sentencePickData, selectedQuote]);
+  }, [isOpen, date, sentencePickData, selectedQuote]);
 
   const handleScroll = useCallback((): void => {
     const el = scrollRef.current;
@@ -168,24 +166,23 @@ export const SentenceShareCardDrawer = ({
     try {
       let blob = blobCacheRef.current[selectedVariant];
       if (!blob) {
-        const params =
-          shareType === "sentence-pick" && date && sentencePickData
+        const params = sentencePickData
+          ? {
+              createdAt: date ?? format(new Date(), "yyyy-MM-dd"),
+              quote: sentencePickData.quote,
+              title: sentencePickData.title,
+              author: sentencePickData.author,
+              coverImageUrl: sentencePickData.coverImageUrl,
+            }
+          : selectedQuote
             ? {
-                createdAt: date,
-                quote: sentencePickData.quote,
-                title: sentencePickData.title,
-                author: sentencePickData.author,
-                coverImageUrl: sentencePickData.coverImageUrl,
+                createdAt: format(new Date(), "yyyy-MM-dd"),
+                quote: selectedQuote.content,
+                title: selectedQuote.title,
+                author: selectedQuote.author,
+                coverImageUrl: selectedQuote.image,
               }
-            : selectedQuote
-              ? {
-                  createdAt: format(new Date(), "yyyy-MM-dd"),
-                  quote: selectedQuote.content,
-                  title: selectedQuote.title,
-                  author: selectedQuote.author,
-                  coverImageUrl: selectedQuote.image,
-                }
-              : null;
+            : null;
         if (!params) return;
         blob = await fetchSentenceCardImage({ variant: selectedVariant, ...params });
       }
