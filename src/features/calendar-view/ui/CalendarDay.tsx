@@ -36,11 +36,11 @@ export const CalendarDay = ({
     return (
       <div className="relative w-11.5 h-19.25">
         {subCover && (
-          <div className="absolute overflow-hidden rounded-[4px] w-10 h-16 top-0 left-0.75 z-0">
+          <div className="absolute overflow-hidden rounded-[4px] w-10 h-16 top-0 left-0.75 z-0 bg-muted">
             <Image src={subCover} alt="책 표지" fill sizes="40px" className="object-cover" />
           </div>
         )}
-        <div className="absolute overflow-hidden rounded-[4px] w-11.5 h-18 bottom-0 left-0 z-10">
+        <div className="absolute overflow-hidden rounded-[4px] w-11.5 h-18 bottom-0 left-0 z-10 bg-muted">
           <Image
             src={mainCover}
             alt="책 표지"

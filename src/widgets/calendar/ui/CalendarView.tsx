@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { type MonthlyReport, useMonthlyReportQuery } from "@/entities/report";
+import { Skeleton } from "@/shared/ui/skeleton";
 import { CalendarDiarySection } from "./CalendarDiarySection";
 import { CalendarWidget } from "./CalendarWidget";
 import { MonthlyReportBanner } from "./MonthlyReportBanner";
@@ -40,7 +41,7 @@ export const CalendarView = () => {
   );
   const hasCurrentMonthReport = !!currentMonthReport && hasReportContent(currentMonthReport);
 
-  const { data: lastMonthReport } = useMonthlyReportQuery(
+  const { data: lastMonthReport, isLoading: isLastMonthLoading } = useMonthlyReportQuery(
     lastYear,
     lastMonth,
     !isCurrentMonthLoading && !hasCurrentMonthReport,
@@ -54,16 +55,22 @@ export const CalendarView = () => {
       ? { year: lastYear, month: lastMonth }
       : null;
 
+  const isBannerLoading = isCurrentMonthLoading || (!hasCurrentMonthReport && isLastMonthLoading);
+
   return (
     <>
-      {reportBanner && (
+      {isBannerLoading ? (
+        <div className="px-5 mb-5">
+          <Skeleton className="h-16 w-full rounded-2xl" />
+        </div>
+      ) : reportBanner ? (
         <MonthlyReportBanner
           month={reportBanner.month}
           onClick={() =>
             router.push(`/report?year=${reportBanner.year}&month=${reportBanner.month}`)
           }
         />
-      )}
+      ) : null}
       <Suspense>
         <CalendarWidget onDateSelect={() => setIsSheetOpen(true)} />
       </Suspense>
