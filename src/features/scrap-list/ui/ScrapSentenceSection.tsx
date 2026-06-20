@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ConfirmModal } from "@/shared/ui/confirm-modal";
 import { IcClose, IcTrash } from "@/shared/ui/icons";
+import { Skeleton } from "@/shared/ui/skeleton";
 
 import { useBulkDeleteScrapsMutation, useScrappedQuotesQuery } from "../api/queries";
 import type { ScrappedQuote } from "../model/scrap.types";
@@ -12,7 +13,8 @@ import { ScrapActionSheet } from "./ScrapActionSheet";
 import { ScrapBookCard } from "./ScrapBookCard";
 
 export const ScrapSentenceSection = () => {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useScrappedQuotesQuery();
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useScrappedQuotesQuery();
   const { mutateAsync: bulkDeleteAsync } = useBulkDeleteScrapsMutation();
 
   const items = data?.pages.flatMap((page) => page.quotes) ?? [];
@@ -102,7 +104,17 @@ export const ScrapSentenceSection = () => {
         ) : null}
       </div>
 
-      {items.length === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center gap-1.75 px-2.5 pb-4">
+          {(["left", "right"] as const).map((side) => (
+            <div key={side} className="flex min-w-0 flex-1 max-w-43.5 flex-col gap-2.5">
+              <Skeleton className="w-full h-52 rounded-2xl" />
+              <Skeleton className="w-full h-40 rounded-2xl" />
+              <Skeleton className="w-full h-60 rounded-2xl" />
+            </div>
+          ))}
+        </div>
+      ) : items.length === 0 ? (
         <div className="flex flex-col items-center justify-center gap-2.25 pb-20 pt-9.75">
           <Image src="/images/scrap-empty.png" alt="" width={151} height={56} />
           <p className="body3 text-gray-500">아직 스크랩한 문장이 없어요.</p>

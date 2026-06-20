@@ -33,6 +33,14 @@ export const ScrapActionSheet = ({
   bookPurchaseLink,
 }: ScrapActionSheetProps): React.ReactElement => {
   const [isBookmarked, setIsBookmarked] = useState(true);
+  const [displayCoverImageUrl, setDisplayCoverImageUrl] = useState(coverImageUrl);
+
+  // 부모가 activeItem을 null로 초기화해 coverImageUrl이 사라져도
+  // 닫히는 애니메이션 동안 마지막 이미지를 유지
+  useEffect(() => {
+    if (coverImageUrl) setDisplayCoverImageUrl(coverImageUrl);
+  }, [coverImageUrl]);
+
   // 시트 닫힘 애니메이션 완료 후 드로어를 열기 위한 플래그
   const [pendingShare, setPendingShare] = useState(false);
   // 시트 닫히면 부모가 activeItem을 null로 초기화하므로, 공유 데이터를 미리 캡처해둠
@@ -89,8 +97,8 @@ export const ScrapActionSheet = ({
         <SheetTitle className="sr-only">{bookTitle}</SheetTitle>
         {/* 책 표지 — 버튼 하단(54px)에 맞춰 위로 돌출 */}
         <div className="absolute -top-37 left-8 h-50.5 w-32 overflow-hidden rounded-lg">
-          {coverImageUrl ? (
-            <Image src={coverImageUrl} alt={bookTitle} fill className="object-cover" />
+          {displayCoverImageUrl ? (
+            <Image src={displayCoverImageUrl} alt={bookTitle} fill className="object-cover" />
           ) : (
             <div className="size-full bg-gray-100" />
           )}

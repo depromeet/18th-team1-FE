@@ -45,6 +45,7 @@ export const ScrapBookCard = memo(
               src={coverImageUrl}
               alt={bookTitle}
               fill
+              sizes="calc(50vw - 14px)"
               className="object-cover"
               crossOrigin="anonymous"
             />
