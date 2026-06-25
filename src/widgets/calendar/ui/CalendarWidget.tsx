@@ -35,7 +35,7 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const viewTab = searchParams.get("tab") === "cover" ? "cover" : "emotion";
+  const viewTab = searchParams.get("tab") === "emotion" ? "emotion" : "cover";
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const { step, openTypeSheet, selectType, close } = useCalendarShareFlow();
   const { navigateToEmotion } = useEmotionNavigation();
@@ -148,8 +148,8 @@ export const CalendarWidget = ({ onDateSelect }: CalendarWidgetProps) => {
         <div className="flex items-center justify-between px-5">
           <OptionTab
             options={[
-              { value: "emotion", label: "감정 색" },
               { value: "cover", label: "책 표지" },
+              { value: "emotion", label: "감정 색" },
             ]}
             value={viewTab}
             onChange={(v) => {
