@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
-import { useReportData } from "@/entities/report";
+import { useReportData, useReportRouteContext } from "@/entities/report";
 import { useReportShare } from "@/features/report-share";
 import { IcShare4 } from "@/shared/ui/icons";
 import { Header } from "@/widgets/header";
@@ -15,6 +15,7 @@ const ReportLayout = ({ children }: ReportLayoutProps) => {
   const router = useRouter();
   const { handleShare } = useReportShare();
   const { hasReportContent } = useReportData();
+  const { isSharedView } = useReportRouteContext();
 
   const handleBack = () => {
     router.back();
@@ -25,7 +26,7 @@ const ReportLayout = ({ children }: ReportLayoutProps) => {
       <Header
         title="월말결산"
         className="z-10"
-        onBack={handleBack}
+        onBack={isSharedView ? undefined : handleBack}
         right={
           hasReportContent && (
             <button
