@@ -74,7 +74,12 @@ const SentenceViewContent = ({
           </div>
         </div>
         <section className="flex shrink-0 flex-col items-center gap-2">
-          <NewButton variant="secondary" label="다른 문장 더보기" onClick={handleViewList} />
+          <NewButton
+            variant="secondary"
+            label="다른 문장 더보기"
+            onClick={handleViewList}
+            className="body1 underline text-[#3A3A3A]/80"
+          />
           <div
             className="w-full shrink-0"
             style={{ height: "calc(56px + env(safe-area-inset-bottom, 0px))" }}

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
+import { HomeBannerModalPortal } from "@/widgets/home";
 import { NavBar } from "@/widgets/nav-bar";
-import { HomeBannerModalPortal } from "./HomeBannerModalPortal";
 
 interface NavLayoutProps {
   children: ReactNode;

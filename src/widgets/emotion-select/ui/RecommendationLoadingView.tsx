@@ -70,29 +70,34 @@ export const RecommendationLoadingView = (): React.ReactElement => {
       className="fixed inset-x-0 top-0 flex flex-col items-center justify-center bg-background md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2"
       style={{ height: "var(--vh, 100dvh)" }}
     >
-      <Lottie animationData={sentenceLoadingJson} style={{ width: 280, height: 189 }} loop />
-      <div
-        key={stageKey}
-        className="-mt-11 flex h-13.5 w-42.5 flex-col items-center gap-3 text-center"
-        style={{ animation: "slide-in-up 0.4s ease-out" }}
-      >
-        {stage === "finding" && (
-          <p className="body3 text-gray-500">책을 펼쳐 문장을 찾는 중이에요</p>
-        )}
-        {stage === "almost" && (
-          <p className="body3 text-gray-500">오늘의 문장을 거의 다 찾았어요</p>
-        )}
-        {stage === "quote" && (
-          <>
-            <p className="body3 text-gray-500">{typedText}</p>
-            <p
-              className="body3 text-gray-500 transition-opacity duration-300 whitespace-nowrap"
-              style={{ opacity: showSource ? 1 : 0 }}
-            >
-              {`『${quoteRef.current.title}』, ${quoteRef.current.author}`}
-            </p>
-          </>
-        )}
+      <div className="relative">
+        <Lottie animationData={sentenceLoadingJson} style={{ width: 280, height: 189 }} loop />
+        <div
+          key={stageKey}
+          className="absolute left-1/2 top-[145px] -translate-x-1/2 flex w-45 flex-col items-center gap-5 text-center"
+          style={{ animation: "slide-in-up 0.4s ease-out" }}
+        >
+          {stage === "finding" && (
+            <p className="body3 text-gray-500">책을 펼쳐 문장을 찾는 중이에요</p>
+          )}
+          {stage === "almost" && (
+            <p className="body3 text-gray-500">오늘의 문장을 거의 다 찾았어요</p>
+          )}
+          {stage === "quote" && (
+            <>
+              <p className="body3 text-gray-500">기다리는 동안 이 문장은 어때요?</p>
+              <div className="flex w-full flex-col gap-1">
+                <p className="body3 text-gray-300">{typedText}</p>
+                <p
+                  className="body3 text-gray-300 whitespace-nowrap transition-opacity duration-300"
+                  style={{ opacity: showSource ? 1 : 0 }}
+                >
+                  {`『${quoteRef.current.title}』, ${quoteRef.current.author}`}
+                </p>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
