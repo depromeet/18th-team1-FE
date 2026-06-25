@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useEmotionSelectStore } from "@/store/emotion-select/useEmotionSelectStore";
-import { EMOTIONS, type EmotionCategory } from "./emotion";
+import { EMOTIONS } from "./emotion";
 
 // thin: 39px, thick: 53px — indices 0,1,3,5,7=thin / 2,4,6,8=thick
 const BOOK_HEIGHTS = [39, 39, 53, 39, 53, 39, 53, 39, 53];
@@ -43,9 +43,6 @@ export const useEmotionBookDrag = ({
   const initialIndexRef = useRef(getRestoredIndex(selectedEmotionId));
   const [selectedIndex, setSelectedIndex] = useState<number | null>(initialIndexRef.current);
   const containerRef = useRef<HTMLDivElement>(null);
-  const prevCategoryRef = useRef<EmotionCategory | null>(
-    selectedEmotionId ? (EMOTIONS.find((e) => e.id === selectedEmotionId)?.category ?? null) : null,
-  );
   const shouldDeselectRef = useRef(false);
 
   useEffect(() => {
@@ -72,10 +69,7 @@ export const useEmotionBookDrag = ({
     const emotion = EMOTIONS[index];
     if (!emotion) return;
 
-    if (prevCategoryRef.current !== null && prevCategoryRef.current !== emotion.category) {
-      navigator.vibrate?.(10);
-    }
-    prevCategoryRef.current = emotion.category;
+    navigator.vibrate?.(10);
 
     if (selectedIndex === null) {
       onValidChange(false);
