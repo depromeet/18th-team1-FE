@@ -87,7 +87,14 @@ export const EmotionSelectView = (): React.ReactElement => {
   return (
     <div
       className={`fixed inset-x-0 top-0 flex flex-col gap-1 md:left-1/2 md:right-auto md:w-93.75 md:-translate-x-1/2 ${currentStep === 1 ? "bg-muted" : "bg-background"}`}
-      style={{ height: currentStep === 3 ? "var(--step3-vh, 100vh)" : "var(--vh, 100lvh)" }}
+      style={{
+        height:
+          currentStep === 3
+            ? "var(--step3-vh, 100dvh)"
+            : currentStep === 4
+              ? "var(--vh, 100dvh)"
+              : "100dvh",
+      }}
     >
       <textarea
         ref={hiddenTextareaRef}
