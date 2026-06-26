@@ -8,7 +8,7 @@ import { useAuthStore } from "@/store/auth/useAuthStore";
 import { fetchDevToken, refreshAccessToken } from "../api/authApi";
 
 // /login으로 시작하는 경로는 인증 없이 접근 허용 (/login/callback 포함)
-const PUBLIC_PATHS = ["/login", "/secret-login"];
+const PUBLIC_PATHS = ["/login", "/secret-login", "/preview"];
 
 // 공유된 월말결산(/report?year=...&month=...&userId=...)은 토큰 없이 접근 허용
 const SHARED_REPORT_PATH = "/report";
