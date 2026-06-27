@@ -1,12 +1,13 @@
+/* iPhone 12: 390 × 844 viewport + 12px bezel */
 .phone {
   position: relative;
-  width: 350px;
-  height: 720px;
+  width: 390px;
+  height: 848px;
   background: linear-gradient(145deg, #2a2a2e 0%, #1a1a1e 60%, #111114 100%);
-  border-radius: 50px;
+  border-radius: 54px;
   box-shadow:
     0 0 0 1px #3a3a3e,
-    0 0 0 2px #111,
+    0 0 0 2.5px #111,
     0 30px 80px rgba(0, 0, 0, 0.8),
     0 0 60px rgba(120, 80, 255, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -21,7 +22,7 @@
 
 .sideBtnVolumeUp {
   left: -3px;
-  top: 130px;
+  top: 148px;
   width: 3px;
   height: 36px;
   box-shadow: -1px 0 2px rgba(0, 0, 0, 0.5);
@@ -29,7 +30,7 @@
 
 .sideBtnVolumeDown {
   left: -3px;
-  top: 178px;
+  top: 198px;
   width: 3px;
   height: 36px;
   box-shadow: -1px 0 2px rgba(0, 0, 0, 0.5);
@@ -37,72 +38,121 @@
 
 .sideBtnPower {
   right: -3px;
-  top: 154px;
+  top: 184px;
   width: 3px;
-  height: 60px;
+  height: 66px;
   box-shadow: 1px 0 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Screen — flex column so status bar stacks above iframe */
 .screen {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #000;
-  border-radius: 40px;
+  background: #fff;
+  border-radius: 44px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.notch {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+/* ── Status bar: 3-column layout [time | notch gap | icons] ── */
+.statusBar {
+  flex-shrink: 0;
+  height: 44px;
+  background: #fff;
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #000;
-  border-radius: 20px;
-  padding: 6px 12px 6px 8px;
-  width: 110px;
-  height: 30px;
+  position: relative;
+  z-index: 10;
 }
 
-.camera {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #2a2a3e, #0a0a1a);
-  border: 1px solid #1a1a2e;
-  box-shadow: 0 0 4px rgba(60, 80, 180, 0.4);
+/* Left section — fills space left of the notch */
+.statusLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.time {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+/* Center spacer — same width as the notch so icons sit outside it */
+.notchGap {
+  width: 185px;
   flex-shrink: 0;
 }
 
-.speaker {
+/* Right section — fills space right of the notch */
+.statusRight {
   flex: 1;
-  height: 4px;
-  background: #111;
-  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 18px;
+  gap: 5px;
+  color: #111;
 }
 
-.iframe {
+/* iPhone 12 notch — absolute, centered */
+.notch {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 185px;
+  height: 30px;
+  background: #000;
+  border-radius: 0 0 22px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+.notchSpeaker {
+  width: 56px;
+  height: 5px;
+  background: #1c1c1c;
+  border-radius: 3px;
+}
+
+.notchCamera {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1a2a40, #040408);
+  box-shadow:
+    0 0 0 1px #111,
+    0 0 6px rgba(50, 80, 200, 0.5);
+  flex-shrink: 0;
+}
+
+/* ── iframe fills remaining space ── */
+.iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  display: block;
+  min-height: 0;
+}
+
+/* ── Home bar ── */
 .homeBar {
   position: absolute;
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: 100px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
+  width: 130px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 3px;
 }

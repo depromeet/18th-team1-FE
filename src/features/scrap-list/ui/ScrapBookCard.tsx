@@ -56,7 +56,7 @@ export const ScrapBookCard = memo(
 
         {/* 하단 그라데이션 오버레이 — backdrop-blur: 40px, 동일 색상 투명→불투명 */}
         <div
-          className="absolute bottom-0 left-0 right-0 top-35 backdrop-blur-2xl"
+          className="absolute bottom-0 left-0 right-0 top-35 rounded-b-2xl backdrop-blur-2xl"
           style={{
             background: `linear-gradient(to bottom, ${color.replace("rgb(", "rgba(").replace(")", ", 0)")}, ${color})`,
           }}
