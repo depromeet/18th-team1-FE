@@ -13,16 +13,6 @@ export const refreshAccessToken = (): Promise<RefreshResponse> =>
 export const fetchDevToken = (): Promise<RefreshResponse> =>
   httpClient.get<RefreshResponse>("/auth/dev-token");
 
-export const fetchTemporaryLoginToken = async (): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/auth/temporary-login-token`, {
-    method: "GET",
-    credentials: "include",
-  });
-  if (!response.ok) {
-    throw new Error(`Temporary login failed: ${response.status}`);
-  }
-};
-
 export const redirectToKakaoLogin = () => {
   window.location.href = `${BASE_URL}/oauth2/authorization/kakao`;
 };
