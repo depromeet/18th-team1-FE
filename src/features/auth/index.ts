@@ -1,5 +1,4 @@
 export {
-  fetchTemporaryLoginToken,
   redirectToGoogleLogin,
   redirectToKakaoLogin,
   refreshAccessToken,
